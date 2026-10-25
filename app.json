@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Stillwave",
+    "slug": "stillwave",
+    "version": "0.1.0",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.stillwave.player",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        },
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.stillwave.player",
+      "allowBackup": false,
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.VIBRATE"
+      ]
+    },
+    "updates": { "enabled": false },
+    "plugins": [
+      ["expo-video", { "supportsBackgroundPlayback": false, "supportsPictureInPicture": false }],
+      "./plugins/withCleartext.cjs"
+    ],
+    "web": { "bundler": "metro", "name": "Stillwave" }
+  }
+}
