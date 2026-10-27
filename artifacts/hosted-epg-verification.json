@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-10-27T22:53:22.684Z",
+  "url": "https://tylermcm.github.io/Stillwave/stillwave-us.xml.gz",
+  "status": {
+    "generatedAt": "2026-10-27T22:51:24.031Z",
+    "coverage": {
+      "total": 1485,
+      "available": 762,
+      "live": 762,
+      "missing": 723
+    },
+    "refreshHours": 6,
+    "compressedBytes": 3139651
+  },
+  "appCoverage": {
+    "total": 1485,
+    "available": 762,
+    "live": 762,
+    "missing": 723
+  },
+  "guideDownloads": 1,
+  "transferBytes": 3139651,
+  "cache": [
+    {
+      "id": "guide-tv-hosted",
+      "bytes": 18830225
+    }
+  ],
+  "indexHttp": 200,
+  "xmlHttp": 200,
+  "workflow": "https://github.com/tylermcm/Stillwave/actions/runs/40597922184"
+}

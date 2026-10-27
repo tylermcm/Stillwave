@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-27T22:41:26.063551+00:00",
+  "probes": [
+    {
+      "site": "distro.tv",
+      "url": "https://tv.jsrdn.com/epg/query.php?range=now,24h&id=42160,42161,51671,",
+      "result": "DNS lookup failed on this machine",
+      "meaning": "Endpoint unavailable in this run; candidate IDs are not counted as listings."
+    },
+    {
+      "site": "tvtv.us",
+      "url": "https://www.tvtv.us/api/v1/lineup/USA-NY71652-X/grid/2026-10-27T00:00:00.000Z/2026-10-28T00:00:00.000Z/10002",
+      "result": "HTTP 404",
+      "meaning": "Current public collector route did not return data; alternative route/source needed."
+    },
+    {
+      "site": "toonamiaftermath.com",
+      "url": "https://api.toonamiaftermath.com/playlists?scheduleName=Toonami%20Aftermath%20EST&startDate=2026-10-27T00:00:00.000Z&thisWeek=true&weekStartDay=monday",
+      "result": "HTTP 500",
+      "meaning": "East/West schedule collection unresolved; no fabricated time shift is installed."
+    },
+    {
+      "site": "watchyour.tv",
+      "url": "https://www.watchyour.tv/guide.json",
+      "result": "HTTP 200, parsed and exact-stream-matched",
+      "meaning": "Integrated into updated app defaults and combined build."
+    },
+    {
+      "site": "tvpassport.com",
+      "url": "https://www.tvpassport.com/tv-listings/stations/three-angels-broadcasting-network/19066/2026-10-27",
+      "result": "HTTP 200, published schedule parsed with America/New_York time zone",
+      "meaning": "Integrated into combined-guide build for exact station catalog matches."
+    }
+  ]
+}
