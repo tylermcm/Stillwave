@@ -75,6 +75,7 @@ export interface Library {
   version: 1;
   channelNumbers?: Record<string, string>;
   channelNumberingVersion?: 1;
+  tvGuideDefaultsVersion?: 2 | 3 | 4;
   channels: Channel[];
   favorites: string[];
   playlists: SavedPlaylist[];

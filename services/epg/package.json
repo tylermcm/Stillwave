@@ -1,0 +1,14 @@
+{
+  "name": "stillwave-epg-service",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsx scripts/audit-guide-coverage.ts --build"
+  },
+  "dependencies": {
+    "fflate": "0.8.3",
+    "saxes": "6.0.0",
+    "tsx": "4.23.15"
+  },
+  "engines": { "node": ">=22" }
+}

@@ -34,6 +34,7 @@ test('No guide includes missing and expired schedules, retains playback addresse
   assert.ok(noGuide.every(r => r.programmes.length === 0 && r.channel.url));
   assert.equal(rows[1]!.programmes.length, 1);
   assert.equal(browseChannelRows(rows, 'all', [], 100).length, 3);
+  assert.deepEqual(browseChannelRows(rows, 'withGuide', [], 100).map(r => r.channel.id), ['future']);
   assert.deepEqual(browseChannelRows(rows, 'favorites', ['future'], 100).map(r => r.channel.id), ['future']);
 });
 

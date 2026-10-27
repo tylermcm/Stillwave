@@ -10,8 +10,9 @@ import { addPlaylist, newPlaylistId, removePlaylist } from './src/core/playlists
 import { MAX_PLAYLIST_BYTES } from './src/core/feedBytes';
 import { normalizeFeedUrl, parseM3u } from './src/core/m3u';
 import { createGuideMatcher, nowAndNext, parseXmltv } from './src/core/xmltv';
-import { createGuideView, getGuideSources, makeReminder, reminderKey, sourceChannels as channelsForSource, sourceMappings, splitGuideKey, withGuideSources, type ProgramResult } from './src/core/guides';
+import { assertGuideRefresh, createGuideView, getGuideSources, makeReminder, reminderKey, sourceChannels as channelsForSource, sourceMappings, splitGuideKey, withGuideSources, type ProgramResult } from './src/core/guides';
 import { adjacentChannel, previousChannel, rememberChannel } from './src/core/history';
+import { downloadGuide } from './src/data/guideFeeds';
 import { downloadFeed, pickFeed } from './src/data/feeds';
 import { cacheGuideSource, loadGuideSource, loadLibrary, removeGuideCache, saveLibrary } from './src/data/library';
 import { dvr } from './src/data/dvr';
@@ -24,7 +25,7 @@ import { MiniGuide } from './src/components/MiniGuide';
 import { AppErrorBoundary } from './src/components/AppErrorBoundary';
 import { useAndroidFullscreen } from './src/components/useAndroidFullscreen';
 import { isTv } from './src/data/tv';
-import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults } from './src/core/tvDefaults';
+import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults, needsTvGuideUpgrade } from './src/core/tvDefaults';
 import { TvShell } from './src/components/tv/TvDvrShell';
 
 if (Platform.OS !== 'web') void SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -137,13 +138,13 @@ function Shell() {
     finally { busyRef.current = false; setBusy(''); }
   };
   const setupTvDefaults = () => run('Setting up US channels…', async () => {
-    const result = await installTvDefaults(current.current, { download: downloadFeed, cache: cacheGuideSource });
+    const result = await installTvDefaults(current.current, { download: downloadFeed, downloadGuide, cache: cacheGuideSource, progress: name => setBusy(`Loading ${name}…`), onUpdate: partial => update(() => completeTvSetup(partial, current.current)) });
     const next = completeTvSetup(result.library, current.current);
     update(() => next); await saveLibrary(next);
     setNotice(result.guideError || 'US channels are ready. Your other playlists are kept.');
   });
   useEffect(() => {
-    if (isTv && loaded && (!current.current.channels.length || (current.current.playlists.some(p => p.url === DEFAULT_TV_PLAYLIST) && !getGuideSources(current.current).length))) void setupTvDefaults();
+    if (isTv && loaded && (!current.current.channels.length || needsTvGuideUpgrade(current.current))) void setupTvDefaults();
   }, [loaded]);
   const importPlaylist = async (fromFile = false, refreshId?: string) => {
     await run('Importing channels…', async () => {
@@ -197,11 +198,12 @@ function Shell() {
       const picked = fromFile ? await pickFeed() : undefined;
       if (fromFile && !picked) return;
       const snapshot = current.current;
-      const text = picked?.text ?? await downloadFeed(url!);
       const existing = source ?? sources.find(s => !!url && s.url === url && JSON.stringify(s.playlistIds) === JSON.stringify(playlistIds));
       const id = existing?.id ?? newPlaylistId().replace('playlist-', 'guide-');
-      const parsed = await parseXmltv(text, channelsForSource({ playlistIds }, snapshot.channels), sourceMappings(id, snapshot.mappings));
-      await cacheGuideSource(text, id);
+      const result = picked ? { text: picked.text, guide: await parseXmltv(picked.text, channelsForSource({ playlistIds }, snapshot.channels), sourceMappings(id, snapshot.mappings)) } : await downloadGuide(url!, channelsForSource({ playlistIds }, snapshot.channels), sourceMappings(id, snapshot.mappings));
+      const parsed = result.guide;
+      assertGuideRefresh(existing?.guide, parsed);
+      await cacheGuideSource(result.text, id);
       const entry: GuideSource = { id, name: existing?.name || guideNameInput.trim() || picked?.name || new URL(url!).hostname, url, playlistIds, guide: parsed, lastAttemptAt: Date.now(), refreshHours: existing?.refreshHours ?? 12 };
       const nextSources = getGuideSources(current.current);
       const next = withGuideSources(current.current, existing ? nextSources.map(s => s.id === id ? entry : s) : [...nextSources, entry]);
@@ -220,7 +222,9 @@ function Shell() {
       if (!source) throw new Error('Choose an available guide source.');
       const text = await loadGuideSource(source.id);
       if (!text) throw new Error('Import the guide again to load this channel’s programs.');
-      const parsed = await parseXmltv(text, channelsForSource(source, snapshot.channels), sourceMappings(source.id, mappings));
+      const result = source.url ? await downloadGuide(source.url, channelsForSource(source, snapshot.channels), sourceMappings(source.id, mappings)) : { text, guide: await parseXmltv(text, channelsForSource(source, snapshot.channels), sourceMappings(source.id, mappings)) };
+      const parsed = result.guide;
+      await cacheGuideSource(result.text, source.id);
       const next = withGuideSources({ ...current.current, mappings }, getGuideSources(current.current).map(s => s.id === source.id ? { ...s, guide: parsed } : s));
       update(() => next); await saveLibrary(next);
       setMatching(false);
@@ -245,7 +249,9 @@ function Shell() {
     const text = await loadGuideSource(id);
     if (!text) throw new Error('Replace or refresh this guide before changing its assignment.');
     const playlistIds = scope === 'all' ? [] : [scope];
-    const parsed = await parseXmltv(text, channelsForSource({ playlistIds }, current.current.channels), sourceMappings(id, current.current.mappings));
+    const result = source.url ? await downloadGuide(source.url, channelsForSource({ playlistIds }, current.current.channels), sourceMappings(id, current.current.mappings)) : { text, guide: await parseXmltv(text, channelsForSource({ playlistIds }, current.current.channels), sourceMappings(id, current.current.mappings)) };
+    const parsed = result.guide;
+    await cacheGuideSource(result.text, id);
     const next = withGuideSources(current.current, getGuideSources(current.current).map(s => s.id === id ? { ...s, playlistIds, guide: parsed } : s));
     update(() => next); await saveLibrary(next);
   });
@@ -273,9 +279,10 @@ function Shell() {
         for (const source of due) {
           let replacement: GuideSource;
           try {
-            const text = await downloadFeed(source.url!);
-            const parsed = await parseXmltv(text, channelsForSource(source, current.current.channels), sourceMappings(source.id, current.current.mappings));
-            await cacheGuideSource(text, source.id);
+            const result = await downloadGuide(source.url!, channelsForSource(source, current.current.channels), sourceMappings(source.id, current.current.mappings));
+            const parsed = result.guide;
+            assertGuideRefresh(source.guide, parsed);
+            await cacheGuideSource(result.text, source.id);
             replacement = { ...source, guide: parsed, lastAttemptAt: Date.now(), lastError: undefined };
           } catch { replacement = { ...source, lastAttemptAt: Date.now(), lastError: 'The latest refresh failed.' }; }
           const next = withGuideSources(current.current, getGuideSources(current.current).map(s => s.id === source.id ? replacement : s));

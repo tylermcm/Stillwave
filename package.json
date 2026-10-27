@@ -13,6 +13,10 @@
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
     "export:check": "node scripts/export-check.mjs",
+    "guide:build": "tsx scripts/audit-guide-coverage.ts --build",
+    "guide:audit": "tsx scripts/audit-guide-gaps.ts",
+    "guide:catalog": "tsx scripts/sync-guide-stations.ts",
+    "guide:serve": "node scripts/serve-guide.mjs",
     "check": "pnpm typecheck && pnpm test"
   },
   "dependencies": {

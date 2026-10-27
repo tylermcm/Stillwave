@@ -3,7 +3,7 @@ import { AppState, BackHandler, ScrollView, StyleSheet, View } from 'react-nativ
 import { StatusBar } from 'expo-status-bar';
 import { NavigationBar } from 'expo-navigation-bar';
 import type { Channel, Library } from '../../types';
-import { createGuideView } from '../../core/guides';
+import { createGuideView, guideCoverage } from '../../core/guides';
 import { guideProgrammeKey, guideWindow, moveGuide, programmeAt, type TvDashboardState, type TvDvrTab, type TvGuideCursor } from '../../core/tvGuide';
 import { recordingConflict, recordingMatchesProgramme, seriesEpisodes, seriesTitle, tvDvrItems } from '../../core/tvDvr';
 import type { Recording } from '../../core/dvr';
@@ -48,7 +48,7 @@ export function TvShell(props: Props) {
   const deletePending = useRef<{ id: string; at: number } | undefined>(undefined);
   const view = useMemo(() => createGuideView(props.library), [props.library.guideSources, props.library.guide, props.library.guideUrl, props.library.mappings]);
   const allRows = useMemo(() => props.library.channels.map((channel, index) => ({ channel, number: channel.number || String(index + 1), programmes: view.guide?.programmes[view.matcher(channel, props.library.mappings) || ''] || [] }))
-    .sort((a, b) => comparePreferredChannels(a.channel, b.channel)), [props.library.channels, props.library.mappings, view]);
+    .sort((a, b) => comparePreferredChannels(a.channel, b.channel)), [props.library.channels, props.library.mappings, view, now]);
   const rows = useMemo(() => browseChannelRows(allRows, browseMode, props.library.favorites, now), [allRows, browseMode, props.library.favorites, now]);
   const selectedCursor = { ...cursor, channel: Math.max(0, Math.min(cursor.channel, rows.length - 1)), programme: Math.max(0, Math.min(cursor.programme, (rows[cursor.channel]?.programmes.length || 1) - 1)) };
   const row = rows[selectedCursor.channel];
@@ -135,18 +135,20 @@ export function TvShell(props: Props) {
   };
   const numberPad = numberSearch && <ChannelNumberPad channels={props.library.channels} initial={numberSearch.initial} onClose={() => setNumberSearch(undefined)} onGuide={showNumberInGuide}
     onWatch={channel => { setNumberSearch(undefined); void props.onWatch(channel); }} />;
+  const coverage = useMemo(() => guideCoverage(props.library.channels, view, now), [props.library.channels, view, now]);
   const menuActions = browseMenu ? [
     ...CHANNEL_BROWSE_MODES.map(mode => ({ label: `${mode.label} (${browseChannelRows(allRows, mode.id, props.library.favorites, now).length})`, run: () => chooseBrowseMode(mode.id) })),
     { label: 'Back', run: () => { setBrowseMenu(false); setMenuIndex(0); } },
   ] : [
     { label: 'Guide', run: () => onScreen('guide') }, { label: 'My DVR', run: () => onScreen('dvr') },
+    { label: `Schedules: ${coverage.available} of ${coverage.total} channels`, run: () => chooseBrowseMode('withGuide') },
     { label: 'Find channel by number', run: () => openNumberSearch() },
     { label: `Browse channels: ${CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label}`, run: () => { setBrowseMenu(true); setMenuIndex(0); } },
     ...(screen === 'guide' && row ? [{ label: 'Selected channel actions', run: () => { setMenu(false); setFocus({ zone: 'guideActions', index: 0 }); } }] : []),
     ...(screen === 'dvr' && item ? [{ label: 'Selected recording actions', run: () => { setMenu(false); setFocus({ zone: 'dvrActions', index: 0 }); } }] : []),
     ...(row ? [{ label: props.library.favorites.includes(row.channel.id) ? 'Remove favorite' : 'Add favorite', run: () => props.onFavorite(row.channel) }] : []),
     { label: 'Refresh US playlist and guide', run: () => { props.onDefaults(); setMenu(false); } },
-    ...view.sources.filter(s => s.url).map(source => ({ label: `Refresh ${source.name}`, run: () => { props.onRefreshGuide(source.id); setMenu(false); } })),
+    ...view.sources.filter(s => s.url).map(source => ({ label: `Refresh ${source.name}${source.lastError ? ' · retry failed guide' : ''}`, run: () => { props.onRefreshGuide(source.id); setMenu(false); } })),
     { label: 'Back', run: () => setMenu(false) },
   ];
   const live = !!programme && programme.start <= now && programme.stop > now;

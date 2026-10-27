@@ -8,6 +8,8 @@ artifacts/*.sha256
 dist/
 web-build/
 coverage/
+artifacts/epg/*.xml*
+artifacts/epg/manifest.json
 /android/
 /ios/
 modules/*/android/build/

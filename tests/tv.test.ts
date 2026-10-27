@@ -58,7 +58,8 @@ test('TV installs an advertised guide scoped to the playlist; guide failure keep
   assert.deepEqual(first.library.guideSources[0]?.playlistIds, ['playlist-tv-us']);
   const second = await installTvDefaults(first.library, { download: async url => { if (url !== DEFAULT_TV_PLAYLIST) throw Error('offline'); return playlist; }, cache: async () => {} }, '');
   assert.equal(second.library.channels.length, 1);
-  assert.equal(second.library.guideSources[0], first.library.guideSources[0]);
+  assert.equal(second.library.guideSources[0]?.guide, first.library.guideSources[0]?.guide);
+  assert.ok(second.library.guideSources[0]?.lastError);
   assert.match(second.guideError!, /saved guide is kept/);
 });
 test('failed TV playlist download leaves the original library untouched', async () => {

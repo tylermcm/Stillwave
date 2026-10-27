@@ -6,7 +6,7 @@ const languageHints: Record<string, string[]> = snapshot.languages;
 export const CHANNEL_BROWSE_MODES = [
   { id: 'all', label: 'All channels' }, { id: 'sports', label: 'Sports' },
   { id: 'animation', label: 'Animation' }, { id: 'movies', label: 'Movies' },
-  { id: 'noGuide', label: 'No guide' }, { id: 'favorites', label: 'Favorites' },
+  { id: 'withGuide', label: 'With guide' }, { id: 'noGuide', label: 'No guide' }, { id: 'favorites', label: 'Favorites' },
 ] as const;
 export type ChannelBrowseMode = typeof CHANNEL_BROWSE_MODES[number]['id'];
 
@@ -45,6 +45,6 @@ export function comparePreferredChannels(a: Channel, b: Channel) {
 export function browseChannelRows(rows: TvGuideRow[], mode: ChannelBrowseMode, favorites: string[], now: number): TvGuideRow[] {
   const saved = new Set(favorites);
   return rows.filter(row => mode === 'all' || (mode === 'favorites' ? saved.has(row.channel.id)
-    : mode === 'noGuide' ? !row.programmes.some(p => p.stop > now) : channelCategory(row.channel) === mode))
+    : mode === 'withGuide' ? row.programmes.some(p => p.stop > now) : mode === 'noGuide' ? !row.programmes.some(p => p.stop > now) : channelCategory(row.channel) === mode))
     .map(row => mode === 'noGuide' ? { ...row, programmes: [] } : row);
 }
