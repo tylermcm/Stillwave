@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "source/candidate images load",
+    "Guide metrics",
+    "DVR metrics",
+    "blend slider",
+    "difference image"
+  ],
+  "errors": []
+}

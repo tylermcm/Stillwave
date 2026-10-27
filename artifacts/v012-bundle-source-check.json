@@ -1,0 +1,18 @@
+[
+  {
+    "file": "App.tsx",
+    "matches": true
+  },
+  {
+    "file": "src/components/LivePlayer.tsx",
+    "matches": true
+  },
+  {
+    "file": "src/core/playlists.ts",
+    "matches": true
+  },
+  {
+    "file": "src/components/useAndroidFullscreen.ts",
+    "matches": true
+  }
+]

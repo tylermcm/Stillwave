@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "apkSha256": "4bea636720bd78dd54d30fb58fb521172310b44607ef46404a7b972d56d43e2a",
+  "device": "Android 15 API 35 emulator-5580",
+  "optimizedRelease": true,
+  "activityLaunch": "Status: ok",
+  "processObserved": true,
+  "androidRuntimeErrors": 0,
+  "reactNativeJsErrors": 0,
+  "physicalFireTvAcceptance": false
+}

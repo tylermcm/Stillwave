@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": [
+    "widescreen layout",
+    "single visible focus",
+    "ordered 18-row navigation",
+    "column roundtrip",
+    "automatic fullscreen",
+    "controls auto-hide",
+    "remote pause/resume",
+    "Back restores channel",
+    "favorites",
+    "guide schedule",
+    "sources via remote",
+    "search via keyboard"
+  ],
+  "errors": []
+}

@@ -4,11 +4,23 @@ A personal Android and iPhone IPTV player built around live television. This is 
 
 ## Install the standalone Android app
 
-The Android release is built as `artifacts/Stillwave-0.1.0.apk`. Transfer that file to your Android phone, open it from Downloads/Files, and approve installation from that app when Android prompts you.
+The Android review release is `artifacts/Stillwave-0.4.0.apk` (version code 7). Transfer that file to your Android phone, open it from Downloads/Files, and approve installation from that app when Android prompts you. This update uses the original signing key: install it over the existing Stillwave app without uninstalling.
 
 The APK contains its JavaScript, assets and native playback engine. **No web server, Expo Go, developer computer or app account is required to run it.** Your phone connects directly to the playlist, guide and channel providers. A guide can also be imported as a local XMLTV file, so hosting your own guide server is optional.
 
-Open **Sources → Channel playlist** to import an M3U URL/file, then import an XMLTV guide below it. The APK targets ARM Android phones, including 32-bit ARM and ARM64, on Android 7.0 or newer. Native playback still needs testing with your actual provider and phone.
+Open **Sources → Your playlists** to import an M3U URL/file, then import an XMLTV guide below it. The universal APK includes 32-bit ARM, ARM64 and x86_64 on Android 7.0 or newer. Local DVR requires Android 8.0 or newer. Native playback still needs testing with your actual provider and phone.
+
+## Pause, rewind and record
+
+Android TV/Fire OS now uses the Guide and My DVR layout from the supplied HTML mockup, with D-pad highlighting, automatic fullscreen, default US playlist/partial Pluto guide setup, and real scheduled recording/series actions. The phone layout stays separate. See [TV_IMPLEMENTATION.md](TV_IMPLEMENTATION.md) for the overlay results, remote controls, native validation and limits. The user's Fire Stick remains on 0.2.0 until the new build is reviewed.
+
+Supported HLS channels automatically build a local rolling buffer, up to **30 minutes or 512 MiB**, whichever comes first. Pause keeps capturing the broadcast. Resume continues at the paused position; the player shows how far behind live you are. Use the timeline, drag to seek, or the 30-second backward/forward buttons. The center refresh icon is **Go live**; it is the explicit action for returning to the current broadcast. If footage expires, the app warns and resumes at the oldest available footage rather than jumping to live.
+
+Tap the record button on the video to **record now**, then tap again to stop and save. Player options also offer a 30-minute recording or a stop at the current guide program's end when guide data is available. Recordings save the incoming broadcast, even if playback is behind live. They continue when you close the player or lock the screen. Open **Recordings** to watch, resume, stop, or delete them; you can watch an ongoing recording from its beginning.
+
+Viewing and recording share one upstream capture. This release captures **one channel at a time**: stop a running recording before opening a different channel. Recordings remain after the rolling buffer clears. Failed or interrupted jobs retain captured footage and show their status. Capture reserves 256 MiB of free device space; recordings themselves use additional storage. Android may stop background data transfers after its time budget, and force-stopping the app, powering off, or losing the source can interrupt capture. Saved footage is kept.
+
+Local DVR supports unencrypted HLS with complete video segments and multiplexed audio. Encrypted streams, separate audio playlists, byte-range HLS, DASH and progressive transport streams use ordinary playback without local DVR. Unsupported channels explain the limitation in player options. Web/iOS do not record yet. Recordings stay in app-private storage; export, configurable padding, time-based recurrence and a PC/NAS companion remain later milestones. TV series rules expand from downloaded guide data; new guide fetching runs while the app is open.
 
 ## Rebuild the APK on this Windows computer
 
@@ -39,10 +51,16 @@ iOS device builds require Apple signing and either macOS/Xcode or a cloud build 
 ## What is implemented
 
 - Native playback through `expo-video`: Android Media3/ExoPlayer and iOS AVPlayer.
-- Custom live TV controls with no scrubber, elapsed-time movie UI, or rewind/fast-forward buttons, including the app's fullscreen layout. Resuming and **Go live** recreate the session to rejoin the broadcast's default live position.
+- Multiple channel playlists coexist. Add by URL/file, optionally name a source, refresh/replace/remove it independently, and filter browsing to one source or all playlists. Existing single-playlist libraries migrate with favorites and guide matches intact. Import completes only after the new library has saved.
+- Watch opens to a searchable category grid with All channels and Favorites. Channel browsing stays virtualized and has an instant floating scroll-to-top button.
+- Guide shows each channel's current program with progress, the next program and later shows, plus access to its full schedule and guide mapping. It uses the imported XMLTV feed; it cannot invent programs absent from that feed.
+- Controls sit on the video: PiP at top left, refresh in the center, pause at bottom center, fullscreen at bottom right, and an options menu for captions/audio/diagnostics. After roughly two seconds of advancing playback, the status panel collapses and the controls and live badge fade. Tap the video to reveal controls. Pausing, buffering and errors restore the status panel. Native screen readers keep controls visible, and reduced-motion settings suppress animation.
+- Android fullscreen locks landscape and hides system bars while retaining the same player and custom controls. Back first exits fullscreen. iOS/web continue to use their platform fullscreen presentation. DVR resume preserves the paused position, including after returning to the app; Go live explicitly rejoins the current broadcast. Ordinary non-DVR streams resume within whatever window the provider still exposes.
+- Android HLS DVR buffers recent footage, supports pause/rewind/forward seeking, records now or until a chosen stop, and provides a recordings library with ongoing playback, resume positions and partial-recording recovery. See the DVR section above for supported formats and device limits.
+- Android floating player: **Minimize** (the overlapping windows icon beside fullscreen) or Android **Back** moves a playing channel into picture-in-picture on supported Android 8+ phones. On Android 12+, **Home** or switching apps enters it automatically while playback is active. Paused/failed streams do not automatically minimize. Expand the floating window to return to the same stream; dismiss it to stop playback. Android's app settings must allow picture-in-picture. Force-stopping the app ends playback.
 - Search, categories, favorites, one active stream, virtualized channel lists, captions when supplied, and switching among available audio tracks.
 - Fast/balanced/stable buffer targets of 8/20/40 seconds. These are buffer preferences, not guarantees of live delay or startup speed. Adaptive quality selection remains with the native engine.
-- An active playback watchdog, five bounded retries with backoff, an offline state, reconnection on network return, and no playback/retries in the background. Retry allowance resets only after 30 seconds of advancing playback or an explicit user/network restart.
+- An active playback watchdog, five bounded retries with backoff, an offline state, and reconnection on network return. Background playback is limited to a visible Android floating player; application retries/watchdog checks resume in the foreground. Retry allowance resets only after 30 seconds of advancing playback or an explicit user/network restart.
 - XMLTV `.xml`/`.xml.gz` imports from a direct URL or file; M3U `x-tvg-url` / `url-tvg` discovery; GitHub `blob` file-link conversion; now/next and upcoming schedules in the phone's local time zone.
 - Exact `tvg-id` matching, unique display-name fallback, and manual guide matching. Raw guide data is cached locally so matching a previously unmatched channel can load its programs without another download.
 - A **Diagnose** panel with evidence, observed/possible/uncertain labels, and an optional seven-second HTTP header check. Details below.
@@ -62,7 +80,7 @@ npm run grab --- --sites=CHOOSE_A_SITE_FROM_SITES.md
 
 Replace the placeholder with an actual supported site. This creates `guide.xml`. Transfer that file to your phone and select **Sources → Program guide → Choose file**. Alternatively, serve the generated file from a server your phone can reach and enter its direct URL. `localhost` on the phone refers to the phone, not your computer.
 
-Generated guides need periodic regeneration. This app currently supports **manual refresh**; it does not run a guide scraper or scheduled background refresh on the phone. It keeps one playlist and one guide source at a time. A new playlist may require reimporting the guide to retain programs for newly added channels. If a channel has no upcoming programs, check the guide dates, source coverage and ID mapping. Programs without a valid `start` and `stop` are skipped rather than having their durations invented.
+Generated guides need periodic regeneration. This app currently supports **manual refresh**; it does not run a guide scraper or scheduled background refresh on the phone. Multiple channel playlists are supported, with one shared guide source. Adding a playlist reparses the cached guide for its channels when one is available. If a channel has no upcoming programs, check the guide dates, source coverage and ID mapping. Programs without a valid `start` and `stop` are skipped rather than having their durations invented. Proposed follow-on features are in `ROADMAP.md`.
 
 ## Explaining playback failures honestly
 
@@ -87,7 +105,7 @@ The app does **not** claim that a responsive JavaScript timer proves the whole a
 
 ## Compatibility and privacy
 
-- HLS (`.m3u8`) is the most practical common format for both platforms. MPEG-TS/other progressive formats and device codecs vary. DASH is Android-only through this native playback API. This version has no alternate VLC/mpv engine or stream transcoder, DRM provisioning, recording, catch-up, casting or picture-in-picture.
+- HLS (`.m3u8`) is the most practical common format for both platforms. MPEG-TS/other progressive formats and device codecs vary. DASH is Android-only through this native playback API. This version has no alternate VLC/mpv engine or stream transcoder, DRM provisioning, recording, catch-up or casting. The floating player is currently enabled for Android.
 - Some extensionless streams need a playlist manifest hint. The importer reads the common Kodi `manifest_type=hls` hint and VLC user-agent/referrer headers. Custom request-header behavior still needs testing against real providers on both platforms.
 - Source failures and broadcaster-inserted commercials cannot be removed by an ad-free player.
 - Playlist URLs, stream URLs, provider headers, settings and guide data are saved in the app's private local files. **The cache is not encrypted**, so credentials embedded in URLs/headers are not a credential vault. Android app backup is disabled; iOS system backups follow device policy. This version should receive secure-cache work before broader distribution with paid provider credentials.

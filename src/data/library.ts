@@ -1,6 +1,7 @@
 import { File, Paths } from 'expo-file-system';
 import { EMPTY_LIBRARY, type Library } from '../types';
 import { createLibraryWriter } from '../core/libraryWriter';
+import { restoreLibrary } from '../core/playlists';
 
 // This is app-private local storage, not encrypted storage. See README privacy notes.
 const libraryFile = () => new File(Paths.document, 'library-v1.json');
@@ -11,12 +12,11 @@ export async function loadLibrary(): Promise<Library> {
   const data = JSON.parse(await file.text()) as Library;
   const channels = new File(Paths.document, 'channels-v1.json');
   const guide = new File(Paths.document, 'guide-v1.json');
+  const sources = new File(Paths.document, 'guides-v1.json');
   if (channels.exists) data.channels = JSON.parse(await channels.text());
   if (guide.exists) data.guide = JSON.parse(await guide.text()) ?? undefined;
-  if (data.version !== 1 || !Array.isArray(data.channels) || !Array.isArray(data.favorites)) {
-    throw new Error('The saved library could not be read. Import your playlist again.');
-  }
-  const library = { ...EMPTY_LIBRARY, ...data };
+  if (sources.exists) data.guideSources = JSON.parse(await sources.text()) ?? [];
+  const library = restoreLibrary(data);
   saveLibrary.seed(library);
   return library;
 }
@@ -29,11 +29,15 @@ export const saveLibrary = createLibraryWriter(async (name, data) => {
     temporary.delete();
 });
 
-export async function cacheGuideSource(text: string): Promise<void> {
-  await new File(Paths.document, 'guide-source.xml').write(text);
+function cacheFile(id: string) {
+  if (!/^[a-z0-9-]+$/i.test(id)) throw new Error('Invalid guide identifier.');
+  return new File(Paths.document, id === 'legacy-guide' ? 'guide-source.xml' : `guide-source-${id}.xml`);
 }
-
-export async function loadGuideSource(): Promise<string | undefined> {
-  const file = new File(Paths.document, 'guide-source.xml');
+export async function cacheGuideSource(text: string, id = 'legacy-guide'): Promise<void> {
+  await cacheFile(id).write(text);
+}
+export async function loadGuideSource(id = 'legacy-guide'): Promise<string | undefined> {
+  const file = cacheFile(id);
   return file.exists ? file.text() : undefined;
 }
+export async function removeGuideCache(id: string): Promise<void> { const file = cacheFile(id); if (file.exists) file.delete(); }

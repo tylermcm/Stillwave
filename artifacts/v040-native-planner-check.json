@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "duration": 16,
+  "bytes": 3637236,
+  "status": "completed",
+  "conflict": "A recording is already running on Planner Fixture. Only one stream is available.",
+  "checks": [
+    "alarm starts real HLS capture in background",
+    "duplicates deduplicated",
+    "second stream refused",
+    "cancelled job stays cancelled",
+    "scheduled end finalizes video",
+    "resume position persisted",
+    "episode metadata kept",
+    "series rule persists and removes"
+  ],
+  "testVariant": "Unminified x86_64 test APK, same native sources",
+  "device": "Android 15 API 35 isolated emulator",
+  "testApkSha256": "c77cfd993f2c9a1a41f1a694094c18bfaac978a1344ed9b3be07fe9df42723fe",
+  "sources": {
+    "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrEngine.kt": "aeec60c0deed95704d8c1196060b0f891d71363f66770cceec90f7f84f1ff757",
+    "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrService.kt": "c89308a6bd4d89a53dd05bef69a3f34ea20c8ccca25961a7025428d18fe3cc49",
+    "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/RecordingPlanner.kt": "1dcf22879f4f715687cdcb5c27ca63e7272f61d6096fa090a5f0f7d405d870a3"
+  }
+}

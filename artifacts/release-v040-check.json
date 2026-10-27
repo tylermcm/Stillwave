@@ -1,0 +1,24 @@
+{
+  "package": "com.stillwave.player",
+  "versionName": "0.4.0",
+  "versionCode": 7,
+  "minSdk": "24",
+  "debuggable": false,
+  "mainActivitySupportsPip": true,
+  "dvrServicePrivate": true,
+  "dvrServiceType": "dataSync",
+  "embeddedBundleBytes": 1742944,
+  "embeddedBundleSha256": "77b8c8f35b010aca41a180324556f0c289eb29de9d149558705665eb3c7faae1",
+  "packagedBundleMatchesBuild": true,
+  "nativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "signingCertificateMatchesOriginalKey": true,
+  "signingCertificateSha256": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "signatureAndAlignmentVerified": true,
+  "containsSigningFiles": false,
+  "apkBytes": 53141662,
+  "apkSha256": "4bea636720bd78dd54d30fb58fb521172310b44607ef46404a7b972d56d43e2a"
+}

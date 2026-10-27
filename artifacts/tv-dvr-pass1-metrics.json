@@ -1,0 +1,35 @@
+{
+  "reference": "mockups/tv-my-dvr.png",
+  "candidate": "artifacts/tv-dvr-candidate.png",
+  "size": [
+    1920,
+    1080
+  ],
+  "regions": {
+    "full": {
+      "mean_absolute_channel_error": 2.9254185956790124,
+      "pixels_over_16_percent": 3.0048225308641974,
+      "identical_pixels_percent": 95.84712577160494
+    },
+    "top": {
+      "mean_absolute_channel_error": 0.011395399305555555,
+      "pixels_over_16_percent": 0.0,
+      "identical_pixels_percent": 98.57161458333333
+    },
+    "details": {
+      "mean_absolute_channel_error": 3.2660688657407406,
+      "pixels_over_16_percent": 2.907465277777778,
+      "identical_pixels_percent": 95.20156250000001
+    },
+    "grid": {
+      "mean_absolute_channel_error": 3.2648941619220153,
+      "pixels_over_16_percent": 3.455939440993789,
+      "identical_pixels_percent": 95.8010643115942
+    },
+    "footer": {
+      "mean_absolute_channel_error": 1.3594277033730158,
+      "pixels_over_16_percent": 2.631138392857143,
+      "identical_pixels_percent": 95.94308035714286
+    }
+  }
+}

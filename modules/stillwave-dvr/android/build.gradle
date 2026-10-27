@@ -1,0 +1,8 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+group = 'com.stillwave'
+version = '0.1.0'
+android { namespace 'expo.modules.stillwavedvr' }
+dependencies { testImplementation 'junit:junit:4.13.2' }

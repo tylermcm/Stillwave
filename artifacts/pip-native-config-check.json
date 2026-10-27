@@ -1,0 +1,9 @@
+{
+  "mainActivitySupportsPip": true,
+  "oneLifecycleRegistration": true,
+  "initializationGuard": true,
+  "fullscreenReturnGuard": true,
+  "matchingMedia3Dependency": true,
+  "nativeCompilationPerformed": true,
+  "devicePipTestPerformed": false
+}

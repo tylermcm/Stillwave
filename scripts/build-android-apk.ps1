@@ -1,4 +1,4 @@
-param([string]$Architectures = 'armeabi-v7a,arm64-v8a')
+param([string]$Architectures = 'armeabi-v7a,arm64-v8a', [switch]$ReuseNativeProject)
 
 $ErrorActionPreference = 'Stop'
 $workspace = Split-Path -Parent $PSScriptRoot
@@ -24,10 +24,12 @@ $env:TMP = $temporary
 $env:TMPDIR = $temporary
 $env:PATH = (Join-Path $jdk.FullName 'bin') + [System.IO.Path]::PathSeparator + $env:PATH
 
-if (-not (Test-Path -LiteralPath 'android\gradlew.bat')) {
+# Reapply app.json and config plugins on every build, including PiP manifest
+# capabilities and lifecycle hooks added since an earlier APK was generated.
+if (-not $ReuseNativeProject) {
     & node node_modules/expo/bin/cli prebuild --platform android --no-install
     if ($LASTEXITCODE -ne 0) { throw 'Android project generation failed.' }
-}
+} elseif (-not (Test-Path -LiteralPath 'android/app/build.gradle')) { throw 'Generate the native project before reusing it.' }
 $sdkProperty = $sdkRoot.Replace('\', '/')
 [System.IO.File]::WriteAllText((Join-Path $workspace 'android\local.properties'), "sdk.dir=$sdkProperty`n")
 

@@ -20,9 +20,15 @@ importers:
       expo-file-system:
         specifier: ~58.0.11
         version: 58.0.11(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))
+      expo-navigation-bar:
+        specifier: ~58.0.4
+        version: 58.0.4(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)
       expo-network:
         specifier: ~58.0.4
         version: 58.0.4(expo@58.0.19)(react@19.3.0)
+      expo-screen-orientation:
+        specifier: ~58.0.3
+        version: 58.0.3(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))
       expo-status-bar:
         specifier: ~58.0.4
         version: 58.0.4(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
@@ -1363,11 +1369,24 @@ packages:
   expo-modules-macros@0.22.0:
     resolution: {integrity: sha512-IHY+FkILfG19qsyf9G/z7dcWVgsyqdkWsvvob3n5nWKa2meCCAGeEjp42N68fG8Ta6dn/bsceuma7uh2i6ho9g==}
 
+  expo-navigation-bar@58.0.4:
+    resolution: {integrity: sha512-XO1Ljy9MlmVLYlmIGUNHxTCcHN8TjlbYQnf+jqjoxpbPxDCXDCSaX0+F7rKh0G4CUehKsfoebbMO/VIy87qSqg==}
+    peerDependencies:
+      expo: '*'
+      react: '*'
+      react-native: '*'
+
   expo-network@58.0.4:
     resolution: {integrity: sha512-E3dYtnku+LDal+4OtKdxGotX7DLjaq+GOvrtN0RiYDTNum8lhMB7dK4GqGgBqHjwsC0awEds5DhTkm+w7O1TtQ==}
     peerDependencies:
       expo: '*'
       react: '*'
+
+  expo-screen-orientation@58.0.3:
+    resolution: {integrity: sha512-nvNA5VE0HBZDoZhzn0OngyVk/dSbaIMIvytgEAjADtC0pUXAeuMpfnM/e9oqM3naSDj52/F1kdg5Tx3D21QGHg==}
+    peerDependencies:
+      expo: '*'
+      react-native: '*'
 
   expo-server@58.0.6:
     resolution: {integrity: sha512-6DBlSZwxk3J0y1j2s4XebAWNiwGaMp32NcWX7b2kJC2+EFf1g+pCcVmx8ylawt2tyLmbDHswm4MHOfrd4bqfvA==}
@@ -3941,10 +3960,24 @@ snapshots:
       '@expo/modules-macros-win32-arm64': 0.22.0
       '@expo/modules-macros-win32-x64': 0.22.0
 
+  expo-navigation-bar@58.0.4(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1):
+    dependencies:
+      debug: 4.4.3(supports-color@8.1.1)
+      expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-dom@19.3.0(react@19.3.0))(react-native-web@0.21.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+      react: 19.3.0
+      react-native: 0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
+    transitivePeerDependencies:
+      - supports-color
+
   expo-network@58.0.4(expo@58.0.19)(react@19.3.0):
     dependencies:
       expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-dom@19.3.0(react@19.3.0))(react-native-web@0.21.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
       react: 19.3.0
+
+  expo-screen-orientation@58.0.3(expo@58.0.19)(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)):
+    dependencies:
+      expo: 58.0.19(@babel/core@7.29.7(supports-color@8.1.1))(@expo/dom-webview@58.0.2)(react-dom@19.3.0(react@19.3.0))(react-native-web@0.21.4(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@6.0.3)
+      react-native: 0.88.0(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
 
   expo-server@58.0.6: {}
 

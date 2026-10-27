@@ -1,0 +1,35 @@
+{
+  "reference": "artifacts/claude-guide-current.png",
+  "candidate": "artifacts/tv-guide-stable-candidate.png",
+  "size": [
+    1920,
+    1080
+  ],
+  "regions": {
+    "full": {
+      "mean_absolute_channel_error": 0.149565329218107,
+      "pixels_over_16_percent": 0.25024112654320985,
+      "identical_pixels_percent": 99.72873263888889
+    },
+    "top": {
+      "mean_absolute_channel_error": 0.0,
+      "pixels_over_16_percent": 0.0,
+      "identical_pixels_percent": 100.0
+    },
+    "details": {
+      "mean_absolute_channel_error": 0.08232870370370371,
+      "pixels_over_16_percent": 0.17256944444444444,
+      "identical_pixels_percent": 99.81215277777777
+    },
+    "grid": {
+      "mean_absolute_channel_error": 0.2124719634230504,
+      "pixels_over_16_percent": 0.3392695393374741,
+      "identical_pixels_percent": 99.63258605072464
+    },
+    "footer": {
+      "mean_absolute_channel_error": 0.0,
+      "pixels_over_16_percent": 0.0,
+      "identical_pixels_percent": 100.0
+    }
+  }
+}

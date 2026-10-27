@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "viewport": {
+    "width": 960,
+    "height": 540
+  },
+  "checks": [
+    "scaled TV stage",
+    "D-pad channel order",
+    "automatic fullscreen",
+    "Back preserves guide cursor",
+    "web does not fake native recording",
+    "DVR tabs",
+    "remote-reachable series action",
+    "phone layout retained"
+  ],
+  "errors": []
+}

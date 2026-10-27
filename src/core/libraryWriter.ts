@@ -1,12 +1,13 @@
 import type { Library } from '../types';
 
-export type SnapshotName = 'channels' | 'guide' | 'library';
+export type SnapshotName = 'channels' | 'guide' | 'guides' | 'library';
 
 export function createLibraryWriter(write: (name: SnapshotName, data: unknown) => Promise<void>) {
   let queue = Promise.resolve();
   let savedChannels: Library['channels'] | undefined;
   let savedGuide: Library['guide'];
   let initializedGuide = false;
+  let savedSources: Library['guideSources'];
   const save = (library: Library): Promise<void> => {
     queue = queue.catch(() => {}).then(async () => {
       // Favorites/settings should never serialize the entire EPG or playlist.
@@ -19,7 +20,11 @@ export function createLibraryWriter(write: (name: SnapshotName, data: unknown) =
         savedGuide = library.guide;
         initializedGuide = true;
       }
-      const { channels: _channels, guide: _guide, ...metadata } = library;
+      if (savedSources !== library.guideSources) {
+        await write('guides', library.guideSources);
+        savedSources = library.guideSources;
+      }
+      const { channels: _channels, guide: _guide, guideSources: _sources, ...metadata } = library;
       await write('library', metadata);
     });
     return queue;
@@ -28,6 +33,7 @@ export function createLibraryWriter(write: (name: SnapshotName, data: unknown) =
     savedChannels = library.channels;
     savedGuide = library.guide;
     initializedGuide = true;
+    savedSources = library.guideSources;
   };
   return save;
 }

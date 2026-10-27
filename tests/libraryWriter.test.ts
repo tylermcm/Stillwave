@@ -10,7 +10,7 @@ test('favorites/settings saves do not serialize an unchanged playlist or guide',
   await save(library);
   await save({ ...library, favorites: ['one'] });
   await save({ ...library, profile: 'stable' });
-  assert.deepEqual(names, ['channels', 'guide', 'library', 'library', 'library']);
+  assert.deepEqual(names, ['channels', 'guide', 'guides', 'library', 'library', 'library']);
 });
 
 test('concurrent saves serialize completely and leave the latest metadata last', async () => {
@@ -36,7 +36,7 @@ test('a failed snapshot is retried on the next save instead of poisoning the que
   });
   await assert.rejects(save(EMPTY_LIBRARY), /disk full/);
   await save(EMPTY_LIBRARY);
-  assert.deepEqual(names, ['channels', 'channels', 'guide', 'library']);
+  assert.deepEqual(names, ['channels', 'channels', 'guide', 'guides', 'library']);
 });
 
 test('loading existing snapshots avoids rewriting them on the first favorite', async () => {

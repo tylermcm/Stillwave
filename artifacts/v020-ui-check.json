@@ -1,0 +1,30 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "legacyMigration": true,
+  "favoritesPreserved": true,
+  "playlistsCoexist": true,
+  "refreshKeepsOtherSources": true,
+  "persistsAfterReload": true,
+  "sourceFiltering": true,
+  "cachedGuideMatchesNewChannels": true,
+  "categoryFirst": true,
+  "categorySearchFavorites": true,
+  "playerPanelBefore": 71,
+  "healthyPanelCollapses": true,
+  "controlsAutoHide": true,
+  "tapRevealsControls": true,
+  "controlPositions": true,
+  "pauseResume": true,
+  "optionsAccessible": true,
+  "errorStatusStaysVisible": true,
+  "scrollToTopImmediate": true,
+  "scheduleShowsNowNext": true,
+  "webFullscreenTargetsVideo": true,
+  "sourceRemovalPreservesOthers": true,
+  "expectedUnavailableStreamMediaErrors": 2,
+  "pageErrors": [],
+  "androidDeviceTest": false
+}

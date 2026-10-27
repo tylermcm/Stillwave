@@ -1,0 +1,71 @@
+{
+  "javascript": [
+    {
+      "file": "App.tsx",
+      "sha256": "edf8809496aec89a726f016faae0ca8690b45f7957068e01c15924cfdb0e321b",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/LivePlayer.tsx",
+      "sha256": "7b7bc515a3fbb84483ef4c7f31cf8c4e866a7bcac62c721c864e681b6d437f49",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/Recordings.tsx",
+      "sha256": "293e89ce921794d5f6695f068735bd547b5799be19f1c7e93cd917ec1f5f67ae",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/useDvrSession.ts",
+      "sha256": "0d3392bb764329091f26dc915d8a607434f21670830f594a3716a2fe687a644c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/useAndroidFullscreen.ts",
+      "sha256": "d31fcd48c0ae33f3e45a0888a868f4d453cc283f9ef12e92f8b1c9f9096c525c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/dvr.ts",
+      "sha256": "f2cce97143b0f58cc35f061bcc5bf82b64884ae33e196aa5fdb87be3487c9294",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/data/dvr.ts",
+      "sha256": "efe723068f2310155f373f4824e1d3a60024488fffdbe5682e3ee281de942ff0",
+      "bundledSourceMatches": true
+    }
+  ],
+  "native": [
+    {
+      "file": "modules/stillwave-dvr/android/src/main/AndroidManifest.xml",
+      "sha256": "8d004c505901a84d64bd6685ca04e556f8f8b38d5a7ad7d40737716fa6428a46",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrEngine.kt",
+      "sha256": "5a2b6b3d94b1935de393b83ba60e8ff2ab5e458162b3589acb4fdb653b4e99df",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrServer.kt",
+      "sha256": "a5c56669f82f72ae9b86b6912a2e124d8ac9a998872e1a851856e9a19c7e59c5",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrService.kt",
+      "sha256": "8cdc44232d6c618c6052f26b5d25d86c7ece4e0900ca2fc010ed2606bf9228fd",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/Hls.kt",
+      "sha256": "7a7a86c9d550480924e9b419b33b370b8fb06de53e6b1de836118504dc4d6dd1",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/StillwaveDvrModule.kt",
+      "sha256": "cdf58b64dedd4f26f822dd0d923871214e7b10758eb5e185f5f141254b1e6668",
+      "modifiedBeforeApk": true
+    }
+  ]
+}

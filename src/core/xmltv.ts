@@ -18,6 +18,19 @@ export function parseXmltvTime(value: string): number | undefined {
 
 export const normalizeName = (name: string): string => name.toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
 
+// Public Pluto guides use the provider's station ID, while iptv-org uses its
+// own ID. The stream link identifies the exact station without guessing names.
+export function guideIds(channel: Channel): string[] {
+  const ids = channel.tvgId ? [channel.tvgId] : [];
+  try {
+    const url = new URL(channel.url);
+    const providerId = url.hostname === 'jmp2.uk' ? /^\/plu-([a-f\d]{24})\.m3u8$/i.exec(url.pathname)?.[1]
+      : (url.hostname === 'pluto.tv' || url.hostname.endsWith('.pluto.tv')) ? /\/channel\/([a-f\d]{24})(?:\/|$)/i.exec(url.pathname)?.[1] : undefined;
+    if (providerId && !ids.includes(providerId)) ids.push(providerId);
+  } catch { /* Invalid stream addresses are rejected by the playlist parser. */ }
+  return ids;
+}
+
 export function createGuideMatcher(guide: Guide | undefined) {
   const names = new Map<string, Set<string>>();
   for (const [id, labels] of Object.entries(guide?.channels ?? {})) {
@@ -31,7 +44,7 @@ export function createGuideMatcher(guide: Guide | undefined) {
     if (!guide) return undefined;
     const manual = mappings[channel.id];
     if (manual && Object.hasOwn(guide.channels, manual)) return manual;
-    if (channel.tvgId && (Object.hasOwn(guide.channels, channel.tvgId) || Object.hasOwn(guide.programmes, channel.tvgId))) return channel.tvgId;
+    for (const id of guideIds(channel)) if (Object.hasOwn(guide.channels, id) || Object.hasOwn(guide.programmes, id)) return id;
     for (const name of [channel.tvgName, channel.name]) {
       if (!name) continue;
       const ids = names.get(normalizeName(name));
@@ -60,14 +73,15 @@ export async function parseXmltv(
   now = Date.now(),
 ): Promise<Guide> {
   const guide: Guide = { channels: Object.create(null), programmes: Object.create(null), importedAt: now };
-  const wanted = new Set([...channels.map(c => c.tvgId).filter(Boolean), ...Object.values(mappings)]);
+  const wanted = new Set([...channels.flatMap(guideIds), ...Object.values(mappings)]);
   const wantedNames = new Set(channels.flatMap(c => [c.name, c.tvgName].filter((s): s is string => !!s)).map(normalizeName));
   const parser = new SaxesParser({ xmlns: false });
   let depth = 0;
   let root = '';
   let currentChannel: { id: string; names: string[] } | undefined;
   let currentProgramme: Partial<Programme> | undefined;
-  let capture: 'display-name' | 'title' | 'desc' | undefined;
+  let capture: 'display-name' | 'title' | 'desc' | 'episode-num' | undefined;
+  let episodeSystem = '';
   let captured = '';
   let captureDepth = 0;
   let count = 0;
@@ -89,8 +103,9 @@ export async function parseXmltv(
         currentProgramme = { channelId: id, start, stop };
       }
     }
-    if (depth === 3 && ((currentChannel && tag.name === 'display-name') || (currentProgramme && ['title', 'desc'].includes(tag.name)))) {
+    if (depth === 3 && ((currentChannel && tag.name === 'display-name') || (currentProgramme && ['title', 'desc', 'episode-num'].includes(tag.name)))) {
       capture = tag.name as typeof capture; captured = ''; captureDepth = depth;
+      if (tag.name === 'episode-num') episodeSystem = String(tag.attributes.system || '');
     }
   });
   const append = (value: string) => { if (capture && captured.length < 4000) captured += value.slice(0, 4000 - captured.length); };
@@ -102,6 +117,13 @@ export async function parseXmltv(
       if (capture === 'display-name' && currentChannel && value) currentChannel.names.push(value);
       if (capture === 'title' && currentProgramme && !currentProgramme.title) currentProgramme.title = value;
       if (capture === 'desc' && currentProgramme && !currentProgramme.description) currentProgramme.description = value;
+      if (capture === 'episode-num' && currentProgramme && !currentProgramme.episode) {
+        if (episodeSystem === 'onscreen') currentProgramme.episode = value.slice(0, 80);
+        else if (episodeSystem === 'xmltv_ns') {
+          const parts = /^(\d+)(?:\/\d+)?\.(\d+)(?:\/\d+)?/.exec(value);
+          if (parts) currentProgramme.episode = `S${Number(parts[1]) + 1} E${Number(parts[2]) + 1}`;
+        }
+      }
       capture = undefined;
     }
     if (depth === 2 && tag.name === 'channel' && currentChannel) {

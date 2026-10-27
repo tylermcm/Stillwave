@@ -1,0 +1,72 @@
+{
+  "device": "Android 15/API 35 x86_64 emulator",
+  "signedApk": "Stillwave-0.2.0.apk",
+  "checks": {
+    "pauseResumeObserved": {
+      "paused": {
+        "text": "",
+        "label": "DVR timeline, 0:07 behind live",
+        "bounds": [
+          80,
+          149,
+          240,
+          165
+        ],
+        "clickable": true,
+        "position": 40
+      },
+      "held": {
+        "text": "",
+        "label": "DVR timeline, 0:19 behind live",
+        "bounds": [
+          80,
+          149,
+          240,
+          165
+        ],
+        "clickable": true,
+        "position": 40
+      },
+      "resumed": {
+        "text": "",
+        "label": "DVR timeline, 0:21 behind live",
+        "bounds": [
+          80,
+          149,
+          240,
+          165
+        ],
+        "clickable": true,
+        "position": 41
+      }
+    },
+    "pauseResume": {
+      "pausedPosition": 40,
+      "afterPause": 40,
+      "resumed": 41,
+      "delaySeconds": 21
+    },
+    "seeking": {
+      "back": 12,
+      "forward": 43,
+      "liveDelay": 3
+    },
+    "timelineDrag": true,
+    "fullscreenAndPip": true,
+    "recordPermissionAndStart": true,
+    "backgroundRecording": {
+      "beforeSeconds": 16,
+      "afterSeconds": 28
+    },
+    "recordingFullscreen": {
+      "beforeSeconds": 11,
+      "afterSeconds": 14
+    },
+    "savedPlaybackAndResume": true,
+    "persistAfterProcessRestart": true,
+    "deleteRecording": true,
+    "partialRecordingRecovery": true
+  },
+  "runtimeErrors": "",
+  "apkSha256": "f2fe7ba4d0b6063ece4814ce157cdbfdd08a7b974d1d1a0a7cc704e8b6cd91d7"
+}

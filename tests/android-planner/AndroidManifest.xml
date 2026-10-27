@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.stillwave.plannerdriver">
+  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+  <application android:label="Stillwave planner test" />
+  <instrumentation android:name="com.stillwave.plannerdriver.Driver" android:targetPackage="com.stillwave.player" />
+</manifest>

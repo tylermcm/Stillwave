@@ -1,0 +1,18 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scrollables": [
+    {
+      "height": 262,
+      "scrollHeight": 1280
+    }
+  ],
+  "headingScrollsAway": true,
+  "playerRemainsVisible": true,
+  "adFreeTagRemoved": true,
+  "guideSearch": true,
+  "webFullscreenTargetsVideo": true,
+  "webFullscreenExits": true
+}

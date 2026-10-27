@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stillwave TV · Overlay review</title>
+<style>
+:root{color-scheme:dark;font-family:Segoe UI,system-ui,sans-serif;background:#0b0f10;color:#e1e8e8}*{box-sizing:border-box}body{margin:0;padding:22px 28px}header{display:flex;align-items:center;gap:24px;flex-wrap:wrap}h1{font-size:21px;font-weight:600;margin:0 14px 0 0}button,select{font:inherit;color:inherit;background:#151d20;border:1px solid #263438;border-radius:5px;padding:8px 14px;cursor:pointer}button.active{background:#8fd6c0;color:#08201a;border-color:#8fd6c0}a{color:#8fd6c0;text-decoration:none;margin-left:auto}.controls{display:flex;gap:18px;align-items:center;margin:16px 0;font-size:14px;color:#9cabac}label{display:flex;align-items:center;gap:10px}input{accent-color:#8fd6c0;width:170px}.stage{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 200px);background:#000;overflow:hidden;border:1px solid #1f2b2e}.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage img.hidden{display:none}p{color:#7f8f90;font-size:14px;line-height:1.5;margin:10px 0}#stats{color:#b5c4c3}footer{display:flex;justify-content:space-between;gap:20px;align-items:center}
+</style></head><body>
+<header><h1>Stillwave TV · Overlay review</h1><button id="guide" class="active">Guide</button><button id="dvr">My DVR</button><a id="source" href="/tv-dvr.html" target="_blank">Open Claude’s original HTML ↗</a></header>
+<div class="controls"><label>Reference <select id="reference"><option value="stable">Settled HTML</option><option value="supplied">Supplied PNG</option></select></label><label>View <select id="mode"><option value="overlay">50% overlay</option><option value="candidate">App component</option><option value="reference">Reference only</option><option value="difference">Difference ×5</option></select></label><label id="blend">App opacity <input id="opacity" type="range" min="0" max="100" value="50"><span id="percent">50%</span></label></div>
+<div class="stage"><img id="ref" alt="Design reference"><img id="app" alt="Rendered app component"><img id="diff" class="hidden" alt="Amplified pixel difference"></div>
+<footer><p id="stats"></p><p>1920 × 1080 · same fixture data · actual app components</p></footer><p id="note"></p>
+<script>
+let screen='guide';const $=id=>document.getElementById(id);
+async function paint(){
+ $('guide').classList.toggle('active',screen==='guide');$('dvr').classList.toggle('active',screen==='dvr');
+ $('reference').disabled=screen==='dvr';const supplied=$('reference').value==='supplied';
+ const reference=screen==='dvr'?'/mockups/tv-my-dvr.png':supplied?'/mockups/tv-guide.png':'/artifacts/claude-guide-current.png';
+ const candidate=screen==='dvr'?'/artifacts/tv-dvr-candidate.png':'/artifacts/tv-guide-stable-candidate.png';
+ const prefix=screen==='dvr'?'tv-dvr-final':supplied?'tv-guide-supplied-final':'tv-guide-stable-final';
+ $('ref').src=reference;$('app').src=candidate;$('diff').src='/artifacts/'+prefix+'-difference.png';
+ const mode=$('mode').value,opacity=Number($('opacity').value)/100;
+ $('ref').classList.toggle('hidden',mode==='candidate'||mode==='difference');$('app').classList.toggle('hidden',mode==='reference'||mode==='difference');$('diff').classList.toggle('hidden',mode!=='difference');
+ $('app').style.opacity=mode==='overlay'?opacity:1;$('percent').textContent=Math.round(opacity*100)+'%';$('blend').style.visibility=mode==='overlay'?'visible':'hidden';
+ $('source').href='/tv-dvr.html'+(screen==='dvr'?'#dvr':'');
+ $('note').textContent=screen==='guide'?'The supplied Guide PNG captured the grid mid-animation. The settled HTML is the primary reference; its top bar, details block, and footer match exactly. Original mockups were kept unchanged.':'The My DVR overlay uses the supplied PNG directly. Small remaining differences are text anti-aliasing and subpixel edges. The recording controller is tested separately against real native HLS capture; this page compares layout only.';
+ try{const result=await(await fetch('/artifacts/'+prefix+'-metrics.json')).json(),m=result.regions.full;$('stats').textContent=m.identical_pixels_percent.toFixed(4)+'% exact pixels · '+(100-m.pixels_over_16_percent).toFixed(4)+'% within 16/255 per color channel';}catch{$('stats').textContent='Overlay comparison';}
+}
+$('guide').onclick=()=>{screen='guide';paint()};$('dvr').onclick=()=>{screen='dvr';paint()};['reference','mode','opacity'].forEach(id=>$(id).oninput=paint);paint();
+</script></body></html>

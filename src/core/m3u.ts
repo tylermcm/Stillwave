@@ -121,6 +121,7 @@ export function parseM3u(text: string, base?: string): Playlist {
           name: channelName,
           tvgId: info['tvg-id'] || undefined,
           tvgName: info['tvg-name'] || undefined,
+            number: info['tvg-chno'] || info['channel-number'] || undefined,
           group: group || 'Other', logo: httpUrl(info['tvg-logo'] || '', base),
           url, headers: { ...headers }, kind: kind || inferKind(url),
         });

@@ -1,0 +1,35 @@
+{
+  "reference": "mockups/tv-guide.png",
+  "candidate": "artifacts/tv-guide-candidate.png",
+  "size": [
+    1920,
+    1080
+  ],
+  "regions": {
+    "full": {
+      "mean_absolute_channel_error": 0.8202690972222222,
+      "pixels_over_16_percent": 1.767602237654321,
+      "identical_pixels_percent": 96.88864776234568
+    },
+    "top": {
+      "mean_absolute_channel_error": 0.01076171875,
+      "pixels_over_16_percent": 0.0,
+      "identical_pixels_percent": 98.56184895833333
+    },
+    "details": {
+      "mean_absolute_channel_error": 0.17657291666666666,
+      "pixels_over_16_percent": 0.2947916666666667,
+      "identical_pixels_percent": 97.74409722222222
+    },
+    "grid": {
+      "mean_absolute_channel_error": 1.1800705766908213,
+      "pixels_over_16_percent": 2.5921163302277432,
+      "identical_pixels_percent": 96.3193905279503
+    },
+    "footer": {
+      "mean_absolute_channel_error": 1.2873635912698413,
+      "pixels_over_16_percent": 2.700892857142857,
+      "identical_pixels_percent": 96.46205357142857
+    }
+  }
+}

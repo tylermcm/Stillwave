@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stillwave TV — Set-top DVR mockup</title>
+<style>
+  :root {
+    --bg: #0b0f10;
+    --panel: #11171a;
+    --cell: #151d20;
+    --cell-now: #1a2528;
+    --line: #1f2b2e;
+    --text: #e1e8e8;
+    --muted: #7f8f90;
+    --dim: #55646a;
+    --accent: #8fd6c0;
+    --ink: #08201a;
+    --rec: #e5484d;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; background: #000; overflow: hidden; font-family: "Segoe UI", system-ui, sans-serif; color: var(--text); }
+  #viewport { position: fixed; inset: 0; }
+  #stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+  button { all: unset; cursor: pointer; }
+
+  /* top bar */
+  .top { height: 80px; flex: none; display: flex; align-items: center; padding: 0 64px; gap: 56px; }
+  .brand { font-size: 26px; font-weight: 600; letter-spacing: -.3px; color: var(--muted); }
+  .nav { display: flex; gap: 40px; }
+  .nav button { font-size: 28px; color: var(--dim); padding: 6px 0; border-bottom: 3px solid transparent; }
+  .nav button.on { color: var(--text); border-color: var(--accent); }
+  .clock { margin-left: auto; font-size: 26px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .screen { display: none; flex: 1; min-height: 0; flex-direction: column; }
+  .screen.on { display: flex; }
+
+  /* details */
+  .details { height: 300px; flex: none; display: flex; gap: 48px; padding: 8px 64px 28px; }
+  .preview { width: 448px; height: 252px; flex: none; background: var(--panel); border: 1px solid var(--line); position: relative; }
+  .preview span { position: absolute; left: 16px; bottom: 12px; font-size: 20px; color: var(--muted); }
+  .preview .rec { left: auto; right: 16px; top: 12px; bottom: auto; display: flex; align-items: center; gap: 8px; color: var(--text); }
+  .info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .when { font-size: 24px; color: var(--muted); }
+  .info h1 { font-size: 52px; font-weight: 600; letter-spacing: -.8px; margin: 6px 0 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .info p { font-size: 24px; line-height: 1.45; color: #a9b6b6; max-width: 900px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .actions { margin-top: auto; display: flex; gap: 14px; align-items: center; }
+  .btn { padding: 12px 28px; font-size: 24px; border: 1px solid var(--line); border-radius: 6px; color: var(--text); }
+  .btn:hover { border-color: var(--dim); }
+  .btn.primary { background: var(--accent); color: var(--ink); border-color: var(--accent); font-weight: 600; }
+  .hint { font-size: 20px; color: var(--dim); margin-left: 12px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--rec); display: inline-block; flex: none; }
+  .ring { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); display: inline-block; flex: none; }
+
+  /* grid */
+  .grid { flex: 1; min-height: 0; display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+  .ruler { height: 56px; flex: none; display: flex; border-bottom: 1px solid var(--line); }
+  .ruler .corner { width: 260px; flex: none; padding: 0 24px 0 64px; width: 324px; display: flex; align-items: center; font-size: 20px; color: var(--dim); }
+  .clip { flex: 1; position: relative; overflow: hidden; }
+  .ticks { position: absolute; inset: 0; transition: transform .2s; }
+  .tick { position: absolute; top: 0; bottom: 0; padding-left: 12px; display: flex; align-items: center; font-size: 22px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .rows-wrap { flex: 1; min-height: 0; position: relative; overflow: hidden; }
+  .rows { position: absolute; left: 0; right: 0; top: 0; transition: transform .15s; }
+  .row { height: 84px; display: flex; }
+  .chan { width: 324px; flex: none; display: flex; align-items: center; gap: 18px; padding: 0 24px 0 64px; font-size: 24px; color: var(--muted); }
+  .chan b { font-weight: 400; width: 40px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .chan.sel { color: var(--text); }
+  .lane { flex: 1; position: relative; overflow: hidden; }
+  .lane-inner { position: absolute; top: 0; bottom: 0; left: 0; transition: transform .2s; }
+  .prog { position: absolute; top: 5px; bottom: 5px; background: var(--cell); padding: 0 18px; display: flex; align-items: center; gap: 12px; font-size: 24px; overflow: hidden; white-space: nowrap; cursor: pointer; border-radius: 4px; }
+  .prog.now { background: var(--cell-now); }
+  .prog.past { color: var(--dim); }
+  .prog .t { overflow: hidden; text-overflow: ellipsis; }
+  .prog.focus { background: var(--accent); color: var(--ink); }
+  .prog.focus .ring { border-color: var(--ink); }
+  .nowline { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--rec); opacity: .8; pointer-events: none; z-index: 3; transition: transform .2s; }
+  .foot { height: 56px; flex: none; display: flex; align-items: center; padding: 0 64px; gap: 40px; font-size: 20px; color: var(--dim); border-top: 1px solid var(--line); }
+  .foot span:last-child { margin-left: auto; }
+
+  /* My DVR */
+  .dvr { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 560px; }
+  .dvr-main { padding: 0 64px; display: flex; flex-direction: column; min-height: 0; }
+  .dvr-head { display: flex; align-items: baseline; gap: 56px; padding: 4px 0 8px; }
+  .dvr-head h2 { font-size: 48px; font-weight: 600; letter-spacing: -.8px; }
+  .tabs { display: flex; gap: 36px; }
+  .tabs button { font-size: 26px; color: var(--dim); padding: 4px 0; border-bottom: 3px solid transparent; }
+  .tabs button.on { color: var(--text); border-color: var(--accent); }
+  .summary { font-size: 22px; color: var(--muted); padding: 8px 0 20px; }
+  .note { font-size: 22px; color: var(--text); border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin-bottom: 18px; }
+  .list { flex: 1; min-height: 0; overflow: hidden; }
+  .item { display: flex; align-items: center; gap: 24px; height: 88px; padding: 0 20px 0 0; border-radius: 4px; cursor: pointer; }
+  .item .mark { width: 28px; display: flex; justify-content: center; flex: none; }
+  .item .ti { flex: 1; min-width: 0; font-size: 28px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item .ti small { font-size: 22px; color: var(--muted); margin-left: 14px; }
+  .item .r { font-size: 22px; color: var(--muted); font-variant-numeric: tabular-nums; flex: none; }
+  .item.focus { background: var(--panel); outline: 1px solid var(--accent); padding-left: 16px; }
+  .item.watched .ti { color: var(--dim); }
+  .bar { width: 120px; height: 4px; background: var(--line); flex: none; }
+  .bar i { display: block; height: 100%; background: var(--accent); }
+  .side { border-left: 1px solid var(--line); padding: 8px 48px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .side .preview { width: 100%; height: 290px; }
+  .side h3 { font-size: 36px; font-weight: 600; letter-spacing: -.5px; line-height: 1.15; margin-top: 8px; }
+  .side .meta { font-size: 22px; color: var(--muted); }
+  .side p { font-size: 22px; line-height: 1.45; color: #a9b6b6; }
+  .side .actions { flex-wrap: wrap; }
+  .empty { color: var(--muted); font-size: 24px; padding: 24px 0; }
+
+  #toast { position: absolute; left: 50%; bottom: 84px; transform: translate(-50%, 12px); background: var(--text); color: var(--bg); padding: 14px 28px; border-radius: 6px; font-size: 22px; opacity: 0; transition: .2s; pointer-events: none; z-index: 9; }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<div id="viewport">
+<div id="stage">
+  <header class="top">
+    <div class="brand">stillwave</div>
+    <nav class="nav" id="nav"><button data-screen="guide" class="on">Guide</button><button data-screen="dvr">My DVR</button></nav>
+    <div class="clock">Tue 8:47 PM</div>
+  </header>
+
+  <section class="screen on" id="screen-guide">
+    <div class="details" id="details"></div>
+    <div class="grid">
+      <div class="ruler"><div class="corner" id="dayLabel">Tonight</div><div class="clip"><div class="ticks" id="ticks"></div></div></div>
+      <div class="rows-wrap"><div class="rows" id="rows"></div><div class="nowline" id="nowline"></div></div>
+      <div class="foot"><span>▲ ▼ ◀ ▶  Browse</span><span>OK  Watch</span><span>R  Record</span><span>S  Series</span><span>D  My DVR</span></div>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-dvr">
+    <div class="dvr">
+      <div class="dvr-main">
+        <div class="dvr-head"><h2>My DVR</h2><div class="tabs" id="tabs"></div></div>
+        <div class="summary" id="summary"></div>
+        <div id="callout"></div>
+        <div class="list" id="list"></div>
+        <div class="foot" style="margin:0 -64px"><span>▲ ▼  Select</span><span>◀ ▶  Tabs</span><span>OK  Play</span><span>X  Delete</span><span>G  Guide</span></div>
+      </div>
+      <aside class="side" id="side"></aside>
+    </div>
+  </section>
+  <div id="toast"></div>
+</div>
+</div>
+
+<script>
+const BASE = 18 * 60, NOW = 20 * 60 + 47, SPAN = 8 * 60, PX = 276 / 30, LEFT = 324, LANE_W = 1920 - LEFT, ROW_H = 84;
+
+const channels = [
+  { n: 2,  name: 'KWAV',          shows: [['Evening News Tonight',30],['Wheel of Luck',30],['Harbor Division',60],['Cold Case Files',60],['Late Edition',30],['The Midnight Hour',90],['Overnight Weather',60],['Sign-on Preview',60]] },
+  { n: 4,  name: 'NBX',           shows: [['Dateline Tonight',60],['Chicago Rescue',60],['Parkview',60],['Local 4 News',30],['Tonight with Alex Reed',60],['Late Night Sessions',60],['Early Today',120]] },
+  { n: 7,  name: 'ABN',           shows: [['Jeopardy Junior',30],['Family Fortunes',30],['The Good Doctor Returns',60],['Rookie Blues',60],['Nightline 7',30],['Late Show Live',60],['The Daily Brief',60],['World News Now',150]] },
+  { n: 11, name: 'Sports 1',      shows: [['SportsCenter Primetime',60],['NBA: Hawks at Celtics',150],['Postgame Live',30],['Fight Night Replay',120],['Top Plays',30],['Golf Highlights',60],['Hockey Tonight',30]] },
+  { n: 12, name: 'Pitch & Court', shows: [['Premier League Weekly',60],['La Liga: Sevilla v Valencia',120],['Tennis Masters Day 4',120],['Cricket Extra',60],['Rugby Today',60],['Motorsport Roundup',60]] },
+  { n: 21, name: 'Chronicle',     shows: [['Ancient Engineering',60],['Lost Cities of the Andes',60],['Deep Time',120],['Secrets of the Silk Road',60],['Dig Site',60],['Ancient Engineering',60],['Lost Cities of the Andes',60]] },
+  { n: 24, name: 'Wild Planet',   shows: [['Blue Ocean',60],['Big Cats of the Serengeti',90],['Tiny Giants',30],['Arctic Seasons',60],['Night in the Rainforest',60],['Blue Ocean',60],['Big Cats of the Serengeti',90],['Tiny Giants',30]] },
+  { n: 31, name: 'Matinee',       shows: [['Casablanca Skies (1952)',135],['Short Feature: The Lighthouse',15],['Night Train to Lisbon (1961)',110],['The Last Telegram (1948)',100],['Harvest Moon (1957)',120]] },
+  { n: 32, name: 'Cinema Max',    shows: [['Orbital Drift (2023)',140],['Making Of: Orbital Drift',25],['The Quiet Heist (2021)',115],['Neon Harbor (2019)',105],['Paper Planes (2016)',95]] },
+  { n: 40, name: 'Splash Kids',   shows: [['Bubble Pals',30],['Rocket Rabbit',30],['Captain Crumb',30],['Dino Detectives',30],['Bedtime Stories',30],['Sleepy Sheep',30]] },
+  { n: 52, name: 'World 24',      shows: [['World Tonight',60],['Markets Close',30],['Global Focus',30],['Interview Hour',60],['World Tonight',60],['Overnight Report',120],['Asia Open',120]] },
+  { n: 58, name: 'Table & Fire',  shows: [['Smoke & Salt',30],['The Weeknight Cook',30],['Bake Off Finals',90],['Street Food Atlas',60],['Chef vs Home',60],['Smoke & Salt',30],['The Weeknight Cook',30],['Bake Off Finals',90],['Street Food Atlas',60]] },
+];
+const blurbs = [
+  'A tense hour as the investigation closes in on the one detail nobody expected.',
+  'Fresh episode. The team travels farther than ever in search of answers hidden in plain sight.',
+  'An in-depth look at the people, places and decisions that shaped the story, with new interviews and archive footage.',
+  'Live coverage with analysis from the studio team and the key moments from tonight.',
+  'A feature presentation, remastered and shown without commercial interruption.',
+];
+let seed = 3;
+channels.forEach(ch => {
+  ch.progs = []; let t = 0, i = 0;
+  while (t < SPAN) {
+    const [title, mins] = ch.shows[i % ch.shows.length], d = Math.min(mins, SPAN - t);
+    ch.progs.push({ title, start: BASE + t, end: BASE + t + d, ch, blurb: blurbs[(seed++) % blurbs.length], ep: 'S' + (1 + seed % 6) + ' E' + (1 + (seed * 3) % 14) });
+    t += d; i++;
+  }
+});
+
+const state = {};   // "ci:pi" -> 'rec' | 'sched' | 'series'
+[[3,'NBA: Hawks at Celtics','rec'],[1,'Local 4 News','sched'],[5,'Deep Time','sched'],[10,'Interview Hour','series'],[7,'Night Train to Lisbon (1961)','sched'],[11,'Bake Off Finals','series']]
+  .forEach(([ci, t, v]) => { const i = channels[ci].progs.findIndex(p => p.title === t && p.end > NOW); if (i >= 0) state[ci + ':' + i] = v; });
+
+const saved = [
+  { title: 'Harbor Division', sub: 'S4 E9', ch: 'KWAV', when: 'Yesterday', len: 60, size: 1.4, watched: 0 },
+  { title: 'Big Cats of the Serengeti', sub: 'S2 E3', ch: 'Wild Planet', when: 'Sunday', len: 90, size: 2.1, watched: .45 },
+  { title: 'Premier League Weekly', sub: '', ch: 'Pitch & Court', when: 'Sunday', len: 60, size: 1.4, watched: 1 },
+  { title: 'Casablanca Skies (1952)', sub: '', ch: 'Matinee', when: 'Saturday', len: 135, size: 3.0, watched: 0 },
+  { title: 'Ancient Engineering', sub: 'S6 E2', ch: 'Chronicle', when: 'Friday', len: 60, size: 1.4, watched: .8 },
+  { title: 'Smoke & Salt', sub: 'S11 E5', ch: 'Table & Fire', when: 'Friday', len: 30, size: .7, watched: 1 },
+  { title: 'The Quiet Heist (2021)', sub: '', ch: 'Cinema Max', when: 'Thursday', len: 115, size: 2.6, watched: 0 },
+];
+
+const $ = s => document.querySelector(s);
+const fmt = m => { m = ((m % 1440) + 1440) % 1440; const h = Math.floor(m / 60); return (h % 12 || 12) + ':' + String(m % 60).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM'); };
+const dur = m => m >= 60 ? Math.floor(m / 60) + ' hr' + (m % 60 ? ' ' + (m % 60) + ' min' : '') : m + ' min';
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+let toastT; const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800); };
+
+/* ---------- guide ---------- */
+let screen = 'guide', fc = 3, fp = channels[3].progs.findIndex(p => p.start <= NOW && p.end > NOW);
+let winStart = BASE + 150, rowTop = 0;
+
+function buildGuide() {
+  $('#ticks').innerHTML = Array.from({ length: SPAN / 30 }, (_, i) => `<div class="tick" style="left:${i * 30 * PX}px">${fmt(BASE + i * 30)}</div>`).join('');
+  $('#rows').innerHTML = channels.map((ch, ci) => `<div class="row">
+    <div class="chan" data-chan="${ci}"><b>${ch.n}</b>${esc(ch.name)}</div>
+    <div class="lane"><div class="lane-inner" style="width:${SPAN * PX}px">${ch.progs.map((p, pi) => `<div class="prog" data-ci="${ci}" data-pi="${pi}" style="left:${(p.start - BASE) * PX + 2}px;width:${(p.end - p.start) * PX - 4}px"></div>`).join('')}</div></div></div>`).join('');
+}
+function paint() {
+  document.querySelectorAll('.prog').forEach(el => {
+    const ci = +el.dataset.ci, pi = +el.dataset.pi, p = channels[ci].progs[pi], st = state[ci + ':' + pi];
+    el.className = 'prog' + (p.start <= NOW && p.end > NOW ? ' now' : '') + (p.end <= NOW ? ' past' : '') + (ci === fc && pi === fp ? ' focus' : '');
+    el.innerHTML = (st === 'rec' ? '<i class="dot"></i>' : st ? '<i class="ring"></i>' : '') + `<span class="t">${esc(p.title)}</span>`;
+  });
+  document.querySelectorAll('.chan').forEach(e => e.classList.toggle('sel', +e.dataset.chan === fc));
+}
+function layout() {
+  const rows = Math.floor($('.rows-wrap').clientHeight / ROW_H) || 6;
+  if (fc < rowTop) rowTop = fc; if (fc >= rowTop + rows) rowTop = fc - rows + 1;
+  $('#rows').style.transform = `translateY(${-rowTop * ROW_H}px)`;
+  const p = channels[fc].progs[fp];
+  if (p.start < winStart) winStart = Math.floor(p.start / 30) * 30;
+  if (p.end > winStart + LANE_W / PX) winStart = Math.min(BASE + SPAN - LANE_W / PX, Math.ceil((p.end - LANE_W / PX) / 30) * 30);
+  const tx = -(winStart - BASE) * PX;
+  document.querySelectorAll('.lane-inner').forEach(l => l.style.transform = `translateX(${tx}px)`);
+  $('#ticks').style.transform = `translateX(${tx}px)`;
+  const nx = LEFT + (NOW - winStart) * PX, nl = $('#nowline');
+  nl.style.display = nx >= LEFT && nx < 1920 ? 'block' : 'none'; nl.style.left = nx + 'px'; nl.style.transform = 'none';
+  $('#dayLabel').textContent = winStart >= 24 * 60 ? 'Wednesday' : 'Tonight';
+  paint(); details();
+}
+function details() {
+  const p = channels[fc].progs[fp], ch = channels[fc], st = state[fc + ':' + fp], live = p.start <= NOW && p.end > NOW, past = p.end <= NOW;
+  const rec = st === 'rec' ? 'Stop recording' : st === 'series' ? 'Cancel series' : st ? 'Cancel recording' : live ? 'Record' : 'Record';
+  $('#details').innerHTML = `
+    <div class="preview"><span>${ch.n}  ${esc(ch.name)}</span>${st === 'rec' ? '<span class="rec"><i class="dot"></i>REC</span>' : ''}</div>
+    <div class="info">
+      <div class="when">${fmt(p.start)} – ${fmt(p.end)}  ·  ${dur(p.end - p.start)}${live ? '  ·  ' + (p.end - NOW) + ' min left' : ''}</div>
+      <h1>${esc(p.title)}</h1>
+      <p>${p.ep} · ${esc(p.blurb)}</p>
+      <div class="actions">
+        ${live ? '<button class="btn primary" data-act="watch">Watch</button>' : ''}
+        ${past ? '' : `<button class="btn ${live ? '' : 'primary'}" data-act="record">${rec}</button>`}
+        ${past ? '' : `<span class="hint">S  Record series</span>`}
+      </div>
+    </div>`;
+}
+function toggle(series) {
+  const p = channels[fc].progs[fp], k = fc + ':' + fp, live = p.start <= NOW;
+  if (p.end <= NOW) return toast('Already aired');
+  if (series) { if (state[k] === 'series') delete state[k]; else state[k] = 'series'; toast(state[k] ? 'Series rule added' : 'Series rule removed'); }
+  else if (state[k]) { delete state[k]; toast('Cancelled'); }
+  else {
+    if (live && Object.values(state).includes('rec')) return toast('Stop the current recording first. Your provider allows one stream.');
+    state[k] = live ? 'rec' : 'sched'; toast(live ? 'Recording started' : 'Scheduled for ' + fmt(p.start));
+  }
+  layout();
+}
+
+/* ---------- my dvr ---------- */
+let tab = 'recordings', di = 0;
+function entries() {
+  const rec = [], sched = [];
+  Object.entries(state).forEach(([k, v]) => { const [ci, pi] = k.split(':').map(Number); (v === 'rec' ? rec : sched).push({ p: channels[ci].progs[pi], v, ci, pi, key: k }); });
+  sched.sort((a, b) => a.p.start - b.p.start); return { rec, sched };
+}
+function items() {
+  const { rec, sched } = entries();
+  if (tab === 'recordings') return [...rec.map(r => ({ kind: 'rec', ...r })), ...saved.map(s => ({ kind: 'saved', ...s }))];
+  if (tab === 'scheduled') return sched.filter(s => s.v !== 'series').map(s => ({ kind: 'sched', ...s }));
+  return sched.filter(s => s.v === 'series').map(s => ({ kind: 'series', ...s }));
+}
+function renderDVR() {
+  const { rec, sched } = entries(), used = saved.reduce((a, s) => a + s.size, 0) + .8 * rec.length;
+  $('#tabs').innerHTML = [['recordings', 'Recordings'], ['scheduled', 'Scheduled'], ['series', 'Series']].map(([k, l]) => `<button data-tab="${k}" class="${tab === k ? 'on' : ''}">${l}</button>`).join('');
+  $('#summary').textContent = `${used.toFixed(1)} of 64 GB used  ·  ${rec.length} of 1 streams in use`;
+  const c = sched.find(s => s.v !== 'series' && rec.length && s.p.start < rec[0].p.end);
+  $('#callout').innerHTML = c ? `<div class="note">${esc(c.p.title)} starts at ${fmt(c.p.start)}, before ${esc(rec[0].p.title)} ends. Only one stream is available.</div>` : '';
+  const list = items(); if (di >= list.length) di = Math.max(0, list.length - 1);
+  $('#list').innerHTML = list.length ? list.map(row).join('') : `<div class="empty">${tab === 'scheduled' ? 'Nothing scheduled.' : 'No series rules.'}</div>`;
+  side(list[di]);
+  const f = $('.item.focus'); if (f) f.scrollIntoView({ block: 'nearest' });
+}
+function row(it, i) {
+  const f = i === di ? ' focus' : '';
+  if (it.kind === 'saved') return `<div class="item${f}${it.watched >= 1 ? ' watched' : ''}" data-i="${i}"><span class="mark">${it.watched === 0 ? '<i class="ring"></i>' : ''}</span><div class="ti">${esc(it.title)}<small>${esc(it.ch)}${it.sub ? ' · ' + it.sub : ''}</small></div>${it.watched > 0 && it.watched < 1 ? `<div class="bar"><i style="width:${it.watched * 100}%"></i></div>` : ''}<div class="r">${it.when}  ·  ${dur(it.len)}</div></div>`;
+  if (it.kind === 'rec') return `<div class="item${f}" data-i="${i}"><span class="mark"><i class="dot"></i></span><div class="ti">${esc(it.p.title)}<small>${esc(it.p.ch.name)} · recording</small></div><div class="r">${NOW - it.p.start} min captured  ·  ends ${fmt(it.p.end)}</div></div>`;
+  return `<div class="item${f}" data-i="${i}"><span class="mark"><i class="ring"></i></span><div class="ti">${esc(it.p.title)}<small>${esc(it.p.ch.name)}</small></div><div class="r">${fmt(it.p.start)}  ·  in ${dur(it.p.start - NOW)}</div></div>`;
+}
+function side(it) {
+  if (!it) { $('#side').innerHTML = ''; return; }
+  let t, m, d, b;
+  if (it.kind === 'saved') { t = it.title; m = `${it.ch} · ${it.when} · ${dur(it.len)} · ${it.size.toFixed(1)} GB`; d = it.watched > 0 && it.watched < 1 ? `Stopped at ${Math.round(it.watched * it.len)} min.` : it.watched >= 1 ? 'Watched.' : 'Not watched yet.'; b = `<button class="btn primary" data-dact="play">${it.watched > 0 && it.watched < 1 ? 'Resume' : 'Play'}</button><button class="btn" data-dact="delete">Delete</button>`; }
+  else if (it.kind === 'rec') { t = it.p.title; m = `${it.p.ch.name} · ${fmt(it.p.start)} – ${fmt(it.p.end)}`; d = 'Recording now. Watch from the start, or stop and keep what has been captured.'; b = '<button class="btn primary" data-dact="play">Watch from start</button><button class="btn" data-dact="stop">Stop</button>'; }
+  else { t = it.p.title; m = `${it.p.ch.name} · ${fmt(it.p.start)} – ${fmt(it.p.end)}`; d = it.p.blurb; b = `<button class="btn primary" data-dact="cancel">${it.kind === 'series' ? 'Remove rule' : 'Cancel'}</button><button class="btn" data-dact="guide">Show in guide</button>`; }
+  $('#side').innerHTML = `<div class="preview"><span>${it.kind === 'saved' ? '' : ''}${esc(it.ch || it.p.ch.name)}</span>${it.kind === 'rec' ? '<span class="rec"><i class="dot"></i>REC</span>' : ''}</div><h3>${esc(t)}</h3><div class="meta">${esc(m)}</div><p>${esc(d)}</p><div class="actions" style="margin-top:auto">${b}</div>`;
+}
+function dvrAct(a) {
+  const it = items()[di]; if (!it) return;
+  if (a === 'play') return toast('Opening player');
+  if (a === 'delete') { saved.splice(saved.indexOf(it), 1); toast('Deleted'); }
+  if (a === 'stop' || a === 'cancel') { delete state[it.key]; toast(a === 'stop' ? 'Stopped. Partial recording kept.' : 'Cancelled'); }
+  if (a === 'guide') { go('guide'); fc = it.ci; fp = it.pi; layout(); return; }
+  renderDVR();
+}
+
+/* ---------- input ---------- */
+function go(s) {
+  screen = s;
+  document.querySelectorAll('.screen').forEach(e => e.classList.toggle('on', e.id === 'screen-' + s));
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.screen === s));
+  s === 'dvr' ? renderDVR() : layout();
+}
+function move(dx, dy) {
+  if (dy) {
+    const nc = Math.max(0, Math.min(channels.length - 1, fc + dy)); if (nc === fc) return;
+    const mid = Math.max(winStart, channels[fc].progs[fp].start) + 1, np = channels[nc].progs.findIndex(p => p.start <= mid && p.end > mid);
+    fc = nc; fp = np < 0 ? 0 : np;
+  } else { const np = fp + dx; if (np < 0 || np >= channels[fc].progs.length) return; fp = np; }
+  layout();
+}
+document.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if (k === 'd') return go('dvr'); if (k === 'g') return go('guide');
+  if (screen === 'guide') {
+    if (k === 'arrowright') move(1, 0); else if (k === 'arrowleft') move(-1, 0); else if (k === 'arrowdown') move(0, 1); else if (k === 'arrowup') move(0, -1);
+    else if (k === 'r') toggle(false); else if (k === 's') toggle(true);
+    else if (k === 'enter') toast('Tuning to ' + channels[fc].name);
+  } else {
+    const T = ['recordings', 'scheduled', 'series'];
+    if (k === 'arrowdown') { di = Math.min(items().length - 1, di + 1); renderDVR(); }
+    else if (k === 'arrowup') { di = Math.max(0, di - 1); renderDVR(); }
+    else if (k === 'arrowright') { tab = T[Math.min(2, T.indexOf(tab) + 1)]; di = 0; renderDVR(); }
+    else if (k === 'arrowleft') { tab = T[Math.max(0, T.indexOf(tab) - 1)]; di = 0; renderDVR(); }
+    else if (k === 'enter') { const it = items()[di]; if (it) dvrAct(it.kind === 'saved' || it.kind === 'rec' ? 'play' : 'guide'); }
+    else if (k === 'x') { const it = items()[di]; if (it) dvrAct(it.kind === 'saved' ? 'delete' : it.kind === 'rec' ? 'stop' : 'cancel'); }
+  }
+  if (k.startsWith('arrow')) e.preventDefault();
+});
+document.addEventListener('click', e => {
+  const n = e.target.closest('#nav button'); if (n) return go(n.dataset.screen);
+  const p = e.target.closest('.prog'); if (p) { fc = +p.dataset.ci; fp = +p.dataset.pi; return layout(); }
+  const a = e.target.closest('[data-act]'); if (a) { const v = a.dataset.act; return v === 'record' ? toggle(false) : toast('Tuning to ' + channels[fc].name); }
+  const t = e.target.closest('[data-tab]'); if (t) { tab = t.dataset.tab; di = 0; return renderDVR(); }
+  const it = e.target.closest('.item'); if (it) { di = +it.dataset.i; return renderDVR(); }
+  const d = e.target.closest('[data-dact]'); if (d) dvrAct(d.dataset.dact);
+});
+function fit() { const s = Math.min(innerWidth / 1920, innerHeight / 1080); $('#stage').style.transform = `translate(${(innerWidth - 1920 * s) / 2}px,${(innerHeight - 1080 * s) / 2}px) scale(${s})`; }
+addEventListener('resize', fit); fit();
+buildGuide(); layout(); if (location.hash === '#dvr') go('dvr');
+</script>
+</body>
+</html>
