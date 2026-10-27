@@ -1,0 +1,1576 @@
+{
+  "sources": [
+    "https://github.com/iptv-org/epg/tree/master/sites/i.mjh.nz",
+    "https://github.com/iptv-org/epg/tree/master/sites/tvpassport.com"
+  ],
+  "updatedAt": "2026-10-27",
+  "stations": {
+    "24hourfreemovies.us": [
+      "5e20b730f2f8d5003d739db7-5fd115bab7ef8d002dcf181d"
+    ],
+    "48hours.us@us": [
+      "e1df79771ae4850c0e48ecc6284065d0"
+    ],
+    "50centaction.us": [
+      "5e20b730f2f8d5003d739db7-6827b9579beea89c38b6df55",
+      "e2422e42301a3176997019f882471d77"
+    ],
+    "70scinema.us": [
+      "5f4d878d3d19b30007d2e782"
+    ],
+    "80srewind.us": [
+      "5ca525b650be2571e3943c63"
+    ],
+    "90sthrowback.us": [
+      "5f4d86f519358a00072b978e"
+    ],
+    "acapulcoshore.us@us": [
+      "64dab1f835425100080e1e7b"
+    ],
+    "accdigitalnetwork.us": [
+      "5e20b730f2f8d5003d739db7-5f8ee3727c75fa002d9e47c1",
+      "409951b52fa75a1684ba8efe5b724e91"
+    ],
+    "accuweathernow.us": [
+      "5e20b730f2f8d5003d739db7-6151d74593dbf246f0843f01",
+      "f95c40a17cfe5b9fb1970192e378fb0c"
+    ],
+    "afrolandtv.us": [
+      "5e20b730f2f8d5003d739db7-60e737a4ebef9d002c4d0a0c"
+    ],
+    "allblkgems.us": [
+      "5e20b730f2f8d5003d739db7-628bb0eafcb403aa62d2317d",
+      "6793ea255225b515b4ba91a7",
+      "147998bc965e584d9c6cc360b2c7ae4f"
+    ],
+    "allrealitybywetv.us": [
+      "5e20b730f2f8d5003d739db7-5fc705ff2f220e002d5e6bec",
+      "5e82530945600e0007ca076c",
+      "ebedf88c76db5154b9a747a54d393758"
+    ],
+    "allweddingswetv.us": [
+      "5e20b730f2f8d5003d739db7-60de0520281b17002cd1d4c4",
+      "7c7fd49414d5529788c10291cf90214a"
+    ],
+    "alwaysfunnyvideos.us": [
+      "86c08261fc015a58866210bea63eb8f4",
+      "USBA1600001XM"
+    ],
+    "amcenespanol.us": [
+      "5e20b730f2f8d5003d739db7-62d1efa6c33948ea4ceedbcf",
+      "6727481eeb0951dfa692259e25055293"
+    ],
+    "americastestkitchen.us": [
+      "5e84f54a82f05300080e6746",
+      "a96f9c338b3e5ab29ec3b436c01c84da",
+      "USBA3800002KI"
+    ],
+    "americasvoice.us": [
+      "d748045d77105901b8e25fcc34aa9e2f"
+    ],
+    "americasvoicenews.us": [
+      "5e1f7da4bc7d740009831259"
+    ],
+    "angermanagementchannel.us": [
+      "5e20b730f2f8d5003d739db7-6303ca568a01b5d4dae57d0e",
+      "7fbae583c30451e989ea55b4c605e8a9"
+    ],
+    "animationplus.us": [
+      "5e20b730f2f8d5003d739db7-674f6a6cf44561420465f9f3",
+      "2b54188672a6acb8d3e4c6b9e71a3a7c"
+    ],
+    "animexhidive.us": [
+      "5e20b730f2f8d5003d739db7-63dea56a2a2abb171ff6dadf",
+      "6793eaa4bc03978b9bc63db1",
+      "0b92deed3dd556cf91c911a36e948fde"
+    ],
+    "antiquesroadshowuk.us": [
+      "5e20b730f2f8d5003d739db7-630902bf0417b7074a4ad95c",
+      "5ce44810b421747ae467b7cd",
+      "b14c3ee8314b54dd916011298b4958b0"
+    ],
+    "antiquesroadtrip.us": [
+      "5e20b730f2f8d5003d739db7-6348adc71159f6a5ce819b85",
+      "615b8ec39e878900073f419a"
+    ],
+    "arewethereyet.us": [
+      "5e20b730f2f8d5003d739db7-612919784f53e1002c9aa219",
+      "1c235612cec3540f85bb5e2bf7982047"
+    ],
+    "asiancrush.us": [
+      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc767"
+    ],
+    "athomewithfamilyhandyman.us": [
+      "5e20b730f2f8d5003d739db7-632270e3e67cf9cd9011fce1",
+      "58673c6e05455569978456bdc210f9d7"
+    ],
+    "babysharktv.us": [
+      "5e20b730f2f8d5003d739db7-60d4eddeb2fdec002c141137",
+      "60faffc3fbbc120007fc4376",
+      "40d73ba5be775428a377908b02033b4c"
+    ],
+    "backstage.us": [
+      "5e20b730f2f8d5003d739db7-608aec5fa09205002da4f28f",
+      "USBC10000129R"
+    ],
+    "barrescue.us": [
+      "60a3d889a5b3690008dc7fe8"
+    ],
+    "baywatch.us@us": [
+      "5e20b730f2f8d5003d739db7-63e63f20abacad42ed3d1acf",
+      "ab47c5037be851e6a929a4d09daafeac",
+      "USBA2000001BR"
+    ],
+    "bbcearth.uk@us": [
+      "5e20b730f2f8d5003d739db7-6414a73254c537d12d8073d7",
+      "656535fc2c46f30008870fae",
+      "41a03e0853d45c06bdfdedc5d26b78d8"
+    ],
+    "bbcfood.us": [
+      "5e20b730f2f8d5003d739db7-630905af0417b7074a4ad95e",
+      "b5d43356a7fc515f996493fcd52a84c6",
+      "USBC6000108Z"
+    ],
+    "bbchomegarden.us": [
+      "5e20b730f2f8d5003d739db7-6308eda9ac9983739c8a29bb",
+      "b04b170e5f085586985358512adbdb9f",
+      "USBC600017FG"
+    ],
+    "beinsportsxtra.us": [
+      "5e20b730f2f8d5003d739db7-60a53634126de9002e694bc4",
+      "bc932f13c31e542db6e3e6247e7131bc",
+      "USAJ4300001Q7"
+    ],
+    "beinsportsxtraenespanol.us": [
+      "5e20b730f2f8d5003d739db7-64a8903d273b89c4e7396553",
+      "909b135136a1567eaf3f65fb64988323"
+    ],
+    "bellatormma.us": [
+      "5ebc8688f3697d00072f7cf8",
+      "963092a6c9489bdb5ec99e3c3ede8ad1"
+    ],
+    "bestofdrphil.us": [
+      "60f760bbdf090700075d7bfe",
+      "6d4ae9d9d0df5122a0811cff961b24b2"
+    ],
+    "betplutotv.us@us": [
+      "5ca670f6593a5d78f0e85aed",
+      "515d785b0a5ea55f15f7e4c773990009"
+    ],
+    "beverlyhillbillies.us@us": [
+      "5f7796e470510900070d4e3d"
+    ],
+    "billiardtv.us": [
+      "5e20b730f2f8d5003d739db7-6334a8e48a7b2a349d903b8c",
+      "0b4814b9a5e53029e2b9aba64ddc1df0"
+    ],
+    "blackinkcrew.us": [
+      "5d51e2bceca5b4b2c0e06c50"
+    ],
+    "blazelive.us": [
+      "5e46fba0c43b0d00096e5ac1"
+    ],
+    "bloombergoriginals.us": [
+      "5e20b730f2f8d5003d739db7-68fafe0dae4af1c7478fbeec"
+    ],
+    "bloombergtv.us@us": [
+      "5e20b730f2f8d5003d739db7-68fafc6e558214386ab7ca3a"
+    ],
+    "bluebloods.us": [
+      "61b3b8c645b45d0007a9bb8d"
+    ],
+    "bonappetit.us": [
+      "bab0626ab5655e569790befb4522806a"
+    ],
+    "bouncexl.us": [
+      "5e20b730f2f8d5003d739db7-623d9b0370560b72147a994a",
+      "6176fd25e83a5f0007a464c9",
+      "7f28cd98ab575aa784d0f80698279e70"
+    ],
+    "brattv.us": [
+      "5e20b730f2f8d5003d739db7-63d6f6c5a9e88ee909e7ee1f",
+      "USBC240001823"
+    ],
+    "britboxmysteries.us": [
+      "5e20b730f2f8d5003d739db7-639a0b83812b6c1429f7acd1",
+      "60f5d389985a0c0007357304",
+      "0141916713c53d074650f14e2c9ff61e"
+    ],
+    "buzzr.us": [
+      "5e20b730f2f8d5003d739db7-66a2d71b0b91165254efdb40",
+      "5812bfbe4ced4f7b601b12e6",
+      "562baf35c5da56cc91cdea41537b43f9"
+    ],
+    "campspoopy.us": [
+      "5e20b730f2f8d5003d739db7-6164a963766ab4f9f57e81b1"
+    ],
+    "cbsnews247.us": [
+      "5e20b730f2f8d5003d739db7-6571f43a1d2aae780d597196",
+      "5a6b92f6e22a617379789618",
+      "70881c73b6275623ace6c5c3603a339c"
+    ],
+    "cbsnewsbaltimore.us": [
+      "60f75919718aed0007250d7a",
+      "a3b212829dd85675bf997edc25a40a73"
+    ],
+    "cbsnewsbayarea.us": [
+      "5eb1afb21486df0007abc57c",
+      "8a5a455185bb504694df6689035f6f14"
+    ],
+    "cbsnewsboston.us": [
+      "5eb1af2ad345340008fccd1e",
+      "73a2f0c10aa1523dabb9d1e470425566"
+    ],
+    "cbsnewschicago.us": [
+      "5eb1aeb2fd4b8a00076c2047",
+      "8fec7a48bdc959d7b1a91d27e3ffbb0b"
+    ],
+    "cbsnewscolorado.us": [
+      "5eb1b12146cba40007aa7e5d",
+      "50e00e5cbec45dbfa5fcbd1f7122d19b"
+    ],
+    "cbsnewsdetroit.us": [
+      "634f2610d5023700078f7dee",
+      "4dae849c49ba5724bc485566e89fd46a"
+    ],
+    "cbsnewslosangeles.us": [
+      "e3fa9982ac3c555298eb72fcb3ffd8a4"
+    ],
+    "cbsnewsmiami.us": [
+      "60fb299b79498900070b29e0",
+      "b7fc60ea3d8d539d8ac0998e9c76b97c"
+    ],
+    "cbsnewsminnesota.us": [
+      "5eb1b0bf2240d8000732a09c",
+      "fa83022cd5f654938a558ec37b93d752"
+    ],
+    "cbsnewsnewyork.us": [
+      "41d5a59655975c379aff0ea4c729313e"
+    ],
+    "cbsnewsphilly.us": [
+      "5eb1b05ea168cc000767ba67",
+      "78a1b45133495e54a0a1377b8e828789"
+    ],
+    "cbsnewspittsburgh.us": [
+      "5eb1b17aa5277e00083f6521",
+      "15e9b249ce4d508b88972380003f9032"
+    ],
+    "cbsnewssacramento.us": [
+      "60cb6df2b2ad610008cd5bea",
+      "c3174023eb705f3d870d4ad2411de5f3"
+    ],
+    "cbssportsgolazonetwork.us": [
+      "5e20b730f2f8d5003d739db7-6571186d9a46917c0a8f2ddd",
+      "63a0e33a45264d000850ed7e",
+      "b18a1af4fa8b5c58acd43dbc2cf5cc9f"
+    ],
+    "cbssportshq.us": [
+      "5e20b730f2f8d5003d739db7-657107dc56226238740fcc2d",
+      "5e9f2c05172a0f0007db4786",
+      "1337f5ac77595895bbaf16d1dd75f377"
+    ],
+    "celebritynamegame.us": [
+      "5e20b730f2f8d5003d739db7-640205c40e1daf16b299567e",
+      "23427355f7f35851b75a210d7cca22a4"
+    ],
+    "cheddarnews.us": [
+      "5e20b730f2f8d5003d739db7-5f6b8e5900b0950040d0f2af"
+    ],
+    "choppertown.us": [
+      "5e20b730f2f8d5003d739db7-5ef11487d33ab9004048a1d3"
+    ],
+    "cineadrenalina.us": [
+      "5d8d164d92e97a5e107638d2"
+    ],
+    "cineamor.us": [
+      "5f5136317aedfb0007016f93"
+    ],
+    "cinepremiere.us": [
+      "5cf968040ab7d8f181e6a68b"
+    ],
+    "cineromantico.us": [
+      "5e20b730f2f8d5003d739db7-67db0a3892cb453db28ab020",
+      "79eb3a43680e5a9f9689fee074502a3b",
+      "USBA3800001E0"
+    ],
+    "cineterror.us@us": [
+      "5d8d180092e97a5e107638d3"
+    ],
+    "cinevault80s.us": [
+      "c490011275a8562b87366dbf80b62af2",
+      "USAJ30000148W"
+    ],
+    "cinevaultwesterns.us": [
+      "7ef5e16ef5d95718b8e14b7bd657fa81",
+      "USAK3508709A"
+    ],
+    "circle.us": [
+      "f208a84047865b16820dd7110ec2e17f",
+      "USBA300035FV"
+    ],
+    "clarity4k.us": [
+      "USBA3800005NI"
+    ],
+    "classica.us": [
+      "5f779951372da90007fd45e8"
+    ],
+    "classicmovieschannel.us": [
+      "561c5b0dada51f8004c4d855"
+    ],
+    "classictvcomedy.us": [
+      "5f15e32b297f96000768f928"
+    ],
+    "classictvdrama.us": [
+      "5f15e3cccf49290007053c67"
+    ],
+    "classictvfamilies.us@us": [
+      "61325d18f5166c00081b84e0"
+    ],
+    "cmtequalplay.us": [
+      "5f68f53eb1e5800007390bf8"
+    ],
+    "cnnoriginals.us": [
+      "5e20b730f2f8d5003d739db7-66ad6025cb5d3b7fb5011c2d",
+      "d1a9aad44bf03f8bb866517bb4e1383d"
+    ],
+    "coldcasefiles.us": [
+      "5c37d6712de254456f7ec340",
+      "a3b243e7a1ea5ac99bb3e5560721d1f6"
+    ],
+    "comedycentralenespanol.us": [
+      "5cf96dad1652631e36d43320"
+    ],
+    "comedycentralplutotv.us@us": [
+      "5ca671f215a62078d2ec0abf",
+      "3d3f3113ff49ca22c3ad51ee00fe7e9d"
+    ],
+    "comedydynamics.us": [
+      "5e20b730f2f8d5003d739db7-5efe1de5e0b3f5003f5d9f76",
+      "bc68164868385873a0f2b1c649fa2495"
+    ],
+    "cops.us": [
+      "5e1f7e089f23700009d66303",
+      "1a50b7ba48389669b3e0bc6750fe6b31"
+    ],
+    "courttv.us": [
+      "5e20b730f2f8d5003d739db7-6245d867ddf1ba983d5b8bf8",
+      "5dae0b4841a7d0000938ddbd",
+      "bf4508c9597e5f618e508ae00b01f66f",
+      "USBA34000049Z"
+    ],
+    "crime360.us": [
+      "5e20b730f2f8d5003d739db7-5f74cf7effbe690040689f41",
+      "6000a5a9e767980007b497ca",
+      "0455f88e83625b3c8c302db0c30fe01e",
+      "USAK3508703A"
+    ],
+    "crimenesimperfectos.us": [
+      "5e94cd036cc69d0007e8a1ba"
+    ],
+    "crunchyroll.us": [
+      "307b3b9ea321539b9688148fc97a8bfd"
+    ],
+    "csi.us": [
+      "5efbd29e4aa26700076c0d06"
+    ],
+    "csienespanol.us": [
+      "604928d54a4f730007ff76bc"
+    ],
+    "curiositynow.de@en": [
+      "5e20b730f2f8d5003d739db7-64831c8be3541c909e96d240"
+    ],
+    "dangertv.us": [
+      "447d63b6da208bb796b69f0383c474a1",
+      "USAJ3504708A"
+    ],
+    "darkmattertv.us": [
+      "5e20b730f2f8d5003d739db7-5eea605674085f0040ddc7a6"
+    ],
+    "dateline247.us": [
+      "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd19",
+      "637413d8531e0c0007442d6d",
+      "18c5f5feae8855baba4d1ccfd75be3db"
+    ],
+    "dealornodeal.us": [
+      "5e20b730f2f8d5003d739db7-6516023b1fc969615e69d172",
+      "5e9debf8c881310007d7bde1",
+      "1e234e88e79d5de99b222cbe4361767a",
+      "USBB4400017N3"
+    ],
+    "degrassi.us@us": [
+      "5e20b730f2f8d5003d739db7-636d5aa3dc2c550b145ed422",
+      "5c6eeb85c05dfc257e5a50c4",
+      "d89b6124edce5dc0a4dfe42a8026353a"
+    ],
+    "designatedsurvivor.us": [
+      "5e20b730f2f8d5003d739db7-66aa9b7fd8fc59729226073e",
+      "8b6e781730caa4afe9bd288a8b880c40"
+    ],
+    "doctorwhoclassic.us@us": [
+      "5ce4475cd43850831ca91ce7"
+    ],
+    "documentaryplus.us@us": [
+      "5e20b730f2f8d5003d739db7-62f42e6cad0081c6ef405723"
+    ],
+    "dogthebountyhunter.us@us": [
+      "5e20b730f2f8d5003d739db7-66428faa5116d565e63ae32a",
+      "5bee1a7359ee03633e780238",
+      "56d6a285b9095e39a711a69a3058410c"
+    ],
+    "donttellthebride.uk": [
+      "5e20b730f2f8d5003d739db7-635847d0d3a668f1cafc1f9d"
+    ],
+    "dovechannel.us": [
+      "d93912b4b21158fd95af2ceb8979c586"
+    ],
+    "draftkingsnetwork.us": [
+      "5976983fa00953dab911a0ebea932943"
+    ],
+    "drybarcomedyplus.us": [
+      "USAJ30000039U"
+    ],
+    "ebonytvbylionsgate.us": [
+      "5e20b730f2f8d5003d739db7-6533de63bd43e1c8b1865152"
+    ],
+    "ekeepingup.us": [
+      "5e20b730f2f8d5003d739db7-645e328e3ea1d2d705ef8ab2",
+      "4f05781ce64f5b25a42a10c70853312a"
+    ],
+    "electricnow.us": [
+      "5e20b730f2f8d5003d739db7-5f170d61b898490041b49360",
+      "15cc44e50d8453e18f21ea37713319c5",
+      "USBC6000225M"
+    ],
+    "entertainmenttonight.us": [
+      "5e20b730f2f8d5003d739db7-6578bb741a12778a8550d158",
+      "5dc0c78281eddb0009a02d5e",
+      "392a421311b35de594961680be62564c"
+    ],
+    "estrellagames.us": [
+      "5e20b730f2f8d5003d739db7-64fb9149bb3e0baa5dcc0944",
+      "417de64d5d2255119088209d40ebfee6"
+    ],
+    "estrellanews.us": [
+      "5e20b730f2f8d5003d739db7-60089d97f682a3002c34829b",
+      "60492e6d7f3f560007ab0f62",
+      "0af429c36c6b517e8df2025e809b3964",
+      "USAJ2200020N4"
+    ],
+    "estrellatv.us": [
+      "5e20b730f2f8d5003d739db7-60089d98f682a3002c34829f",
+      "5cf0622da00ca1e2f6fac712",
+      "91dff2b8a62b5fe1bdf64de721032cba"
+    ],
+    "f1channel.ie@us": [
+      "5e20b730f2f8d5003d739db7-6896595a58a6658b3d6a501a",
+      "d2564cef9feeec6c58a076d6f6a90491"
+    ],
+    "failarmy.us@us": [
+      "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc791",
+      "554158e864526b29254ff105",
+      "aeef4f63419a5d5fabcf0055585f9ccc",
+      "USAJ3504702A"
+    ],
+    "familyties.us": [
+      "5f77939a630f530007dde654",
+      "a88da21b1c6ec86578d222626cc5cb05",
+      "USBB3500003D6"
+    ],
+    "farscape.us": [
+      "5e20b730f2f8d5003d739db7-635195e9ccee3e1547a8831a"
+    ],
+    "fasttv.us": [
+      "6400f731d200410008f9b339"
+    ],
+    "fearfactor.us@us": [
+      "8ab612dd8b845046b641f38c1412303d",
+      "USBB2300002Q6"
+    ],
+    "fifaplus.uk@unitedstates": [
+      "5e20b730f2f8d5003d739db7-66628d4a8dfc36b8c8a399c4",
+      "b8c4d1dc632d5402afce99ee70859b5e"
+    ],
+    "filmriseforensicfiles.us": [
+      "62945e18ab825bfd8b4995d9bd14917b"
+    ],
+    "flicksoffury.us": [
+      "58e55b14ad8e9c364d55f717"
+    ],
+    "forensicfiles.us": [
+      "5e20b730f2f8d5003d739db7-6449369f243fbe342a9c0b4d",
+      "5bb1af6a268cae539bcedb0a",
+      "USBB3200017MY"
+    ],
+    "foreverkids.us": [
+      "56171fafada51f8004c4b40f"
+    ],
+    "foxsoul.us": [
+      "bdf6b34e48585f588789f7e7857a84a6",
+      "USBA300032J7"
+    ],
+    "foxweather.us": [
+      "5e20b730f2f8d5003d739db7-6351b29cb940534786b2ec17",
+      "640a68880e884c0009979cc2",
+      "0838d5ccb1d5564d98fb804ab314c85e"
+    ],
+    "frightflix.us": [
+      "5e20b730f2f8d5003d739db7-621674502c2627c068e73ada"
+    ],
+    "ftfsports.us": [
+      "5e20b730f2f8d5003d739db7-605a309dc5acdc002c7a20aa",
+      "e0970e3e4ea951689b1a15f64b091cb1"
+    ],
+    "fubosportsnetwork.us": [
+      "5e20b730f2f8d5003d739db7-5fc705f68aba71002d8b7b37",
+      "b4273871759a5631bd536d2214f175e5",
+      "USAJ2200023Z0"
+    ],
+    "funnyaf.us": [
+      "580e87ff497c73ba2f321dd3"
+    ],
+    "gameshowcentral.us": [
+      "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc782",
+      "5e54187aae660e00093561d6",
+      "b89f979c548a5576a27bbe515c906814",
+      "USAJ3400012FA"
+    ],
+    "garfieldandfriends.us@us": [
+      "60faf9ddfcc1f200070a5932"
+    ],
+    "gordonramsayshellskitchen.us": [
+      "5b4e99f4423e067bd6df6903"
+    ],
+    "gotraveler.us": [
+      "5e20b730f2f8d5003d739db7-60a53634126de9002e694bc2"
+    ],
+    "gravitasmovies.us": [
+      "5e20b730f2f8d5003d739db7-5efe1de7e0b3f5003f5d9f8e",
+      "973e467d44ac5410ba217c39c9c06958"
+    ],
+    "gritxtra.us": [
+      "5e20b730f2f8d5003d739db7-62b45f15b4508e0eedacdf25",
+      "923cd8e7aa1e5a5898aad41fdf6a0f0f"
+    ],
+    "grjngowesternmovies.de": [
+      "5e20b730f2f8d5003d739db7-63489a771159f6a5ce819b7b"
+    ],
+    "gunsmoke.us": [
+      "60f75771dfc72a00071fd0e0"
+    ],
+    "hallmarkmoviesmore.us": [
+      "5e20b730f2f8d5003d739db7-6244cf3c742b0d58cd4f2514",
+      "628e685ba3811100070551a8"
+    ],
+    "happydays.us": [
+      "5f7794162a4559000781fc12"
+    ],
+    "haunttv.ca": [
+      "285f3ba210e8561fa5261af0871ace90"
+    ],
+    "heartland.us@web": [
+      "5e20b730f2f8d5003d739db7-6449369eb3ff17382cae5806",
+      "61f07513227feb00073ee6bc",
+      "USBB2900003O3"
+    ],
+    "historyhit.uk": [
+      "5e20b730f2f8d5003d739db7-5f74cf83ffbe690040689f50"
+    ],
+    "hiyah.us": [
+      "5e20b730f2f8d5003d739db7-5f64c4ef35f612003f6ffe30",
+      "2deae9b4e83550f88f6776c45df08315"
+    ],
+    "hollywire.us": [
+      "USBC2400015DO"
+    ],
+    "homeful.ca@us": [
+      "9c7a717f25a15b9997c6e3fd5f43a1a6"
+    ],
+    "homemadenation.us": [
+      "5e20b730f2f8d5003d739db7-5f74cf82ffbe690040689f47",
+      "e363a99773db501aa05514f7e52faf2c"
+    ],
+    "hsn.us@east": [
+      "5f8a02476b72230007e62b7d",
+      "0057bb20ce6c5717a5a025f2a73b682a"
+    ],
+    "humormill.us": [
+      "5e20b730f2f8d5003d739db7-5fd115b7b7ef8d002dcf1814"
+    ],
+    "hungry.us": [
+      "USAJ2200009C2"
+    ],
+    "impossiblequizshow.us": [
+      "5e20b730f2f8d5003d739db7-6308fa9c0417b7074a4ad959"
+    ],
+    "inkmaster.us": [
+      "60807fd5db701400078219c2",
+      "65ae845b7372c0fb85142f6d88a56de7"
+    ],
+    "iontv.us@east": [
+      "5e20b730f2f8d5003d739db7-624c37af6281708eabbbe26b"
+    ],
+    "ironchef.us@us": [
+      "5e20b730f2f8d5003d739db7-6707cfa5da81682f2d1e6837"
+    ],
+    "jerseyshore.us": [
+      "609bfa51fbecc1000733152e",
+      "cfddaaa5800d4786e7bc1d51093bf098"
+    ],
+    "jewelrytv.us": [
+      "fb0f3c89533dc272a21e0488e2ca3fde"
+    ],
+    "johnnycarsontv.us": [
+      "5e20b730f2f8d5003d739db7-60d4edd6b2fdec002c141123",
+      "92b50144a69f5862a6d398c478fa6aa0"
+    ],
+    "journy.us": [
+      "5e20b730f2f8d5003d739db7-5f5132df62fe160040f26bc2",
+      "USBB1000003HL"
+    ],
+    "judgenosey.us@us": [
+      "5e9decb953e157000752321c",
+      "75ff2c061db65f4e812cfbe6b1480752"
+    ],
+    "justforlaughsgags.us": [
+      "5e20b730f2f8d5003d739db7-64704954e536e0faaf10be9f",
+      "4f628a666da552d7a9ea9157e079d56b"
+    ],
+    "kartoonchannel.us": [
+      "60fb040d4795a6000762fe8f"
+    ],
+    "kevinhartslolnetwork.us": [
+      "5e20b730f2f8d5003d739db7-628ea9fcffe4cec6361f5310",
+      "52c137ae3cdc50768ad7ea3cdaf0f2f4"
+    ],
+    "kidsflix.us": [
+      "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc797"
+    ],
+    "latv.us": [
+      "5e20b730f2f8d5003d739db7-6685a97b59703916799193a5"
+    ],
+    "lawcrime.us": [
+      "5e20b730f2f8d5003d739db7-5eea605674085f0040ddc79d",
+      "8ba514251e1a58b7b53368177baa1041",
+      "USAK3508710A"
+    ],
+    "legokidstv.us": [
+      "60fb01a24795a6000762fe83"
+    ],
+    "littlestarsuniverse.us": [
+      "51c75f7bb6f26ba1cd00002f"
+    ],
+    "livenowfromfox.us": [
+      "5e20b730f2f8d5003d739db7-6377ea0e13bb6b1757e14695",
+      "63d025db4e83e700086eaa96",
+      "f9c0d48b540a55dcb98b04d2cc8abf25",
+      "USBA300024TN"
+    ],
+    "localish.us": [
+      "8b77c262c90652658b21fdb9ee292ab7"
+    ],
+    "logoplutotv.us": [
+      "5ce5a8954311f992edbe1da2"
+    ],
+    "lonestar.us": [
+      "5e20b730f2f8d5003d739db7-6196c9241d310bf925e02616"
+    ],
+    "lovehiphop.us": [
+      "5d51ddf0369acdb278dfb05e",
+      "b8671587aa35a03aaab52b1891f15a87",
+      "USBA300020WC"
+    ],
+    "lovenatureenespanol.us": [
+      "03a419fc4dff59b39b176d9f76b09e38"
+    ],
+    "lovepets.ca@us": [
+      "5e20b730f2f8d5003d739db7-63fe7d7eb6312779f56504d3"
+    ],
+    "luckydog.us": [
+      "USBA3000044BJ"
+    ],
+    "madeinhollywood.us": [
+      "5e20b730f2f8d5003d739db7-60db63d29ec966002c9ea6f0"
+    ],
+    "magellantvnow.us": [
+      "USAJ340000677"
+    ],
+    "matlock.us": [
+      "60f754f98185580007eb0754"
+    ],
+    "maverickblackcinema.us": [
+      "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c4430",
+      "834e2a09799752b3be7ecaab726b7242",
+      "USAJ3000007MT"
+    ],
+    "midnightpulp.us": [
+      "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c4427"
+    ],
+    "midsomermurders.us": [
+      "5e20b730f2f8d5003d739db7-63d6fc71a9e88ee909e7ee23",
+      "5cbf6a868a1bce4a3d52a5e9",
+      "d1e4e369eda359c897e1fdfd8286b19b",
+      "USBC24000134A"
+    ],
+    "missionimpossible.us": [
+      "5f77977bd924d80007eee60c"
+    ],
+    "misteriossinresolver.us": [
+      "5e20b730f2f8d5003d739db7-64d79408e5f67b0fab47ff24",
+      "5f4d882d5233170007ee880e",
+      "f2bbfc9566f9519aad982aea41b95f83"
+    ],
+    "mlb.us": [
+      "5e66968a70f34c0007d050be"
+    ],
+    "moretvdrama.us": [
+      "613260e4bdb71c00070d63fa"
+    ],
+    "moretvsitcoms.us": [
+      "6132619f9ddaa50007e7dd86"
+    ],
+    "moviesphere.us@us": [
+      "5e20b730f2f8d5003d739db7-5fb84bc1b7ad2d002dcb735f",
+      "e1192d17771c5a059930192d439957ee"
+    ],
+    "mrbeananimated.uk@english": [
+      "5e20b730f2f8d5003d739db7-66a2e7fe94b6a49cb5054d7b"
+    ],
+    "mst3k.us@us": [
+      "5e20b730f2f8d5003d739db7-60d4eddbb2fdec002c141133",
+      "545943f1c9f133a519bbac92",
+      "1f62c81a73575fdca9fdc8a36c55d8b9"
+    ],
+    "mtvbiggestpop.us@us": [
+      "5d14fd1a252d35decbc4080c"
+    ],
+    "mtvenespanol.us": [
+      "5cf96d351652631e36d4331f",
+      "e5475fb7b613a20f044be16a23fbcdaf"
+    ],
+    "mtvplutotv.us@us": [
+      "5ca672f515a62078d2ec0ad2",
+      "7a406f20f6ad468f10f6b4752b30df56",
+      "USBA3000093U"
+    ],
+    "mtvspankinnew.us@us": [
+      "5d14fdb8ca91eedee1633117"
+    ],
+    "mytimemovienetworkeast.us": [
+      "5e20b730f2f8d5003d739db7-644875d7af92c31f4a190bc2",
+      "be3c81de355c56f89cbf99301735cfd2"
+    ],
+    "naruto.us@us": [
+      "5da0c85bd2c9c10009370984"
+    ],
+    "nashbridges.us": [
+      "5e20b730f2f8d5003d739db7-6668b69889c051b3733f9b60",
+      "cb515abf2b733ce38c17b4a1a384d069"
+    ],
+    "nbccomedyvault.us": [
+      "4b631847108256fd8c77f6ba3bf3af03"
+    ],
+    "nbclx.us": [
+      "USBB40000028E"
+    ],
+    "nbcnewsnow.us": [
+      "5e20b730f2f8d5003d739db7-5fc70600dd53a6002d8f93ca",
+      "5df97894467dfa00091c873c",
+      "b5fe4277ff365ccda0a7d43028d53d90",
+      "USBB2200014DK"
+    ],
+    "nbcsportsnow.us": [
+      "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd43",
+      "a90a91570ce0536cbb22b591ad7e0da2"
+    ],
+    "newkmovies.us": [
+      "5e20b730f2f8d5003d739db7-60d4eddab2fdec002c141131",
+      "USAJ30000122O"
+    ],
+    "newkpop.us": [
+      "5e20b730f2f8d5003d739db7-60d4edd7b2fdec002c14112d"
+    ],
+    "news12newyork.us": [
+      "5e20b730f2f8d5003d739db7-5fc6f3a62b6f7b002e77ffaa",
+      "5fff49cfb5cd4f0007c2b0dc"
+    ],
+    "newsmax2.us": [
+      "5e20b730f2f8d5003d739db7-5fb81660b7ad2d002dcb7335",
+      "55b179af994403942f3061d6",
+      "28844a800a4e54909eec9695aa3762b2"
+    ],
+    "newsmaxtv.us": [
+      "USBA300028QU"
+    ],
+    "nflchannel.us": [
+      "5e20b730f2f8d5003d739db7-61e805952502a7a6fa84d70f",
+      "5ced7d5df64be98e07ed47b6",
+      "998e7fd5826653fc84880c91e2620a33"
+    ],
+    "nhratv.us": [
+      "5e20b730f2f8d5003d739db7-60aeb5cd87f9b1002ce12323",
+      "82bd10ceb52152a7adb6bdc5d776e794"
+    ],
+    "nickelodeonplutotv.us": [
+      "5ca673e0d0bd6c2689c94ce3"
+    ],
+    "nickjrplutotv.us@us": [
+      "5ca6748a37b88b269472dad9"
+    ],
+    "ninjakidztv.us": [
+      "5e20b730f2f8d5003d739db7-627ec46a92d8e6a705784bd1",
+      "9dd23031622757d1944e4782b2a192ef"
+    ],
+    "nosey.us@us": [
+      "5e20b730f2f8d5003d739db7-5f0ff262d71dcb00449ec015",
+      "5aec96ec5126c2157123c657",
+      "d216c2141a835cfcbe34a7d1b7d2e078",
+      "USAJ34000022E"
+    ],
+    "novelisima.us": [
+      "5e20b730f2f8d5003d739db7-64d4e82ac5d4668c9cb7b5df",
+      "5d1c16bba82b53e69bf979c2fdca4ca8"
+    ],
+    "oanplus.us": [
+      "5e7cf6c7b156d500078c5f44",
+      "e29e205ea1fb529f996ad862a2d6724e"
+    ],
+    "outersphere.us": [
+      "5e20b730f2f8d5003d739db7-641496bf238e21f260e7844a",
+      "e6d36fc89adf1de07aa090ec5669e0ca"
+    ],
+    "outsidetv.us": [
+      "5e20b730f2f8d5003d739db7-629e522ed1bc5f1b16c6b98d",
+      "7bdac47dd6dd5204b00b1d0e4cbc9684"
+    ],
+    "overtime.us": [
+      "5e20b730f2f8d5003d739db7-62a388865440744efae8e243",
+      "52451c26422c45e087820bb0a13a69ab"
+    ],
+    "pac12insider.us": [
+      "5e20b730f2f8d5003d739db7-646c0dfbfb58444e4e1e262d",
+      "USBA300034DB"
+    ],
+    "paramountmoviechannel.us": [
+      "5cb0cae7a461406ffe3f5213",
+      "e2855d7a70c960c11ab278e386f11921",
+      "USAJ26000054W"
+    ],
+    "paramountpluspicks.us": [
+      "5ff8c708653d080007361b14"
+    ],
+    "pbrridepass.us": [
+      "60d39387706fe50007fda8e8"
+    ],
+    "pbsantiquesroadshow.us": [
+      "5e20b730f2f8d5003d739db7-6348ac7090b96ef5e0eb3288",
+      "636c2b3c55d2e700074105c4",
+      "856fca464da0544784204ba8f6161dac"
+    ],
+    "pbsnature.us": [
+      "5e20b730f2f8d5003d739db7-63506e7747b2355a27e76e7f",
+      "640a64bd73e013000893d4e0",
+      "32fa723f285fc238ae786634f051f972"
+    ],
+    "pbstravel.us": [
+      "5e20b730f2f8d5003d739db7-684c201a3496598cf4003fbc",
+      "94598743eeb76f0dae3caf86ed026deb"
+    ],
+    "peopleareawesome.us": [
+      "5e20b730f2f8d5003d739db7-5f0ff263d71dcb00449ec021"
+    ],
+    "perrymason.us": [
+      "6197086891ddd4000739941a"
+    ],
+    "pgatour.us": [
+      "5e20b730f2f8d5003d739db7-68017ed20268b77d02a5f4bd",
+      "5de94dacb394a300099fa22a",
+      "938d8156a8c45e719f24022d8c1c972c"
+    ],
+    "plutotvaction.us@us": [
+      "561d7d484dc7c8770484914a"
+    ],
+    "plutotvadventure.us@us": [
+      "69d7ebb726eeec84158e28cb"
+    ],
+    "plutotvanime.us@us": [
+      "5812b7d3249444e05d09cc49"
+    ],
+    "plutotvanimemovies.us": [
+      "67ed8f7e443f0671bc2b2368"
+    ],
+    "plutotvcars.us": [
+      "5812b3a4249444e05d09cc46",
+      "b7d49470ce09913c2cb9227708a815a2"
+    ],
+    "plutotvcinecomedia.us@us": [
+      "5f513564e4622a0007c578c0"
+    ],
+    "plutotvcomedy.us@us": [
+      "5a4d3a00ad95e4718ae8d8db"
+    ],
+    "plutotvcompetition.us": [
+      "603fde9026ecbf0007752c2c"
+    ],
+    "plutotvcrimedrama.us": [
+      "5f31fd1b4c510e00071c3103"
+    ],
+    "plutotvcrimemovies.us": [
+      "5f4d8594eb979c0007706de7"
+    ],
+    "plutotvcultfilms.us@us": [
+      "5c665db3e6c01b72c4977bc2"
+    ],
+    "plutotvdrama.us@us": [
+      "5b4e92e4694c027be6ecece1"
+    ],
+    "plutotvelreinoinfantil.us": [
+      "66fedd65d7de140008dccd66"
+    ],
+    "plutotvfantastic.us": [
+      "5b64a245a202b3337f09e51d",
+      "9d21287eff4c09a5d1078558e8245cfb",
+      "USBA300017PK"
+    ],
+    "plutotvgameshows.us": [
+      "6036e7c385749f00075dbd3b"
+    ],
+    "plutotvhistory.us@us": [
+      "5a4d35dfa5c02e717a234f86"
+    ],
+    "plutotvhometowndrama.us": [
+      "69d6c7befde57cd5ba0160c3"
+    ],
+    "plutotvhorror.us@us": [
+      "569546031a619b8f07ce6e25"
+    ],
+    "plutotvicons.us": [
+      "64b585f84ea480000838e446"
+    ],
+    "plutotvlives.us@us": [
+      "5d8beeb39b5d5d5f8c672530"
+    ],
+    "plutotvmilitary.us": [
+      "5bb3fea0f711fd76340eebff"
+    ],
+    "plutotvnovelas.us@us": [
+      "5cf96c0222df39f1a338d163"
+    ],
+    "plutotvparanormal.us@us": [
+      "5adf96e3e738977e2c31cb04"
+    ],
+    "plutotvreaction.us": [
+      "617b37b361e0fd0008cfd8c5"
+    ],
+    "plutotvreality.us@us": [
+      "5d8bf0b06d2d855ee15115e3"
+    ],
+    "plutotvromance.us@us": [
+      "5a66795ef91fef2c7031c599"
+    ],
+    "plutotvscience.us@us": [
+      "563a970aa1a1f7fe7c9daad7"
+    ],
+    "plutotvscifi.us@us": [
+      "5b4fc274694c027be6ed3eea"
+    ],
+    "plutotvspotlight.us": [
+      "5ba3fb9c4b078e0f37ad34e8"
+    ],
+    "plutotvstaffpicks.us": [
+      "5f4d863b98b41000076cd061"
+    ],
+    "plutotvterror.us": [
+      "5c6dc88fcd232425a6e0f06e"
+    ],
+    "plutotvthetwilightzone.us": [
+      "67352ed93a61d4000881f9fa"
+    ],
+    "plutotvthrillers.us@us": [
+      "5b4e69e08291147bd04a9fd7"
+    ],
+    "plutotvtrendingnow.us": [
+      "673247127d5da5000817b4d6"
+    ],
+    "plutotvtruecrime.us@us": [
+      "5812be1c249444e05d09cc50"
+    ],
+    "plutotvwesterns.us@us": [
+      "5b4e94282d4ec87bdcbb87cd",
+      "USBA300005MK"
+    ],
+    "pokergo.us@us": [
+      "5fc54366b04b2300072e31af"
+    ],
+    "portlandia.us": [
+      "5e20b730f2f8d5003d739db7-61d735fea7b7c7f703418512",
+      "753bb09547f701d2e6d0f66bee0ee589"
+    ],
+    "powernationtv.us": [
+      "5e20b730f2f8d5003d739db7-69814bbff871095eafc65925",
+      "63b48016d9dd51000828fa37",
+      "ca25dfba8ba45a1bb277c8b0ca8f56c4"
+    ],
+    "pursuitup.us": [
+      "5e20b730f2f8d5003d739db7-63628eb88e4b18ca22f897dc",
+      "330e3534b1614aad9cc2740c522a5b59"
+    ],
+    "qvc.us": [
+      "015c83c4485a597d9e2132252e2a75ae"
+    ],
+    "qvc2.us": [
+      "9cb058af15a0fdacf5aa87b78b2e3d33"
+    ],
+    "rainbowruby.us": [
+      "85f1333ff9065bf2923c8fa5eee50036"
+    ],
+    "realamericasvoice.us": [
+      "USBB1900002KF"
+    ],
+    "realwild.uk": [
+      "5e20b730f2f8d5003d739db7-63584a0cf8e2be1350f802a4"
+    ],
+    "redbulltv.at@us": [
+      "c5e8a74546771de365652cd053f73351"
+    ],
+    "retrocrush.us": [
+      "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c442a",
+      "72a54a3c7a3d5381a1baa223a5dc8d23"
+    ],
+    "revandroll.us": [
+      "f1584888a8625b1abf77aecb4690abe0"
+    ],
+    "revry.us": [
+      "5e20b730f2f8d5003d739db7-68c86f0bda79d98d977dc90c",
+      "674f735a2fb8a100087bf253",
+      "5199d161259a5f3c93c3c5d3532d3732",
+      "USBA3800003VP"
+    ],
+    "revrylatinx.us": [
+      "5e20b730f2f8d5003d739db7-68c87052da79d98d977dc90e"
+    ],
+    "rifftrax.us@us": [
+      "58d947b9e420d8656ee101ab",
+      "USAJ3504706A"
+    ],
+    "runtimeespanol.us": [
+      "5e20b730f2f8d5003d739db7-5f5132e362fe160040f26c15",
+      "eaeb1f4ef8ed510e8bc2a3fd78510c30"
+    ],
+    "ryanandfriends.us": [
+      "5e20b730f2f8d5003d739db7-5f91c4ea96a391002df9a664",
+      "5fb584b7613a31000789de5a",
+      "d1bfe824cfee5369a493d7a8bbd96ec1"
+    ],
+    "samsungwildlife.us": [
+      "USBA3000043LH"
+    ],
+    "scrippsnews.us": [
+      "5e20b730f2f8d5003d739db7-5fc705dda2236e002d69f211",
+      "5459795fc9f133a519bc0bef",
+      "d3f36d4a35fa5f40a24b96a51556b9b5"
+    ],
+    "shemaroobollywood.us": [
+      "5e20b730f2f8d5003d739db7-62d1a58e520656fda09e609d"
+    ],
+    "slopestv.us": [
+      "5e20b730f2f8d5003d739db7-616df1be2cf008a748c8cb53"
+    ],
+    "smithsonianchannelselects.us": [
+      "5f21ea08007a49000762d349",
+      "c1737248a0579987190aa79d4d87dab9"
+    ],
+    "snlvault.us": [
+      "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd34",
+      "9349c516ca6456b9b5ed7e20cb1c1384"
+    ],
+    "sonictv.us": [
+      "5e20b730f2f8d5003d739db7-62ba4aaff663580a7238f327"
+    ],
+    "sonycanalnovelas.us": [
+      "USAJ3000002OC"
+    ],
+    "spikeoutdoors.us": [
+      "5c393cad2de254456f7ef8c2"
+    ],
+    "spikeplutotv.us": [
+      "5812bcc8237a6ff45d16c407"
+    ],
+    "sportsgrid.us": [
+      "5e20b730f2f8d5003d739db7-5ef11485d33ab9004048a1ca",
+      "62f1cd0d4c395a2a8ab72cff688666a0",
+      "USBA300031OT"
+    ],
+    "stadium.us": [
+      "5e20b730f2f8d5003d739db7-5f6142d2fc6ce20041ec3c92",
+      "USAJ3504705A"
+    ],
+    "startrek.us@us": [
+      "5efbd39f8c4ce900075d7698"
+    ],
+    "stingraygreatestholidayhits.us": [
+      "5e20b730f2f8d5003d739db7-61aa97d4113e1e5137fd5325"
+    ],
+    "storiesbyamc.us": [
+      "5e20b730f2f8d5003d739db7-5fc705e2a2236e002d69f3ba",
+      "62f2ce24f328e00007e7f55a",
+      "f6ddb474d9cd5ac88f5d1e85186b9cb9"
+    ],
+    "supersimplesongs.us": [
+      "9aff620ece2457a3a7572886ecae0495"
+    ],
+    "survivor.us": [
+      "5f21e7b24744c60007c1f6fc",
+      "38f074c80d4c0a6208a8c50257f41d0f"
+    ],
+    "swervesports.us": [
+      "5e20b730f2f8d5003d739db7-61f04d2bb01a6e8df3f72902",
+      "683df56f5195c2a60a3f5559"
+    ],
+    "tastemade.us@us": [
+      "5e20b730f2f8d5003d739db7-5ef51c802ddee5003f1c0225",
+      "e6416436e5d6510e9e22c23862deea23"
+    ],
+    "tastemadetravel.us": [
+      "95a0b94ff13a4dc14fea6e9eb47ecf09"
+    ],
+    "ted.us": [
+      "5e20b730f2f8d5003d739db7-62ab5aabbb869dd0df6a3487"
+    ],
+    "teenmom.us": [
+      "6127e12ed140e900077e7b6f",
+      "dfb455b2d34724456821fe18f2b6b284"
+    ],
+    "telemundoaldia.us": [
+      "5e20b730f2f8d5003d739db7-6478acb5c83f56da796f166f",
+      "8e0bb4b7ca7c5ea1af52427462297f38"
+    ],
+    "telemundotelenovelasclasicas.us": [
+      "5cf96cc422df39f1a338d165"
+    ],
+    "tennischannel.us@plus2": [
+      "5e20b730f2f8d5003d739db7-65944d40cbc51b25e5070a18",
+      "681109b688b9d85d0938c6ba",
+      "a0b7c0bc09955942866e7072266483c8"
+    ],
+    "tgjunior.us": [
+      "5e20b730f2f8d5003d739db7-5f170d64b898490041b4938f",
+      "USBB3600001R6"
+    ],
+    "theaddamsfamily.us": [
+      "5e20b730f2f8d5003d739db7-689fb7110a486aeba3c7917c",
+      "5d81607ab737153ea3c1c80e"
+    ],
+    "theamazingrace.us": [
+      "5f21e8a6e2f12b000755afdb",
+      "1b4a3b14ce19baa18082c2cb7e0fb086"
+    ],
+    "theandygriffithshow.us": [
+      "60f75178e7f8aa0007e9c259"
+    ],
+    "theasylum.us@us": [
+      "7e202ec14b17515a8e732f662aec155d",
+      "USAJ17000014C"
+    ],
+    "thebobrosschannel.us": [
+      "5e20b730f2f8d5003d739db7-5efe1de6e0b3f5003f5d9f88",
+      "5f36d726234ce10007784f2a",
+      "1d3f60995d80521882a379fc06e47679"
+    ],
+    "thecarolburnettshow.us": [
+      "5e20b730f2f8d5003d739db7-60d4edd6b2fdec002c141125",
+      "e3cd976116d5578ab9be32baa738ade2"
+    ],
+    "thechallenge.us": [
+      "5d48685da7e9f476aa8a1888",
+      "e64d0ca363b1e9e5475da2559a97f6b5",
+      "USBB3500001O6"
+    ],
+    "theconners.us": [
+      "5e20b730f2f8d5003d739db7-6668b7a5e4f56766e556a415",
+      "f2d2afeb40ccfeaf7c4c02b75e710b6f"
+    ],
+    "thedesignnetwork.us": [
+      "5e20b730f2f8d5003d739db7-5f0641d3e8ffda004033b16e"
+    ],
+    "thefirsttv.us": [
+      "5d486acc34ceb37d3c458a64"
+    ],
+    "thegrahamnortonshow.uk": [
+      "5e20b730f2f8d5003d739db7-68dcbb869beaa3a402966dba",
+      "5934441271a0583124d84d704f600bcc"
+    ],
+    "thehilltv.us": [
+      "8bfd3a488b59590eb2fa5602c2120168"
+    ],
+    "thejamieoliverchannel.us": [
+      "5e20b730f2f8d5003d739db7-64b7170c4612b1f48e9ad31e",
+      "64dab9df3d48f40008868091",
+      "8fd0bc4f08285a12abb872f0b2e320d4"
+    ],
+    "thejudgejudychannel.us": [
+      "6283d51144ad8f0007fa382d",
+      "e0c3a43132e99f2188f63d4b3d95b9ac"
+    ],
+    "theloveboat.us": [
+      "5f7794a788d29000079d2f07"
+    ],
+    "thenewdetectives.us@us": [
+      "5e20b730f2f8d5003d739db7-67cbd471cc5136329877e098",
+      "5aea40b35126c2157123aa64",
+      "USAJ3504547A"
+    ],
+    "thepetcollective.us@us": [
+      "5bb1ad55268cae539bcedb08",
+      "69791edb54d953268aa8933e2cb29a32",
+      "USAJ3504704A"
+    ],
+    "thepriceisright.us": [
+      "5e20b730f2f8d5003d739db7-63e63d26abacad42ed3d1acd",
+      "643f035d5a0cd50008361534",
+      "57716baa323e2fb356d638f04e5b277e"
+    ],
+    "thepriceisrightthebarkerera.us": [
+      "5f7791b8372da90007fd45e6",
+      "4ad47ace83b25065955adca3f8e9bdcf"
+    ],
+    "therifleman.us": [
+      "5e20b730f2f8d5003d739db7-64f123008d44f2871135a905",
+      "5e825550e758c700077b0aef"
+    ],
+    "thewalkingdeadenespanol.us": [
+      "5e20b730f2f8d5003d739db7-6848269efd17cd629e5df2ea",
+      "5e82bb378601b80007b4bd78"
+    ],
+    "thewalkingdeaduniverse.us": [
+      "5e20b730f2f8d5003d739db7-5fc705ff2f220e002d5e6bce",
+      "62fa8176b9884200074ef5ae",
+      "be88a28806f251338d65ec08119f5c81"
+    ],
+    "thisoldhouse.us": [
+      "5e20b730f2f8d5003d739db7-62e3232ca105dea9c400e9fe",
+      "5d51e791b7dba3b2ae990ab2",
+      "7e9fe2b4c7ba5869af6d60adbf4b7c86",
+      "USBC13000065U"
+    ],
+    "threescompany.us": [
+      "5ef3977e5d773400077de284"
+    ],
+    "tinyhousenation.us": [
+      "5e20b730f2f8d5003d739db7-63c1e176f0f132afc3afbab0",
+      "601a0342dcf4370007566891",
+      "6f6a43405187540486e726fdb22bb600",
+      "USAJ3400020KC"
+    ],
+    "tmz.us": [
+      "5e20b730f2f8d5003d739db7-63e2ca44203bafbef831a152"
+    ],
+    "todayallday.us": [
+      "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd39",
+      "5d695f7db53adf96b78e7ce3",
+      "97a1c32a9f1057cf974a920a4279a801",
+      "USBB32000251N"
+    ],
+    "toongoggles.us": [
+      "5e20b730f2f8d5003d739db7-5f170d60b898490041b49359",
+      "USBB1900004J9"
+    ],
+    "tosh0.us": [
+      "5dae084727c8af0009fe40a4",
+      "ed811bdcdfe56064a07e8f457af3b84a"
+    ],
+    "totallyturtles.us@us": [
+      "5d0c16d686454ead733d08f8"
+    ],
+    "tribecachannel.us": [
+      "5e20b730f2f8d5003d739db7-60ede94f7da2ef002c55ce9b",
+      "2547ef42e2f45bbaa84752657cffe3c9"
+    ],
+    "truecrimenow.us": [
+      "5e20b730f2f8d5003d739db7-61ae679103baf19077bbf933"
+    ],
+    "truehistory.us": [
+      "5e20b730f2f8d5003d739db7-614398a08f30fa61e0da7c97"
+    ],
+    "tvlanddrama.us": [
+      "5d40bebc5e3d2750a2239d7e",
+      "df060784c402175739d219b5952838ca",
+      "USBB3500002FL"
+    ],
+    "tvlandsitcoms.us": [
+      "5c2d64ffbdf11b71587184b8",
+      "e287c5c667c39fa5025b362a93ea09b1",
+      "USBA300019WF"
+    ],
+    "unbeaten.us": [
+      "5e20b730f2f8d5003d739db7-633239caa6615514fb78ecf3"
+    ],
+    "unidentified.us": [
+      "5e20b730f2f8d5003d739db7-6227d1d2c9f485cc7afe8c44",
+      "USBB10000047W"
+    ],
+    "universalcrime.us@east": [
+      "6549341853fc9700083901ac",
+      "0322f5b9c0d954169122de194a8005ac"
+    ],
+    "unsolvedmysteries.us@us": [
+      "5b4e96a0423e067bd6df6901",
+      "4ecf313b40975382b983c183bf7d86f0",
+      "USBB3200018Q6"
+    ],
+    "usatoday.us": [
+      "5e20b730f2f8d5003d739db7-60df3e18541143002f3b8607",
+      "5321194d102d57e094d47d50949088b8",
+      "USBB1500001GD"
+    ],
+    "venevisioninternacional.ve": [
+      "cc04d77fd589a818cd036c850b6be867"
+    ],
+    "vevo2k.us": [
+      "5fd7bca3e0a4ee0007a38e8c",
+      "94759dbd58a65682bcc573932f725f46",
+      "USBB4400015F5"
+    ],
+    "vevo70s.us": [
+      "5f32f26bcd8aea00071240e5",
+      "e5dcad2b1c055d4d86a9f7bba9438da7"
+    ],
+    "vevo80s.us": [
+      "5fd7b8bf927e090007685853",
+      "fd8d765f98605129914b581147e7e8b2"
+    ],
+    "vevo90s.us": [
+      "5fd7bb1f86d94a000796e2c2",
+      "4c0772ef75e1565183843b37e91591f8"
+    ],
+    "vevocountry.us": [
+      "5da0d75e84830900098a1ea0",
+      "1db9c603bb4e5d87b015f9963da1093e",
+      "USBC3600001RQ"
+    ],
+    "vevohiphop.us": [
+      "8dc44c8fdea45f039c68f75bda233850",
+      "USBC3600002EK"
+    ],
+    "vevolatino.us": [
+      "0d5283959d3a59bf87411e7077fd9e58",
+      "USBC3600015GF"
+    ],
+    "vevopop.us": [
+      "5d93b635b43dd1a399b39eee",
+      "e50a8f06d3245c95a4e250dc5c33c2be",
+      "USBC3600008WY"
+    ],
+    "vevorb.us": [
+      "5da0d83f66c9700009b96d0e",
+      "6be3083b8ec2508495684e5087f8f86a",
+      "USBC3900009K5"
+    ],
+    "vevoretrorock.us": [
+      "61d4b38226b8a50007fe03a6"
+    ],
+    "vevotrueschoolhiphop.us": [
+      "61d4c2817a823d00070ba53e"
+    ],
+    "vicetv.us": [
+      "5e20b730f2f8d5003d739db7-62c47062085f5c338b9c6360",
+      "USBB1900006NY"
+    ],
+    "wanteddeadoralive.us": [
+      "5e20b730f2f8d5003d739db7-61ddcc6023daf618ed44c29f"
+    ],
+    "watchitscream.us": [
+      "5e20b730f2f8d5003d739db7-621671d05abdd3d5556a1baf"
+    ],
+    "waypointtv.us": [
+      "5e20b730f2f8d5003d739db7-5fd115b8b7ef8d002dcf1817",
+      "USBB440002055"
+    ],
+    "wbtv641.us": [
+      "bf7ee95e6a905222a1d24174120cc106"
+    ],
+    "weathernation.us": [
+      "a1e38b83ae2a56f09f4d2ee8ed206b35"
+    ],
+    "weatherspy.us": [
+      "5e20b730f2f8d5003d739db7-5f0ff266d71dcb00449ec030",
+      "USAJ3400014LK"
+    ],
+    "weedsnursejackie.us": [
+      "5e20b730f2f8d5003d739db7-66915d35086cb6d46eae12c8"
+    ],
+    "westerntv.us": [
+      "5e8df4bc16e34700077e77d3"
+    ],
+    "wildnout.us": [
+      "5d48678d34ceb37d3c458a55",
+      "0ce1935dc620b3afcc5b0022656fbeb3",
+      "USBA3000100X"
+    ],
+    "willowsports.us": [
+      "5e20b730f2f8d5003d739db7-66fbf9cf128ab3f65b259bcb",
+      "52361d5aea45dadb3168c2ecea7d984a"
+    ],
+    "wipeoutxtra.us": [
+      "5e20b730f2f8d5003d739db7-6515fb621fc969615e69d16e",
+      "USBB4400018LR"
+    ],
+    "wired2fishtv.us": [
+      "5e20b730f2f8d5003d739db7-608a2c722957c9002c6a617b"
+    ],
+    "womenssportsnetwork.us": [
+      "5e20b730f2f8d5003d739db7-630fa9e577ec3866def38fa2",
+      "686d8dd294a028da3ac59566",
+      "11f70f2cc59750f4ad9a019d72ad17b1"
+    ],
+    "worldpokertour.us@us": [
+      "5616f9c0ada51f8004c4b091"
+    ],
+    "wutangcollection.us": [
+      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc770"
+    ],
+    "xite90sthrowback.us": [
+      "5e20b730f2f8d5003d739db7-6889430a3b7708975e7c07e3"
+    ],
+    "xiteclassiccountry.nl": [
+      "5e20b730f2f8d5003d739db7-688d399a8ceaa3681d9425d3"
+    ],
+    "xitejustchill.nl@us": [
+      "5e20b730f2f8d5003d739db7-6889467267ddc0ef2cdbf4ff"
+    ],
+    "xitenuevolatino.us": [
+      "5e20b730f2f8d5003d739db7-6889479e67ddc0ef2cdbf501"
+    ],
+    "xitereggaevibes.nl": [
+      "5e20b730f2f8d5003d739db7-68800f0c4033a6a442ad923d"
+    ],
+    "xiterockxmetal.nl@us": [
+      "5e20b730f2f8d5003d739db7-68800806996f1a2fb393a6e5"
+    ],
+    "xitesiemprelatino.us": [
+      "5e20b730f2f8d5003d739db7-68800a594033a6a442ad9237"
+    ],
+    "xploretv.us": [
+      "f230a0c3f7ba5804b42d88f5d3c20002",
+      "USBC2100008DP"
+    ],
+    "yahoofinance.us": [
+      "5e20b730f2f8d5003d739db7-5f170f01b898490041b49dd1"
+    ],
+    "yomtv.us": [
+      "5d14fc31252d35decbc4080b"
+    ],
+    "yugioh.us": [
+      "5e20b730f2f8d5003d739db7-6617f52f0049fcb8e2b0d5b8",
+      "5f4ec10ed9636f00089b8c89",
+      "77946e082d8958f599087890aebf1623"
+    ]
+  },
+  "tvPassport": {
+    "3abnenglish.us": "three-angels-broadcasting-network/19066",
+    "accnetwork.us": "acc-network/33964",
+    "accuweathernow.us": "accuweather-hd/7335",
+    "amc.us@east": "amc--eastern-feed-hd/6219",
+    "americanheroeschannel.us": "american-heroes-channel/2035",
+    "amp2.us": "amp2/13283",
+    "animalplanet.us@east": "animal-planet-us-hd--east/4537",
+    "bbcamerica.us@east": "bbc-america--east-hd/11121",
+    "bigtennetwork.us": "big-ten-network-hd/4500",
+    "bloombergtv.us@us": "bloomberg-tv-usa/1856",
+    "boomerang.us": "boomerang-hd/16413",
+    "bravo.us@east": "bravo-usa-hd--eastern-feed/6120",
+    "cartoonnetwork.us@east": "cartoon-network-usa-hd--eastern/6917",
+    "charge.us": "charge/15228",
+    "cinemax.us@west": "cinemax--pacific-feed/1215",
+    "cmt.us@east": "cmt-us--eastern-feed-hd/6344",
+    "cnbc.us": "cnbc-usa-hd/6119",
+    "cnn.us": "cnn/70",
+    "comet.us": "comet-tv/16811",
+    "cookingchannel.us": "the-cooking-channel-hd/8113",
+    "courttv.us": "court-tv-network/33650",
+    "daystartv.us": "daystar--network-hd/13634",
+    "discoverychannel.us@east": "discovery-channel-us--eastern-feed/649",
+    "disneyjunior.us@east": "disney-junior-usa-hd--east/10523",
+    "disneyxd.us@east": "disney-xd-usa-hd--eastern-feed/6236",
+    "e.us@east": "e-entertainment-usa-hd--east/6659",
+    "espn.us": "espn-hd/3036",
+    "espn2.us": "espn2-hd/3379",
+    "espnu.us": "espn-u/3331",
+    "ewtn.us@english": "ewtn-usa/620",
+    "foodnetwork.us@east": "food-network-usa-hd--eastern-feed/3438",
+    "fox.us@west": "fox--pacific/4409",
+    "foxbusinessnetwork.us": "fox-business-hd/5600",
+    "foxdeportes.us": "fox-deportes-hd/10502",
+    "foxnewschannel.us": "fox-news-hd/6207",
+    "foxweather.us": "fox-weather/37620",
+    "fuse.us@east": "fuse-tv-hd--eastern/6221",
+    "fx.us@east": "fx-networks-east-coast-hd/6111",
+    "hallmarkchannel.us@east": "hallmark-channel-hd--eastern/6213",
+    "hbo.us@east": "hbo-hd--eastern-feed/627",
+    "hgtv.us@east": "hgtv-usa-hd--eastern/3690",
+    "hln.us": "hln-hd/6994",
+    "hopechannelnorthamerica.us": "hope-channel/6827",
+    "hsn.us@east": "hsn--home-shopping-network/14985",
+    "hsn2.us": "hsn-2/13495",
+    "ifc.us@east": "independent-film-channel-us-hd/6215",
+    "investigationdiscovery.us@east": "investigation-discovery-usa-hd--eastern/6997",
+    "jewelrytv.us": "jewelry-television/3000",
+    "knxvtv611.us": "abc-knxv-phoenix-az-hd/5721",
+    "laff.us": "laff--network-hd/20170",
+    "lawcrime.us": "law--crime-network/32823",
+    "metv.us": "metv--network-hd/20357",
+    "msg.us": "msg-madison-square-gardens-hd/4695",
+    "mtv.us@east": "mtv-usa--eastern-feed/656",
+    "mtv2.us@east": "mtv-2-east-hd/10276",
+    "mtvlive.us": "mtv-live-hd/6081",
+    "nationalgeographic.us@east": "national-geographic-us-hd--eastern/4436",
+    "nationalgeographicwild.us@east": "national-geographic-wild-hd/9579",
+    "nbatv.us": "nba-tv-usa-hd/5645",
+    "nbc.us@east": "nbc--network-eastern/1227",
+    "nbc.us@west": "nbc--network-pacific/4410",
+    "newsmax2.us": "newsmax2/37081",
+    "newsmaxtv.us": "newsmax-tv/16818",
+    "nflnetwork.us": "nfl-network/3349",
+    "nhlnetwork.us": "nhl-network-usa/14156",
+    "nickelodeon.us@east": "nickelodeon-usa--east-feed-hd/6342",
+    "nickjr.us@east": "nick-jr--east/1969",
+    "nicktoons.us@east": "nicktoons-hd--east/11445",
+    "oneamericanewsnetwork.us": "one-america-news-network/12614",
+    "ontv4u.us": "ontv4u/13142",
+    "outdoorchannel.us": "outdoor-channel-us-hd/4638",
+    "own.us@east": "oprah-winfrey-network-usa-eastern/1159",
+    "pbskids.us": "pbs-kids-247/31867",
+    "positivtv.us": "positiv/4456",
+    "qvc.us": "qvc/14683",
+    "reelz.us": "reelzchannel/4175",
+    "revolt.us": "revolt-tv/11301",
+    "scrippsnews.us": "scripps-news/5999",
+    "secnetwork.us": "sec-network-hd/13712",
+    "shoplc.us": "shop-lc/36273",
+    "showtimefamilyzone.us@east": "showtime-family-zone-hd--eastern/7108",
+    "starz.us@west": "starz-hd--pacific/3389",
+    "starzcomedy.us@east": "starz-comedy--eastern/4223",
+    "starzkidsfamily.us@east": "starz-kids--family--eastern/1194",
+    "syfy.us@east": "syfy-hd--eastern-feed/5643",
+    "tbn.us@east": "tbn--trinity-broadcasting-network--east/1119",
+    "tbs.us@east": "tbs--east-hd/6090",
+    "tbs.us@west": "tbs--pacific-hd/6231",
+    "tcm.us@east": "turner-classic-movies-usa/176",
+    "telemundo.us@east": "telemundo--eastern-feed/1521",
+    "telemundo.us@west": "telemundo--pacific-feed/2013",
+    "tennischannel.us": "the-tennis-channel-hd/7051",
+    "thenest.us": "the-nest/14118",
+    "theweatherchannel.us": "the-weather-channel-hd/5599",
+    "tnt.us@east": "tnt--eastern-feed/347",
+    "tnt.us@west": "tnt--pacific-feed/2252",
+    "trutv.us@east": "trutv-usa--east-hd/6996",
+    "trutv.us@west": "trutv-usa--pacific-hd/18808",
+    "univision.us@east": "univision--eastern-feed-hd/8136",
+    "univision.us@west": "univision--pacific-feed-hd/8137",
+    "wbtv641.us": "cbs-wbtv-charlotte-nc-hd/3649",
+    "weathernation.us": "weathernation/13501",
+    "wetv.us@east": "we-womens-entertainment--eastern/664",
+    "worldchannel.us": "pbs-world/10214",
+    "wplg101.us": "abc-wplg-miami-fl-hd/5722",
+    "yesnetwork.us": "yes-network/1953"
+  }
+}

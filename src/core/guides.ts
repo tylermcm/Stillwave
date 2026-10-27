@@ -1,5 +1,5 @@
 import type { Channel, Guide, GuideSource, Library, Programme, ProgramReminder } from '../types';
-import { createGuideMatcher } from './xmltv';
+import { createGuideMatcher, nowAndNext } from './xmltv';
 
 export const guideKey = (sourceId: string, channelId: string) => `${encodeURIComponent(sourceId)}::${encodeURIComponent(channelId)}`;
 export function splitGuideKey(value: string): [string, string] | undefined {
@@ -28,6 +28,12 @@ export function withGuideSources(library: Library, sources: GuideSource[]): Libr
   return { ...library, guideSources: sources, guide: undefined, guideUrl: undefined };
 }
 
+/** Do not discard useful saved listings when a provider returns an empty/stale feed. */
+export function assertGuideRefresh(previous: Guide | undefined, next: Guide, now = Date.now()) {
+  const upcoming = (guide: Guide | undefined) => Object.values(guide?.programmes ?? {}).some(list => list.some(p => p.stop > now));
+  if (upcoming(previous) && !upcoming(next)) throw new Error('This guide returned no current schedules. Your saved guide is kept; try refreshing later.');
+}
+
 export function createGuideView(library: Pick<Library, 'guideSources' | 'guide' | 'guideUrl' | 'mappings'>) {
   const sources = getGuideSources(library);
   const merged: Guide | undefined = sources.length ? { channels: Object.create(null), programmes: Object.create(null), importedAt: Math.max(...sources.map(s => s.guide.importedAt)) } : undefined;
@@ -46,12 +52,19 @@ export function createGuideView(library: Pick<Library, 'guideSources' | 'guide' 
       const source = candidates.find(s => s.id === explicit[0]);
       if (source && (Object.hasOwn(source.guide.channels, explicit[1]) || Object.hasOwn(source.guide.programmes, explicit[1]))) return guideKey(source.id, explicit[1]);
     }
-    // Specific playlist guides take priority over shared guides, then list order.
+    // Prefer usable listings over an empty/stale match in an earlier source.
+    let first: string | undefined, future: string | undefined;
+    const now = Date.now();
     for (const source of candidates) {
       const id = matchers.get(source.id)!(channel, manual && !explicit ? { [channel.id]: manual } : {});
-      if (id) return guideKey(source.id, id);
+      if (!id) continue;
+      const key = guideKey(source.id, id);
+      first ??= key;
+      const shows = nowAndNext(source.guide.programmes[id], now);
+      if (shows.now) return key;
+      if (shows.next) future ??= key;
     }
-    return undefined;
+    return future || first;
   };
   const choices = (channel: Channel) => applicable(channel).flatMap(s => Object.entries(s.guide.channels).map(([id, names]) => ({ id: guideKey(s.id, id), names, sourceName: s.name })));
   return { guide: merged, matcher, sources, choices };
@@ -80,4 +93,15 @@ export function searchPrograms(index: ProgramResult[], query: string, range: 'no
     (range === 'saved' ? saved.has(row.key) : range === 'now' ? row.programme.start <= now : range === 'soon' ? row.programme.start > now && row.programme.start <= now + 3 * 3600_000 : true) &&
     tokens.every(token => `${row.programme.title} ${row.programme.description ?? ''} ${row.channel.name} ${row.channel.group}`.toLocaleLowerCase().includes(token)))
     .sort((a, b) => a.programme.start - b.programme.start || a.channel.name.localeCompare(b.channel.name));
+}
+
+export function guideCoverage(channels: Channel[], view: GuideView, now = Date.now()) {
+  let live = 0, available = 0;
+  for (const channel of channels) {
+    const id = view.matcher(channel);
+    const shows = nowAndNext(id ? view.guide?.programmes[id] : undefined, now);
+    if (shows.now) live++;
+    if (shows.now || shows.next) available++;
+  }
+  return { total: channels.length, available, live, missing: channels.length - available };
 }
