@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, AppState, FlatList, Linking, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
+import { LaunchSplash } from './src/components/LaunchSplash';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EMPTY_LIBRARY, type BufferProfile, type Channel, type GuideSource, type Library, type Programme, type SavedPlaylist } from './src/types';
 import { addPlaylist, newPlaylistId, removePlaylist } from './src/core/playlists';
@@ -9,7 +11,7 @@ import { MAX_PLAYLIST_BYTES } from './src/core/feedBytes';
 import { normalizeFeedUrl, parseM3u } from './src/core/m3u';
 import { createGuideMatcher, nowAndNext, parseXmltv } from './src/core/xmltv';
 import { createGuideView, getGuideSources, makeReminder, reminderKey, sourceChannels as channelsForSource, sourceMappings, splitGuideKey, withGuideSources, type ProgramResult } from './src/core/guides';
-import { previousChannel, rememberChannel } from './src/core/history';
+import { adjacentChannel, previousChannel, rememberChannel } from './src/core/history';
 import { downloadFeed, pickFeed } from './src/data/feeds';
 import { cacheGuideSource, loadGuideSource, loadLibrary, removeGuideCache, saveLibrary } from './src/data/library';
 import { dvr } from './src/data/dvr';
@@ -24,6 +26,10 @@ import { useAndroidFullscreen } from './src/components/useAndroidFullscreen';
 import { isTv } from './src/data/tv';
 import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults } from './src/core/tvDefaults';
 import { TvShell } from './src/components/tv/TvDvrShell';
+
+if (Platform.OS !== 'web') void SplashScreen.preventAutoHideAsync().catch(() => {});
+const splashPreview = Platform.OS === 'web' && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('splash') === '1';
+const hideNativeSplash = () => { if (Platform.OS !== 'web') void SplashScreen.hideAsync().catch(() => {}); };
 
 type Tab = 'watch' | 'guide' | 'recordings' | 'sources';
 const time = (ms: number) => new Date(ms).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -40,6 +46,7 @@ function Button({ label, icon, onPress, secondary = false, disabled = false }: {
 function Shell() {
   const [library, setLibrary] = useState<Library>({ ...EMPTY_LIBRARY });
   const [loaded, setLoaded] = useState(false);
+  useEffect(() => { if (loaded) hideNativeSplash(); }, [loaded]);
   const [tab, setTab] = useState<Tab>('watch');
   const [busy, setBusy] = useState('');
   const [notice, setNotice] = useState('');
@@ -100,6 +107,8 @@ function Shell() {
   const guide = guideView.guide;
   const matcher = guideView.matcher;
   const previous = useMemo(() => previousChannel(library, selectedId), [library.channels, library.recents, selectedId]);
+  const previousInLineup = useMemo(() => adjacentChannel(library.channels, selectedId, -1), [library.channels, selectedId]);
+  const nextInLineup = useMemo(() => adjacentChannel(library.channels, selectedId, 1), [library.channels, selectedId]);
   const onFirstPlaying = useCallback((id: string) => update(previous => rememberChannel(previous, id)), [update]);
   const favorites = useMemo(() => new Set(library.favorites), [library.favorites]);
   const sourceChannels = useMemo(() => library.channels.filter(c => playlistFilter === 'all' || c.playlistId === playlistFilter), [library.channels, playlistFilter]);
@@ -111,7 +120,7 @@ function Shell() {
   const filtered = useMemo(() => {
     const search = query.trim().toLowerCase();
     const recent = new Map(library.recents.map((r, index) => [r.channelId, index]));
-    return sourceChannels.filter(c => (!onlyFavorites || favorites.has(c.id)) && (!recentOnly || recent.has(c.id)) && (tab === 'guide' || group === 'All' || c.group === group) && (!search || `${c.name} ${c.group}`.toLowerCase().includes(search)))
+    return sourceChannels.filter(c => (!onlyFavorites || favorites.has(c.id)) && (!recentOnly || recent.has(c.id)) && (tab === 'guide' || group === 'All' || c.group === group) && (!search || (/^\d+$/.test(search) ? c.number === String(Number(search)) : `${c.name} ${c.group}`.toLowerCase().includes(search))))
       .sort((a, b) => recentOnly ? recent.get(a.id)! - recent.get(b.id)! : 0);
   }, [sourceChannels, query, group, favorites, onlyFavorites, tab, recentOnly, library.recents]);
   useEffect(() => { channelList.current?.scrollToOffset({ offset: 0, animated: false }); setShowTop(false); }, [tab, group, query, onlyFavorites, playlistFilter, browsing]);
@@ -365,10 +374,10 @@ function Shell() {
   const upcoming = (selectedGuideId ? guide?.programmes[selectedGuideId] ?? [] : []).filter(p => p.stop > now).slice(0, 100);
   const showPlayer = selected;
 
+  if (!loaded) return <LaunchSplash onReady={hideNativeSplash} />;
   if (isTv) return <TvShell library={library} selected={selected} loaded={loaded} busy={busy} error={error} notice={notice}
     onWatch={selectChannel} onClose={() => { selectionRequest.current++; setSelected(undefined); setFullscreen(false); }} onFirstPlaying={onFirstPlaying}
     onFavorite={toggleFavorite} onDefaults={() => void setupTvDefaults()} onRefreshPlaylist={id => void importPlaylist(false, id)} onRefreshGuide={id => void importGuide(false, id)} />;
-  if (!loaded) return <SafeAreaView style={[s.safe, { justifyContent: 'center' }]}><ActivityIndicator color="#a7eccb" /></SafeAreaView>;
   return <SafeAreaView style={s.safe} edges={fullscreen ? [] : ['top', 'left', 'right']}>
     <StatusBar style="light" hidden={fullscreen} />
     <View style={[s.frame, fullscreen && s.fullFrame]}>
@@ -376,7 +385,7 @@ function Shell() {
         <View><View style={s.brandRow}><Ionicons name="radio" size={21} color="#a7eccb" /><Text style={s.brand}>stillwave<Text style={{ color: '#a7eccb' }}>.</Text></Text></View><Text style={s.tagline}>A little less noise. A lot more TV.</Text></View>
       </View>}
 
-      {showPlayer && <LivePlayer key={`${selected.id}:${library.profile}:${library.playlists.find(p => p.id === selected.playlistId)?.updatedAt ?? 0}`} channel={selected} programme={nowAndNext(guide?.programmes[matcher(selected, library.mappings) || ''], now).now} profile={library.profile} fullscreen={fullscreen} onFullscreenChange={setFullscreen} onFirstPlaying={onFirstPlaying} onOpenGuide={() => setShowMiniGuide(true)} previousChannelName={previous?.name} onPreviousChannel={previous ? () => void selectChannel(previous) : undefined} onClose={() => { selectionRequest.current++; setSelected(undefined); setFullscreen(false); setShowMiniGuide(false); }} />}
+      {showPlayer && <LivePlayer key={`${selected.id}:${library.profile}:${library.playlists.find(p => p.id === selected.playlistId)?.updatedAt ?? 0}`} channel={selected} programme={nowAndNext(guide?.programmes[matcher(selected, library.mappings) || ''], now).now} profile={library.profile} fullscreen={fullscreen} onFullscreenChange={setFullscreen} onFirstPlaying={onFirstPlaying} onOpenGuide={() => setShowMiniGuide(true)} previousChannelName={previous?.name} onPreviousChannel={previous ? () => void selectChannel(previous) : undefined} onPreviousInLineup={previousInLineup ? () => void selectChannel(previousInLineup) : undefined} onNextChannel={nextInLineup ? () => void selectChannel(nextInLineup) : undefined} onClose={() => { selectionRequest.current++; setSelected(undefined); setFullscreen(false); setShowMiniGuide(false); }} />}
 
       {!fullscreen && <>
         {busy !== '' && <View style={s.banner}><ActivityIndicator size="small" color="#a7eccb" /><Text style={s.bannerText}>{busy}</Text></View>}
@@ -444,7 +453,7 @@ function Shell() {
   </SafeAreaView>;
 }
 
-export default function App() { return <SafeAreaProvider><AppErrorBoundary><Shell /></AppErrorBoundary></SafeAreaProvider>; }
+export default function App() { return <SafeAreaProvider><AppErrorBoundary>{splashPreview ? <LaunchSplash /> : <Shell />}</AppErrorBoundary></SafeAreaProvider>; }
 
 const s = StyleSheet.create({
   fullFrame: { maxWidth: undefined, paddingHorizontal: 0 },

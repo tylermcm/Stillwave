@@ -1,27 +1,23 @@
-# Install Stillwave on Android
+# Install StillWave 0.4.3
 
-1. Copy `Stillwave-0.4.0.apk` to your phone using USB, a file-transfer app, or your preferred private storage.
-2. Open the APK in your phone's Files/Downloads app. If Android asks, allow that file manager to install this app.
-3. If Stillwave is already installed, choose **Update**; do not uninstall it first. This APK uses the original signing key and version code 7. Your existing playlist, favorites and guide mappings are preserved.
-4. For a first installation, open **Stillwave**, choose **Add your playlist**, and import your M3U URL or file.
-5. In **Sources**, add an XMLTV `.xml` / `.xml.gz` guide URL or file if needed.
+APK: Stillwave-0.4.3.apk, version code 10, 35.2 MiB. ARM32 and ARM64; Android 7.0 or newer. Local DVR requires Android 8.0 or newer.
 
-The universal APK includes ARM32, ARM64 and x86_64 for Android 7.0 or newer. Local DVR needs Android 8.0 or newer. It includes the app, assets and native video engine. You do not need a web server, Expo Go, an Expo account, or a running computer. Channels and URL-based guides still need an internet connection to their providers.
+Install as an update over Stillwave. The original signing certificate is retained. Do not uninstall first; saved playlists, favorites, channel numbers and guide mappings remain in app storage.
 
-Supported HLS channels now build a rewind buffer (up to 30 minutes or 512 MiB). Pause keeps capturing; resume stays behind live. Use the timeline or 30-second buttons to seek. The center refresh button explicitly returns to live.
+All Android devices share the landscape TV Guide and My DVR. Phones/tablets use the mobile video player; TV hardware uses remote player controls. This release includes the approved StillWave splash, larger top navigation buttons and smooth mobile scrolling. Fresh installs load the full US playlist and partial Pluto US guide. Existing sources are preserved.
 
-Tap the record button to start/stop a recording, or use player options for 30 minutes/current program end. **Recordings** contains saved and ongoing recordings, with playback and resume positions. Recording continues after closing the player or locking the screen. Stop it before switching to another channel; this release captures one channel at a time. Allow recording notifications to see capture status outside the app.
+On Fire Stick, use your authorized ADB connection at home:
 
-DVR currently supports unencrypted HLS with multiplexed audio and complete segments. Other formats still play normally and explain DVR unavailability in player options. The TV Guide now creates real scheduled recordings and series rules; export and a home DVR server remain future milestones. The device must remain on and connected; Android background limits, force-stop and source failures can interrupt recording. Saved footage is retained, with partial recordings marked.
+    adb -s <fire-tv-ip>:5555 install -r artifacts/Stillwave-0.4.3.apk
 
-For Fire TV, use ADB Debugging and install with `adb -s <fire-tv-ip>:5555 install -r artifacts/Stillwave-0.4.0.apk`. The same APK detects television mode. Fresh TV installs automatically load the public US playlist and partial Pluto US guide. Menu/D-pad reaches actions without typing. The user's working 0.2.0 Fire Stick installation has not yet been replaced. See `TV_IMPLEMENTATION.md` for review and validation details.
+On an Android phone, transfer the APK and open it from Files/Downloads, then choose Update. The app opens in landscape. Use Menu for categories, favorites, No guide, channel-number lookup and feed refresh. Swipe the guide to browse; tap a cell to focus it and tap it again or choose Watch. Touch and remote input use the same interface. Tap video to reveal auto-hidden controls; Options opens player actions.
 
-This update supports multiple playlists with independent refresh/removal and source filtering. Watch starts with categories, Guide shows channel schedules, and the channel list has an instant floating scroll-to-top button.
+Supported HLS provides pause, a rolling buffer, 10-second seeking on mobile / 30-second seeking on TV, Go live and recording. My DVR shows saved and scheduled recordings and series rules. One capture channel is supported at a time. Schedules depend on downloaded guide data; sports guide coverage remains partial. iOS retains its separate UI and has not been built here.
 
-Playback controls are on the video. After roughly two seconds of healthy playback, the lower status panel collapses and controls fade. Tap the picture to reveal them: PiP top left, refresh center, pause bottom center, fullscreen bottom right; the options menu contains captions, audio and diagnostics. Errors and buffering keep status visible.
+The app, assets and native engine are embedded. No Expo Go, developer server, computer or app account is required to run it. Remote streams/guides require access to their providers.
 
-Android fullscreen keeps the same custom controls in landscape. Back first leaves fullscreen. Use the overlapping windows icon or Android Back from the inline player to minimize a playing channel on supported devices. Android 12+ also minimizes on Home/app switching. Expand the floating window to return; close it to pause playback.
+Verification: typecheck and 82 tests passed. Native release compilation/lint, original signer, signature/alignment, version, landscape manifest, native splash theme/PNG assets and approved v2 logo, both ARM architectures, private DVR service, non-debuggable status and embedded bundle were checked. Current TV/controller/player JavaScript matches the native build source map. Signing files and preview harness are excluded. Reports: release-v043-check.json and v043-bundle-source-check.json.
 
-The release build, signing, alignment and packaged manifest were checked. The signed APK passed generated-stream DVR, landscape fullscreen, PiP, screen-off recording, recorded playback, deletion and restart-recovery checks on an Android 15 emulator. Verify your provider and phone: physical-device codecs, older Android versions and sustained multi-hour capture have not yet been tested. Use **Diagnose** in the player when a channel will not open.
+This build was not installed on a physical device or emulator. Test remote/touch browsing, playback, fullscreen and recordings on your own hardware.
 
-Future updates must use the same signing key. The key and its credentials are kept locally in `private/android-signing/`, outside Git and outside the APK.
+SHA-256: 8367f233bdb6e076f0ffc5fcedbd7252bc15701f9681c2746f5a1f31af849cc7

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Stillwave",
+    "name": "StillWave",
     "slug": "stillwave",
-    "version": "0.4.0",
+    "version": "0.4.3",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
@@ -16,7 +16,7 @@
     },
     "android": {
       "package": "com.stillwave.player",
-      "versionCode": 7,
+      "versionCode": 10,
       "allowBackup": false,
       "blockedPermissions": [
         "android.permission.SYSTEM_ALERT_WINDOW",
@@ -25,14 +25,34 @@
         "android.permission.VIBRATE"
       ]
     },
-    "updates": { "enabled": false },
+    "updates": {
+      "enabled": false
+    },
     "plugins": [
-      ["expo-video", { "supportsBackgroundPlayback": false, "supportsPictureInPicture": true }],
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": false,
+          "supportsPictureInPicture": true
+        }
+      ],
       "./plugins/withPipLifecycle.cjs",
       "expo-screen-orientation",
       "./plugins/withCleartext.cjs",
-      "./plugins/withTvRemote.cjs"
+      "./plugins/withTvRemote.cjs",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0b0f10",
+          "image": "./assets/branding/stillwave-mark-v2.png",
+          "imageWidth": 168,
+          "resizeMode": "contain"
+        }
+      ]
     ],
-    "web": { "bundler": "metro", "name": "Stillwave" }
+    "web": {
+      "bundler": "metro",
+      "name": "StillWave"
+    }
   }
 }

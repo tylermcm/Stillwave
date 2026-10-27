@@ -1,0 +1,4584 @@
+{
+  "source": "https://iptv-org.github.io/api/feeds.json",
+  "playlist": "https://iptv-org.github.io/iptv/countries/us.m3u",
+  "fetchedAt": "2026-10-27T13:21:33.859Z",
+  "languages": {
+    "00sReplay.us@SD": [
+      "eng"
+    ],
+    "24HourFreeMovies.us@SD": [
+      "eng"
+    ],
+    "30ADarcizzleOffshore.us@SD": [
+      "eng"
+    ],
+    "30AGeorgiaHollywoodReview.us@SD": [
+      "eng"
+    ],
+    "30AGolfKingdom.us@SD": [
+      "eng"
+    ],
+    "30AInvestmentPitch.us@SD": [
+      "eng"
+    ],
+    "30ALionelNation.us@SD": [
+      "eng"
+    ],
+    "30ALoomeredTV.us@SD": [
+      "eng"
+    ],
+    "30ALuxeLifeDiscovered.us@SD": [
+      "eng"
+    ],
+    "30AMusic.us@SD": [
+      "eng"
+    ],
+    "30ARidiculousTV.us@SD": [
+      "eng"
+    ],
+    "30ASidewalks.us@SD": [
+      "eng"
+    ],
+    "30ATelevisionChannel.us@SD": [
+      "eng"
+    ],
+    "30ATheBeachShow.us@SD": [
+      "eng"
+    ],
+    "30ATVClassicMovies.us@SD": [
+      "eng"
+    ],
+    "30AWeLoveCars.us@SD": [
+      "eng"
+    ],
+    "3ABNEnglish.us@SD": [
+      "eng"
+    ],
+    "3ABNFrench.us@SD": [
+      "fra"
+    ],
+    "3ABNKids.us@SD": [
+      "eng"
+    ],
+    "3ABNLatino.us@SD": [
+      "spa"
+    ],
+    "3ABNPraiseHimMusicNetwork.us@SD": [
+      "eng"
+    ],
+    "3ABNProclaimNetwork.us@SD": [
+      "eng"
+    ],
+    "48Hours.us@US": [
+      "eng"
+    ],
+    "50CentAction.us@SD": [
+      "eng"
+    ],
+    "70sCinema.us@SD": [
+      "eng"
+    ],
+    "80sRewind.us@SD": [
+      "eng"
+    ],
+    "90sKids.us@SD": [
+      "eng"
+    ],
+    "90sKidsTV2.us@SD": [
+      "eng"
+    ],
+    "90sThrowback.us@SD": [
+      "eng"
+    ],
+    "ABC.us@KAAL": [
+      "eng"
+    ],
+    "ABC.us@KEROTV": [
+      "eng"
+    ],
+    "ABC.us@KGTV": [
+      "eng"
+    ],
+    "ABC.us@KGUNTV": [
+      "eng"
+    ],
+    "ABC.us@KITV": [
+      "eng"
+    ],
+    "ABC.us@KMGHTV": [
+      "eng"
+    ],
+    "ABC.us@KOATTV": [
+      "eng"
+    ],
+    "ABC.us@KRGVTV": [
+      "eng"
+    ],
+    "ABC.us@KSTPTV": [
+      "eng"
+    ],
+    "ABC.us@KXXV": [
+      "eng"
+    ],
+    "ABC.us@WBBJTV": [
+      "eng"
+    ],
+    "ABC.us@WBRZTV": [
+      "eng"
+    ],
+    "ABC.us@WDIODT": [
+      "eng"
+    ],
+    "ABC.us@WFTV": [
+      "eng"
+    ],
+    "ABC.us@WISNTV": [
+      "eng"
+    ],
+    "ABC.us@WJLATV": [
+      "eng"
+    ],
+    "ABC.us@WLOS": [
+      "eng"
+    ],
+    "ABC.us@WMARTV": [
+      "eng"
+    ],
+    "ABC.us@WMURTV": [
+      "eng"
+    ],
+    "ABC.us@WPDETV": [
+      "eng"
+    ],
+    "ABC.us@WSOCTV": [
+      "eng"
+    ],
+    "ABC.us@WSYX": [
+      "eng"
+    ],
+    "ABC.us@WTNH": [
+      "eng"
+    ],
+    "ABC.us@WTVQDT": [
+      "eng"
+    ],
+    "ABC.us@WTXLTV": [
+      "eng"
+    ],
+    "ABC.us@WWAY": [
+      "eng"
+    ],
+    "ABCNewsLive1.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive10.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive2.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive3.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive4.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive5.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive6.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive7.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive8.us@SD": [
+      "eng"
+    ],
+    "ABCNewsLive9.us@SD": [
+      "eng"
+    ],
+    "ABHPTV.us@HD": [
+      "vie"
+    ],
+    "ABNAfghanistan.us@SD": [
+      "pus",
+      "prd"
+    ],
+    "ABNAfrica.us@SD": [
+      "eng"
+    ],
+    "ABNBibleMoviesChannel.us@SD": [
+      "eng"
+    ],
+    "ABNChina.us@SD": [
+      "zho"
+    ],
+    "ABNTVIndia.us@SD": [
+      "hin"
+    ],
+    "ABNUrdu.us@SD": [
+      "urd"
+    ],
+    "AbsoluteRealitybyWETV.us@SD": [
+      "eng"
+    ],
+    "AcapulcoShore.us@US": [
+      "eng"
+    ],
+    "ACCDigitalNetwork.us@SD": [
+      "eng"
+    ],
+    "Access19.us@SD": [
+      "eng"
+    ],
+    "Access4PAC.us@SD": [
+      "eng"
+    ],
+    "AccessHumboldt.us@SD": [
+      "eng"
+    ],
+    "AccessNashua.us@SD": [
+      "eng"
+    ],
+    "AccessSacramentoChannel17.us@SD": [
+      "eng"
+    ],
+    "AccessTuolumne.us@SD": [
+      "eng"
+    ],
+    "AccessVisionChannel16.us@SD": [
+      "eng"
+    ],
+    "AccessVisionChannel17.us@SD": [
+      "eng"
+    ],
+    "ACCNetwork.us@SD": [
+      "eng"
+    ],
+    "AccuWeatherNOW.us@SD": [
+      "eng"
+    ],
+    "ACECountryRadio.us@KPVMLD": [
+      "eng"
+    ],
+    "AceTV.us@KCKSLD": [
+      "eng"
+    ],
+    "AceTV.us@SD": [
+      "eng"
+    ],
+    "ACTV.us@SD": [
+      "eng"
+    ],
+    "AdrenalinaPuraTV.us@SD": [
+      "spa"
+    ],
+    "AdultSwim.us@West": [
+      "eng",
+      "spa"
+    ],
+    "AE.us@East": [
+      "eng"
+    ],
+    "AfroLandTV.us@SD": [
+      "eng"
+    ],
+    "AFTV.us@SD": [
+      "eng"
+    ],
+    "AFV.us@SD": [
+      "eng"
+    ],
+    "AFVEspanol.us@SD": [
+      "spa"
+    ],
+    "Akaku53.us@SD": [
+      "eng"
+    ],
+    "Akaku54.us@SD": [
+      "eng"
+    ],
+    "Akaku55.us@SD": [
+      "eng"
+    ],
+    "AKCTV.us@SD": [
+      "eng"
+    ],
+    "AKCTVMeettheBreeds.us@SD": [
+      "eng"
+    ],
+    "AKCTVPuppies.us@SD": [
+      "eng"
+    ],
+    "AlabamaWeatherNetwork.us@SD": [
+      "eng"
+    ],
+    "AlFadyTV.us@SD": [
+      "ara"
+    ],
+    "AlHorreyaTV.us@SD": [
+      "ara"
+    ],
+    "AlientoVision.us@SD": [
+      "spa"
+    ],
+    "AlkarmaTVAustralia.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVFamily.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVMiddleEast.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVNorthAmericaCanada.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVPraise.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVTalmazaDiscipleship.us@SD": [
+      "ara"
+    ],
+    "AlkarmaTVYouthEnglish.us@SD": [
+      "ara"
+    ],
+    "ALLBLKGems.us@SD": [
+      "eng"
+    ],
+    "AllRealitybyWEtv.us@SD": [
+      "eng"
+    ],
+    "AllWeddingsWEtv.us@SD": [
+      "eng"
+    ],
+    "AlmagdTVMiddleEast.us@SD": [
+      "ara",
+      "eng"
+    ],
+    "AlmagdTVNorthAmerica.us@SD": [
+      "ara",
+      "eng"
+    ],
+    "AlMahdiTV.us@SD": [
+      "fas"
+    ],
+    "AlwaysFunnyVideos.us@SD": [
+      "eng"
+    ],
+    "AmazingFactsTV.us@SD": [
+      "eng"
+    ],
+    "AMC.us@EastHD": [
+      "eng"
+    ],
+    "AMCenEspanol.us@SD": [
+      "spa"
+    ],
+    "AmericanHeroesChannel.us@SD": [
+      "eng"
+    ],
+    "AmericanHorrors.us@SD": [
+      "eng"
+    ],
+    "AmericanNinjaWarrior.us@SD": [
+      "eng"
+    ],
+    "AmericasNextTopModel.us@SD": [
+      "eng"
+    ],
+    "AmericasTestKitchen.us@SD": [
+      "eng"
+    ],
+    "AmericasVoice.us@SD": [
+      "eng"
+    ],
+    "AmericasVoiceNews.us@SD": [
+      "eng"
+    ],
+    "Ameritrade.us@SD": [
+      "eng"
+    ],
+    "AMGATV.us@SD": [
+      "eng"
+    ],
+    "AMGTV.us@SD": [
+      "eng"
+    ],
+    "AMP1.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "AMP2.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "AmuTV.us@SD": [
+      "prd",
+      "pus"
+    ],
+    "AneflixLive.us@HD": [
+      "eng",
+      "spa"
+    ],
+    "AngerManagementChannel.us@SD": [
+      "eng"
+    ],
+    "AnimalPlanet.us@East": [
+      "eng"
+    ],
+    "AnimationPlus.us@SD": [
+      "eng"
+    ],
+    "AnimexHIDIVE.us@SD": [
+      "eng"
+    ],
+    "AntiquesRoadshowUK.us@SD": [
+      "eng"
+    ],
+    "AntiquesRoadTrip.us@SD": [
+      "eng"
+    ],
+    "AreWeThereYet.us@SD": [
+      "eng"
+    ],
+    "Armenia1.am@America": [
+      "arm"
+    ],
+    "ARTFLIXMovieClassics.us@SD": [
+      "eng"
+    ],
+    "ARTNTV.us@SD": [
+      "rus",
+      "hye"
+    ],
+    "AsianCrush.us@SD": [
+      "eng"
+    ],
+    "AsianCultureTV.us@HD": [
+      "eng"
+    ],
+    "AspireTVLife.us@SD": [
+      "eng"
+    ],
+    "AtHomewithFamilyHandyman.us@SD": [
+      "eng"
+    ],
+    "ATL26.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "AtlantaChannel.us@SD": [
+      "eng"
+    ],
+    "Atlas.us@SD": [
+      "eng"
+    ],
+    "ATXN1.us@SD": [
+      "eng"
+    ],
+    "ATXN2.us@SD": [
+      "eng"
+    ],
+    "ATXN3.us@SD": [
+      "eng"
+    ],
+    "AuroraTV.us@SD": [
+      "eng"
+    ],
+    "AutenticHistory.de@SD": [
+      "eng"
+    ],
+    "AutenticTravel.de@SD": [
+      "eng"
+    ],
+    "AvangTV.us@SD": [
+      "fas"
+    ],
+    "AVIRewind.us@SD": [
+      "spa"
+    ],
+    "AWE.us@SD": [
+      "eng"
+    ],
+    "AWEInternational.us@SD": [
+      "eng"
+    ],
+    "AWEPlus.us@KPVMLD": [
+      "eng"
+    ],
+    "AWEPlus.us@SD": [
+      "eng"
+    ],
+    "AXSTV.us@SD": [
+      "eng"
+    ],
+    "BabyFirst.us@Spanish": [
+      "spa"
+    ],
+    "BabyFirst.us@US": [
+      "eng",
+      "zho",
+      "spa",
+      "fra",
+      "tur",
+      "deu",
+      "kor",
+      "jpn",
+      "por",
+      "pol",
+      "rus",
+      "ara",
+      "heb",
+      "hun",
+      "ron"
+    ],
+    "BabySharkTV.us@SD": [
+      "eng"
+    ],
+    "BabyTV.uk@LatinAmerica": [
+      "spa"
+    ],
+    "Backstage.us@SD": [
+      "eng"
+    ],
+    "BarkTV.us@SD": [
+      "eng"
+    ],
+    "BarRescue.us@SD": [
+      "eng"
+    ],
+    "BattlestarGalactica.us@SD": [
+      "eng"
+    ],
+    "BATV.us@SD": [
+      "eng"
+    ],
+    "BATVEducationalChannel.us@SD": [
+      "eng"
+    ],
+    "BATVGovernmentChannel.us@SD": [
+      "eng"
+    ],
+    "BATVGovernmentTV.us@SD": [
+      "eng"
+    ],
+    "BATVPublicChannel.us@SD": [
+      "eng"
+    ],
+    "Baywatch.us@US": [
+      "eng"
+    ],
+    "BBCAmerica.us@East": [
+      "eng"
+    ],
+    "BBCEarth.uk@US": [
+      "eng"
+    ],
+    "BBCFood.us@SD": [
+      "eng"
+    ],
+    "BBCHomeGarden.us@SD": [
+      "eng"
+    ],
+    "BBCKids.us@SD": [
+      "eng"
+    ],
+    "BeachTVFloridaAlabama.us@SD": [
+      "eng"
+    ],
+    "BeachTVKeyWestFloridaKeys.us@SD": [
+      "eng"
+    ],
+    "BeachTVMyrtleBeachTheGrandStrand.us@SD": [
+      "eng"
+    ],
+    "BeachTVPanamaCity.us@SD": [
+      "eng"
+    ],
+    "beINSPORTSXTRA.us@SD": [
+      "eng"
+    ],
+    "beINSPORTSXTRAenEspanol.us@SD": [
+      "spa"
+    ],
+    "BEKNews.us@SD": [
+      "eng"
+    ],
+    "BEKSports.us@West": [
+      "eng"
+    ],
+    "BellatorMMA.us@SD": [
+      "eng"
+    ],
+    "BerksCommunityTV.us@SD": [
+      "eng"
+    ],
+    "BestofBATVChannel.us@SD": [
+      "eng"
+    ],
+    "BestofDrPhil.us@SD": [
+      "eng"
+    ],
+    "BETCinema.us@SD": [
+      "eng"
+    ],
+    "BETClassicsPlutoTV.us@SD": [
+      "eng"
+    ],
+    "BETComedyMovies.us@SD": [
+      "eng"
+    ],
+    "BETPlutoTV.us@US": [
+      "eng"
+    ],
+    "BetterHealthTV.us@SD": [
+      "eng"
+    ],
+    "BetterLifeNatureChannel.us@SD": [
+      "eng"
+    ],
+    "BetterLifeTV.us@SD": [
+      "eng"
+    ],
+    "BETThrowbacks.us@SD": [
+      "eng"
+    ],
+    "BETVisionaries.us@SD": [
+      "eng"
+    ],
+    "BeverlyHillbillies.us@US": [
+      "eng"
+    ],
+    "BeverlyHills90210.us@SD": [
+      "eng"
+    ],
+    "BeyondtheGates.us@SD": [
+      "eng"
+    ],
+    "BHTV10.us@SD": [
+      "eng"
+    ],
+    "BHTV35.us@SD": [
+      "eng"
+    ],
+    "BigBrother.us@SD": [
+      "eng"
+    ],
+    "BIGCivicChannel.us@SD": [
+      "eng"
+    ],
+    "BIGCommunityChannel.us@SD": [
+      "eng"
+    ],
+    "BigTenNetwork.us@SD": [
+      "eng"
+    ],
+    "BilliardTV.us@SD": [
+      "eng"
+    ],
+    "Binge.us@SD": [
+      "eng"
+    ],
+    "BizTV.us@SD": [
+      "eng"
+    ],
+    "BlackFamilySitcoms.us@SD": [
+      "eng"
+    ],
+    "BlackInkCrew.us@SD": [
+      "eng"
+    ],
+    "BlackNewsChannel.us@SD": [
+      "eng"
+    ],
+    "BlazeLive.us@SD": [
+      "eng"
+    ],
+    "BloombergOriginals.us@SD": [
+      "eng"
+    ],
+    "BloombergOriginals.us@US": [
+      "eng"
+    ],
+    "BloombergTV.us@LiveEvent": [
+      "eng"
+    ],
+    "BloombergTV.us@PoliticsLiveEvent": [
+      "eng"
+    ],
+    "BloombergTV.us@US": [
+      "eng"
+    ],
+    "BlueBloods.us@SD": [
+      "eng"
+    ],
+    "BMCHDTV.us@SD": [
+      "eng"
+    ],
+    "Bonanza.us@SD": [
+      "eng"
+    ],
+    "bonappetit.us@SD": [
+      "eng"
+    ],
+    "Boomerang.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "BotflixRadioo.us@HD": [
+      "eng"
+    ],
+    "BotflixTV.us@HD": [
+      "eng"
+    ],
+    "Bounce.us@SD": [
+      "eng"
+    ],
+    "BounceXL.us@SD": [
+      "eng"
+    ],
+    "BPTV.us@SD": [
+      "eng"
+    ],
+    "BPXTVRadio.us@SD": [
+      "fra",
+      "hat"
+    ],
+    "BratTV.us@SD": [
+      "eng"
+    ],
+    "Bravo.us@East": [
+      "eng"
+    ],
+    "BrevardGovernmentAccessTV.us@SD": [
+      "eng"
+    ],
+    "BritBoxMysteries.us@SD": [
+      "eng"
+    ],
+    "BusinessRockstars.us@SD": [
+      "eng"
+    ],
+    "BUTV10.us@SD": [
+      "eng"
+    ],
+    "Buzzr.us@SD": [
+      "eng"
+    ],
+    "BXArts.us@SD": [
+      "eng"
+    ],
+    "BXCulture.us@SD": [
+      "eng"
+    ],
+    "BXInform.us@SD": [
+      "eng"
+    ],
+    "BXInspire.us@SD": [
+      "eng"
+    ],
+    "BXOmni.us@SD": [
+      "eng"
+    ],
+    "BYUTV.us@SD": [
+      "eng"
+    ],
+    "CafeTradeTV.ir@SD": [
+      "fas"
+    ],
+    "CaliforniaMusicChannel.us@SD": [
+      "eng"
+    ],
+    "CameraSmileTV.us@SD": [
+      "eng"
+    ],
+    "CampSpoopy.us@SD": [
+      "eng"
+    ],
+    "CanaldelaFe.us@SD": [
+      "spa"
+    ],
+    "CanelaTV.us@SD": [
+      "spa"
+    ],
+    "CANTV19.us@SD": [
+      "eng"
+    ],
+    "CANTV21.us@SD": [
+      "eng"
+    ],
+    "CANTV27.us@SD": [
+      "eng"
+    ],
+    "CANTV36.us@SD": [
+      "eng"
+    ],
+    "CapitalCityConnectionMontgomery.us@SD": [
+      "eng"
+    ],
+    "CarChase.us@SD": [
+      "eng"
+    ],
+    "CartoonNetwork.us@East": [
+      "eng",
+      "spa"
+    ],
+    "CatholicFaithNetwork.us@SD": [
+      "eng"
+    ],
+    "CatholicTV.us@SD": [
+      "eng"
+    ],
+    "CBNEspanol.us@SD": [
+      "spa"
+    ],
+    "CBNFamily.us@SD": [
+      "eng"
+    ],
+    "CBNNews.us@SD": [
+      "eng"
+    ],
+    "CBS.us@KCCI": [
+      "eng"
+    ],
+    "CBS.us@KIROTV": [
+      "eng"
+    ],
+    "CBS.us@KMTVTV": [
+      "eng"
+    ],
+    "CBS.us@KUTV": [
+      "eng"
+    ],
+    "CBS.us@KWTVDT": [
+      "eng"
+    ],
+    "CBS.us@KZTV": [
+      "eng"
+    ],
+    "CBS.us@WCBITV": [
+      "eng"
+    ],
+    "CBS.us@WDEFTV": [
+      "eng"
+    ],
+    "CBS.us@WHIOTV": [
+      "eng"
+    ],
+    "CBS.us@WJAXTV": [
+      "eng"
+    ],
+    "CBS.us@WKRCTV": [
+      "eng"
+    ],
+    "CBS.us@WPEC": [
+      "eng"
+    ],
+    "CBS.us@WTVRTV": [
+      "eng"
+    ],
+    "CBS.us@WWMT": [
+      "eng"
+    ],
+    "CBSenespanol.us@SD": [
+      "eng"
+    ],
+    "CBSNews247.us@SD": [
+      "eng"
+    ],
+    "CBSNewsBaltimore.us@SD": [
+      "eng"
+    ],
+    "CBSNewsBayArea.us@SD": [
+      "eng"
+    ],
+    "CBSNewsBoston.us@SD": [
+      "eng"
+    ],
+    "CBSNewsChicago.us@SD": [
+      "eng"
+    ],
+    "CBSNewsColorado.us@SD": [
+      "eng"
+    ],
+    "CBSNewsDetroit.us@SD": [
+      "eng"
+    ],
+    "CBSNewsLosAngeles.us@SD": [
+      "eng"
+    ],
+    "CBSNewsMiami.us@SD": [
+      "eng"
+    ],
+    "CBSNewsMinnesota.us@SD": [
+      "eng"
+    ],
+    "CBSNewsNewYork.us@SD": [
+      "eng"
+    ],
+    "CBSNewsPhilly.us@SD": [
+      "eng"
+    ],
+    "CBSNewsPittsburgh.us@SD": [
+      "eng"
+    ],
+    "CBSNewsSacramento.us@SD": [
+      "eng"
+    ],
+    "CBSSportsGolazoNetwork.us@SD": [
+      "eng"
+    ],
+    "CBSSportsHQ.us@SD": [
+      "eng"
+    ],
+    "CCTV.us@SD": [
+      "eng"
+    ],
+    "CCX1.us@SD": [
+      "eng"
+    ],
+    "CelebrityNameGame.us@SD": [
+      "eng"
+    ],
+    "CelebritySceneTV.us@SD": [
+      "eng"
+    ],
+    "CerritosTV3.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "CFMTVChannel98.us@SD": [
+      "eng"
+    ],
+    "CGTV.us@SD": [
+      "eng"
+    ],
+    "Channel10.us@SD": [
+      "eng"
+    ],
+    "Channel18GAC.us@SD": [
+      "eng"
+    ],
+    "ChannelOne.us@SD": [
+      "fas"
+    ],
+    "Charge.us@SD": [
+      "eng"
+    ],
+    "CheddarNews.us@SD": [
+      "eng"
+    ],
+    "CheersPlusFrasier.us@SD": [
+      "eng"
+    ],
+    "ChefChampion.us@SD": [
+      "eng"
+    ],
+    "ChefRocShow.us@SD": [
+      "eng"
+    ],
+    "Choppertown.us@SD": [
+      "eng"
+    ],
+    "ChristianYouthChannelCYC.us@SD": [
+      "eng"
+    ],
+    "CineAdrenalina.us@SD": [
+      "spa"
+    ],
+    "CineAmor.us@SD": [
+      "spa"
+    ],
+    "Cineaventura.us@SD": [
+      "eng"
+    ],
+    "Cineenespanol.us@SD": [
+      "eng"
+    ],
+    "Cinemax.us@West": [
+      "eng",
+      "spa"
+    ],
+    "CinemaxClassics.us@East": [
+      "eng"
+    ],
+    "CinemaxHits.us@East": [
+      "eng",
+      "spa"
+    ],
+    "CinePremiere.us@SD": [
+      "spa"
+    ],
+    "CinePride.us@SD": [
+      "spa"
+    ],
+    "CineRomantico.us@SD": [
+      "eng"
+    ],
+    "CineSony.us@SD": [
+      "spa",
+      "eng"
+    ],
+    "CineTerror.us@US": [
+      "spa"
+    ],
+    "Cinevault80s.us@SD": [
+      "eng"
+    ],
+    "CinevaultWesterns.us@SD": [
+      "eng"
+    ],
+    "Circle.us@SD": [
+      "eng"
+    ],
+    "CityofFairfieldChannel26.us@SD": [
+      "eng"
+    ],
+    "CityofFortPierce.us@SD": [
+      "eng"
+    ],
+    "CityofLovelandTV.us@SD": [
+      "eng"
+    ],
+    "CityofMonroeGovernmentChannel.us@SD": [
+      "eng"
+    ],
+    "CityofPompanoBeach.us@SD": [
+      "eng"
+    ],
+    "CityTV20SantaMonica.us@SD": [
+      "eng"
+    ],
+    "CityTVCarlsbad.us@SD": [
+      "eng"
+    ],
+    "CityTVChannel341.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "CityTVLakewood.us@SD": [
+      "eng"
+    ],
+    "CityTVSanDiego.us@SD": [
+      "eng"
+    ],
+    "CityTVWhittier.us@SD": [
+      "eng"
+    ],
+    "Clarity4K.us@SD": [
+      "eng"
+    ],
+    "Classica.us@SD": [
+      "eng"
+    ],
+    "ClassicCinema.us@SD": [
+      "eng"
+    ],
+    "ClassicMoviesChannel.us@SD": [
+      "eng"
+    ],
+    "ClassicMovieWesterns.us@SD": [
+      "eng"
+    ],
+    "ClassicTVComedy.us@SD": [
+      "eng"
+    ],
+    "ClassicTVCrimeDrama.us@SD": [
+      "eng"
+    ],
+    "ClassicTVDrama.us@SD": [
+      "eng"
+    ],
+    "ClassicTVFamilies.us@US": [
+      "eng"
+    ],
+    "CloudflareTV.us@SD": [
+      "eng"
+    ],
+    "CMAC1.us@SD": [
+      "eng"
+    ],
+    "CMAC2.us@SD": [
+      "eng"
+    ],
+    "CMAC3.us@SD": [
+      "eng"
+    ],
+    "CMAPChannel17.us@SD": [
+      "eng"
+    ],
+    "CMAPChannel18.us@SD": [
+      "eng"
+    ],
+    "CMAPChannel19.us@SD": [
+      "eng"
+    ],
+    "CMAPChannel20.us@SD": [
+      "eng"
+    ],
+    "CMCUSACountryMusicChannel.us@SD": [
+      "eng"
+    ],
+    "CMT.us@East": [
+      "eng"
+    ],
+    "CMTEqualPlay.us@SD": [
+      "eng"
+    ],
+    "CMTV.us@SD": [
+      "eng"
+    ],
+    "CNBC.us@SD": [
+      "eng"
+    ],
+    "CNN.us@HD": [
+      "eng"
+    ],
+    "CNN.us@SD": [
+      "eng"
+    ],
+    "CNNChile.cl@SD": [
+      "spa"
+    ],
+    "CNNenEspanol.us@SD": [
+      "spa"
+    ],
+    "CNNOriginals.us@SD": [
+      "eng"
+    ],
+    "ColdCaseFiles.us@SD": [
+      "eng"
+    ],
+    "CollierTV.us@SD": [
+      "eng"
+    ],
+    "ComedyCentralAnimation.us@SD": [
+      "eng"
+    ],
+    "ComedyCentralenEspanol.us@SD": [
+      "spa"
+    ],
+    "ComedyCentralPlutoTV.us@US": [
+      "eng"
+    ],
+    "ComedyDynamics.us@SD": [
+      "eng"
+    ],
+    "ComercioTV.us@SD": [
+      "spa"
+    ],
+    "Comet.us@SD": [
+      "eng"
+    ],
+    "Community12TV.us@SD": [
+      "eng"
+    ],
+    "CommunityTVChannel189.us@SD": [
+      "eng"
+    ],
+    "ConcertChannel.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "ConcordTV.us@SD": [
+      "eng"
+    ],
+    "ContraCostaTV.us@SD": [
+      "eng"
+    ],
+    "CookingChannel.us@SD": [
+      "eng"
+    ],
+    "CookingPanda.us@SD": [
+      "eng"
+    ],
+    "Cops.us@SD": [
+      "eng"
+    ],
+    "CornerstoneTV.us@SD": [
+      "eng"
+    ],
+    "COStv.us@SD": [
+      "eng"
+    ],
+    "CourtTV.us@SD": [
+      "eng"
+    ],
+    "Create.us@SD": [
+      "eng"
+    ],
+    "Create.us@WMPT": [
+      "eng"
+    ],
+    "CreaTVChannel15.us@SD": [
+      "eng",
+      "zho"
+    ],
+    "CreaTVChannel27.us@SD": [
+      "eng"
+    ],
+    "CreaTVChannel28.us@SD": [
+      "eng"
+    ],
+    "CreaTVChannel30.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "Crime360.us@SD": [
+      "eng"
+    ],
+    "CrimenesImperfectos.us@SD": [
+      "eng"
+    ],
+    "CrimePlusInvestigation.us@SD": [
+      "eng"
+    ],
+    "Crunchyroll.us@SD": [
+      "eng",
+      "jap"
+    ],
+    "CruzTV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "CSatTV.us@SD": [
+      "eng"
+    ],
+    "CSI.us@SD": [
+      "eng"
+    ],
+    "CSIenespanol.us@SD": [
+      "spa"
+    ],
+    "CSIMiami.us@SD": [
+      "eng"
+    ],
+    "CSIMiamienespanol.us@SD": [
+      "eng"
+    ],
+    "CSINY.us@SD": [
+      "eng"
+    ],
+    "CSINYenespanol.us@SD": [
+      "eng"
+    ],
+    "CTN.us@SD": [
+      "eng"
+    ],
+    "CTNCourtFeed.us@SD": [
+      "eng"
+    ],
+    "CTNLiveStream2.us@SD": [
+      "eng"
+    ],
+    "CTNTVConneticut.us@SD": [
+      "eng"
+    ],
+    "CTV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "CuriosityNOW.de@EN": [
+      "eng"
+    ],
+    "CVCEducation.us@SD": [
+      "eng"
+    ],
+    "CVCGovernment.us@SD": [
+      "eng"
+    ],
+    "CVCPublic.us@SD": [
+      "eng"
+    ],
+    "CVTVChannel192.us@SD": [
+      "eng"
+    ],
+    "CVTVChannel194.us@SD": [
+      "eng"
+    ],
+    "CypressChannel36.us@SD": [
+      "eng"
+    ],
+    "DangerTV.us@SD": [
+      "eng"
+    ],
+    "DareToDreamNetwork.us@SD": [
+      "eng"
+    ],
+    "DarkMatterTV.us@SD": [
+      "eng"
+    ],
+    "Dateline247.us@SD": [
+      "eng"
+    ],
+    "DatingDisasters.us@SD": [
+      "eng"
+    ],
+    "DaystarTV.us@SD": [
+      "eng"
+    ],
+    "DaystarTV.us@WSLFLD": [
+      "eng"
+    ],
+    "DaystarTVEspanol.us@SD": [
+      "spa"
+    ],
+    "DCC.us@SD": [
+      "eng"
+    ],
+    "DCCMakingtheTeam.us@SD": [
+      "eng"
+    ],
+    "DCCouncilHearingRoom120.us@SD": [
+      "eng"
+    ],
+    "DealorNoDeal.us@SD": [
+      "eng"
+    ],
+    "DegaTV.us@SD": [
+      "fra"
+    ],
+    "Degrassi.us@US": [
+      "eng"
+    ],
+    "Denver8TV.us@SD": [
+      "eng"
+    ],
+    "DePeliculaUS.us@SD": [
+      "spa"
+    ],
+    "DerryTV17.us@SD": [
+      "eng"
+    ],
+    "DerryTV23.us@SD": [
+      "eng"
+    ],
+    "DesignatedSurvivor.us@SD": [
+      "eng"
+    ],
+    "DestinationAmerica.us@SD": [
+      "eng"
+    ],
+    "DetroitChannel10.us@SD": [
+      "eng"
+    ],
+    "DetroitChannel21.us@SD": [
+      "eng"
+    ],
+    "DetroitChannel22.us@SD": [
+      "eng"
+    ],
+    "DetroitChannel68.us@SD": [
+      "eng"
+    ],
+    "DidgahTV.us@SD": [
+      "fas"
+    ],
+    "DiscoveryChannel.us@East": [
+      "eng"
+    ],
+    "DiscoveryTurbo.us@SD": [
+      "eng"
+    ],
+    "DisneyJunior.us@East": [
+      "eng",
+      "spa"
+    ],
+    "DisneyXD.us@East": [
+      "eng",
+      "spa"
+    ],
+    "DistrictofColumbiaNetwork.us@SD": [
+      "eng"
+    ],
+    "DiyaTV.us@SD": [
+      "eng",
+      "hin",
+      "pan"
+    ],
+    "DKN.us@SD": [
+      "eng"
+    ],
+    "DoctorWhoClassic.us@US": [
+      "eng"
+    ],
+    "DocumentaryPlus.us@US": [
+      "eng"
+    ],
+    "Docurama.us@SD": [
+      "eng"
+    ],
+    "DogtheBountyHunter.us@US": [
+      "eng"
+    ],
+    "DontTellTheBride.uk@SD": [
+      "eng"
+    ],
+    "DoveChannel.us@SD": [
+      "eng"
+    ],
+    "DraftKingsNetwork.us@SD": [
+      "eng"
+    ],
+    "DrGeneScott.us@SD": [
+      "eng"
+    ],
+    "DryBarComedyPlus.us@SD": [
+      "eng"
+    ],
+    "DuckHuntingTV.us@SD": [
+      "eng"
+    ],
+    "DungeonTV.us@SD": [
+      "eng"
+    ],
+    "Dynasty.us@SD": [
+      "eng"
+    ],
+    "E.us@East": [
+      "eng"
+    ],
+    "EbonyTVbyLionsgate.us@SD": [
+      "eng"
+    ],
+    "EBSCinema.us@SD": [
+      "amh"
+    ],
+    "EBSMusika.us@SD": [
+      "amh"
+    ],
+    "EKeepingUp.us@SD": [
+      "eng"
+    ],
+    "ElbesharaGTV.us@SD": [
+      "ara"
+    ],
+    "ElectricNow.us@SD": [
+      "eng"
+    ],
+    "ElevationChurchNetwork.us@HD": [
+      "eng"
+    ],
+    "ElRey.us@SD": [
+      "eng"
+    ],
+    "ElSembradorNuevaEvangelizacionESNE.us@SD": [
+      "spa"
+    ],
+    "EntertainmentTonight.us@SD": [
+      "eng"
+    ],
+    "EntrepreneurTV.us@SD": [
+      "eng"
+    ],
+    "EscambiaCountyTV.us@SD": [
+      "eng"
+    ],
+    "ESNETV.us@SD": [
+      "spa"
+    ],
+    "ESPN.us@HD": [
+      "eng"
+    ],
+    "ESPN.us@SD": [
+      "eng"
+    ],
+    "ESPN2.us@HD": [
+      "eng"
+    ],
+    "ESPNDeportes.us@HD": [
+      "spa"
+    ],
+    "ESPNU.us@HD": [
+      "eng"
+    ],
+    "EstrellaGames.us@SD": [
+      "spa"
+    ],
+    "EstrellaNews.us@SD": [
+      "spa"
+    ],
+    "EstrellaTV.us@SD": [
+      "spa"
+    ],
+    "EWTN.us@English": [
+      "eng"
+    ],
+    "EWTN.us@Spanish": [
+      "spa"
+    ],
+    "ExtremaTV.us@SD": [
+      "eng"
+    ],
+    "F1Channel.ie@US": [
+      "eng"
+    ],
+    "FailArmy.us@US": [
+      "eng"
+    ],
+    "FairgroundAICreatorTV.us@SD": [
+      "eng"
+    ],
+    "FaithTV.us@SD": [
+      "eng"
+    ],
+    "FamilyTies.us@SD": [
+      "eng"
+    ],
+    "Farscape.us@SD": [
+      "eng"
+    ],
+    "FashionFinds.us@SD": [
+      "eng"
+    ],
+    "FastTV.us@SD": [
+      "eng"
+    ],
+    "FCPublicMedia.us@SD": [
+      "eng"
+    ],
+    "FCTV.us@SD": [
+      "eng"
+    ],
+    "FearFactor.us@US": [
+      "eng"
+    ],
+    "FeelGoodDrama.us@SD": [
+      "eng"
+    ],
+    "FernandinaBeachChannel.us@SD": [
+      "eng"
+    ],
+    "FGTV.us@SD": [
+      "eng"
+    ],
+    "FierroaFondoTV.us@SD": [
+      "spa"
+    ],
+    "FIFAPlus.uk@UnitedStates": [
+      "eng"
+    ],
+    "FilAmTVNetwork.us@HD": [
+      "eng",
+      "tgl"
+    ],
+    "FilmRiseForensicFiles.us@SD": [
+      "eng"
+    ],
+    "FITE247.us@SD": [
+      "eng"
+    ],
+    "FlicksofFury.us@SD": [
+      "eng"
+    ],
+    "FlowersTVUSA.us@SD": [
+      "mal",
+      "eng"
+    ],
+    "FNX.us@KVCRDT": [
+      "eng"
+    ],
+    "FNX.us@SD": [
+      "eng"
+    ],
+    "FoodNetwork.us@East": [
+      "eng"
+    ],
+    "ForensicFiles.us@SD": [
+      "spa"
+    ],
+    "ForeverKids.us@SD": [
+      "eng"
+    ],
+    "Fox.us@KBSI": [
+      "eng"
+    ],
+    "Fox.us@KCPQ": [
+      "eng"
+    ],
+    "Fox.us@KDFW": [
+      "eng"
+    ],
+    "Fox.us@KMPHTV": [
+      "eng"
+    ],
+    "Fox.us@KOKHTV": [
+      "eng"
+    ],
+    "Fox.us@KRIV": [
+      "eng"
+    ],
+    "Fox.us@KSAZTV": [
+      "eng"
+    ],
+    "Fox.us@KTBC": [
+      "eng"
+    ],
+    "Fox.us@KTTV": [
+      "eng"
+    ],
+    "Fox.us@WBFF": [
+      "eng"
+    ],
+    "Fox.us@West": [
+      "eng"
+    ],
+    "Fox.us@WFTXTV": [
+      "eng"
+    ],
+    "Fox.us@WFXT": [
+      "eng"
+    ],
+    "Fox.us@WHBQTV": [
+      "eng"
+    ],
+    "Fox.us@WITI": [
+      "eng"
+    ],
+    "Fox.us@WJBK": [
+      "eng"
+    ],
+    "Fox.us@WNYW": [
+      "eng"
+    ],
+    "Fox.us@WSVN": [
+      "eng"
+    ],
+    "Fox.us@WTTG": [
+      "eng"
+    ],
+    "Fox.us@WTVT": [
+      "eng"
+    ],
+    "Fox.us@WTXFTV": [
+      "eng"
+    ],
+    "Fox.us@WXXVTV": [
+      "eng"
+    ],
+    "FoxBusinessNetwork.us@SD": [
+      "eng"
+    ],
+    "FoxDeportes.us@SD": [
+      "spa",
+      "eng"
+    ],
+    "FoxNewsChannel.us@SD": [
+      "eng"
+    ],
+    "FoxNewsRadio.us@SD": [
+      "eng"
+    ],
+    "FoxSoul.us@SD": [
+      "eng"
+    ],
+    "FoxSports1.us@HD": [
+      "eng"
+    ],
+    "FoxSports2.us@HD": [
+      "eng"
+    ],
+    "FoxWeather.us@SD": [
+      "eng"
+    ],
+    "FreebieTV.us@SD": [
+      "eng"
+    ],
+    "FreeSpeechTV.us@SD": [
+      "eng"
+    ],
+    "FrightFlix.us@SD": [
+      "eng"
+    ],
+    "FTFSports.us@SD": [
+      "eng"
+    ],
+    "FuboSportsNetwork.us@SD": [
+      "eng"
+    ],
+    "FunnyAF.us@SD": [
+      "eng"
+    ],
+    "FunRoads.us@SD": [
+      "eng"
+    ],
+    "Fuse.us@East": [
+      "eng"
+    ],
+    "FX.us@East": [
+      "eng"
+    ],
+    "G10TV.us@SD": [
+      "eng"
+    ],
+    "Gagsnetwork.us@SD": [
+      "rus",
+      "eng"
+    ],
+    "Galavision.us@EastHD": [
+      "spa"
+    ],
+    "Galavision.us@West": [
+      "spa"
+    ],
+    "Galavision.us@WestHD": [
+      "spa"
+    ],
+    "GalvestonCountyTV.us@SD": [
+      "eng"
+    ],
+    "GalxyTV.us@SD": [
+      "eng"
+    ],
+    "GameShowCentral.us@SD": [
+      "eng"
+    ],
+    "GameShowNetwork.us@East": [
+      "eng"
+    ],
+    "GanjeHozourTV.us@SD": [
+      "fas"
+    ],
+    "GarfieldandFriends.us@US": [
+      "eng"
+    ],
+    "GCNAmerica.us@SD": [
+      "eng"
+    ],
+    "GCOtv.us@SD": [
+      "eng"
+    ],
+    "GEBNetwork.us@KBPXLD": [
+      "vie"
+    ],
+    "GemShoppingNetwork.us@SD": [
+      "eng"
+    ],
+    "GenesisScienceNetwork.us@SD": [
+      "eng"
+    ],
+    "GiggleMug.us@SD": [
+      "eng"
+    ],
+    "GillettePublicAccessTelevisionChannel189.us@SD": [
+      "eng"
+    ],
+    "GillettePublicAccessTelevisionChannel190.us@SD": [
+      "eng"
+    ],
+    "GillettePublicAccessTelevisionChannel192.us@SD": [
+      "eng"
+    ],
+    "GirlfriendsFilms.us@SD": [
+      "eng"
+    ],
+    "Glendale11AZ.us@SD": [
+      "eng"
+    ],
+    "GlendaleTV.us@SD": [
+      "eng"
+    ],
+    "GlobalBuddhistNetwork.us@SD": [
+      "tha"
+    ],
+    "GlobalFashionChannel.us@SD": [
+      "eng"
+    ],
+    "GlobalWorldTV.us@SD": [
+      "eng"
+    ],
+    "GMTV.us@SD": [
+      "eng"
+    ],
+    "GodsLearningChannel.us@KPCBDT": [
+      "eng"
+    ],
+    "GolazoNetwork.us@SD": [
+      "eng"
+    ],
+    "GoodLife45.us@SD": [
+      "eng"
+    ],
+    "GordonRamsaysHellsKitchen.us@SD": [
+      "eng"
+    ],
+    "GospelTruthTV.us@SD": [
+      "eng"
+    ],
+    "GoTraveler.us@SD": [
+      "eng"
+    ],
+    "GovernmentTV16.us@SD": [
+      "eng"
+    ],
+    "GravitasMovies.us@SD": [
+      "eng"
+    ],
+    "GreatEntertainmentTelevision.us@SD": [
+      "eng"
+    ],
+    "GreaterLoveTV.us@SD": [
+      "eng"
+    ],
+    "GreensboroTV.us@SD": [
+      "eng"
+    ],
+    "GritXtra.us@SD": [
+      "eng"
+    ],
+    "GrjngoWesternMovies.de@SD": [
+      "eng",
+      "deu"
+    ],
+    "GuangdongTVAmerica.us@SD": [
+      "zho"
+    ],
+    "GunAzTV.us@SD": [
+      "aze"
+    ],
+    "Gunsmoke.us@SD": [
+      "eng"
+    ],
+    "HallmarkChannel.us@East": [
+      "eng"
+    ],
+    "HallmarkMoviesMore.us@SD": [
+      "eng"
+    ],
+    "HappyDays.us@SD": [
+      "eng"
+    ],
+    "HappyKids.us@SD": [
+      "eng"
+    ],
+    "HarmonyGospelMusicTV.us@SD": [
+      "eng"
+    ],
+    "HarPalGeo.pk@SD": [
+      "urd"
+    ],
+    "HarvestUSA.in@SD": [
+      "eng"
+    ],
+    "HasbroLegends.us@SD": [
+      "eng"
+    ],
+    "HauntTV.ca@SD": [
+      "eng"
+    ],
+    "HBO.us@East": [
+      "eng",
+      "spa"
+    ],
+    "HBOHits.us@East": [
+      "eng",
+      "spa"
+    ],
+    "HBTV.us@SD": [
+      "eng"
+    ],
+    "HCTVEducationalAccessChannel.us@SD": [
+      "eng"
+    ],
+    "HCTVGovernmentChannel.us@SD": [
+      "eng"
+    ],
+    "HCTVPublicAccessChannel.us@SD": [
+      "eng"
+    ],
+    "Heartland.us@Eastern": [
+      "eng"
+    ],
+    "Heartland.us@Web": [
+      "eng"
+    ],
+    "HGTV.us@East": [
+      "eng"
+    ],
+    "HighVisionTV.us@SD": [
+      "fas"
+    ],
+    "HillsboroughTV.us@SD": [
+      "eng"
+    ],
+    "HisGloryTV.us@SD": [
+      "eng"
+    ],
+    "History.us@East": [
+      "eng"
+    ],
+    "HistoryHit.uk@SD": [
+      "eng"
+    ],
+    "HiYAH.us@SD": [
+      "eng"
+    ],
+    "HKTV.us@SD": [
+      "eng"
+    ],
+    "HLN.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "HMIPROMZNEWS.us@SD": [
+      "fra"
+    ],
+    "HmongStarTV.us@SD": [
+      "hmn",
+      "vie"
+    ],
+    "HmongTVNetwork.us@SD": [
+      "hmn",
+      "vie"
+    ],
+    "HogansHeroes.us@SD": [
+      "eng"
+    ],
+    "HollyWire.us@SD": [
+      "eng"
+    ],
+    "Homeful.ca@US": [
+      "eng"
+    ],
+    "HomeMadeNation.us@SD": [
+      "eng"
+    ],
+    "Hope4LifeTV.us@SD": [
+      "eng"
+    ],
+    "HopeChannelInterAmerica.us@SD": [
+      "spa"
+    ],
+    "HopeChannelInterAmericaEnglish.us@SD": [
+      "eng"
+    ],
+    "HopeChannelInternational.us@SD": [
+      "eng"
+    ],
+    "HopeChannelNorthAmerica.us@SD": [
+      "eng"
+    ],
+    "HotBench.us@SD": [
+      "eng"
+    ],
+    "HSN.us@East": [
+      "eng"
+    ],
+    "HSN.us@West": [
+      "eng"
+    ],
+    "HSN2.us@SD": [
+      "eng"
+    ],
+    "HTV1HoustonTelevision.us@SD": [
+      "eng"
+    ],
+    "HTV2HoustonTelevision.us@SD": [
+      "eng"
+    ],
+    "HumorMill.us@SD": [
+      "eng"
+    ],
+    "Hungry.us@SD": [
+      "eng"
+    ],
+    "iCarly.us@SD": [
+      "eng"
+    ],
+    "IFC.us@East": [
+      "eng"
+    ],
+    "iHolyfieldTV.us@WHPSCD": [
+      "eng"
+    ],
+    "ILoveLucy.us@SD": [
+      "eng"
+    ],
+    "ImanTV.us@SD": [
+      "pus"
+    ],
+    "ImpactNetwork.us@SD": [
+      "eng"
+    ],
+    "ImpossibleQuizShow.us@SD": [
+      "eng"
+    ],
+    "INFAST.nl@SD": [
+      "eng"
+    ],
+    "InkMaster.us@SD": [
+      "eng"
+    ],
+    "InstantSaga.us@US": [
+      "fra"
+    ],
+    "IntheKitchen.us@SD": [
+      "eng"
+    ],
+    "Investiga.us@US": [
+      "eng"
+    ],
+    "InvestigationDiscovery.us@East": [
+      "eng"
+    ],
+    "INWILD.nl@SD": [
+      "eng"
+    ],
+    "IONPlus.us@East": [
+      "eng"
+    ],
+    "IONTV.us@East": [
+      "eng"
+    ],
+    "IraneFardaTV.uk@SD": [
+      "fas"
+    ],
+    "IronChef.us@US": [
+      "eng"
+    ],
+    "ItIsWrittenTV.us@SD": [
+      "eng"
+    ],
+    "ItsSupernaturalNetwork.us@SD": [
+      "eng"
+    ],
+    "JBS.us@SD": [
+      "eng"
+    ],
+    "JerseyShore.us@SD": [
+      "eng"
+    ],
+    "JewelryTV.us@SD": [
+      "eng"
+    ],
+    "JewelryTV2.us@SD": [
+      "eng"
+    ],
+    "JewishLifeTelevision.us@SD": [
+      "eng"
+    ],
+    "JoelOsteenNetwork.us@HD": [
+      "eng"
+    ],
+    "JohnnyCarsonTV.us@SD": [
+      "eng"
+    ],
+    "Journy.us@SD": [
+      "eng"
+    ],
+    "JudgeNosey.us@US": [
+      "eng"
+    ],
+    "JusHindi.us@SD": [
+      "hin"
+    ],
+    "JusOne.us@SD": [
+      "hin"
+    ],
+    "JusPunjabi.us@SD": [
+      "pan"
+    ],
+    "JustforLaughsGags.us@SD": [
+      "eng"
+    ],
+    "KajouTV.us@SD": [
+      "fra"
+    ],
+    "KaloopyTV.us@SD": [
+      "eng"
+    ],
+    "KartoonChannel.us@SD": [
+      "eng"
+    ],
+    "KBEV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "KBRI8.us@SD": [
+      "eng"
+    ],
+    "KBSV231.us@SD": [
+      "aii",
+      "eng"
+    ],
+    "KCAT.us@SD": [
+      "eng"
+    ],
+    "KContentbyCJENM.us@SD": [
+      "eng"
+    ],
+    "KentuckyEducationalTelevision.us@WKMJTV": [
+      "eng"
+    ],
+    "KentuckyEducationalTelevision.us@WKPCTV": [
+      "eng"
+    ],
+    "KernCountyTV.us@SD": [
+      "eng"
+    ],
+    "KetchupTV.us@SD": [
+      "eng"
+    ],
+    "KevinHartsLOLNetwork.us@SD": [
+      "eng"
+    ],
+    "KFONTV.us@SD": [
+      "eng"
+    ],
+    "KidOO.us@SD": [
+      "spa"
+    ],
+    "KidsFlix.us@SD": [
+      "eng"
+    ],
+    "KidsMovieClub.us@SD": [
+      "eng"
+    ],
+    "KIIOLD101.us@HD": [
+      "hye",
+      "eng"
+    ],
+    "KIIOLD104.us@SD": [
+      "hye",
+      "eng"
+    ],
+    "KMCTTV391.us@HD": [
+      "eng"
+    ],
+    "KNino.us@SD": [
+      "spa"
+    ],
+    "KNOVCD411.us@HD": [
+      "eng"
+    ],
+    "KNXVTV611.us@HD": [
+      "eng"
+    ],
+    "KOCTChannel18.us@SD": [
+      "eng"
+    ],
+    "KOCTChannel19.us@SD": [
+      "eng"
+    ],
+    "KPVMLD251.us@HD": [
+      "eng"
+    ],
+    "KRGVTV52.us@HD": [
+      "spa"
+    ],
+    "KSCE381.us@HD": [
+      "eng",
+      "spa"
+    ],
+    "KSCE383.us@HD": [
+      "eng",
+      "spa"
+    ],
+    "KTOO360TV.us@KTOOTV": [
+      "eng"
+    ],
+    "KVTNDT251.us@HD": [
+      "eng"
+    ],
+    "LA36.us@SD": [
+      "eng"
+    ],
+    "LACityView35.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "LacrosseTV.us@SD": [
+      "eng"
+    ],
+    "Laff.us@SD": [
+      "eng"
+    ],
+    "LakeFrontTV.us@SD": [
+      "eng"
+    ],
+    "LakeHavasuCity4.us@SD": [
+      "eng"
+    ],
+    "LakewoodChannel8.us@SD": [
+      "eng"
+    ],
+    "LaQueBuenaAtlanta.us@SD": [
+      "spa"
+    ],
+    "LasVegasTonightwithDaleDavidson.us@HD": [
+      "eng"
+    ],
+    "LatinoChannelTV.us@HD": [
+      "eng"
+    ],
+    "LATV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "LaVozdeJesusHD.do@HD": [
+      "eng",
+      "spa"
+    ],
+    "LawCrime.us@SD": [
+      "eng"
+    ],
+    "LBCInternational.lb@SD": [
+      "ara"
+    ],
+    "LegoChannel.us@SD": [
+      "eng"
+    ],
+    "LEGOKidsTV.us@SD": [
+      "eng"
+    ],
+    "LeominsterTVEducational.us@SD": [
+      "eng"
+    ],
+    "LeominsterTVGovernment.us@SD": [
+      "eng"
+    ],
+    "LeominsterTVPublic.us@SD": [
+      "eng"
+    ],
+    "LexTV.us@SD": [
+      "eng"
+    ],
+    "LGTV.us@SD": [
+      "eng"
+    ],
+    "LifetimeMovies.us@East": [
+      "eng",
+      "spa"
+    ],
+    "LifevisionTV.us@SD": [
+      "eng"
+    ],
+    "LindellTV.us@SD": [
+      "eng"
+    ],
+    "LittleGuyanaTV.us@SD": [
+      "eng"
+    ],
+    "LittleStarsUniverse.us@SD": [
+      "eng"
+    ],
+    "Littleton8TV.us@SD": [
+      "eng"
+    ],
+    "LiveMusic.us@SD": [
+      "eng"
+    ],
+    "LiveNOWfromFOX.us@SD": [
+      "eng"
+    ],
+    "LIVExLIVE.us@SD": [
+      "eng"
+    ],
+    "LivingFaithTV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "LLBNHisLight.us@SD": [
+      "eng"
+    ],
+    "LLBNHisWord.us@SD": [
+      "eng"
+    ],
+    "LLBNTVArabic.us@SD": [
+      "ara"
+    ],
+    "LLBNTVChinese.us@SD": [
+      "zho"
+    ],
+    "LLBNTVKorean.us@SD": [
+      "kor"
+    ],
+    "LLBNTVLatino.us@SD": [
+      "spa"
+    ],
+    "LLBNTVRomanian.us@SD": [
+      "ron"
+    ],
+    "LLBNTVSouthAsia.us@SD": [
+      "hin"
+    ],
+    "Localish.us@SD": [
+      "eng"
+    ],
+    "LogoPlutoTV.us@SD": [
+      "eng"
+    ],
+    "LogosTV.es@SD": [
+      "spa"
+    ],
+    "LogosTV.us@SD": [
+      "ara"
+    ],
+    "LogosTVEnglish.us@SD": [
+      "eng"
+    ],
+    "LogosTVEstudio.es@SD": [
+      "spa"
+    ],
+    "LogosTVKids.es@SD": [
+      "spa"
+    ],
+    "LogosTVSalud.es@SD": [
+      "spa"
+    ],
+    "LoneStar.us@SD": [
+      "eng"
+    ],
+    "LoveHipHop.us@SD": [
+      "eng"
+    ],
+    "LoveNatureenEspanol.us@SD": [
+      "eng"
+    ],
+    "LovePets.ca@US": [
+      "eng"
+    ],
+    "LoveThePlanet.es@EN": [
+      "eng"
+    ],
+    "LoveWorldUSA.ng@SD": [
+      "eng"
+    ],
+    "LucasFriends.us@SD": [
+      "eng"
+    ],
+    "LuckyDog.us@SD": [
+      "eng"
+    ],
+    "MadDogandMerrill.us@SD": [
+      "eng"
+    ],
+    "MadeInHollywood.us@SD": [
+      "eng"
+    ],
+    "MagellanTVNow.us@SD": [
+      "eng"
+    ],
+    "MagnificentMoviesNetwork.us@SD": [
+      "eng"
+    ],
+    "MagnoliaNetwork.us@East": [
+      "eng"
+    ],
+    "MajestadTV.us@SD": [
+      "spa"
+    ],
+    "MariaVisionUSA.us@SD": [
+      "eng"
+    ],
+    "MartinCountyTV.us@SD": [
+      "eng"
+    ],
+    "Masadrenalina.us@SD": [
+      "eng"
+    ],
+    "Matlock.us@SD": [
+      "eng"
+    ],
+    "MaverickBlackCinema.us@SD": [
+      "eng"
+    ],
+    "Maxcine.us@HD": [
+      "spa"
+    ],
+    "Maxcine2.us@HD": [
+      "spa"
+    ],
+    "MaxcineComedy.us@HD": [
+      "spa"
+    ],
+    "MaxcineFamily.us@HD": [
+      "spa"
+    ],
+    "MaxcineKids.us@HD": [
+      "spa"
+    ],
+    "MBC1USA.us@SD": [
+      "eng",
+      "ara"
+    ],
+    "MBC3USA.us@SD": [
+      "ara",
+      "eng"
+    ],
+    "MBCAmerica.us@SD": [
+      "kor",
+      "eng"
+    ],
+    "MBCDramaUSA.us@SD": [
+      "ara"
+    ],
+    "MBCMasrUSA.us@SD": [
+      "ara"
+    ],
+    "MBTV.us@SD": [
+      "eng"
+    ],
+    "MCN6ArtsChannel.us@SD": [
+      "eng"
+    ],
+    "MCN6MainChannel.us@SD": [
+      "eng"
+    ],
+    "MCN6MusicChannel.us@SD": [
+      "eng"
+    ],
+    "MCPSSTV.us@SD": [
+      "eng"
+    ],
+    "MediasetItalia.it@USA": [
+      "ita"
+    ],
+    "MegaExtrenoHD.us@HD": [
+      "spa",
+      "eng"
+    ],
+    "MegaTV.us@WSBSTV": [
+      "eng"
+    ],
+    "MeritStreet.us@SD": [
+      "eng"
+    ],
+    "MetaleitorTV.us@SD": [
+      "spa"
+    ],
+    "MeTV.us@SD": [
+      "eng"
+    ],
+    "MidnightPulp.us@SD": [
+      "eng"
+    ],
+    "MidpenMediaCenterChannel26.us@SD": [
+      "eng"
+    ],
+    "MidpenMediaCenterChannel28.us@SD": [
+      "eng"
+    ],
+    "MidpenMediaCenterChannel29.us@SD": [
+      "eng"
+    ],
+    "MidpenMediaCenterChannel30.us@SD": [
+      "eng"
+    ],
+    "MidpenMediaCenterChannel75.us@SD": [
+      "eng"
+    ],
+    "MidsomerMurders.us@SD": [
+      "eng"
+    ],
+    "MilitaryHistory.us@SD": [
+      "eng"
+    ],
+    "MinisterioLaVozDeUnRemanenteTV.us@SD": [
+      "spa"
+    ],
+    "MissionImpossible.us@SD": [
+      "eng"
+    ],
+    "MissionTV.us@SD": [
+      "eng"
+    ],
+    "Misteriossinresolver.us@SD": [
+      "spa"
+    ],
+    "MLB.us@SD": [
+      "eng"
+    ],
+    "MLBStrikeZone.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "MMATV.us@SD": [
+      "eng"
+    ],
+    "MNT.us@WCIV": [
+      "eng"
+    ],
+    "MNT.us@WFLD": [
+      "eng"
+    ],
+    "MohabatTV.us@SD": [
+      "fas"
+    ],
+    "MonroeCommunityMediaEducationChannel.us@SD": [
+      "eng"
+    ],
+    "MonroeCommunityMediaPublicAccessChannel.us@SD": [
+      "eng"
+    ],
+    "MonroeCountyTV.us@SD": [
+      "eng"
+    ],
+    "MontgomeryChannel.us@SD": [
+      "eng"
+    ],
+    "MoreTrueCrime.us@SD": [
+      "eng"
+    ],
+    "MoreTVDrama.us@SD": [
+      "eng"
+    ],
+    "MoreTVSitcoms.us@SD": [
+      "eng"
+    ],
+    "Movies.us@KPVMLD": [
+      "eng"
+    ],
+    "Movies.us@SD": [
+      "eng"
+    ],
+    "MovieSphere.us@US": [
+      "eng"
+    ],
+    "MovieSphereGold.us@WFXT": [
+      "eng"
+    ],
+    "MrBeanAnimated.uk@English": [
+      "eng"
+    ],
+    "MRVTVChannel44.us@SD": [
+      "eng"
+    ],
+    "MRVTVChannel45.us@SD": [
+      "eng"
+    ],
+    "MSG.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "MSNOW.us@SD": [
+      "eng"
+    ],
+    "MST3K.us@US": [
+      "eng"
+    ],
+    "MSTV.us@SD": [
+      "eng"
+    ],
+    "MTC.us@SD": [
+      "fas"
+    ],
+    "MTV.us@East": [
+      "eng"
+    ],
+    "MTV2.us@East": [
+      "eng",
+      "spa"
+    ],
+    "MTVBiggestPop.us@US": [
+      "eng"
+    ],
+    "MTVenEspanol.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "MTVFlowLatino.us@SD": [
+      "eng"
+    ],
+    "MTVLive.us@SD": [
+      "eng"
+    ],
+    "MTVPlutoTV.us@US": [
+      "eng"
+    ],
+    "MTVSpankinNew.us@US": [
+      "eng"
+    ],
+    "MuslimNetworkTV.us@SD": [
+      "eng",
+      "ara"
+    ],
+    "MysteryScienceTheater3000.us@SD": [
+      "eng"
+    ],
+    "MyTimeMovieNetworkEast.us@SD": [
+      "eng"
+    ],
+    "Naruto.us@US": [
+      "eng"
+    ],
+    "Narutoenespanol.us@SD": [
+      "spa"
+    ],
+    "NashBridges.us@SD": [
+      "eng"
+    ],
+    "NashuaETV.us@SD": [
+      "eng"
+    ],
+    "NatickEducationChannel.us@SD": [
+      "eng"
+    ],
+    "NatickGovernmentChannel.us@SD": [
+      "eng"
+    ],
+    "NatickPublicAccessChannel.us@SD": [
+      "eng"
+    ],
+    "NationalGeographic.us@East": [
+      "eng"
+    ],
+    "NationalGeographic.us@HDEast": [
+      "eng"
+    ],
+    "NationalGeographicWild.us@HDEast": [
+      "eng"
+    ],
+    "NATTV.us@SD": [
+      "tha"
+    ],
+    "NBATV.us@SD": [
+      "eng"
+    ],
+    "NBC.us@East": [
+      "eng"
+    ],
+    "NBC.us@KNTV": [
+      "eng"
+    ],
+    "NBC.us@KRISTV": [
+      "eng"
+    ],
+    "NBC.us@KSBW": [
+      "eng"
+    ],
+    "NBC.us@KSBY": [
+      "eng"
+    ],
+    "NBC.us@KSHBTV": [
+      "eng"
+    ],
+    "NBC.us@KSNV": [
+      "eng"
+    ],
+    "NBC.us@KXASTV": [
+      "eng"
+    ],
+    "NBC.us@WBALTV": [
+      "eng"
+    ],
+    "NBC.us@WBTSCD": [
+      "eng"
+    ],
+    "NBC.us@West": [
+      "eng"
+    ],
+    "NBC.us@WGAL": [
+      "eng"
+    ],
+    "NBC.us@WGBATV": [
+      "eng"
+    ],
+    "NBC.us@WHECTV": [
+      "eng"
+    ],
+    "NBC.us@WJACTV": [
+      "eng"
+    ],
+    "NBC.us@WJAR": [
+      "eng"
+    ],
+    "NBC.us@WLIO": [
+      "eng"
+    ],
+    "NBC.us@WMAQTV": [
+      "eng"
+    ],
+    "NBC.us@WMGTTV": [
+      "eng"
+    ],
+    "NBC.us@WNYT": [
+      "eng"
+    ],
+    "NBC.us@WOAITV": [
+      "eng"
+    ],
+    "NBC.us@WPTVTV": [
+      "eng"
+    ],
+    "NBC.us@WPXI": [
+      "eng"
+    ],
+    "NBC.us@WRDELD": [
+      "eng"
+    ],
+    "NBC.us@WTLV": [
+      "eng"
+    ],
+    "NBC.us@WTMJTV": [
+      "eng"
+    ],
+    "NBC.us@WTOVTV": [
+      "eng"
+    ],
+    "NBC.us@WTVJ": [
+      "eng"
+    ],
+    "NBC.us@WVIT": [
+      "eng"
+    ],
+    "NBCComedyVault.us@SD": [
+      "eng"
+    ],
+    "NBCLX.us@SD": [
+      "eng"
+    ],
+    "NBCLXHome.us@HD": [
+      "eng"
+    ],
+    "NBCNewsNOW.us@SD": [
+      "eng"
+    ],
+    "NBCSportsNOW.us@SD": [
+      "eng"
+    ],
+    "NCMEducationalKidsChannel.us@SD": [
+      "eng"
+    ],
+    "NCMGovernmentPoliticsChannel.us@SD": [
+      "eng"
+    ],
+    "NCMMainChannel.us@SD": [
+      "eng"
+    ],
+    "NCTV79.us@SD": [
+      "eng"
+    ],
+    "NewChannel.ca@SD": [
+      "eng"
+    ],
+    "NewChannelPop.ca@SD": [
+      "eng",
+      "ind",
+      "msa",
+      "rus",
+      "por"
+    ],
+    "NEWKMOVIES.us@SD": [
+      "eng"
+    ],
+    "NEWKPOP.us@SD": [
+      "eng"
+    ],
+    "News12Bronx.us@SD": [
+      "eng"
+    ],
+    "News12Brooklyn.us@SD": [
+      "eng"
+    ],
+    "News12Conneticut.us@SD": [
+      "eng"
+    ],
+    "News12HudsonValley.us@SD": [
+      "eng"
+    ],
+    "News12LongIsland.us@SD": [
+      "eng"
+    ],
+    "News12NewJersey.us@SD": [
+      "eng"
+    ],
+    "News12NewYork.us@SD": [
+      "eng"
+    ],
+    "News12PlusConnecticut.us@HD": [
+      "eng"
+    ],
+    "News12PlusHudsonValley.us@HD": [
+      "eng"
+    ],
+    "News12PlusLongIsland.us@HD": [
+      "eng"
+    ],
+    "News12PlusNewJersey.us@HD": [
+      "eng"
+    ],
+    "News12PlusNewYork.us@HD": [
+      "eng"
+    ],
+    "News12Westchester.us@SD": [
+      "eng"
+    ],
+    "Newsmax2.us@KPVMLD": [
+      "eng"
+    ],
+    "Newsmax2.us@SD": [
+      "eng"
+    ],
+    "NewsmaxSpanish.us@SD": [
+      "spa"
+    ],
+    "NewsmaxTV.us@SD": [
+      "eng"
+    ],
+    "NewsoftheWorld.us@Arabic": [
+      "ara"
+    ],
+    "NewsoftheWorld.us@Spanish": [
+      "spa"
+    ],
+    "NewsoftheWorld.us@USA": [
+      "eng"
+    ],
+    "Newsy.us@SD": [
+      "eng"
+    ],
+    "NFLChannel.us@SD": [
+      "eng"
+    ],
+    "NFLNetwork.us@SD": [
+      "eng"
+    ],
+    "NHLNetwork.us@SD": [
+      "eng"
+    ],
+    "NHRATV.us@SD": [
+      "eng"
+    ],
+    "Nickelodeon.us@East": [
+      "eng"
+    ],
+    "Nickelodeonenespanol.us@SD": [
+      "eng"
+    ],
+    "NickelodeonPlutoTV.us@SD": [
+      "eng"
+    ],
+    "NickJr.us@East": [
+      "eng"
+    ],
+    "NickJrPlutoTV.us@US": [
+      "eng"
+    ],
+    "Nicktoons.us@East": [
+      "eng"
+    ],
+    "NinjaKidzTV.us@SD": [
+      "eng"
+    ],
+    "NMBTV.us@SD": [
+      "eng"
+    ],
+    "NorCastWeather.us@HD": [
+      "eng"
+    ],
+    "Nosey.us@US": [
+      "eng"
+    ],
+    "NOST.us@SD": [
+      "eng"
+    ],
+    "Novelisima.us@SD": [
+      "spa"
+    ],
+    "NRBTV.us@SD": [
+      "eng"
+    ],
+    "NTDTV.us@East": [
+      "zho",
+      "eng"
+    ],
+    "NTDTV.us@West": [
+      "zho",
+      "eng"
+    ],
+    "NTDTVEnglish.us@USA": [
+      "eng"
+    ],
+    "NYXT.us@SD": [
+      "eng"
+    ],
+    "OANPlus.us@KPVMLD": [
+      "eng"
+    ],
+    "OANPlus.us@SD": [
+      "eng"
+    ],
+    "OCNTV.us@SD": [
+      "eng"
+    ],
+    "Olelo49.us@SD": [
+      "eng"
+    ],
+    "Olelo53.us@SD": [
+      "eng"
+    ],
+    "Olelo54.us@SD": [
+      "eng"
+    ],
+    "Olelo55.us@SD": [
+      "eng"
+    ],
+    "OmideIranTV.us@SD": [
+      "fas",
+      "eng"
+    ],
+    "OneAmericaNewsNetwork.us@SD": [
+      "eng"
+    ],
+    "OnePiece.us@US": [
+      "jap"
+    ],
+    "OntarioPublicAccessChannel.us@SD": [
+      "eng"
+    ],
+    "OnTV4U.us@SD": [
+      "eng"
+    ],
+    "OrangeGovernmentAccessTV.us@SD": [
+      "eng"
+    ],
+    "OutdoorAmerica.us@SD": [
+      "eng"
+    ],
+    "OutdoorChannel.us@HD": [
+      "eng"
+    ],
+    "OutdoorChannel.us@SD": [
+      "eng"
+    ],
+    "OuterSphere.us@SD": [
+      "eng"
+    ],
+    "Outlaw.us@WGGSTV": [
+      "eng"
+    ],
+    "OutsideTV.us@SD": [
+      "eng"
+    ],
+    "OvercomersTV.us@SD": [
+      "eng"
+    ],
+    "Overtime.us@SD": [
+      "eng"
+    ],
+    "OWN.us@East": [
+      "eng"
+    ],
+    "Pac12Insider.us@SD": [
+      "eng"
+    ],
+    "PacificIslandNetwork.us@HD": [
+      "eng"
+    ],
+    "PalmBeachesTV.us@SD": [
+      "eng"
+    ],
+    "ParamountMovieChannel.us@SD": [
+      "eng"
+    ],
+    "ParamountPlusPicks.us@SD": [
+      "eng"
+    ],
+    "ParsTV.us@SD": [
+      "fas"
+    ],
+    "PascoTV.us@SD": [
+      "eng"
+    ],
+    "PayameAfghanTV.us@SD": [
+      "prd",
+      "pus"
+    ],
+    "PayameArameshTV.us@SD": [
+      "fas"
+    ],
+    "PayamJavanTV.us@SD": [
+      "fas"
+    ],
+    "PayvandTV.us@SD": [
+      "eng"
+    ],
+    "PBCTapeshTV.us@SD": [
+      "fas"
+    ],
+    "PBCTVChannel20.us@SD": [
+      "eng"
+    ],
+    "PBRRidePass.us@SD": [
+      "eng"
+    ],
+    "PBS.us@East": [
+      "eng"
+    ],
+    "PBS.us@KETS": [
+      "eng"
+    ],
+    "PBS.us@KHET": [
+      "eng"
+    ],
+    "PBS.us@KMOSTV": [
+      "eng"
+    ],
+    "PBS.us@KQED": [
+      "eng"
+    ],
+    "PBS.us@KUONTV": [
+      "eng"
+    ],
+    "PBS.us@KVIE": [
+      "eng"
+    ],
+    "PBS.us@WEDQ": [
+      "eng"
+    ],
+    "PBS.us@WJXT": [
+      "eng"
+    ],
+    "PBS.us@WNJT": [
+      "eng"
+    ],
+    "PBSAntiquesRoadshow.us@SD": [
+      "eng"
+    ],
+    "PBSKids.us@SD": [
+      "eng"
+    ],
+    "PBSKidsAlaska.us@SD": [
+      "eng"
+    ],
+    "PBSKidsEasternCentral.us@SD": [
+      "eng"
+    ],
+    "PBSKidsHawaii.us@SD": [
+      "eng"
+    ],
+    "PBSKidsMountain.us@SD": [
+      "eng"
+    ],
+    "PBSKidsPacific.us@SD": [
+      "eng"
+    ],
+    "PBSNature.us@SD": [
+      "eng"
+    ],
+    "PBSTravel.us@SD": [
+      "eng"
+    ],
+    "PCTChannel26.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "PCTChannel27.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "PCTV26.us@SD": [
+      "eng"
+    ],
+    "PCTV28.us@SD": [
+      "eng"
+    ],
+    "PeopleAreAwesome.us@SD": [
+      "eng"
+    ],
+    "PeppaPig.us@SD": [
+      "eng"
+    ],
+    "PerryMason.us@SD": [
+      "eng"
+    ],
+    "PGATour.us@SD": [
+      "eng"
+    ],
+    "PhillyCAM.us@SD": [
+      "eng"
+    ],
+    "PHLgovTV.us@SD": [
+      "eng"
+    ],
+    "PHXTV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "PixLTV.us@SD": [
+      "eng"
+    ],
+    "Placid.us@EastHD": [
+      "eng"
+    ],
+    "PlutoTVAction.us@US": [
+      "eng"
+    ],
+    "PlutoTVAdventure.us@US": [
+      "eng"
+    ],
+    "PlutoTVAnime.us@US": [
+      "eng",
+      "jap"
+    ],
+    "PlutoTVAnimeMovies.us@SD": [
+      "eng",
+      "jap"
+    ],
+    "PlutoTVCars.us@SD": [
+      "eng"
+    ],
+    "PlutoTVCineComedia.us@US": [
+      "spa"
+    ],
+    "PlutoTVComedy.us@US": [
+      "eng"
+    ],
+    "PlutoTVCompetition.us@SD": [
+      "eng"
+    ],
+    "PlutoTVCrimeDrama.us@SD": [
+      "eng"
+    ],
+    "PlutoTVCrimeMovies.us@SD": [
+      "eng"
+    ],
+    "PlutoTVCultFilms.us@US": [
+      "eng"
+    ],
+    "PlutoTVDogelcazarrecompensas.us@SD": [
+      "spa"
+    ],
+    "PlutoTVDrama.us@US": [
+      "eng"
+    ],
+    "PlutoTVElReinoInfantil.us@SD": [
+      "spa"
+    ],
+    "PlutoTVEstrellasdeAccion.us@SD": [
+      "spa"
+    ],
+    "PlutoTVFantastic.us@SD": [
+      "eng"
+    ],
+    "PlutoTVFranchiseFavorites.us@SD": [
+      "eng"
+    ],
+    "PlutoTVGameShows.us@SD": [
+      "eng"
+    ],
+    "PlutoTVHistory.us@US": [
+      "eng"
+    ],
+    "PlutoTVHometownDrama.us@SD": [
+      "eng"
+    ],
+    "PlutoTVHorror.us@US": [
+      "eng"
+    ],
+    "PlutoTVIcons.us@SD": [
+      "eng"
+    ],
+    "PlutoTVLives.us@US": [
+      "eng"
+    ],
+    "PlutoTVLosnuevosdetectives.us@SD": [
+      "spa"
+    ],
+    "PlutoTVMilitary.us@SD": [
+      "eng"
+    ],
+    "PlutoTVMinutoParaGanar.us@SD": [
+      "spa"
+    ],
+    "PlutoTVMisteriosMedicos.us@SD": [
+      "spa"
+    ],
+    "PlutoTVNovelas.us@US": [
+      "spa"
+    ],
+    "PlutoTVParanormal.us@US": [
+      "eng"
+    ],
+    "PlutoTVReaction.us@SD": [
+      "eng"
+    ],
+    "PlutoTVReality.us@US": [
+      "eng"
+    ],
+    "PlutoTVRomance.us@US": [
+      "eng"
+    ],
+    "PlutoTVSanctuary.us@SD": [
+      "eng"
+    ],
+    "PlutoTVScience.us@US": [
+      "eng"
+    ],
+    "PlutoTVSciFi.us@US": [
+      "spa"
+    ],
+    "PlutoTVSpotlight.us@SD": [
+      "eng"
+    ],
+    "PlutoTVStaffPicks.us@SD": [
+      "eng"
+    ],
+    "PlutoTVStorageWars.us@SD": [
+      "eng"
+    ],
+    "PlutoTVTerror.us@SD": [
+      "eng"
+    ],
+    "PlutoTVTheTwilightZone.us@SD": [
+      "eng"
+    ],
+    "PlutoTVThrillers.us@US": [
+      "eng"
+    ],
+    "PlutoTVTrendingNow.us@SD": [
+      "eng"
+    ],
+    "PlutoTVTrueCrime.us@US": [
+      "eng"
+    ],
+    "PlutoTVWesterns.us@US": [
+      "eng"
+    ],
+    "PlutoTVWipeout.us@SD": [
+      "eng"
+    ],
+    "pocketwatch.us@SD": [
+      "eng"
+    ],
+    "PoconoTelevisionNetwork.us@HD": [
+      "eng"
+    ],
+    "PokerGo.us@US": [
+      "eng"
+    ],
+    "PomonaInternetStreamingChannel.us@SD": [
+      "eng"
+    ],
+    "PopstarTV.us@SD": [
+      "eng"
+    ],
+    "Portlandia.us@SD": [
+      "eng"
+    ],
+    "PositivTV.us@SD": [
+      "eng"
+    ],
+    "PottaDivineTVUSA.us@SD": [
+      "mal"
+    ],
+    "PowerNationTV.us@SD": [
+      "eng"
+    ],
+    "PSDTV.us@SD": [
+      "eng"
+    ],
+    "PSLTV.us@SD": [
+      "eng"
+    ],
+    "PTLTVNetwork.us@SD": [
+      "eng"
+    ],
+    "PursuitChannel.us@SD": [
+      "eng"
+    ],
+    "PursuitUP.us@SD": [
+      "eng"
+    ],
+    "QVC.us@SD": [
+      "eng"
+    ],
+    "QVC2.us@SD": [
+      "eng"
+    ],
+    "QVC3.us@SD": [
+      "eng"
+    ],
+    "RadiantTV.us@SD": [
+      "eng"
+    ],
+    "RadioMensajeTV.us@SD": [
+      "spa"
+    ],
+    "RadioTeleKajou.us@SD": [
+      "fra"
+    ],
+    "RadioTelePuissance.us@SD": [
+      "fra",
+      "eng"
+    ],
+    "RadioTeleSentinel.us@SD": [
+      "fra",
+      "hat"
+    ],
+    "RadioTeleWisdom.us@SD": [
+      "fra"
+    ],
+    "RadioyTelevisionMarti.us@SD": [
+      "spa"
+    ],
+    "RainbowRuby.us@SD": [
+      "eng"
+    ],
+    "RaiWorldPremium.it@SD": [
+      "ita"
+    ],
+    "RallyTV.us@SD": [
+      "eng"
+    ],
+    "Rawhide.us@SD": [
+      "eng"
+    ],
+    "RCTV.us@SD": [
+      "eng"
+    ],
+    "RCTV3.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "RealAmericasVoice.us@KPVMLD": [
+      "eng"
+    ],
+    "RealAmericasVoice.us@SD": [
+      "eng"
+    ],
+    "RealWild.uk@SD": [
+      "eng"
+    ],
+    "RedADvenirTV.bo@KSCE": [
+      "spa"
+    ],
+    "RedApple21.us@SD": [
+      "eng"
+    ],
+    "RedBullTV.at@US": [
+      "eng"
+    ],
+    "Reelz.us@SD": [
+      "eng"
+    ],
+    "RetroCrush.us@SD": [
+      "eng"
+    ],
+    "RetroTV.us@East": [
+      "eng"
+    ],
+    "ReutersTV.us@SD": [
+      "eng"
+    ],
+    "RevandRoll.us@SD": [
+      "eng"
+    ],
+    "REVNAction.us@SD": [
+      "eng"
+    ],
+    "Revolt.us@SD": [
+      "eng"
+    ],
+    "Revry.us@SD": [
+      "eng"
+    ],
+    "RevryLatinX.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "RevryNews.us@SD": [
+      "eng"
+    ],
+    "RevryQueer.us@SD": [
+      "eng"
+    ],
+    "RFDTV.us@SD": [
+      "eng"
+    ],
+    "Ridiculousness.us@SD": [
+      "eng"
+    ],
+    "RiffTrax.us@US": [
+      "eng"
+    ],
+    "RightNowTV.us@SD": [
+      "eng"
+    ],
+    "Roar.us@KCWX": [
+      "eng"
+    ],
+    "Roar.us@KOKITV": [
+      "eng"
+    ],
+    "Roar.us@SD": [
+      "eng"
+    ],
+    "Roar.us@WKEF": [
+      "eng"
+    ],
+    "Roar.us@WSBTTV": [
+      "eng"
+    ],
+    "RockyHillChannel16.us@SD": [
+      "eng"
+    ],
+    "RTenEspanol.ru@SD": [
+      "spa"
+    ],
+    "RTHTV1.us@SD": [
+      "fra",
+      "hat"
+    ],
+    "RTN.us@SD": [
+      "rus"
+    ],
+    "RTNChicago.us@SD": [
+      "ron",
+      "eng"
+    ],
+    "RTRPlaneta.ru@US": [
+      "eng"
+    ],
+    "RTViUS.us@SD": [
+      "rus"
+    ],
+    "Runtime.us@SD": [
+      "eng"
+    ],
+    "RuntimeEspanol.us@SD": [
+      "spa"
+    ],
+    "RVTV.us@HD": [
+      "eng"
+    ],
+    "RVTVCivic.us@SD": [
+      "eng"
+    ],
+    "RVTVGrantsPass.us@SD": [
+      "eng"
+    ],
+    "RVTVPrime.us@SD": [
+      "eng"
+    ],
+    "RVTVVoices.us@SD": [
+      "eng"
+    ],
+    "RyanandFriends.us@SD": [
+      "eng"
+    ],
+    "SalemNewsChannel.us@SD": [
+      "eng"
+    ],
+    "SamsungWildlife.us@SD": [
+      "eng"
+    ],
+    "SanskarUSA.in@SD": [
+      "hin"
+    ],
+    "SBNTV.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "SCCurrents.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "SchwabNetwork.us@SD": [
+      "eng"
+    ],
+    "ScientologyNetwork.us@KSCNTV": [
+      "eng"
+    ],
+    "ScientologyNetwork.us@SD": [
+      "eng"
+    ],
+    "ScientologyNetwork.us@WFTTTV": [
+      "eng"
+    ],
+    "SCorbyTV.us@HD": [
+      "eng"
+    ],
+    "ScottsdaleChannel11.us@SD": [
+      "eng"
+    ],
+    "ScreenDreams.us@SD": [
+      "eng"
+    ],
+    "ScrippsNews.us@SD": [
+      "eng"
+    ],
+    "SCVTV.us@SD": [
+      "eng"
+    ],
+    "SECNetwork.us@SD": [
+      "eng"
+    ],
+    "SemillitasTV.us@SD": [
+      "spa"
+    ],
+    "SFCommons29.us@SD": [
+      "eng"
+    ],
+    "SFCommons76.us@SD": [
+      "eng"
+    ],
+    "SFGovTV.us@SD": [
+      "eng"
+    ],
+    "SFGovTV2.us@SD": [
+      "eng"
+    ],
+    "SGTN49.us@SD": [
+      "eng"
+    ],
+    "SGTV.us@SD": [
+      "eng"
+    ],
+    "Shabakeh7.us@SD": [
+      "fas"
+    ],
+    "ShalomAmerica.us@SD": [
+      "mal"
+    ],
+    "ShemarooBollywood.us@SD": [
+      "eng"
+    ],
+    "ShopLC.us@SD": [
+      "eng"
+    ],
+    "ShoutFactoryTV.us@SD": [
+      "eng"
+    ],
+    "ShowtimeFamilyZone.us@East": [
+      "eng"
+    ],
+    "SitcomLegends.us@SD": [
+      "eng"
+    ],
+    "SketchyAF.us@SD": [
+      "eng"
+    ],
+    "SkwadPlay.us@SD": [
+      "eng"
+    ],
+    "SLOCountyChannel21.us@SD": [
+      "eng"
+    ],
+    "SlopesTV.us@SD": [
+      "eng"
+    ],
+    "SmartLifeStyleTV.us@SD": [
+      "eng"
+    ],
+    "SMCTVChannel23.us@SD": [
+      "eng"
+    ],
+    "SMCTVChannel24.us@SD": [
+      "eng"
+    ],
+    "SMCTVChannel25.us@SD": [
+      "eng"
+    ],
+    "SMetroTV.us@HD": [
+      "eng"
+    ],
+    "SmithsonianChannelSelects.us@SD": [
+      "eng"
+    ],
+    "SmurfTV.us@SD": [
+      "eng"
+    ],
+    "SNLVault.us@SD": [
+      "eng"
+    ],
+    "SonicTV.us@SD": [
+      "eng"
+    ],
+    "SonyCanalNovelas.us@SD": [
+      "spa"
+    ],
+    "SonyKALHindi.us@SD": [
+      "hin"
+    ],
+    "SoundViewCommunityMedia.us@SD": [
+      "eng"
+    ],
+    "SpikeOutdoors.us@SD": [
+      "eng"
+    ],
+    "SpikePlutoTV.us@SD": [
+      "eng"
+    ],
+    "SpiritTV.us@SD": [
+      "eng"
+    ],
+    "SPlayEvent.us@HD": [
+      "eng"
+    ],
+    "SportsGrid.us@SD": [
+      "eng"
+    ],
+    "SPTV.us@SD": [
+      "eng"
+    ],
+    "Stadium.us@SD": [
+      "eng"
+    ],
+    "StarChannelInternational.gr@HD": [
+      "ell"
+    ],
+    "StarTrek.us@US": [
+      "eng"
+    ],
+    "StarTrekDeepSpaceNine.us@SD": [
+      "eng"
+    ],
+    "StarTrekTheNextGeneration.us@SD": [
+      "eng"
+    ],
+    "StarTrekVoyager.us@SD": [
+      "eng"
+    ],
+    "Starz.us@West": [
+      "eng",
+      "spa"
+    ],
+    "StarzCinema.us@East": [
+      "eng",
+      "spa"
+    ],
+    "StarzComedy.us@East": [
+      "eng",
+      "spa"
+    ],
+    "StarzEncoreSpanish.us@East": [
+      "eng"
+    ],
+    "StarzKidsFamily.us@East": [
+      "eng",
+      "spa"
+    ],
+    "StingrayGreatestHolidayHits.us@SD": [
+      "eng"
+    ],
+    "StLuciePublicSchools.us@SD": [
+      "eng"
+    ],
+    "StocktonGovTV.us@SD": [
+      "eng"
+    ],
+    "StoriesbyAMC.us@SD": [
+      "eng"
+    ],
+    "StoryTelevision.us@KPVMLD": [
+      "eng"
+    ],
+    "StoryTelevision.us@WCIUTV": [
+      "eng"
+    ],
+    "StrykTV.us@HD": [
+      "eng"
+    ],
+    "SUMtvEnglish.us@SD": [
+      "eng"
+    ],
+    "SUMtvLatino.us@SD": [
+      "spa"
+    ],
+    "SupernaturalDrama.us@SD": [
+      "eng"
+    ],
+    "SuperSimpleSongs.us@SD": [
+      "eng"
+    ],
+    "Survivor.us@SD": [
+      "eng"
+    ],
+    "SwamijiTVAmerican.at@SD": [
+      "eng"
+    ],
+    "SwerveCombat.us@SD": [
+      "eng"
+    ],
+    "SwerveSports.us@SD": [
+      "eng"
+    ],
+    "SYFY.us@East": [
+      "eng"
+    ],
+    "TaiwanPlusTV.tw@SD": [
+      "eng"
+    ],
+    "TalkinLiveClassicsTV.us@SD": [
+      "eng"
+    ],
+    "Tapesh2.us@SD": [
+      "fas"
+    ],
+    "TAPTVChannel23.us@SD": [
+      "eng"
+    ],
+    "TAPTVChannel24.us@SD": [
+      "eng"
+    ],
+    "TAPTVChannel25.us@SD": [
+      "eng"
+    ],
+    "Tastemade.us@US": [
+      "eng"
+    ],
+    "TastemadeTravel.us@SD": [
+      "eng"
+    ],
+    "TBCN.us@SD": [
+      "eng"
+    ],
+    "TBN.us@East": [
+      "eng"
+    ],
+    "TBNArmenia.us@SD": [
+      "eng"
+    ],
+    "TBNInspire.us@SD": [
+      "eng"
+    ],
+    "TBNPacific.us@SD": [
+      "eng"
+    ],
+    "TBNUkraine.us@SD": [
+      "eng"
+    ],
+    "TBS.us@East": [
+      "eng",
+      "spa"
+    ],
+    "TBS.us@West": [
+      "eng",
+      "spa",
+      "por"
+    ],
+    "TCM.us@East": [
+      "eng"
+    ],
+    "TCM.us@West": [
+      "eng"
+    ],
+    "TCT.us@SD": [
+      "eng"
+    ],
+    "TED.us@SD": [
+      "eng"
+    ],
+    "TeenMom.us@SD": [
+      "eng"
+    ],
+    "TeenNick.us@East": [
+      "eng"
+    ],
+    "TeleBoston.us@SD": [
+      "fra",
+      "eng",
+      "acf"
+    ],
+    "TeleMIX.us@SD": [
+      "fra"
+    ],
+    "Telemundo.us@East": [
+      "eng"
+    ],
+    "Telemundo.us@EastHD": [
+      "eng"
+    ],
+    "Telemundo.us@KNSD": [
+      "eng"
+    ],
+    "Telemundo.us@WCAU": [
+      "eng"
+    ],
+    "Telemundo.us@West": [
+      "eng"
+    ],
+    "Telemundo.us@WTMOCD": [
+      "spa"
+    ],
+    "TelemundoAlDia.us@HD": [
+      "spa"
+    ],
+    "TelemundoCorpusChristi.us@SD": [
+      "spa"
+    ],
+    "TelemundoTelenovelasClasicas.us@SD": [
+      "eng"
+    ],
+    "TelePam.us@SD": [
+      "fra",
+      "hat",
+      "eng"
+    ],
+    "TeleXitos.us@SD": [
+      "spa"
+    ],
+    "TemeculaTV.us@SD": [
+      "eng"
+    ],
+    "Tempe11.us@SD": [
+      "eng"
+    ],
+    "TennisChannel.us@Plus2": [
+      "eng"
+    ],
+    "TennisChannel.us@SD": [
+      "eng"
+    ],
+    "TennisChannel2.us@SD": [
+      "eng"
+    ],
+    "TerraMaterWILD.de@English": [
+      "eng"
+    ],
+    "TeveVidaNetwork.us@SD": [
+      "spa"
+    ],
+    "TGJunior.us@SD": [
+      "eng"
+    ],
+    "TheAddamsFamily.us@SD": [
+      "eng"
+    ],
+    "TheAmazingRace.us@SD": [
+      "eng"
+    ],
+    "TheAndyGriffithShow.us@SD": [
+      "eng"
+    ],
+    "TheArchive.us@SD": [
+      "eng"
+    ],
+    "TheAsylum.us@US": [
+      "eng"
+    ],
+    "TheBobRossChannel.us@SD": [
+      "eng"
+    ],
+    "TheBurbankChannel.us@SD": [
+      "eng"
+    ],
+    "TheCarolBurnettShow.us@SD": [
+      "eng"
+    ],
+    "TheChallenge.us@SD": [
+      "eng"
+    ],
+    "TheChatShowChannel.uk@SD": [
+      "eng"
+    ],
+    "TheCityofMarina.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "TheConners.us@SD": [
+      "eng"
+    ],
+    "TheCountryNetwork.us@SD": [
+      "eng"
+    ],
+    "TheDesignNetwork.us@SD": [
+      "eng"
+    ],
+    "TheDoctors.us@HD": [
+      "eng"
+    ],
+    "theDoveTV.us@SD": [
+      "eng"
+    ],
+    "TheFilmDetective.us@SD": [
+      "eng"
+    ],
+    "TheFirstTV.us@SD": [
+      "eng"
+    ],
+    "TheGrahamNortonShow.uk@SD": [
+      "eng"
+    ],
+    "TheHillTV.us@SD": [
+      "eng"
+    ],
+    "TheJamieOliverChannel.us@SD": [
+      "eng"
+    ],
+    "TheJudgeJudyChannel.us@SD": [
+      "eng"
+    ],
+    "TheLoop.us@SD": [
+      "eng"
+    ],
+    "TheLoveBoat.us@SD": [
+      "eng"
+    ],
+    "TheMontereyChannel.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "TheNest.us@SD": [
+      "eng"
+    ],
+    "TheNewDetectives.us@US": [
+      "eng"
+    ],
+    "TheNowNetwork.us@SD": [
+      "eng"
+    ],
+    "ThePeninsulaChannel.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "ThePetCollective.us@US": [
+      "eng"
+    ],
+    "ThePointTelevsionNetwork.us@SD": [
+      "eng"
+    ],
+    "ThePriceIsRight.us@HD": [
+      "eng"
+    ],
+    "ThePriceIsRightTheBarkerEra.us@SD": [
+      "eng"
+    ],
+    "TheRifleman.us@SD": [
+      "eng"
+    ],
+    "TheWalkingDeadenEspanol.us@SD": [
+      "spa"
+    ],
+    "TheWalkingDeadUniverse.us@SD": [
+      "eng"
+    ],
+    "TheWalkTV.us@SD": [
+      "eng"
+    ],
+    "TheWeatherChannel.us@SD": [
+      "eng"
+    ],
+    "TheWildWildWest.us@SD": [
+      "eng"
+    ],
+    "TheWordNetwork.us@SD": [
+      "eng"
+    ],
+    "TheYoungTurks.us@SD": [
+      "eng"
+    ],
+    "ThisOldHouse.us@SD": [
+      "eng"
+    ],
+    "Thornton8.us@SD": [
+      "eng"
+    ],
+    "ThreesCompany.us@SD": [
+      "eng"
+    ],
+    "TimelessTV.us@SD": [
+      "eng"
+    ],
+    "TinTV.us@SD": [
+      "fas"
+    ],
+    "TinyHouseNation.us@SD": [
+      "eng"
+    ],
+    "TLN.ca@KQSL": [
+      "eng"
+    ],
+    "TLNMediaChicago.us@SD": [
+      "eng"
+    ],
+    "TLNMediaSanFrancisco.us@SD": [
+      "eng"
+    ],
+    "TMZ.us@SD": [
+      "eng"
+    ],
+    "TNT.us@East": [
+      "eng",
+      "spa"
+    ],
+    "TNT.us@West": [
+      "eng",
+      "spa",
+      "por"
+    ],
+    "TNTInternational.ru@SD": [
+      "rus"
+    ],
+    "TODAYAllDay.us@SD": [
+      "eng"
+    ],
+    "TomAndJerry.do@HD": [
+      "eng"
+    ],
+    "ToonamiAftermath.us@East": [
+      "eng"
+    ],
+    "ToonamiAftermath.us@West": [
+      "eng"
+    ],
+    "Tooncast.us@SD": [
+      "spa",
+      "eng",
+      "por"
+    ],
+    "ToonGoggles.us@SD": [
+      "eng"
+    ],
+    "TopStoriesbyNewsy.us@SD": [
+      "eng"
+    ],
+    "Tosh0.us@SD": [
+      "eng"
+    ],
+    "TotallyTurtles.us@US": [
+      "eng"
+    ],
+    "ToughJobs.us@SD": [
+      "eng"
+    ],
+    "TransformersTV.us@SD": [
+      "eng"
+    ],
+    "TribecaChannel.us@SD": [
+      "eng"
+    ],
+    "TrueCrimeNetwork.us@SD": [
+      "eng"
+    ],
+    "TrueCrimeNetwork.us@WCVBTV": [
+      "eng"
+    ],
+    "TrueCrimeNow.us@SD": [
+      "eng"
+    ],
+    "TrueHistory.us@SD": [
+      "eng"
+    ],
+    "truTV.us@East": [
+      "eng"
+    ],
+    "truTV.us@West": [
+      "eng"
+    ],
+    "TSTV.us@SD": [
+      "eng"
+    ],
+    "TUDN.us@SD": [
+      "spa"
+    ],
+    "TurismoHD.do@HD": [
+      "eng",
+      "spa"
+    ],
+    "TUTV.us@SD": [
+      "eng"
+    ],
+    "TV4.us@SD": [
+      "eng"
+    ],
+    "TVDaja.do@SD": [
+      "spa"
+    ],
+    "TVEInternacionalAmerica.es@HD": [
+      "spa"
+    ],
+    "TVEInternacionalAmerica.es@SD": [
+      "spa"
+    ],
+    "TVHispanic.us@SD": [
+      "spa"
+    ],
+    "TVLandDrama.us@SD": [
+      "eng"
+    ],
+    "TVLandSitcoms.us@SD": [
+      "eng"
+    ],
+    "TVPanou.ht@SD": [
+      "eng"
+    ],
+    "TVQuisqueya.us@SD": [
+      "spa"
+    ],
+    "TVSAGovernmentChannel.us@SD": [
+      "eng"
+    ],
+    "TVSAPublicChannel.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "TVSBowlingNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSBoxing.us@SD": [
+      "eng"
+    ],
+    "TVSCipherNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSClassicMovies.us@SD": [
+      "eng"
+    ],
+    "TVSClassicSports.us@SD": [
+      "eng"
+    ],
+    "TVSComedyNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSConsumerDirect.us@SD": [
+      "eng"
+    ],
+    "TVSDriveInMovie.us@SD": [
+      "eng"
+    ],
+    "TVSFamilyChannel.us@SD": [
+      "eng"
+    ],
+    "TVSFilmNoirNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSFlashbackNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSHiTops.us@SD": [
+      "eng"
+    ],
+    "TVSHollywoodHistory.us@SD": [
+      "eng"
+    ],
+    "TVSMainstreet.us@SD": [
+      "eng"
+    ],
+    "TVSMusicNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSNostalgia.us@SD": [
+      "eng"
+    ],
+    "TVSNostalgiaMovies.us@SD": [
+      "eng"
+    ],
+    "TVSPetParadeNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSPinballNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSQuizShowNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSSelectNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSSports.us@SD": [
+      "eng"
+    ],
+    "TVSSportsBureau.us@SD": [
+      "eng"
+    ],
+    "TVSTalkNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSTallyHo.us@SD": [
+      "eng"
+    ],
+    "TVSTavern.us@SD": [
+      "eng"
+    ],
+    "TVSTelevisionNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSTravelNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSTurbo.us@SD": [
+      "eng"
+    ],
+    "TVSVintageNetwork.us@SD": [
+      "eng"
+    ],
+    "TVSWesternMovie.us@SD": [
+      "eng"
+    ],
+    "TVSWomenSports.us@SD": [
+      "eng"
+    ],
+    "TyCSportsUSA.ar@SD": [
+      "spa"
+    ],
+    "UCTV.us@SD": [
+      "eng"
+    ],
+    "Unbeaten.us@SD": [
+      "eng"
+    ],
+    "Unidentified.us@SD": [
+      "eng"
+    ],
+    "UniMas.us@Central": [
+      "eng"
+    ],
+    "UniMas.us@KFTRDT": [
+      "spa"
+    ],
+    "UniMas.us@KUVNDT": [
+      "spa"
+    ],
+    "UniMas.us@Mountain": [
+      "spa"
+    ],
+    "UniMas.us@WAMIDT": [
+      "eng"
+    ],
+    "UniMas.us@WFUTDT": [
+      "eng"
+    ],
+    "UniMas.us@WXTVDT": [
+      "eng"
+    ],
+    "UniversalCinema.us@SD": [
+      "eng"
+    ],
+    "UniversalComedy.us@SD": [
+      "eng"
+    ],
+    "UniversalCrime.us@East": [
+      "eng"
+    ],
+    "Univision.us@East": [
+      "eng"
+    ],
+    "Univision.us@EastHD": [
+      "eng"
+    ],
+    "Univision.us@KMEXDT": [
+      "spa"
+    ],
+    "Univision.us@West": [
+      "eng"
+    ],
+    "Univision.us@WGBODT": [
+      "eng"
+    ],
+    "Univision.us@WLTVDT": [
+      "spa"
+    ],
+    "UnivisionTlnovelas.us@SD": [
+      "spa"
+    ],
+    "UnsolvedMysteries.us@US": [
+      "eng"
+    ],
+    "USANetwork.us@East": [
+      "eng"
+    ],
+    "USATODAY.us@SD": [
+      "eng"
+    ],
+    "VallenatoInternacional.us@SD": [
+      "spa"
+    ],
+    "VBSTV.us@SD": [
+      "vie"
+    ],
+    "VCAT.us@SD": [
+      "eng"
+    ],
+    "VegasLifeTV.us@HD": [
+      "eng",
+      "tgl"
+    ],
+    "VelayatTVNetwork.us@SD": [
+      "fas"
+    ],
+    "VenevisionInternacional.ve@SD": [
+      "spa"
+    ],
+    "Vevo2K.us@SD": [
+      "eng"
+    ],
+    "Vevo70s.us@SD": [
+      "eng"
+    ],
+    "Vevo80s.us@SD": [
+      "eng"
+    ],
+    "Vevo90s.us@SD": [
+      "eng"
+    ],
+    "VevoCountry.us@SD": [
+      "eng"
+    ],
+    "VevoHipHop.us@SD": [
+      "eng"
+    ],
+    "VevoLatino.us@SD": [
+      "eng"
+    ],
+    "VevoPop.us@SD": [
+      "eng"
+    ],
+    "VevoRB.us@SD": [
+      "eng"
+    ],
+    "VevoRetroRock.us@SD": [
+      "eng"
+    ],
+    "VevoTrueSchoolHipHop.us@SD": [
+      "eng"
+    ],
+    "VH1QueensofReality.us@SD": [
+      "eng"
+    ],
+    "VICETV.us@SD": [
+      "eng"
+    ],
+    "VidaMejorTV.us@SD": [
+      "spa"
+    ],
+    "VideoMixTV.us@SD": [
+      "eng"
+    ],
+    "VisionLatinaNetwork.us@SD": [
+      "spa"
+    ],
+    "VoATV.us@SD": [
+      "eng"
+    ],
+    "VoATVPersian.us@SD": [
+      "fas"
+    ],
+    "VSCTV.us@SD": [
+      "eng"
+    ],
+    "VSiN.us@SD": [
+      "eng"
+    ],
+    "W14DKD141.us@HD": [
+      "eng"
+    ],
+    "W14DKD142.us@SD": [
+      "eng"
+    ],
+    "WACX551.us@SD": [
+      "eng"
+    ],
+    "WantedDeadorAlive.us@SD": [
+      "eng"
+    ],
+    "WATCDT571.us@HD": [
+      "eng"
+    ],
+    "WATCDT572.us@HD": [
+      "eng"
+    ],
+    "WatchitKID.us@SD": [
+      "eng"
+    ],
+    "WatchitScream.us@SD": [
+      "eng"
+    ],
+    "WaypointTV.us@SD": [
+      "eng"
+    ],
+    "WBTV641.us@HD": [
+      "eng"
+    ],
+    "WCETVDigitalChannel318.us@SD": [
+      "zho"
+    ],
+    "WCOT.us@SD": [
+      "eng"
+    ],
+    "WeatherNation.us@SD": [
+      "eng"
+    ],
+    "WeatherSpy.us@SD": [
+      "eng"
+    ],
+    "WeedsNurseJackie.us@SD": [
+      "eng"
+    ],
+    "WeHoTV.us@SD": [
+      "eng"
+    ],
+    "Westerns4U.us@SD": [
+      "eng"
+    ],
+    "WesternTV.us@SD": [
+      "eng"
+    ],
+    "WeTV.us@East": [
+      "eng"
+    ],
+    "WGGSTV161.us@HD": [
+      "eng"
+    ],
+    "Whiplash.us@HD": [
+      "eng"
+    ],
+    "WhiplashCinema.us@SD": [
+      "eng"
+    ],
+    "WhiplashII.us@SD": [
+      "eng"
+    ],
+    "WhitePlainsCommunityMedia.us@SD": [
+      "eng"
+    ],
+    "WHOHTV.us@SD": [
+      "eng"
+    ],
+    "WildNOut.us@SD": [
+      "eng"
+    ],
+    "WillametteFallsMediaCenter.us@SD": [
+      "eng"
+    ],
+    "Willow.us@SD": [
+      "eng"
+    ],
+    "WillowSports.us@SD": [
+      "eng"
+    ],
+    "WindowTV.us@SD": [
+      "eng"
+    ],
+    "WineWatchesWhiskey.us@HD": [
+      "eng"
+    ],
+    "WipeoutXtra.us@SD": [
+      "eng"
+    ],
+    "Wired2FishTV.us@SD": [
+      "eng"
+    ],
+    "WITN22.us@SD": [
+      "eng"
+    ],
+    "WLMB.us@SD": [
+      "eng"
+    ],
+    "WLNGRadio.us@SD": [
+      "eng"
+    ],
+    "WomensSportsNetwork.us@SD": [
+      "eng"
+    ],
+    "WorldChannel.us@SD": [
+      "eng"
+    ],
+    "WorldChannel.us@WGTV": [
+      "eng"
+    ],
+    "WorldHarvestTV.us@SD": [
+      "eng"
+    ],
+    "WorldPokerTour.us@US": [
+      "eng"
+    ],
+    "WPLG101.us@HD": [
+      "eng"
+    ],
+    "WPSTV.us@SD": [
+      "eng"
+    ],
+    "WSOCNow.us@SD": [
+      "eng"
+    ],
+    "WuTangCollection.us@SD": [
+      "eng"
+    ],
+    "WVCULP.us@SD": [
+      "eng"
+    ],
+    "WVVHCD181.us@HD": [
+      "eng"
+    ],
+    "WWENetwork.us@SD": [
+      "eng"
+    ],
+    "WWONTVChannel48.us@SD": [
+      "eng"
+    ],
+    "XFCTV.us@SD": [
+      "eng"
+    ],
+    "XITE90sThrowback.us@SD": [
+      "eng"
+    ],
+    "XITEClassicCountry.nl@SD": [
+      "eng"
+    ],
+    "XITEJustChill.nl@US": [
+      "eng"
+    ],
+    "XITENuevoLatino.us@SD": [
+      "spa",
+      "por"
+    ],
+    "XITEReggaeVibes.nl@HD": [
+      "eng"
+    ],
+    "XITERockxMetal.nl@US": [
+      "eng"
+    ],
+    "XITESiempreLatino.us@SD": [
+      "spa",
+      "por"
+    ],
+    "XploreTV.us@SD": [
+      "eng"
+    ],
+    "YahooFinance.us@SD": [
+      "eng"
+    ],
+    "YesNetwork.us@SD": [
+      "eng"
+    ],
+    "YoMTV.us@SD": [
+      "eng"
+    ],
+    "YouDotGov.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "YoungHollywood.us@SD": [
+      "eng"
+    ],
+    "YoutooAmerica.us@KVVBLD": [
+      "eng"
+    ],
+    "YTATV.us@SD": [
+      "eng"
+    ],
+    "YuGiOh.us@SD": [
+      "eng"
+    ],
+    "YuGiOhenespanol.us@SD": [
+      "eng"
+    ],
+    "Yuma77.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "YumaChannel72.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "YumaChannel73.us@SD": [
+      "eng",
+      "spa"
+    ],
+    "ZarinTV.us@SD": [
+      "pus",
+      "ara"
+    ],
+    "ZoomNews.us@SD": [
+      "kur"
+    ],
+    "ZTV.us@SD": [
+      "spa"
+    ]
+  }
+}

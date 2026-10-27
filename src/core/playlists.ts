@@ -1,4 +1,5 @@
 import { EMPTY_LIBRARY, type Library, type Playlist, type SavedPlaylist } from '../types';
+import { withChannelNumbers } from './channelNumbers';
 
 // Keep legacy channel IDs intact so existing favorites and guide mappings survive
 // the update. New sources get namespaced IDs, even when their streams overlap.
@@ -16,14 +17,14 @@ export function restoreLibrary(value: unknown): Library {
     library.playlists = data.channels.length ? [{ id, name: data.playlistName || 'My playlist', url: data.playlistUrl, updatedAt: data.playlistUpdatedAt }] : [];
     library.channels = data.channels.map(c => ({ ...c, playlistId: id, sourceId: c.id }));
   }
-  return library;
+  return withChannelNumbers(library);
 }
 
 function retainReferences(library: Library, channels: Library['channels']): Library {
   const ids = new Set(channels.map(c => c.id));
-  return { ...library, channels, favorites: library.favorites.filter(id => ids.has(id)),
+  return withChannelNumbers({ ...library, channels, favorites: library.favorites.filter(id => ids.has(id)),
     recents: library.recents.filter(r => ids.has(r.channelId)), reminders: library.reminders.filter(r => ids.has(r.channelId)),
-    mappings: Object.fromEntries(Object.entries(library.mappings).filter(([id]) => ids.has(id))) };
+    mappings: Object.fromEntries(Object.entries(library.mappings).filter(([id]) => ids.has(id))) });
 }
 
 export function addPlaylist(library: Library, parsed: Playlist, source: SavedPlaylist): Library {

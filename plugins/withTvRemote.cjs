@@ -29,6 +29,8 @@ module.exports = config => {
       else manifest['uses-feature'].push({ $: { 'android:name': name, 'android:required': 'false' } });
     }
     const activity = manifest.application[0].activity.find(a => a.$['android:name'] === '.MainActivity');
+    // The same landscape TV interface is the default on every Android device.
+    if (activity) activity.$['android:screenOrientation'] = 'landscape';
     const launcher = activity?.['intent-filter']?.find(f => f.action?.some(a => a.$['android:name'] === 'android.intent.action.MAIN'));
     if (launcher && !launcher.category?.some(c => c.$['android:name'] === 'android.intent.category.LEANBACK_LAUNCHER')) {
       launcher.category ??= []; launcher.category.push({ $: { 'android:name': 'android.intent.category.LEANBACK_LAUNCHER' } });

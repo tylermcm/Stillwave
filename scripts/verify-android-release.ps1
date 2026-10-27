@@ -18,6 +18,23 @@ $versionName = $manifest.manifest.GetAttribute('versionName', $namespace)
 $versionCode = $manifest.manifest.GetAttribute('versionCode', $namespace)
 $pip = $main.GetAttribute('supportsPictureInPicture', $namespace) -eq 'true'
 $debuggable = $manifest.manifest.application.GetAttribute('debuggable', $namespace) -eq 'true'
+$orientationValue = $main.GetAttribute('screenOrientation', $namespace)
+# apkanalyzer can decode Android's landscape enum as its integer value (0).
+$orientation = if ($orientationValue -in @('landscape', '0', '0x0')) { 'landscape' } else { $orientationValue }
+$launchTheme = $main.GetAttribute('theme', $namespace)
+$resourceTable = & "$tools/aapt2.exe" dump resources $apkPath
+if ($LASTEXITCODE -ne 0) { throw 'Could not inspect compiled splash resources.' }
+$resourceText = $resourceTable -join "`n"
+$splashStyleId = [regex]::Match($resourceText, 'resource (0x[0-9a-f]+) style/Theme\.App\.SplashScreen\b').Groups[1].Value
+if (!$splashStyleId -or ($launchTheme -notmatch 'SplashScreen' -and $launchTheme -ne "@ref/$splashStyleId")) { throw 'The launch activity is missing its branded splash theme.' }
+# Release optimization shortens ZIP paths. Resolve the drawable names through
+# the resource table rather than expecting their source filenames in the APK.
+function Get-PackagedDrawableFiles([string]$name) {
+  $pattern = '(?s)drawable/' + [regex]::Escape($name) + '\s+(.*?)(?=\s+resource 0x|\z)'
+  $block = [regex]::Match($resourceText, $pattern).Groups[1].Value
+  return @([regex]::Matches($block, '\(file\) (\S+) type=PNG') | ForEach-Object { $_.Groups[1].Value })
+}
+if ($orientation -ne 'landscape') { throw 'The shared Android TV interface must launch in landscape.' }
 if ($packageName -ne 'com.stillwave.player' -or $versionName -ne $Version -or [int]$versionCode -ne $configuration.expo.android.versionCode -or !$pip -or $debuggable) { throw 'Unexpected APK version/capabilities.' }
 if (!$service -or $service.GetAttribute('exported', $namespace) -ne 'false' -or $service.GetAttribute('foregroundServiceType', $namespace) -notin @('dataSync', '0x1')) { throw 'DVR service missing or misconfigured.' }
 $permissions = @($manifest.manifest.'uses-permission' | ForEach-Object { $_.GetAttribute('name', $namespace) })
@@ -37,6 +54,12 @@ try {
   $stream = $bundle.Open()
   try { $bundleHash = [Convert]::ToHexString([System.Security.Cryptography.SHA256]::HashData($stream)).ToLowerInvariant() } finally { $stream.Dispose() }
   $abis = @($archive.Entries | Where-Object { $_.FullName -match '^lib/[^/]+/.+\.so$' } | ForEach-Object { $_.FullName.Split('/')[1] } | Sort-Object -Unique)
+  $splashAssets = @(Get-PackagedDrawableFiles 'splashscreen_logo')
+  $brandAssets = @(Get-PackagedDrawableFiles 'assets_branding_stillwavemarkv2')
+  if (!$splashAssets.Count -or !$brandAssets.Count) { throw 'The native splash or approved version-2 logo asset is missing.' }
+  foreach ($asset in @($splashAssets) + @($brandAssets)) {
+    if (!$archive.GetEntry($asset)) { throw "Packaged splash image missing: $asset" }
+  }
   if (@($archive.Entries | Where-Object { $_.FullName -match '(?i)credentials\.json|\.keystore$|android-signing' }).Count) { throw 'Signing files were packaged.' }
 } finally { $archive.Dispose() }
 if ($bundleBytes -lt 1000000 -or 'armeabi-v7a' -notin $abis -or 'arm64-v8a' -notin $abis) { throw 'Missing standalone bundle/ARM binaries.' }
@@ -46,6 +69,8 @@ $report = [ordered]@{
   package = $packageName; versionName = $versionName; versionCode = [int]$versionCode
   minSdk = $manifest.manifest.'uses-sdk'.GetAttribute('minSdkVersion', $namespace)
   debuggable = $debuggable; mainActivitySupportsPip = $pip; dvrServicePrivate = $true; dvrServiceType = 'dataSync'
+  mainActivityOrientation = $orientation
+  mainActivityLaunchTheme = $launchTheme; nativeSplashStyleId = $splashStyleId; nativeSplashAssets = $splashAssets; approvedBrandAssets = $brandAssets
   embeddedBundleBytes = $bundleBytes; embeddedBundleSha256 = $bundleHash; packagedBundleMatchesBuild = $true; nativeAbis = $abis
   signingCertificateMatchesOriginalKey = $true; signingCertificateSha256 = $certificate
   signatureAndAlignmentVerified = $true; containsSigningFiles = $false

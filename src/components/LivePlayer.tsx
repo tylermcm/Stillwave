@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, ActivityIndicator, Animated, AppState, BackHandler, Modal, PermissionsAndroid, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { fetch as probeFetch } from 'expo/fetch';
 import { isPictureInPictureSupported, VideoView, useVideoPlayer } from 'expo-video';
 import * as Network from 'expo-network';
@@ -12,8 +12,9 @@ import { PipHandoff } from '../core/pipHandoff';
 import { bufferWarning, clock, dvrSeekTarget, playbackWindow, type DvrSnapshot } from '../core/dvr';
 import { dvr } from '../data/dvr';
 import { useDvrSession } from './useDvrSession';
-import { isTv } from '../data/tv';
+import { isTv, usesTvPlayer } from '../data/tv';
 import { TvPlayerControls, type TvAction } from './tv/TvPlayerControls';
+import { MobilePlayerControls, type MobileShortcut } from './MobilePlayerControls';
 
 const buffers = {
   fast: { preferredForwardBufferDuration: 8, minBufferForPlayback: 1 },
@@ -30,8 +31,11 @@ type Props = {
   programme?: { title: string; stop: number };
   onFirstPlaying?: (channelId: string) => void;
   onOpenGuide?: () => void;
+  onOpenChannelNumber?: () => void;
   previousChannelName?: string;
   onPreviousChannel?: () => void;
+  onNextChannel?: () => void;
+  onPreviousInLineup?: () => void;
 };
 
 // A new session owns a single native player. Changing channel or retrying unmounts
@@ -47,8 +51,9 @@ export function LivePlayer(props: Props) {
     if (reset) attempts.current = 0;
     setGeneration(g => g + 1);
   }, []);
-  if (isTv && (capture.error || capture.pending)) return <View style={[s.container, s.fullscreen]}><TvPlayerControls title={props.channel.name} badge={capture.error ? 'UNAVAILABLE' : 'CONNECTING'} message={capture.error || 'Preparing playback…'} settled={false} paused={false} onClose={props.onClose}
-    actions={[...(capture.error ? [{ id: 'retry', label: 'Retry', run: capture.retry }] : []), { id: 'close', label: 'Channels', run: props.onClose }]} /></View>;
+  if (usesTvPlayer && (capture.error || capture.pending)) return <View style={[s.container, s.fullscreen]}><TvPlayerControls title={props.channel.name} badge={capture.error ? 'UNAVAILABLE' : 'CONNECTING'} message={capture.error || 'Preparing playback…'} settled={false} paused={false} onClose={props.onClose}
+    actions={[...(capture.error ? [{ id: 'retry', label: 'Retry', run: capture.retry }] : []), { id: 'close', label: 'Channels', run: props.onClose }]}
+    options={props.onOpenChannelNumber ? [{ id: 'number', label: 'Find channel by number', run: props.onOpenChannelNumber }] : []} /></View>;
   if (capture.error || capture.pending) return <View style={[s.container, props.fullscreen && s.fullscreen, { padding: 20, gap: 12 }]}>
     <Text style={s.title}>{props.channel.name}</Text>{capture.pending && <ActivityIndicator color="#a7eccb" />}
     <Text style={s.detail}>{capture.error || 'Preparing pause, rewind, and recording…'}</Text>
@@ -57,7 +62,7 @@ export function LivePlayer(props: Props) {
   return <PlayerSession {...props} key={`${capture.snapshot?.sessionId ?? 'direct'}:${generation}`} capture={capture.fallback ? undefined : capture.snapshot} dvrUnavailable={capture.fallback} anchor={anchor} attempts={attempts} restart={restart} diagnosis={diagnosis} recordDiagnosis={recordDiagnosis} />;
 }
 
-function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClose, programme, onFirstPlaying, onOpenGuide, previousChannelName, onPreviousChannel, attempts, restart, diagnosis, recordDiagnosis, capture, dvrUnavailable, anchor }: Props & {
+function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClose, programme, onFirstPlaying, onOpenGuide, onOpenChannelNumber, previousChannelName, onPreviousChannel, onNextChannel, onPreviousInLineup, attempts, restart, diagnosis, recordDiagnosis, capture, dvrUnavailable, anchor }: Props & {
   attempts: React.RefObject<number>;
   restart: (reset: boolean) => void;
   diagnosis?: Diagnosis;
@@ -66,7 +71,10 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   dvrUnavailable: string;
   anchor: React.RefObject<{ positionMs: number; paused: boolean } | undefined>;
 }) {
-  const insets = useSafeAreaInsets();
+  const [media, setMedia] = useState<{ duration: number; position: number }>();
+  const [speed, setSpeed] = useState(1);
+  const [looping, setLooping] = useState(false);
+  const [contentFit, setContentFit] = useState<'contain' | 'cover' | 'fill'>('contain');
   const [state, setState] = useState('Connecting');
   const [detail, setDetail] = useState('Opening channel…');
   const [playing, setPlaying] = useState(false);
@@ -91,9 +99,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   const [recordingBusy, setRecordingBusy] = useState(false);
   const captureRef = useRef(capture);
   captureRef.current = capture;
-  const [timelineWidth, setTimelineWidth] = useState(1);
   const [interaction, setInteraction] = useState(0);
-  const lastScrub = useRef(0);
   const reportedPlaying = useRef(false);
   const [recordingId, setRecordingId] = useState(capture?.recordingId);
   useEffect(() => setRecordingId(capture?.recordingId), [capture?.recordingId]);
@@ -307,6 +313,8 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
       if (captureRef.current) {
         const position = pausedAt.current ?? currentPosition();
         if (position > 0) { setPositionMs(position); anchor.current = { positionMs: position, paused: !intended.current }; }
+      } else if (channel.kind === 'progressive' && !player.isLive && Number.isFinite(player.duration) && player.duration > 0) {
+        setMedia({ duration: player.duration, position: player.currentTime });
       }
       const tickTime = Date.now();
       // Android suspends JS in native fullscreen. Time spent there is neither
@@ -501,6 +509,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     { id: 'channels', label: 'Channels', icon: 'list-outline', run: onClose },
   ];
   const tvOptions: TvAction[] = [
+    ...(onOpenChannelNumber ? [{ id: 'number', label: 'Find channel by number', run: onOpenChannelNumber }] : []),
     ...(onPreviousChannel ? [{ id: 'previous', label: `Previous: ${previousChannelName}`, icon: 'swap-horizontal' as const, run: onPreviousChannel }] : []),
     ...(capture && !recordingId && !capture.ended ? [{ id: 'record30', label: 'Record 30 minutes', run: () => void toggleRecording(Date.now() + 30 * 60_000), disabled: recordingBusy },
       ...(programme && programme.stop > Date.now() ? [{ id: 'recordShow', label: 'Record until program ends', run: () => void toggleRecording(programme.stop), disabled: recordingBusy }] : [])] : []),
@@ -509,9 +518,24 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     { id: 'diagnose', label: 'Diagnose playback', run: () => { const result = diagnosePlayback(evidence.current); setDvrNotice(`${result.title}. ${result.explanation}`); } },
     { id: 'probe', label: probing ? 'Checking server…' : 'Check server response', run: () => void checkSource(), disabled: probing },
   ];
+  const touchInteraction = () => { setControlsVisible(true); setInteraction(value => value + 1); };
+  const mobileSeek = (seconds: number) => {
+    if (capture) tvSeek(seconds);
+    else if (media) { const position = Math.max(0, Math.min(media.duration, player.currentTime + seconds)); player.currentTime = position; setMedia({ ...media, position }); resetWatchdog.current = true; }
+  };
+  const mobileShortcuts: MobileShortcut[] = [
+    { id: 'rotation', label: 'Rotation', icon: 'phone-landscape-outline', run: () => void enterFullscreen(), disabled: isTv },
+    { id: 'speed', label: `${speed}× Speed`, icon: 'speedometer-outline', run: () => { const rates = [.5, .75, 1, 1.25, 1.5, 2]; const next = rates[(rates.indexOf(speed) + 1) % rates.length]!; player.playbackRate = next; setSpeed(next); } },
+    { id: 'pip', label: 'PiP Play', icon: 'browsers-outline', run: () => void minimize(), disabled: !canMinimize },
+    { id: 'audio', label: 'Audio', icon: 'headset-outline', run: cycleAudio, disabled: audioCount < 2 },
+    { id: 'loop', label: 'Loop', icon: 'repeat', run: () => { player.loop = !looping; setLooping(!looping); }, selected: looping, disabled: !media || !!capture },
+    { id: 'live', label: failed ? 'Retry' : capture ? 'Go live' : 'Refresh', icon: 'refresh', run: failed ? () => restart(true) : goLive },
+    { id: 'record', label: recordingId ? 'Stop rec' : 'Record', icon: recordingId ? 'stop-circle' : 'radio-button-on', run: () => void toggleRecording(), selected: !!recordingId, disabled: !capture || recordingBusy || !!capture.ended && !recordingId },
+    { id: 'guide', label: 'Guide', icon: 'list-outline', run: () => onOpenGuide?.(), disabled: !onOpenGuide },
+  ];
   return <View style={[s.container, fullscreen && s.fullscreen]}>
     <View style={[s.videoArea, fullscreen && s.fullscreenVideo]}>
-      <VideoView ref={videoView} player={player} nativeControls={false} playsInline contentFit="contain" style={s.video}
+      <VideoView ref={videoView} player={player} nativeControls={false} playsInline contentFit={usesTvPlayer ? 'contain' : contentFit} style={s.video}
         fullscreenOptions={{ enable: true, orientation: 'landscape', autoExitOnRotate: false }}
         onFullscreenExit={exitFullscreen} controllerAutoShow={false}
         allowsPictureInPicture={pipSupported} startsPictureInPictureAutomatically={autoPipEnabled}
@@ -519,34 +543,17 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
         buttonOptions={{ showSeekBackward: false, showSeekForward: false, showNext: false, showPrevious: false }}
         requiresLinearPlayback={!capture} showsTimecodes={false} allowsVideoFrameAnalysis={false} />
       {!playing && !paused && !failed && <View pointerEvents="none" style={s.loading}><ActivityIndicator color="#a8eece" /><Text style={s.overlayText}>{state}</Text></View>}
-      {isTv ? <TvPlayerControls title={channel.name} subtitle={programme?.title} badge={`${recordingId ? 'REC · ' : ''}${badge}`} message={warning || dvrNotice || probe || (failed ? detail : '')}
-        actions={tvActions} options={tvOptions} settled={settled} paused={paused} onClose={onClose} onPause={togglePause} onSeek={tvSeek} /> : <>
-      <Pressable accessibilityRole="button" accessibilityLabel={controlsVisible ? 'Hide video controls' : 'Show video controls'} onPress={() => setControlsVisible(value => !value)} style={StyleSheet.absoluteFill} />
-      <Animated.View pointerEvents={controlsVisible || screenReader ? 'box-none' : 'none'} accessibilityElementsHidden={!controlsVisible && !screenReader} importantForAccessibility={controlsVisible || screenReader ? 'auto' : 'no-hide-descendants'} style={[s.videoChrome, { opacity: chromeOpacity }]}>
-        <View style={[s.videoTop, fullscreen && { top: Math.max(6, insets.top), left: Math.max(8, insets.left), right: Math.max(8, insets.right) }]}>
-          <View style={s.topSide}>{pipSupported && <Pressable accessibilityRole="button" accessibilityLabel="Minimize player" accessibilityState={{ disabled: !canMinimize }} disabled={!canMinimize} onPress={() => void minimize()} style={[s.videoButton, !canMinimize && { opacity: 0.35 }]}><Ionicons name="browsers-outline" size={21} color="white" /></Pressable>}</View>
-          <View style={s.videoHeading}><Text numberOfLines={1} style={s.overlayName}>{channel.name}{recordingId ? ' · REC' : ''}</Text>{(!capture || fullscreen) && <View style={s.badge}><View style={[s.dot, { backgroundColor: badge === 'LIVE' || badge === 'PLAYING' ? '#8ce4b7' : '#d8b983' }]} /><Text style={s.badgeText}>{badge}</Text></View>}</View>
-          <View style={s.topSide}><Pressable accessibilityRole="button" accessibilityLabel="Close player" onPress={onClose} style={s.videoButton}><Ionicons name="close" size={22} color="white" /></Pressable></View>
-        </View>
-        <View style={[s.centerControl, capture && s.dvrCenter]}>
-          {capture && <Pressable accessibilityRole="button" accessibilityLabel="Rewind 30 seconds" onPress={() => seekPosition((pausedAt.current ?? currentPosition()) - 30_000)} style={s.videoButton}><Ionicons name="play-back" size={20} color="white" /><Text style={s.skipText}>30</Text></Pressable>}
-          <Pressable accessibilityRole="button" accessibilityLabel={failed ? 'Retry stream' : capture ? 'Go live' : 'Refresh live stream'} onPress={failed ? () => restart(true) : goLive} style={[s.refreshButton, capture && { width: 44, height: 44 }]}><Ionicons name="refresh" size={27} color="white" /></Pressable>
-          {capture && <Pressable accessibilityRole="button" accessibilityLabel="Forward 30 seconds" onPress={() => seekPosition((pausedAt.current ?? currentPosition()) + 30_000)} style={s.videoButton}><Ionicons name="play-forward" size={20} color="white" /><Text style={s.skipText}>30</Text></Pressable>}
-        </View>
-        {capture && <View style={[s.timeline, { top: fullscreen ? 'auto' : 28, bottom: fullscreen ? Math.max(6, insets.bottom) + 48 : 'auto', left: fullscreen ? Math.max(14, insets.left) : 60, right: fullscreen ? Math.max(14, insets.right) : 60 }]}>
-          <Pressable accessibilityRole="adjustable" accessibilityLabel="DVR timeline" accessibilityValue={{ min: 0, max: Math.round(capture.duration), now: Math.round(Math.max(0, (positionMs - capture.startMs) / 1000)), text: `${clock(liveDelay)} behind live` }} accessibilityActions={[{ name: 'increment', label: 'Forward 30 seconds' }, { name: 'decrement', label: 'Rewind 30 seconds' }]} onAccessibilityAction={event => seekPosition((pausedAt.current ?? currentPosition()) + (event.nativeEvent.actionName === 'increment' ? 30_000 : -30_000))} onLayout={event => setTimelineWidth(Math.max(1, event.nativeEvent.layout.width))} onTouchMove={event => { if (Date.now() - lastScrub.current < 150) return; lastScrub.current = Date.now(); seekPosition(capture.startMs + Math.max(0, Math.min(1, event.nativeEvent.locationX / timelineWidth)) * (capture.endMs - capture.startMs)); }} onPress={event => seekPosition(capture.startMs + Math.max(0, Math.min(1, event.nativeEvent.locationX / timelineWidth)) * (capture.endMs - capture.startMs))} style={s.timelineTouch}>
-            <View pointerEvents="none" style={s.timelineTrack}><View style={[s.timelineFill, { width: `${Math.max(0, Math.min(100, (positionMs - capture.startMs) / Math.max(1, capture.endMs - capture.startMs) * 100))}%` }]} /></View>
-          </Pressable><View style={s.timelineLabels}><Text style={s.timelineText}>{clock(capture.duration)} available</Text><Text style={s.timelineText}>{delayed || paused ? `${clock(liveDelay)} behind live` : 'LIVE'}</Text></View>
-        </View>}
-        <View style={[s.videoBottom, fullscreen && { bottom: Math.max(6, insets.bottom), left: Math.max(8, insets.left), right: Math.max(8, insets.right) }]}>
-          <View style={[s.bottomSide, { flexDirection: 'row' }]}><Pressable accessibilityRole="button" accessibilityLabel="Player options" onPress={() => setShowOptions(true)} style={s.videoButton}><Ionicons name="ellipsis-horizontal" size={24} color="white" /></Pressable>{capture && <Pressable accessibilityRole="button" accessibilityLabel={recordingId ? 'Stop recording' : 'Record now'} disabled={recordingBusy || capture.ended && !recordingId} onPress={() => void toggleRecording()} style={[s.videoButton, { marginLeft: 4 }]}><Ionicons name={recordingId ? 'stop-circle' : 'radio-button-on'} size={24} color={recordingId ? '#ff7777' : 'white'} /></Pressable>}</View>
-          {!failed && <Pressable accessibilityRole="button" accessibilityLabel={paused ? 'Resume live TV' : 'Pause live TV'} onPress={togglePause} style={s.videoButton}><Ionicons name={paused ? 'play' : 'pause'} size={25} color="white" /></Pressable>}
-          <View style={[s.bottomSide, { flexDirection: 'row', justifyContent: 'flex-end' }]}>{fullscreen && previousChannelName && <Pressable accessibilityRole="button" accessibilityLabel={`Previous channel ${previousChannelName}`} onPress={onPreviousChannel} style={s.videoButton}><Ionicons name="swap-horizontal" size={21} color="white" /></Pressable>}{onOpenGuide && <Pressable accessibilityRole="button" accessibilityLabel="Open mini guide" accessibilityHint={previousChannelName ? `Hold to return to ${previousChannelName}` : undefined} onPress={onOpenGuide} onLongPress={onPreviousChannel} style={s.videoButton}><Ionicons name="list-outline" size={22} color="white" /></Pressable>}<Pressable accessibilityRole="button" accessibilityLabel={fullscreen ? 'Exit fullscreen' : 'Fullscreen'} onPress={() => void enterFullscreen()} style={s.videoButton}><Ionicons name={fullscreen ? 'contract-outline' : 'expand-outline'} size={23} color="white" /></Pressable></View>
-        </View>
-      </Animated.View>
-      </>}
+      {usesTvPlayer ? <TvPlayerControls title={channel.name} subtitle={programme?.title} badge={`${recordingId ? 'REC · ' : ''}${badge}`} message={warning || dvrNotice || probe || (failed ? detail : '')}
+        actions={tvActions} options={tvOptions} settled={settled} paused={paused} onClose={onClose} onPause={togglePause} onSeek={tvSeek} /> : <MobilePlayerControls title={channel.name} number={channel.number} programme={programme?.title} badge={badge} fullscreen={fullscreen}
+        paused={paused} failed={failed} visible={controlsVisible} screenReader={screenReader} opacity={chromeOpacity}
+        dvr={capture ? { duration: capture.duration, progress: Math.max(0, Math.min(1, (positionMs - capture.startMs) / Math.max(1, capture.endMs - capture.startMs))), delay: liveDelay, delayed } : undefined}
+        media={media} shortcuts={mobileShortcuts} hasCc={hasCc} cc={cc} onCaptions={toggleCc} onPrevious={onPreviousInLineup || onPreviousChannel} onNext={onNextChannel}
+        onAspectRatio={() => { const fits = ['contain', 'cover', 'fill'] as const; setContentFit(fits[(fits.indexOf(contentFit) + 1) % fits.length]!); }}
+        onToggleControls={() => { setControlsVisible(value => !value); setInteraction(value => value + 1); }} onInteract={touchInteraction}
+        onPause={togglePause} onSeek={mobileSeek} onSeekFraction={fraction => { if (capture) seekPosition(capture.startMs + fraction * (capture.endMs - capture.startMs)); else if (media) { const position = media.duration * fraction; player.currentTime = position; setMedia({ ...media, position }); resetWatchdog.current = true; } }}
+        onGoLive={failed ? () => restart(true) : goLive} onOptions={() => setShowOptions(true)} onClose={onClose} />}
     </View>
-    {!isTv && <>
+    {!usesTvPlayer && <>
     {!!(warning || dvrNotice) && <Pressable accessibilityRole="button" accessibilityLabel="Dismiss DVR message" onPress={() => setDvrNotice('')} style={s.dvrNotice}><Text accessibilityRole="alert" style={s.detail}>{warning || dvrNotice}</Text></Pressable>}
     <Animated.View testID="player-status-panel" pointerEvents={compact || fullscreen ? 'none' : 'auto'} accessibilityElementsHidden={compact || fullscreen} importantForAccessibility={compact || fullscreen ? 'no-hide-descendants' : 'auto'} style={{ height: fullscreen ? 0 : panelExpansion.interpolate({ inputRange: [0, 1], outputRange: [0, panelHeight] }), opacity: panelExpansion, overflow: 'hidden' }}>
       <View onLayout={event => setPanelHeight(Math.ceil(event.nativeEvent.layout.height))} style={s.statusPanel}>
@@ -557,6 +564,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     <Modal visible={showOptions} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowOptions(false)}><SafeAreaView style={s.diagnosticScreen}><ScrollView contentContainerStyle={s.diagnosticContent}>
       <View style={s.titleRow}><Text style={s.title}>Player options</Text><Pressable accessibilityRole="button" accessibilityLabel="Close player options" onPress={() => setShowOptions(false)} style={s.icon}><Ionicons name="close" size={25} color="#d6e4e1" /></Pressable></View>
       <Text style={s.diagnosticTitle}>{channel.name}</Text><Text style={s.diagnosticBody}>{detail || metrics || channel.group}</Text>
+      {onOpenChannelNumber && <Pressable accessibilityRole="button" accessibilityLabel="Find channel by number" onPress={() => { setShowOptions(false); onOpenChannelNumber(); }} style={s.control}><Text style={s.controlText}>Find channel by number</Text></Pressable>}
       {onOpenGuide && <Pressable accessibilityRole="button" accessibilityLabel="Open mini guide" onPress={() => { setShowOptions(false); onOpenGuide(); }} style={s.control}><Text style={s.controlText}>Mini guide · browse without leaving the video</Text></Pressable>}
       {previousChannelName && <Pressable accessibilityRole="button" accessibilityLabel={`Previous channel ${previousChannelName}`} onPress={() => { setShowOptions(false); onPreviousChannel?.(); }} style={s.control}><Text style={s.controlText}>Previous · {previousChannelName}</Text></Pressable>}
       {!!dvrUnavailable && <Text style={s.diagnosticBody}>{dvrUnavailable}</Text>}
@@ -593,7 +601,7 @@ const s = StyleSheet.create({
   fullscreen: { flex: 1, marginBottom: 0, borderRadius: 0, backgroundColor: '#000' }, fullscreenVideo: { flex: 1, aspectRatio: undefined },
   videoChrome: { ...StyleSheet.absoluteFill, backgroundColor: '#0003' }, videoHeading: { flex: 1, alignItems: 'center', gap: 4, paddingHorizontal: 5 }, overlayName: { color: '#fff', fontSize: 12, fontWeight: '600', textShadowColor: '#000', textShadowRadius: 4, textShadowOffset: { width: 0, height: 1 } }, topSide: { width: 44 }, videoButton: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center', backgroundColor: '#061012aa' }, centerControl: { position: 'absolute', top: '50%', left: '50%', marginLeft: -26, marginTop: -26 }, refreshButton: { width: 52, height: 52, borderRadius: 26, backgroundColor: '#061012aa', justifyContent: 'center', alignItems: 'center' }, videoBottom: { position: 'absolute', left: 8, right: 8, bottom: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, bottomSide: { flex: 1 }, statusPanel: { position: 'absolute', left: 0, right: 0, top: 0, padding: 14, gap: 5 }, statusName: { color: '#e0eee7', fontSize: 15, fontWeight: '600' }, textAction: { flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 42 },
   container: { backgroundColor: '#0e1a1c', borderRadius: 20, overflow: 'hidden', marginBottom: 18 },
-  videoArea: { aspectRatio: 16 / 9, backgroundColor: '#000' },
+  videoArea: { aspectRatio: 16 / 9, minHeight: isTv ? 188 : 224, backgroundColor: '#000' },
   video: { width: '100%', height: '100%' },
   loading: { position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, alignItems: 'center', justifyContent: 'center', gap: 9, backgroundColor: '#0006' },
   overlayText: { color: '#d6e4e1', fontSize: 12 },

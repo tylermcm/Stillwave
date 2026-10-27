@@ -1,4 +1,6 @@
-# Stillwave TV handoff — October 27, 2026
+# Stillwave TV handoff â€” October 27, 2026
+
+The current signed package is **0.4.3 / versionCode 10** (35.2 MiB). Android devices share the landscape TV Guide/My DVR, with larger navigation controls and mobile momentum scrolling. Phones/tablets use mobile live/recording controls; TV hardware retains the remote player. The approved StillWave splash and v2 logo are packaged. Original signer retained; all 82 tests and package/source verification passed. See `CURRENT_WORK.md`, `VALIDATION.md` and `artifacts/INSTALL.md`. Older measurements below are historical; physical 0.4.3 acceptance remains pending.
 
 ## Review build
 
@@ -10,7 +12,7 @@ The final reconnect to the previously authorized `192.168.1.242:5555` timed out;
 
 ## Visual source and overlays
 
-Use unchanged `mockups/tv-dvr.html` and `mockups/TV_DESIGN_SPEC.md`. `#dvr` opens My DVR. The earlier three-column TV draft has been replaced by `src/components/tv/TvDashboard.tsx`; `TvDvrShell.tsx` supplies real guide and DVR state. The 1920×1080 stage scales to the viewport. Browser comparisons use Segoe UI; Android uses Roboto as specified. The player overlay was not redesigned for these two reference screens.
+Use unchanged `mockups/tv-dvr.html` and `mockups/TV_DESIGN_SPEC.md`. `#dvr` opens My DVR. The earlier three-column TV draft has been replaced by `src/components/tv/TvDashboard.tsx`; `TvDvrShell.tsx` supplies real guide and DVR state. The 1920Ã—1080 stage scales to the viewport. Browser comparisons use Segoe UI; Android uses Roboto as specified. The player overlay was not redesigned for these two reference screens.
 
 `artifacts/tv-parity-review.html` provides a blend slider, candidate/reference views and amplified differences. Run `node scripts/serve-mockups.mjs` and open `http://127.0.0.1:8098/review`. The original HTML remains available at `/tv-dvr.html` and `/tv-dvr.html#dvr`.
 
@@ -33,14 +35,14 @@ Evidence: `tv-guide-stable-final-*`, `tv-guide-supplied-final-*`, `tv-dvr-final-
 - Series rules match title and channel, queue episodes in the downloaded guide and add newly discovered episodes after guide refresh. Cancelled episodes remain cancelled rather than being immediately re-created by reconciliation. Limits: 200 queued jobs, 100 rules, individual programs under 24 hours. Schedule/rule data are app-private and unencrypted, like the existing provider library.
 - Menu focuses show actions; a second Menu opens source/favorites options. In My DVR, Menu focuses side-panel actions. Thus the basic Fire remote reaches actions without a keyboard. R/1/red records, S/2/green toggles series, X/3/yellow deletes/stops/cancels, D/4/blue opens My DVR, and G/5/Guide returns to the guide. My DVR Left/Right switches tabs.
 - TV first-run setup loads `https://iptv-org.github.io/iptv/countries/us.m3u` and `https://i.mjh.nz/PlutoTV/us.xml.gz`. An existing US-playlist installation without a guide also receives the guide. Exact provider IDs are extracted from known Pluto stream links. The guide covers matching Pluto stations, not the whole US playlist; schedules are never invented. Setup preserves other playlists and favorites/recents changed while downloading. Sources can be refreshed from Menu without typing.
-- Existing phone categories, sources and mobile playback layout remain separate. Earlier in-progress features—multiple provider-scoped guides, guide search/reminders, recents and previous-channel support—are retained.
+- Existing phone categories, sources and mobile playback layout remain separate. Earlier in-progress featuresâ€”multiple provider-scoped guides, guide search/reminders, recents and previous-channel supportâ€”are retained.
 
 ## Validation
 
 - Typecheck and 68 TypeScript tests passed. This includes guide/episode matching, navigation/time windows, genuine recording markers, series deduplication/cancellation, actual conflict deadlines, resume data, library migration and concurrent first-run preference preservation.
 - Native JVM DVR tests passed, including shared capture, preparing a recording without stealing the visible player, refusing a second recording, metadata retention, buffer eviction and deadline behavior.
 - An isolated Android 15/API 35 instrumentation run used an **unminified x86_64 test APK from the same native source**. An alarm started real HLS capture with the app in the background, duplicate jobs were deduplicated, a second stream was refused, cancellation persisted, the deadline finalized video, resume/episode metadata persisted, and series rules added/removed correctly. Final run: **16 seconds, 3,637,236 bytes**. Evidence with source hashes: `artifacts/v040-native-planner-check.json`. Reproducible driver: `tests/android-planner/`; runner: `scripts/test-recording-planner.ps1` (isolated emulators only). Start the local generated HLS fixture separately with `node tests/dvr-fixture-server.mjs`.
-- The real TV controller passed browser checks at 960×540 for scaling, D-pad order, automatic fullscreen, restored cursor on Back, honest web DVR unavailability, DVR tabs, remote-reachable series actions, and the retained phone view. See `artifacts/tv-controller-check.json`.
+- The real TV controller passed browser checks at 960Ã—540 for scaling, D-pad order, automatic fullscreen, restored cursor on Back, honest web DVR unavailability, DVR tabs, remote-reachable series actions, and the retained phone view. See `artifacts/tv-controller-check.json`.
 - Production APK signature, original certificate, alignment, manifest, embedded bundle, ABIs and absence of signing files passed verification. Current TV/DVR JavaScript exactly matches the bundle's source map; native source fingerprints predate the packaged APK. See `artifacts/release-v040-check.json` and `artifacts/v040-bundle-source-check.json`.
 - Final Android/iOS/web exports passed. The optimized production APK was installed and launched in the isolated API 35 emulator with no reported AndroidRuntime/ReactNativeJS errors. See `artifacts/v040-release-startup-check.json`. That emulator and the local HLS/parity test servers were stopped; only the mockup/overlay review server remains available.
 

@@ -5,6 +5,7 @@ export interface Channel {
   name: string;
   tvgId?: string;
   tvgName?: string;
+  languages?: string[];
   group: string;
   logo?: string;
   url: string;
@@ -72,6 +73,8 @@ export type BufferProfile = 'fast' | 'balanced' | 'stable';
 
 export interface Library {
   version: 1;
+  channelNumbers?: Record<string, string>;
+  channelNumberingVersion?: 1;
   channels: Channel[];
   favorites: string[];
   playlists: SavedPlaylist[];

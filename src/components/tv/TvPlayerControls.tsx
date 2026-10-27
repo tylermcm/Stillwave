@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BackHandler, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { BackHandler, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type Ionicons from '@expo/vector-icons/Ionicons';
 import { useTvKeys } from '../../data/tv';
 import { TvButton, tvColors, tvUi } from './TvUi';
@@ -41,9 +41,11 @@ export function TvPlayerControls({ title, subtitle, badge, message, actions, opt
       if (key === 'down' && settled && !paused) setVisible(false);
     }
   });
-  if (!visible) return null;
+  if (!visible) return <Pressable accessibilityRole="button" accessibilityLabel="Show player controls" style={StyleSheet.absoluteFill} onPress={() => { setVisible(true); setInteraction(n => n + 1); }} />;
   return <View testID="tv-player-controls" style={styles.overlay} pointerEvents="box-none">
-    <View style={styles.heading}><View style={{ flex: 1 }}><Text style={tvUi.heading}>{title}</Text>{!!subtitle && <Text style={tvUi.text}>{subtitle}</Text>}</View><Text style={tvUi.text}>{badge}</Text></View>
+    <Pressable accessibilityRole="button" accessibilityLabel="Hide player controls" style={StyleSheet.absoluteFill} onPress={() => { if (settled && !paused && !menu) setVisible(false); }} />
+    <View style={styles.heading}><View style={{ flex: 1 }}><Text style={tvUi.heading}>{title}</Text>{!!subtitle && <Text style={tvUi.text}>{subtitle}</Text>}</View><Text style={tvUi.text}>{badge}</Text>
+      {!!options.length && <Pressable accessibilityRole="button" accessibilityLabel="Open player options" style={{ padding: 10 }} onPress={() => { setMenu(value => !value); setIndex(0); setInteraction(n => n + 1); }}><Text style={tvUi.text}>Options</Text></Pressable>}</View>
     {menu ? <View style={styles.menu}><Text style={[tvUi.heading, { marginBottom: 12 }]}>Player options</Text><ScrollView ref={menuList}>{choices.map((action, i) => <TvButton key={action.id} {...action} focused={i === focus} onFocus={() => setIndex(i)} onPress={action.run} />)}</ScrollView></View>
       : <View style={styles.bottom}>
         {!!message && <Text accessibilityRole="alert" style={styles.message} numberOfLines={3}>{message}</Text>}

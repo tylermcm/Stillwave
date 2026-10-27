@@ -1,12 +1,26 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { moveTvFocus, type TvFocus, type TvNavigation } from '../src/core/tvNavigation';
+import { moveTvFocus, usesRemotePlayer, usesTvLayout, type TvFocus, type TvNavigation } from '../src/core/tvNavigation';
 import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults } from '../src/core/tvDefaults';
 import { EMPTY_LIBRARY } from '../src/types';
 import { parseXmltv, createGuideMatcher } from '../src/core/xmltv';
 
 const nav: TvNavigation = { tab: 0, category: 4, channel: 67, body: 'channels', counts: { tabs: 5, categories: 20, channels: 1000, details: 2, settings: 5, recordings: 4 } };
+
+test('Android phones and TVs use the same TV layout; iOS and web retain explicit preview selection', () => {
+  assert.equal(usesTvLayout('android',false),true);
+  assert.equal(usesTvLayout('android',true),true);
+  assert.equal(usesTvLayout('ios',false),false);
+  assert.equal(usesTvLayout('web',false),false);
+  assert.equal(usesTvLayout('web',false,true),true);
+});
+test('TV browsing on a phone does not select remote player controls', () => {
+  assert.equal(usesTvLayout('android', false), true);
+  assert.equal(usesRemotePlayer(false), false);
+  assert.equal(usesRemotePlayer(true), true);
+  assert.equal(usesRemotePlayer(false, true), true);
+});
 test('TV remote stays in its column, reaches every channel, and returns to the remembered row', () => {
   let focus: TvFocus = { zone: 'channels', index: 67 };
   for (let i = 0; i < 100; i++) focus = moveTvFocus(focus, 'down', nav);

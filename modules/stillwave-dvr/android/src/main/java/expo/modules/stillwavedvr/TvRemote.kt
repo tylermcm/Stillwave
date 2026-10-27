@@ -25,11 +25,13 @@ object TvRemote {
       KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> "fastForward"
       KeyEvent.KEYCODE_CHANNEL_UP -> "channelUp"
       KeyEvent.KEYCODE_CHANNEL_DOWN -> "channelDown"
-      KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_PROG_RED, KeyEvent.KEYCODE_1, KeyEvent.KEYCODE_MEDIA_RECORD -> "record"
-      KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_PROG_GREEN, KeyEvent.KEYCODE_2 -> "series"
-      KeyEvent.KEYCODE_X, KeyEvent.KEYCODE_PROG_YELLOW, KeyEvent.KEYCODE_3 -> "delete"
-      KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_PROG_BLUE, KeyEvent.KEYCODE_4 -> "dvr"
-      KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_GUIDE, KeyEvent.KEYCODE_5 -> "guide"
+      in KeyEvent.KEYCODE_0..KeyEvent.KEYCODE_9 -> "digit${event.keyCode - KeyEvent.KEYCODE_0}"
+      in KeyEvent.KEYCODE_NUMPAD_0..KeyEvent.KEYCODE_NUMPAD_9 -> "digit${event.keyCode - KeyEvent.KEYCODE_NUMPAD_0}"
+      KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_PROG_RED, KeyEvent.KEYCODE_MEDIA_RECORD -> "record"
+      KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_PROG_GREEN -> "series"
+      KeyEvent.KEYCODE_X, KeyEvent.KEYCODE_PROG_YELLOW -> "delete"
+      KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_PROG_BLUE -> "dvr"
+      KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_GUIDE -> "guide"
       else -> return false
     }
     if (event.action == KeyEvent.ACTION_DOWN && (event.repeatCount == 0 || key in listOf("up", "down", "left", "right", "rewind", "fastForward"))) listener?.invoke(key)

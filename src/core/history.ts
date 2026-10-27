@@ -12,3 +12,10 @@ export function previousChannel(library: Pick<Library, 'channels' | 'recents'>, 
   }
   return undefined;
 }
+
+export function adjacentChannel(channels: Library['channels'], selectedId: string | undefined, direction: -1 | 1) {
+  if (channels.length < 2 || !selectedId) return undefined;
+  const sorted = [...channels].sort((a, b) => Number(a.number || 99999) - Number(b.number || 99999) || a.name.localeCompare(b.name));
+  const index = sorted.findIndex(c => c.id === selectedId);
+  return index < 0 ? undefined : sorted[(index + direction + sorted.length) % sorted.length];
+}

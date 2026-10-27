@@ -1,4 +1,13 @@
-export type TvKey = 'up' | 'down' | 'left' | 'right' | 'select' | 'back' | 'menu' | 'playPause' | 'rewind' | 'fastForward' | 'channelUp' | 'channelDown' | 'record' | 'series' | 'delete' | 'dvr' | 'guide';
+export type TvDigit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+/** Android APKs share the TV interface on phones, tablets and televisions. */
+export function usesTvLayout(platform: string, hardwareTv: boolean, tvPreview = false) {
+  return platform === 'android' || hardwareTv || (platform === 'web' && tvPreview);
+}
+/** Player controls follow the input device, independently of the guide layout. */
+export function usesRemotePlayer(hardwareTv: boolean, remotePreview = false) {
+  return hardwareTv || remotePreview;
+}
+export type TvKey = `digit${TvDigit}` | 'up' | 'down' | 'left' | 'right' | 'select' | 'back' | 'menu' | 'playPause' | 'rewind' | 'fastForward' | 'channelUp' | 'channelDown' | 'record' | 'series' | 'delete' | 'dvr' | 'guide';
 export type TvZone = 'tabs' | 'categories' | 'channels' | 'details' | 'settings' | 'recordings';
 export interface TvFocus { zone: TvZone; index: number }
 export interface TvNavigation {

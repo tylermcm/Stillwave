@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AppState, BackHandler, StyleSheet, View } from 'react-native';
+import { AppState, BackHandler, ScrollView, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationBar } from 'expo-navigation-bar';
 import type { Channel, Library } from '../../types';
@@ -7,15 +7,17 @@ import { createGuideView } from '../../core/guides';
 import { guideProgrammeKey, guideWindow, moveGuide, programmeAt, type TvDashboardState, type TvDvrTab, type TvGuideCursor } from '../../core/tvGuide';
 import { recordingConflict, recordingMatchesProgramme, seriesEpisodes, seriesTitle, tvDvrItems } from '../../core/tvDvr';
 import type { Recording } from '../../core/dvr';
-import { previousChannel } from '../../core/history';
+import { adjacentChannel, previousChannel } from '../../core/history';
 import { nowAndNext } from '../../core/xmltv';
 import { dvr } from '../../data/dvr';
 import { recordingPlanner, type RecordingPlan, type SeriesRule } from '../../data/recordingPlanner';
-import { tvNative, useTvKeys } from '../../data/tv';
+import { TvKeysSuspended, tvNative, usesTvPlayer, useTvKeys } from '../../data/tv';
 import { LivePlayer } from '../LivePlayer';
 import { TvRecordingPlayer } from './TvRecordingPlayer';
 import { TvDashboard, DVR_COLORS } from './TvDashboard';
 import { TvButton } from './TvUi';
+import { browseChannelRows, CHANNEL_BROWSE_MODES, comparePreferredChannels, type ChannelBrowseMode } from '../../core/channelBrowsing';
+import { ChannelNumberPad } from './ChannelNumberPad';
 
 type Props = {
   library: Library; selected?: Channel; loaded: boolean; busy: string; error: string; notice: string;
@@ -37,18 +39,23 @@ export function TvShell(props: Props) {
   const [watching, setWatching] = useState<Recording & { uri: string }>();
   const [menu, setMenu] = useState(false);
   const [menuIndex, setMenuIndex] = useState(0);
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [browseMode, setBrowseMode] = useState<ChannelBrowseMode>('all');
+  const [browseMenu, setBrowseMenu] = useState(false);
+  const [numberSearch, setNumberSearch] = useState<{ initial: string }>();
+  const menuList = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const busy = useRef(false);
   const initialized = useRef(false);
   const deletePending = useRef<{ id: string; at: number } | undefined>(undefined);
   const view = useMemo(() => createGuideView(props.library), [props.library.guideSources, props.library.guide, props.library.guideUrl, props.library.mappings]);
-  const rows = useMemo(() => props.library.channels.map((channel, index) => ({ channel, number: channel.number || String(index + 1), programmes: view.guide?.programmes[view.matcher(channel, props.library.mappings) || ''] || [] }))
-    .filter(row => !favoritesOnly || props.library.favorites.includes(row.channel.id)), [props.library.channels, props.library.favorites, props.library.mappings, view, favoritesOnly]);
+  const allRows = useMemo(() => props.library.channels.map((channel, index) => ({ channel, number: channel.number || String(index + 1), programmes: view.guide?.programmes[view.matcher(channel, props.library.mappings) || ''] || [] }))
+    .sort((a, b) => comparePreferredChannels(a.channel, b.channel)), [props.library.channels, props.library.mappings, view]);
+  const rows = useMemo(() => browseChannelRows(allRows, browseMode, props.library.favorites, now), [allRows, browseMode, props.library.favorites, now]);
   const selectedCursor = { ...cursor, channel: Math.max(0, Math.min(cursor.channel, rows.length - 1)), programme: Math.max(0, Math.min(cursor.programme, (rows[cursor.channel]?.programmes.length || 1) - 1)) };
   const row = rows[selectedCursor.channel];
   const programme = row?.programmes[selectedCursor.programme];
   const items = useMemo(() => tvDvrItems(dvrTab, recordings, plans, rules, now), [dvrTab, recordings, plans, rules, now]);
   const item = items[Math.min(itemIndex, Math.max(0, items.length - 1))];
+
   const rule = row && programme ? rules.find(r => r.channelId === row.channel.id && seriesTitle(r.title) === seriesTitle(programme.title)) : undefined;
   const plan = row && programme ? plans.find(p => ['scheduled', 'starting', 'recording'].includes(p.status) && p.channelId === row.channel.id && p.start === programme.start && p.title === programme.title) : undefined;
   const record = row && programme ? recordings.find(r => recordingMatchesProgramme(r, row.channel.id, programme, now)) : undefined;
@@ -89,9 +96,10 @@ export function TvShell(props: Props) {
     if (!item) return;
     const selected = item;
     if (action === 'guide') {
-      const channel = rows.findIndex(r => r.channel.id === selected.channelId);
+      const channel = allRows.findIndex(r => r.channel.id === selected.channelId);
       if (channel < 0) { setToast('This channel is no longer in the selected playlist.'); return; }
-      setCursor(guideWindow({ ...cursor, channel, programme: programmeAt(rows[channel]!.programmes, selected.programme?.start || now) }, rows)); onScreen('guide'); return;
+      setBrowseMode('all');
+      setCursor(guideWindow({ ...cursor, channel, programme: programmeAt(allRows[channel]!.programmes, selected.programme?.start || now) }, allRows)); onScreen('guide'); return;
     }
     if (action === 'delete' && (deletePending.current?.id !== selected.id || Date.now() - deletePending.current.at > 4000)) { deletePending.current = { id: selected.id, at: Date.now() }; setToast('Press Delete again to permanently remove this recording.'); return; }
     run(async () => {
@@ -111,9 +119,31 @@ export function TvShell(props: Props) {
     }
     return result;
   }, [rows, recordings, plans, now]);
-  const menuActions = [
+  const chooseBrowseMode = (mode: ChannelBrowseMode) => {
+    const nextRows = browseChannelRows(allRows, mode, props.library.favorites, now);
+    setBrowseMode(mode); setScreen('guide'); setMenu(false);
+    setCursor(guideWindow({ channel: 0, programme: programmeAt(nextRows[0]?.programmes || [], now), rowTop: 0, windowStart: Math.floor(now / 1_800_000) * 1_800_000 }, nextRows));
+    setFocus({ zone: 'grid', index: 0 });
+  };
+  const openNumberSearch = (initial = '') => { setMenu(false); setNumberSearch({ initial }); };
+  const showNumberInGuide = (channel: Channel) => {
+    const index = allRows.findIndex(row => row.channel.id === channel.id);
+    if (index < 0) return;
+    setNumberSearch(undefined); setBrowseMode('all'); onScreen('guide');
+    setCursor(guideWindow({ channel: index, programme: programmeAt(allRows[index]!.programmes, now), rowTop: 0, windowStart: Math.floor(now / 1_800_000) * 1_800_000 }, allRows));
+    if (props.selected) props.onClose();
+  };
+  const numberPad = numberSearch && <ChannelNumberPad channels={props.library.channels} initial={numberSearch.initial} onClose={() => setNumberSearch(undefined)} onGuide={showNumberInGuide}
+    onWatch={channel => { setNumberSearch(undefined); void props.onWatch(channel); }} />;
+  const menuActions = browseMenu ? [
+    ...CHANNEL_BROWSE_MODES.map(mode => ({ label: `${mode.label} (${browseChannelRows(allRows, mode.id, props.library.favorites, now).length})`, run: () => chooseBrowseMode(mode.id) })),
+    { label: 'Back', run: () => { setBrowseMenu(false); setMenuIndex(0); } },
+  ] : [
     { label: 'Guide', run: () => onScreen('guide') }, { label: 'My DVR', run: () => onScreen('dvr') },
-    { label: favoritesOnly ? 'All channels' : 'Favorite channels', run: () => { setFavoritesOnly(!favoritesOnly); setCursor({ ...cursor, channel: 0, programme: 0, rowTop: 0 }); setMenu(false); } },
+    { label: 'Find channel by number', run: () => openNumberSearch() },
+    { label: `Browse channels: ${CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label}`, run: () => { setBrowseMenu(true); setMenuIndex(0); } },
+    ...(screen === 'guide' && row ? [{ label: 'Selected channel actions', run: () => { setMenu(false); setFocus({ zone: 'guideActions', index: 0 }); } }] : []),
+    ...(screen === 'dvr' && item ? [{ label: 'Selected recording actions', run: () => { setMenu(false); setFocus({ zone: 'dvrActions', index: 0 }); } }] : []),
     ...(row ? [{ label: props.library.favorites.includes(row.channel.id) ? 'Remove favorite' : 'Add favorite', run: () => props.onFavorite(row.channel) }] : []),
     { label: 'Refresh US playlist and guide', run: () => { props.onDefaults(); setMenu(false); } },
     ...view.sources.filter(s => s.url).map(source => ({ label: `Refresh ${source.name}`, run: () => { props.onRefreshGuide(source.id); setMenu(false); } })),
@@ -122,17 +152,19 @@ export function TvShell(props: Props) {
   const live = !!programme && programme.start <= now && programme.stop > now;
   const actions = [...(live || !programme ? ['watch'] : []), ...(programme && programme.stop > now ? ['record', 'series'] : [])] as ('watch' | 'record' | 'series')[];
   useTvKeys(key => {
+    if (numberSearch) return;
+    if (key.startsWith('digit')) { openNumberSearch(key.slice(5)); return; }
+    if (props.selected) return;
     if (menu) {
-      if (key === 'back' || key === 'menu') setMenu(false);
+      if (key === 'back' && browseMenu) { setBrowseMenu(false); setMenuIndex(0); }
+      else if (key === 'back' || key === 'menu') setMenu(false);
       else if (key === 'up' || key === 'down') setMenuIndex(i => Math.max(0, Math.min(menuActions.length - 1, i + (key === 'up' ? -1 : 1))));
       else if (key === 'select') menuActions[Math.min(menuIndex, menuActions.length - 1)]?.run();
       return;
     }
     if (key === 'dvr' || key === 'guide') { onScreen(key === 'dvr' ? 'dvr' : 'guide'); return; }
     if (key === 'menu') {
-      if (screen === 'guide' && focus.zone !== 'guideActions') setFocus({ zone: 'guideActions', index: 0 });
-      else if (screen === 'dvr' && focus.zone !== 'dvrActions') setFocus({ zone: 'dvrActions', index: 0 });
-      else { setMenu(true); setMenuIndex(0); }
+      setMenu(true); setBrowseMenu(false); setMenuIndex(0);
       return;
     }
     if (key === 'record' || key === 'series') { if (screen === 'guide') guideAction(key); return; }
@@ -142,8 +174,8 @@ export function TvShell(props: Props) {
       return;
     }
     if (focus.zone === 'nav') {
-      if (key === 'left' || key === 'right') setFocus({ zone: 'nav', index: key === 'left' ? 0 : 1 });
-      else if (key === 'select') onScreen(focus.index ? 'dvr' : 'guide');
+      if (key === 'left' || key === 'right') setFocus({ zone: 'nav', index: Math.max(0, Math.min(2, focus.index + (key === 'left' ? -1 : 1))) });
+      else if (key === 'select') { if (focus.index === 2) { setMenu(true); setBrowseMenu(false); setMenuIndex(0); } else onScreen(focus.index ? 'dvr' : 'guide'); }
       else if (key === 'down') setFocus({ zone: screen === 'guide' ? 'grid' : 'dvrList', index: 0 });
       return;
     }
@@ -155,7 +187,7 @@ export function TvShell(props: Props) {
       return;
     }
     if (focus.zone === 'dvrActions') {
-      if (key === 'left' || key === 'right') setFocus({ zone: 'dvrActions', index: key === 'left' ? 0 : 1 });
+      if (key === 'left' || key === 'right') setFocus({ zone: 'dvrActions', index: Math.max(0, Math.min(2, focus.index + (key === 'left' ? -1 : 1))) });
       else if (key === 'select' && item) onDvrAction(focus.index === 0 ? item.kind === 'saved' || item.kind === 'recording' ? 'play' : 'cancel' : item.kind === 'saved' ? 'delete' : item.kind === 'recording' ? 'stop' : 'guide');
       else if (key === 'up' || key === 'down') setFocus({ zone: 'dvrList', index: 0 });
       return;
@@ -174,7 +206,7 @@ export function TvShell(props: Props) {
       else if (key === 'select' && item) onDvrAction(item.kind === 'saved' || item.kind === 'recording' ? 'play' : 'guide');
       else if (key === 'fastForward') setFocus({ zone: 'dvrActions', index: 0 });
     }
-  }, !props.selected && !watching);
+  }, !watching);
   useEffect(() => { tvNative?.setRemoteEnabled(true); NavigationBar.setHidden(true); return () => { tvNative?.setRemoteEnabled(false); NavigationBar.setHidden(false); }; }, []);
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 30_000); return () => clearInterval(t); }, []);
   useEffect(() => {
@@ -192,33 +224,40 @@ export function TvShell(props: Props) {
   }, []);
   useEffect(() => {
     const capacity = Math.max(0, 200 - plans.filter(p => ['scheduled', 'starting', 'recording'].includes(p.status)).length);
-    const missing = seriesEpisodes(rules, rows, plans, Date.now()).slice(0, capacity);
+    const missing = seriesEpisodes(rules, allRows, plans, Date.now()).slice(0, capacity);
     if (!recordingPlanner || !missing.length || busy.current) return;
     const client = recordingPlanner;
     run(async () => { for (const item of missing) await client.schedule(item.channel, item.programme, item.ruleId); });
-  }, [rows, rules, plans]);
+  }, [allRows, rules, plans]);
+  useEffect(() => { if (menu) menuList.current?.scrollTo({ y: Math.max(0, (menuIndex - 2) * 50), animated: false }); }, [menu, menuIndex, browseMenu]);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4000); return () => clearTimeout(t); }, [toast]);
-  useEffect(() => { if (props.error) setToast(props.error); else if (props.busy) setToast(props.busy); }, [props.error, props.busy]);
+  useEffect(() => { if (props.error) setToast(props.error); else if (props.busy) setToast(props.busy); else if (props.notice) setToast(props.notice); }, [props.error, props.busy, props.notice]);
   useEffect(() => {
-    if (props.selected || watching) return;
-    const sub = BackHandler.addEventListener('hardwareBackPress', () => { if (menu) setMenu(false); else setFocus({ zone: 'nav', index: screen === 'guide' ? 0 : 1 }); return true; });
+    if ((props.selected && !numberSearch) || watching) return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => { if (numberSearch) setNumberSearch(undefined); else if (menu) setMenu(false); else setFocus({ zone: 'nav', index: screen === 'guide' ? 0 : 1 }); return true; });
     return () => sub.remove();
   });
   if (props.selected) {
     const previous = previousChannel(props.library, props.selected.id);
-    return <View style={s.fullscreen}><StatusBar hidden /><LivePlayer key={props.selected.id} channel={props.selected} profile={props.library.profile} fullscreen onFullscreenChange={props.onClose} onClose={props.onClose}
-      programme={nowAndNext(view.guide?.programmes[view.matcher(props.selected, props.library.mappings) || ''], now).now} onFirstPlaying={props.onFirstPlaying} previousChannelName={previous?.name} onPreviousChannel={previous ? () => void props.onWatch(previous) : undefined} /></View>;
+    return <View style={s.fullscreen}><StatusBar hidden /><TvKeysSuspended.Provider value={!!numberSearch}><LivePlayer key={props.selected.id} channel={props.selected} profile={props.library.profile} fullscreen onFullscreenChange={props.onClose} onClose={props.onClose}
+      programme={nowAndNext(view.guide?.programmes[view.matcher(props.selected, props.library.mappings) || ''], now).now} onFirstPlaying={props.onFirstPlaying} onOpenChannelNumber={() => openNumberSearch()} onOpenGuide={props.onClose}
+      onNextChannel={adjacentChannel(props.library.channels, props.selected.id, 1) ? () => { const channel = adjacentChannel(props.library.channels, props.selected!.id, 1); if (channel) void props.onWatch(channel); } : undefined}
+      onPreviousInLineup={adjacentChannel(props.library.channels, props.selected.id, -1) ? () => { const channel = adjacentChannel(props.library.channels, props.selected!.id, -1); if (channel) void props.onWatch(channel); } : undefined}
+      previousChannelName={previous?.name} onPreviousChannel={previous ? () => void props.onWatch(previous) : undefined} /></TvKeysSuspended.Provider>{numberPad}</View>;
   }
   if (watching) return <TvRecordingPlayer recording={watching} onClose={() => setWatching(undefined)} />;
   const totalGb = storage ? (storage.totalBytes / 1_000_000_000).toFixed(1) : '—';
   const usedGb = ((storage ? storage.totalBytes - storage.freeBytes : recordings.reduce((sum, r) => sum + r.bytes, 0)) / 1_000_000_000).toFixed(1);
   const state: TvDashboardState = { screen, now, clock: new Date(now).toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + new Date(now).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-    dayLabel: new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'long' }),
+    dayLabel: browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'long' }),
     rows, cursor: selectedCursor, marks, dvrTab, items, itemIndex, summary: `${usedGb} of ${totalGb} GB used · ${recordings.some(r => r.status === 'recording') ? 1 : 0} of 1 streams in use`,
-    conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : 'No schedule is available. Your channels can still play.') };
-  return <View style={s.fullscreen}><StatusBar hidden /><TvDashboard state={state} onScreen={onScreen} onProgramme={(channel, programme) => { setCursor(guideWindow({ ...cursor, channel, programme }, rows)); setFocus({ zone: 'grid', index: 0 }); }}
-    onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} />
-    {menu && <View style={s.menu}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</View>}
+    conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels in this view. Use Menu → Browse channels → All channels.` : 'No schedule is available. Press OK to watch this channel live.') };
+  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
+    onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }}
+    onProgramme={(channel, programme) => { if (selectedCursor.channel === channel && selectedCursor.programme === programme && focus.zone === 'grid') guideAction('watch'); else { setCursor(usesTvPlayer ? guideWindow({ ...cursor, channel, programme }, rows) : { ...cursor, channel, programme }); setFocus({ zone: 'grid', index: 0 }); } }}
+    onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} /></View>
+    {menu && <View style={s.menu}><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
+    {numberPad}
   </View>;
 }
-const s = StyleSheet.create({ fullscreen: { flex: 1, backgroundColor: '#000' }, menu: { position: 'absolute', left: '25%', right: '25%', top: '12%', backgroundColor: DVR_COLORS.panel, borderColor: DVR_COLORS.line, borderWidth: 1, padding: 20, gap: 6 } });
+const s = StyleSheet.create({ fullscreen: { flex: 1, backgroundColor: '#000' }, menu: { position: 'absolute', left: '25%', right: '25%', top: '12%', bottom: '12%', backgroundColor: DVR_COLORS.panel, borderColor: DVR_COLORS.line, borderWidth: 1, padding: 20 } });
