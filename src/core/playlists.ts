@@ -1,5 +1,6 @@
 import { EMPTY_LIBRARY, type Library, type Playlist, type SavedPlaylist } from '../types';
 import { withChannelNumbers } from './channelNumbers';
+import { preferences } from './preferences';
 
 // Keep legacy channel IDs intact so existing favorites and guide mappings survive
 // the update. New sources get namespaced IDs, even when their streams overlap.
@@ -13,6 +14,8 @@ export function restoreLibrary(value: unknown): Library {
   library.recents = Array.isArray(data.recents) ? data.recents : [];
   library.hiddenChannels = Array.isArray(data.hiddenChannels) ? [...new Set(data.hiddenChannels.filter(id => typeof id === 'string'))] : [];
   library.reminders = Array.isArray(data.reminders) ? data.reminders : [];
+  library.preferences = preferences(data.preferences);
+  library.channelOrder = Array.isArray(data.channelOrder) ? [...new Set(data.channelOrder.filter(key => typeof key === 'string'))] : [];
   if (!Array.isArray(data.playlists) || (!data.playlists.length && data.channels.length)) {
     const id = 'legacy-playlist';
     library.playlists = data.channels.length ? [{ id, name: data.playlistName || 'My playlist', url: data.playlistUrl, updatedAt: data.playlistUpdatedAt }] : [];

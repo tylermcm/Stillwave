@@ -1,0 +1,24 @@
+{
+  "variants": 2,
+  "platforms": [
+    "Fire TV",
+    "Mobile"
+  ],
+  "flows": [
+    "Discover platform visibility",
+    "sports to watch",
+    "cast receiver selection",
+    "multiview audio selection",
+    "podcast play/pause",
+    "mobile local-file choice",
+    "daily city choice",
+    "live world scene"
+  ],
+  "responsiveWidths": [
+    736,
+    390,
+    320
+  ],
+  "errors": [],
+  "designOnly": true
+}

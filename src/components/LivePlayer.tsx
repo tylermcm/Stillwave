@@ -16,6 +16,7 @@ import { isTv, usesTvPlayer } from '../data/tv';
 import { TvPlayerControls, type TvAction } from './tv/TvPlayerControls';
 import { MobilePlayerControls, type MobileShortcut } from './MobilePlayerControls';
 import { mobilePlaybackTimeline, mobileSeekFraction } from '../core/mobilePlayback';
+import { useSleepPlayback, useSleepTimer } from './SleepTimer';
 
 const buffers = {
   fast: { preferredForwardBufferDuration: 8, minBufferForPlayback: 1 },
@@ -26,6 +27,7 @@ const buffers = {
 type Props = {
   channel: Channel;
   profile: BufferProfile;
+  paddingAfter?: number;
   fullscreen: boolean;
   onFullscreenChange: (value: boolean) => void;
   onClose: () => void;
@@ -42,6 +44,7 @@ type Props = {
 // A new session owns a single native player. Changing channel or retrying unmounts
 // it completely, preventing late errors from a previous stream from leaking in.
 export function LivePlayer(props: Props) {
+  useSleepPlayback(props.onClose);
   const capture = useDvrSession(props.channel);
   const [generation, setGeneration] = useState(0);
   const attempts = useRef(0);
@@ -63,7 +66,7 @@ export function LivePlayer(props: Props) {
   return <PlayerSession {...props} key={`${capture.snapshot?.sessionId ?? 'direct'}:${generation}`} capture={capture.fallback ? undefined : capture.snapshot} dvrUnavailable={capture.fallback} anchor={anchor} attempts={attempts} restart={restart} diagnosis={diagnosis} recordDiagnosis={recordDiagnosis} />;
 }
 
-function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClose, programme, onFirstPlaying, onOpenGuide, onOpenChannelNumber, previousChannelName, onPreviousChannel, onNextChannel, onPreviousInLineup, attempts, restart, diagnosis, recordDiagnosis, capture, dvrUnavailable, anchor }: Props & {
+function PlayerSession({ channel, profile, paddingAfter = 0, fullscreen, onFullscreenChange, onClose, programme, onFirstPlaying, onOpenGuide, onOpenChannelNumber, previousChannelName, onPreviousChannel, onNextChannel, onPreviousInLineup, attempts, restart, diagnosis, recordDiagnosis, capture, dvrUnavailable, anchor }: Props & {
   attempts: React.RefObject<number>;
   restart: (reset: boolean) => void;
   diagnosis?: Diagnosis;
@@ -72,6 +75,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   dvrUnavailable: string;
   anchor: React.RefObject<{ positionMs: number; paused: boolean } | undefined>;
 }) {
+  const sleep = useSleepTimer();
   const [media, setMedia] = useState<{ duration: number; position: number }>();
   const [speed, setSpeed] = useState(1);
   const [looping, setLooping] = useState(false);
@@ -440,6 +444,13 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     player.subtitleTrack = next ? player.availableSubtitleTracks[0] ?? null : null;
     setCc(next);
   };
+  const extendRecording = async () => {
+    if (!dvr || !recordingId || recordingBusy) return;
+    setRecordingBusy(true);
+    try { const end = await dvr.extendRecording(recordingId); setDvrNotice(`Recording extended until ${new Date(end).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}. Check upcoming conflicts in My DVR.`); }
+    catch (error) { setDvrNotice(error instanceof Error ? error.message : 'Could not extend the recording.'); }
+    finally { setRecordingBusy(false); }
+  };
   const cycleAudio = () => {
     const tracks = player.availableAudioTracks;
     const index = tracks.findIndex(track => track.id === player.audioTrack?.id);
@@ -512,10 +523,12 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     { id: 'channels', label: 'Channels', icon: 'list-outline', run: onClose },
   ];
   const tvOptions: TvAction[] = [
+    { id: 'sleep', label: sleep.label, run: () => sleep.open(programme?.stop) },
+    ...(recordingId ? [{ id: 'extend', label: 'Add 30 minutes to recording', run: () => void extendRecording(), disabled: recordingBusy }] : []),
     ...(onOpenChannelNumber ? [{ id: 'number', label: 'Find channel by number', run: onOpenChannelNumber }] : []),
     ...(onPreviousChannel ? [{ id: 'previous', label: `Previous: ${previousChannelName}`, icon: 'swap-horizontal' as const, run: onPreviousChannel }] : []),
     ...(capture && !recordingId && !capture.ended ? [{ id: 'record30', label: 'Record 30 minutes', run: () => void toggleRecording(Date.now() + 30 * 60_000), disabled: recordingBusy },
-      ...(programme && programme.stop > Date.now() ? [{ id: 'recordShow', label: 'Record until program ends', run: () => void toggleRecording(programme.stop), disabled: recordingBusy }] : [])] : []),
+      ...(programme && programme.stop > Date.now() ? [{ id: 'recordShow', label: `Record until program ends${paddingAfter ? ` + ${paddingAfter} min` : ''}`, run: () => void toggleRecording(programme.stop + paddingAfter * 60_000), disabled: recordingBusy }] : [])] : []),
     ...(hasCc ? [{ id: 'cc', label: `Captions: ${cc ? 'On' : 'Off'}`, run: toggleCc }] : []),
     ...(audioCount > 1 ? [{ id: 'audio', label: 'Change audio language', run: cycleAudio }] : []),
     { id: 'diagnose', label: 'Diagnose playback', run: () => { const result = diagnosePlayback(evidence.current); setDvrNotice(`${result.title}. ${result.explanation}`); } },
@@ -584,6 +597,8 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
     <Modal visible={showOptions} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowOptions(false)}><SafeAreaView style={s.diagnosticScreen}><ScrollView contentContainerStyle={s.diagnosticContent}>
       <View style={s.titleRow}><Text style={s.title}>Player options</Text><Pressable accessibilityRole="button" accessibilityLabel="Close player options" onPress={() => setShowOptions(false)} style={s.icon}><Ionicons name="close" size={25} color="#d6e4e1" /></Pressable></View>
       <Text style={s.diagnosticTitle}>{channel.name}</Text><Text style={s.diagnosticBody}>{detail || metrics || channel.group}</Text>
+      <Pressable accessibilityRole="button" accessibilityLabel={sleep.label} onPress={() => { setShowOptions(false); sleep.open(programme?.stop); }} style={s.control}><Text style={s.controlText}>{sleep.label}</Text></Pressable>
+      {!!recordingId && <Pressable accessibilityRole="button" disabled={recordingBusy} onPress={() => void extendRecording()} style={s.control}><Text style={s.controlText}>Add 30 minutes to recording</Text></Pressable>}
       {onOpenChannelNumber && <Pressable accessibilityRole="button" accessibilityLabel="Find channel by number" onPress={() => { setShowOptions(false); onOpenChannelNumber(); }} style={s.control}><Text style={s.controlText}>Find channel by number</Text></Pressable>}
       {onOpenGuide && <Pressable accessibilityRole="button" accessibilityLabel="Open mini guide" onPress={() => { setShowOptions(false); onOpenGuide(); }} style={s.control}><Text style={s.controlText}>Mini guide · browse without leaving the video</Text></Pressable>}
       {previousChannelName && <Pressable accessibilityRole="button" accessibilityLabel={`Previous channel ${previousChannelName}`} onPress={() => { setShowOptions(false); onPreviousChannel?.(); }} style={s.control}><Text style={s.controlText}>Previous · {previousChannelName}</Text></Pressable>}
@@ -591,7 +606,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
       {capture && <View style={s.diagnosticBox}><Text style={s.diagnosticLabel}>PAUSE, REWIND & RECORD</Text><Text style={s.diagnosticBody}>{clock(capture.duration)} saved · up to 30 minutes or 512 MiB. Resume stays behind live. Go live returns to the broadcast.</Text>
         {!!capture.error && <Text style={s.diagnosticBody}>{capture.error}</Text>}
         <View style={s.controls}><Pressable accessibilityRole="button" disabled={recordingBusy || capture.ended && !recordingId} onPress={() => void toggleRecording()} style={s.control}><Text style={s.controlText}>{recordingId ? 'Stop and save recording' : 'Record until I stop'}</Text></Pressable>
-          {!recordingId && !capture.ended && <><Pressable accessibilityRole="button" disabled={recordingBusy} onPress={() => void toggleRecording(Date.now() + 30 * 60_000)} style={s.control}><Text style={s.controlText}>Record 30 minutes</Text></Pressable>{programme && programme.stop > Date.now() && <Pressable accessibilityRole="button" disabled={recordingBusy} onPress={() => void toggleRecording(programme.stop)} style={s.control}><Text style={s.controlText}>Record until program ends</Text></Pressable>}</>}
+          {!recordingId && !capture.ended && <><Pressable accessibilityRole="button" disabled={recordingBusy} onPress={() => void toggleRecording(Date.now() + 30 * 60_000)} style={s.control}><Text style={s.controlText}>Record 30 minutes</Text></Pressable>{programme && programme.stop > Date.now() && <Pressable accessibilityRole="button" disabled={recordingBusy} onPress={() => void toggleRecording(programme.stop + paddingAfter * 60_000)} style={s.control}><Text style={s.controlText}>Record until program ends{paddingAfter ? ` + ${paddingAfter} min` : ''}</Text></Pressable>}</>}
         </View><Text style={s.diagnosticBody}>Recordings save the incoming live broadcast, even while you watch behind live. Recording continues when you leave the player. Stop it in Recordings. This release captures one channel at a time. Android may limit background recording time.</Text></View>}
       <View style={s.controls}>
         {hasCc ? <Pressable accessibilityRole="button" accessibilityLabel="Toggle captions" accessibilityState={{ selected: cc }} onPress={toggleCc} style={s.control}><Text style={[s.controlText, cc && { color: '#a8eece' }]}>CC · {cc ? 'On' : 'Off'}</Text></Pressable> : <Text style={s.diagnosticBody}>No caption track is available for this stream.</Text>}

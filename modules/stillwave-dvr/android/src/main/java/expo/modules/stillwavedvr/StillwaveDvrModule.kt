@@ -35,5 +35,10 @@ class StillwaveDvrModule : Module() {
     AsyncFunction("recordingSource") { id: String -> DvrRuntime.engine(context()).recordingSource(id) }
     AsyncFunction("savePosition") { id: String, seconds: Double -> DvrRuntime.engine(context()).savePosition(id, seconds) }
     AsyncFunction("deleteRecording") { id: String -> DvrRuntime.engine(context()).deleteRecording(id) }
+    AsyncFunction("protectRecording") { id: String, protect: Boolean -> DvrRuntime.engine(context()).protectRecording(id, protect) }
+    AsyncFunction("extendRecording") { id: String -> DvrRuntime.engine(context()).extendRecording(id).toDouble() }
+    AsyncFunction("setRetention") { days: Int -> DvrRuntime.engine(context()).setRetention(days) }
+    Function("retentionDays") { DvrRuntime.engine(context()).retentionDays() }
+    Function("releaseRecording") { id: String -> DvrRuntime.engine(context()).releaseRecording(id) }
   }
 }

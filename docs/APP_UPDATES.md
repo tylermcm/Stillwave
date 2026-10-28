@@ -18,6 +18,8 @@ Older builds without the updater must be sideloaded once to reach 0.4.7. Future 
 
 ## Phone and TV channel menu
 
+Source additions after 0.4.11 (require the next APK): **Preferences**, **Channel order**, **Choose guide day**, **DVR storage** and **Sleep timer**. Preferences controls guide size, startup destination and new recording padding. Channel order supports search and up/down/top/bottom moves while retaining channel numbers. The guide day label also opens available dates. DVR storage offers Off/7-day/30-day watched cleanup; protect individual saved recordings in My DVR. Live captures have an Add 30 minutes action in My DVR and player options. Sleep timer stops playback without stopping recordings. Full behavior and validation limits are in README.
+
 - **Search and filter channels:** search channel names, numbers or current/upcoming show titles within any actual playlist category. Existing Favorites, Sports, Movies, With guide and No guide views can be combined with these filters. Search/category filters last for the current app session.
 - **Hide selected channel:** removes it from normal guide views, Favorites browsing, channel-number lookup and player channel stepping. It keeps the stream and recording rules in the library.
 - **Hidden channels:** inspect hidden stations, select one and use Menu → Unhide selected channel. Unhide all channels restores the complete lineup.

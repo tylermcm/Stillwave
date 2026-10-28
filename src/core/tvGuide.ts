@@ -30,12 +30,12 @@ export function programmeAt(programmes: Programme[], timestamp: number): number 
   const next = programmes.findIndex(p => p.start > timestamp);
   return next < 0 ? Math.max(0, programmes.length - 1) : next;
 }
-export function guideWindow(cursor: TvGuideCursor, rows: TvGuideRow[]): TvGuideCursor {
+export function guideWindow(cursor: TvGuideCursor, rows: TvGuideRow[], rowHeight = TV_DESIGN.rowHeight): TvGuideCursor {
   const channel = Math.max(0, Math.min(cursor.channel, rows.length - 1));
   const programmes = rows[channel]?.programmes || [];
   const programme = Math.max(0, Math.min(cursor.programme, programmes.length - 1));
   const selected = programmes[programme];
-  const visibleRows = Math.floor(TV_DESIGN.gridHeight / TV_DESIGN.rowHeight);
+  const visibleRows = Math.max(1, Math.floor(TV_DESIGN.gridHeight / rowHeight));
   let rowTop = Math.max(0, cursor.rowTop);
   if (channel < rowTop) rowTop = channel;
   if (channel >= rowTop + visibleRows) rowTop = channel - visibleRows + 1;
@@ -51,17 +51,17 @@ export function guideWindow(cursor: TvGuideCursor, rows: TvGuideRow[]): TvGuideC
   }
   return { channel, programme, windowStart, rowTop };
 }
-export function moveGuide(cursor: TvGuideCursor, rows: TvGuideRow[], dx: number, dy: number): TvGuideCursor {
+export function moveGuide(cursor: TvGuideCursor, rows: TvGuideRow[], dx: number, dy: number, rowHeight = TV_DESIGN.rowHeight): TvGuideCursor {
   if (!rows.length) return cursor;
-  const current = guideWindow(cursor, rows);
+  const current = guideWindow(cursor, rows, rowHeight);
   if (dy) {
     const channel = Math.max(0, Math.min(rows.length - 1, current.channel + dy));
     const p = rows[current.channel]?.programmes[current.programme];
     const anchor = Math.max(current.windowStart, p?.start ?? current.windowStart) + 1;
-    return guideWindow({ ...current, channel, programme: programmeAt(rows[channel]!.programmes, anchor) }, rows);
+    return guideWindow({ ...current, channel, programme: programmeAt(rows[channel]!.programmes, anchor) }, rows, rowHeight);
   }
   const programme = Math.max(0, Math.min(rows[current.channel]!.programmes.length - 1, current.programme + dx));
-  return guideWindow({ ...current, programme }, rows);
+  return guideWindow({ ...current, programme }, rows, rowHeight);
 }
 
 export const tvTime = (ms: number) => new Date(ms).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
@@ -75,6 +75,7 @@ export interface TvDvrItem {
   subtitle?: string; right: string; meta: string; description: string;
   progress?: number; watched?: boolean; unwatched?: boolean;
   channelId?: string; programme?: Programme; recordingId?: string; ruleId?: string;
+  protected?: boolean;
 }
 export type TvDvrTab = 'recordings' | 'scheduled' | 'series';
 export type TvMark = 'recording' | 'scheduled' | 'series';

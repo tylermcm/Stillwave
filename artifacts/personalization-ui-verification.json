@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "width": 740,
+      "height": 360,
+      "remote": false,
+      "preferencesSaved": true,
+      "favoritesStartup": true,
+      "channelReordered": true,
+      "guideDays": true,
+      "sleepExpired": true,
+      "storageScreen": true
+    },
+    {
+      "width": 852,
+      "height": 393,
+      "remote": false,
+      "preferencesSaved": true,
+      "favoritesStartup": true,
+      "channelReordered": true,
+      "guideDays": true,
+      "sleepExpired": true,
+      "storageScreen": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "remote": false,
+      "preferencesSaved": true,
+      "favoritesStartup": true,
+      "channelReordered": true,
+      "guideDays": true,
+      "sleepExpired": true,
+      "storageScreen": true
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "remote": true,
+      "preferencesSaved": true,
+      "favoritesStartup": true,
+      "channelReordered": true,
+      "guideDays": true,
+      "sleepExpired": true,
+      "storageScreen": true
+    }
+  ],
+  "errors": [],
+  "nativeDeviceTested": false
+}

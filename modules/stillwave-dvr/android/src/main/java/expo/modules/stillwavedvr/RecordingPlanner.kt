@@ -34,6 +34,10 @@ object RecordingPlanner {
     Intent(context, RecordingAlarmReceiver::class.java).setAction("RECORD_PROGRAMME").setData(Uri.Builder().scheme("stillwave-recording").authority("start").appendPath(id).build()).putExtra("id", id),
     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
   fun precise(context: Context): Boolean = Build.VERSION.SDK_INT < 31 || (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()
+  fun captureWindow(start: Long, stop: Long, before: Int, after: Int): Pair<Long, Long> {
+    require(before in 0..30 && after in 0..30) { "Recording padding must be between 0 and 30 minutes." }
+    return Pair(start - before * 60_000L, stop + after * 60_000L)
+  }
   @Synchronized fun schedule(context: Context, serialized: String): String {
     require(serialized.length <= 32 * 1024) { "Recording details are too large." }
     val job = JSONObject(serialized)
@@ -41,6 +45,9 @@ object RecordingPlanner {
     require(channelId.isNotBlank() && channelId.length <= 2000 && job.getString("title").length <= 300)
     val url = URL(job.getString("url")); require(url.protocol in listOf("http", "https"))
     require(stop > maxOf(start, System.currentTimeMillis()) && stop - start <= 24 * 60 * 60_000L) { "Choose an upcoming program shorter than a day." }
+    val before = job.optInt("paddingBefore", 0); val after = job.optInt("paddingAfter", 0)
+    val capture = captureWindow(start, stop, before, after)
+    job.put("captureStart", capture.first).put("captureStop", capture.second)
     val headers = job.optJSONObject("headers") ?: JSONObject()
     require(headers.length() <= 20 && headers.toString().length <= 12 * 1024)
     val id = UUID.nameUUIDFromBytes("$channelId:$start:${job.getString("title")}".toByteArray()).toString()
@@ -60,7 +67,7 @@ object RecordingPlanner {
   private fun setAlarm(context: Context, job: JSONObject) {
     if (job.optString("status") != "scheduled") return
     val manager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    val at = maxOf(System.currentTimeMillis() + 1000, job.getLong("start"))
+    val at = maxOf(System.currentTimeMillis() + 1000, job.optLong("captureStart", job.getLong("start")))
     if (precise(context)) manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, alarm(context, job.getString("id")))
     else manager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, at, alarm(context, job.getString("id")))
   }
@@ -68,7 +75,7 @@ object RecordingPlanner {
     val jobs = rows(context, "jobs"); val now = System.currentTimeMillis()
     jobs.forEach { job ->
       if (job.optString("status") == "starting" && !hasPendingWork()) job.put("status", "failed").put("error", "Android closed the app while this recording was starting.")
-      if (job.optString("status") == "scheduled" && job.getLong("stop") <= now) job.put("status", "missed").put("error", "The program ended while recording was unavailable.")
+      if (job.optString("status") == "scheduled" && job.optLong("captureStop", job.getLong("stop")) <= now) job.put("status", "missed").put("error", "The program ended while recording was unavailable.")
       setAlarm(context, job)
     }
     save(context, "jobs", jobs)
@@ -79,6 +86,7 @@ object RecordingPlanner {
     var changed = false
     jobs.filter { it.optString("status") == "recording" }.forEach { job ->
       val record = recordings[job.optString("recordingId")]
+      if (record != null && record["status"] == "recording" && record["stopAt"] != job.optLong("captureStop", job.getLong("stop"))) { job.put("captureStop", record["stopAt"]); changed = true }
       if (record == null || record["status"] != "recording") { job.put("status", record?.get("status") ?: "interrupted").put("error", record?.get("note") ?: "The recording is no longer available."); changed = true }
     }
     if (changed) save(context, "jobs", jobs)
@@ -105,13 +113,13 @@ object RecordingPlanner {
           val found = rows(context, "jobs").find { it.getString("id") == id && it.optString("status") == "scheduled" }
           if (found != null) change(context, id) { it.put("status", "starting") } else null
         } ?: return@execute
-        check(job.getLong("stop") > System.currentTimeMillis()) { "The program ended before recording could start." }
+        check(job.optLong("captureStop", job.getLong("stop")) > System.currentTimeMillis()) { "The program ended before recording could start." }
         val headers = job.optJSONObject("headers") ?: JSONObject()
         val headerMap = headers.keys().asSequence().associateWith { headers.getString(it) }
         val prepared = engine.prepareRecording(owner, job.getString("channelId"), job.getString("channelName"), job.getString("url"), headerMap)
         ownsCapture = prepared["jobOwnsCapture"] == true
         val sessionId = prepared["sessionId"] as String
-        val deadline = minOf(job.getLong("stop"), System.currentTimeMillis() + 30_000)
+        val deadline = minOf(job.optLong("captureStop", job.getLong("stop")), System.currentTimeMillis() + 30_000)
         while (true) {
           val state = engine.snapshot(sessionId)
           check(state["closed"] != true && state["supported"] != false) { "This stream does not support local recording." }
@@ -122,7 +130,8 @@ object RecordingPlanner {
         }
         synchronized(this) {
           check(rows(context, "jobs").any { it.getString("id") == id && it.optString("status") == "starting" }) { "Recording cancelled." }
-          val record = engine.startRecording(sessionId, job.getString("title"), job.getLong("stop").toDouble(), mapOf("jobId" to id, "programmeStart" to job.getLong("start").toString(), "description" to job.optString("description"), "episode" to job.optString("episode")))
+          check(job.optLong("captureStop", job.getLong("stop")) > System.currentTimeMillis()) { "The program ended before recording could start." }
+          val record = engine.startRecording(sessionId, job.getString("title"), job.optLong("captureStop", job.getLong("stop")).toDouble(), mapOf("jobId" to id, "programmeStart" to job.getLong("start").toString(), "description" to job.optString("description"), "episode" to job.optString("episode")))
           change(context, id) { it.put("status", "recording").put("recordingId", record["id"]) }
         }
       } catch (e: Exception) {

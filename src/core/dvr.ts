@@ -33,6 +33,8 @@ export interface Recording {
   jobId?: string;
   description?: string;
   episode?: string;
+  protected?: boolean;
+  watchedAt?: number;
 }
 
 export const clock = (seconds: number): string => {

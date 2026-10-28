@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSleepPlayback } from './SleepTimer';
 import { ActivityIndicator, Alert, FlatList, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { VideoView, useVideoPlayer } from 'expo-video';
@@ -54,6 +55,7 @@ function RecordingPlayer({ recording, onClose }: { recording: Recording & { uri:
   const [error, setError] = useState('');
   const position = useRef(recording.position);
   const player = useVideoPlayer(null, p => { p.timeUpdateEventInterval = 1; p.staysActiveInBackground = false; });
+  useSleepPlayback(() => { player.pause(); onClose(); });
   useEffect(() => {
     let mounted = true; let restored = false;
     const source = player.addListener('sourceLoad', () => {
@@ -61,13 +63,14 @@ function RecordingPlayer({ recording, onClose }: { recording: Recording & { uri:
       restored = true; player.currentTime = Math.max(0, Math.min(recording.position, player.duration - 0.5)); player.play();
     });
     const tick = player.addListener('timeUpdate', event => { position.current = event.currentTime; });
+    const ended = player.addListener('playToEnd', () => { position.current = player.duration || recording.duration; void dvr?.savePosition(recording.id, position.current).catch(() => {}); });
     const status = player.addListener('statusChange', event => { if (mounted && event.status === 'error') setError('This recording could not play. Captured segments may be incomplete or unsupported by this device.'); });
     // expo-video's native lifecycle pauses hidden playback while preserving
     // the fullscreen Activity handoff. An AppState pause here interrupts it.
     void player.replaceAsync({ uri: recording.uri, contentType: 'hls', useCaching: false }).catch(() => { if (mounted) setError('Could not open the recording.'); });
     const save = () => { void dvr?.savePosition(recording.id, position.current).catch(() => {}); };
     const timer = setInterval(save, 3000);
-    return () => { mounted = false; clearInterval(timer); save(); source.remove(); tick.remove(); status.remove(); };
+    return () => { mounted = false; clearInterval(timer); save(); dvr?.releaseRecording(recording.id); source.remove(); tick.remove(); ended.remove(); status.remove(); };
   }, [player, recording]);
   return <Modal visible animationType="slide" onRequestClose={onClose}><SafeAreaView style={s.screen}>
     <View style={[s.row, { padding: 18 }]}><View style={{ flex: 1 }}><Text style={s.name}>{recording.title}</Text><Text style={s.body}>{recording.channel}</Text></View><Pressable accessibilityRole="button" accessibilityLabel="Close recording" onPress={onClose} style={s.secondary}><Ionicons name="close" size={25} color="#d7e6e0" /></Pressable></View>

@@ -30,6 +30,9 @@ class DvrEngine(private val root: File, private val onIdle: () -> Unit = {}, pri
   private var owner: String? = null
   private val cancelledOwners = mutableSetOf<String>()
   private val deadlines = Executors.newSingleThreadScheduledExecutor()
+  private val playingRecordings = mutableSetOf<String>()
+  private val retentionFile = File(root, "retention.properties")
+  private var retentionDays = Properties().apply { if (retentionFile.exists()) retentionFile.inputStream().use { load(it) } }.getProperty("days", "0").toIntOrNull()?.takeIf { it in listOf(0, 7, 30) } ?: 0
 
   private class Session(val id: String, val channelId: String, val name: String, val url: String, val headers: Map<String, String>, val directory: File) {
     val segments = mutableListOf<DvrSegment>()
@@ -109,20 +112,23 @@ class DvrEngine(private val root: File, private val onIdle: () -> Unit = {}, pri
   fun startRecording(id: String, title: String, stopAt: Double, extra: Map<String, String> = emptyMap()): Map<String, Any?> = synchronized(lock) {
     val s = current?.takeIf { it.id == id && it.ready && it.supported && !it.ended } ?: throw IllegalStateException("Wait for the DVR buffer to become ready.")
     if (s.recordingId != null) throw IllegalStateException("This channel is already recording.")
+    require(stopAt.isFinite() && stopAt >= 0) { "Invalid recording end time." }
+    if (stopAt > 0) require(stopAt > System.currentTimeMillis()) { "The recording end time has already passed." }
+    val end = if (stopAt > 0) stopAt.toLong() else Long.MAX_VALUE
     ensureSpace()
     val recordingId = UUID.randomUUID().toString()
     val dir = File(records, recordingId).apply { check(mkdirs()) }
     val p = Properties().apply {
       setProperty("id", recordingId); setProperty("channel", s.name); setProperty("title", title.take(200).ifBlank { s.name })
       setProperty("createdAt", System.currentTimeMillis().toString()); setProperty("status", "recording")
-      setProperty("channelId", s.channelId); setProperty("stopAt", if (stopAt > System.currentTimeMillis()) stopAt.toLong().toString() else "0")
+      setProperty("channelId", s.channelId); setProperty("stopAt", if (end == Long.MAX_VALUE) "0" else end.toString())
       for (key in listOf("jobId", "programmeStart", "description", "episode")) extra[key]?.let { setProperty(key, it.take(4000)) }
       setProperty("segments", ""); setProperty("position", "0")
     }
     try { saveMetadata(dir, p) } catch (e: Exception) { dir.deleteRecursively(); throw IllegalStateException("Recording could not start. Check available device storage.", e) }
     s.recordingId = recordingId
     // Android's data-sync service budget is finite; the service timeout also finalizes safely.
-    s.recordingEnd = if (stopAt > System.currentTimeMillis()) stopAt.toLong() else Long.MAX_VALUE
+    s.recordingEnd = end
     // Include the currently available segment so record-now has an immediate playable beginning.
     try {
       s.segments.lastOrNull()?.let { appendRecording(s, it) }
@@ -131,15 +137,30 @@ class DvrEngine(private val root: File, private val onIdle: () -> Unit = {}, pri
       dir.deleteRecursively()
       throw IllegalStateException("Recording could not start. Check available device storage.", e)
     }
+    scheduleDeadline(s, recordingId)
+    recordingInfo(dir)
+  }
+
+  private fun scheduleDeadline(s: Session, recordingId: String) {
+    s.deadline?.cancel(false)
     if (s.recordingEnd != Long.MAX_VALUE) s.deadline = deadlines.schedule({
       synchronized(lock) {
-        if (current === s && s.recordingId == recordingId) {
+        if (current === s && s.recordingId == recordingId && System.currentTimeMillis() >= s.recordingEnd) {
           finishRecording(s, "completed", "Scheduled stop time reached.")
           if (owner == null) { stopSession(s); current = null; onIdle() }
         }
       }
     }, max(0L, s.recordingEnd - System.currentTimeMillis()), TimeUnit.MILLISECONDS)
-    recordingInfo(dir)
+  }
+
+  fun extendRecording(id: String): Long = synchronized(lock) {
+    val s = current?.takeIf { it.recordingId == id } ?: throw IllegalStateException("This recording is no longer running.")
+    val now = System.currentTimeMillis()
+    val stop = maxOf(now, s.recordingEnd.takeIf { it != Long.MAX_VALUE } ?: now) + 30 * 60_000L
+    check(stop - now <= 24 * 60 * 60_000L) { "Recording end must be within the next day." }
+    val dir = File(records, id); val p = metadata(dir)
+    p.setProperty("stopAt", stop.toString()); saveMetadata(dir, p)
+    s.recordingEnd = stop; scheduleDeadline(s, id); stop
   }
 
   fun stopRecording(id: String, note: String = ""): Unit = synchronized(lock) {
@@ -149,19 +170,51 @@ class DvrEngine(private val root: File, private val onIdle: () -> Unit = {}, pri
   }
 
   fun listRecordings(): List<Map<String, Any?>> = synchronized(lock) {
+    cleanupWatchedLocked()
     records.listFiles()?.filter { it.isDirectory && File(it, "recording.properties").exists() }?.map(::recordingInfo)?.sortedByDescending { it["createdAt"] as Long } ?: emptyList()
   }
   fun recordingSource(id: String): Map<String, Any?> = synchronized(lock) {
     val dir = recordingDirectory(id)?.takeIf { it.exists() } ?: throw IllegalArgumentException("Recording not found.")
+    playingRecordings.add(id)
     recordingInfo(dir) + mapOf("uri" to server.url(id))
   }
   fun savePosition(id: String, seconds: Double) = synchronized(lock) {
     val dir = recordingDirectory(id)?.takeIf { it.exists() } ?: return@synchronized
-    val p = metadata(dir); p.setProperty("position", max(0.0, seconds).toString()); saveMetadata(dir, p)
+    require(seconds.isFinite()) { "Invalid playback position." }
+    val p = metadata(dir); val duration = readSegments(p).sumOf { it.duration }
+    p.setProperty("position", max(0.0, seconds).toString())
+    if (p.getProperty("status") == "completed" && duration > 0 && seconds / duration >= .98 && p.getProperty("watchedAt", "0") == "0") p.setProperty("watchedAt", System.currentTimeMillis().toString())
+    saveMetadata(dir, p)
+  }
+  fun releaseRecording(id: String) = synchronized(lock) { playingRecordings.remove(id); Unit }
+  fun protectRecording(id: String, protect: Boolean) = synchronized(lock) {
+    val dir = recordingDirectory(id)?.takeIf { it.exists() } ?: throw IllegalArgumentException("Recording not found.")
+    val p = metadata(dir); p.setProperty("protected", protect.toString()); saveMetadata(dir, p)
+  }
+  fun setRetention(days: Int) = synchronized(lock) {
+    require(days in listOf(0, 7, 30)) { "Choose Off, 7 days or 30 days." }
+    val p = Properties().apply { setProperty("days", days.toString()) }
+    val next = File(root, "retention.properties.tmp")
+    next.outputStream().use { out -> p.store(out, "StillWave watched recording cleanup"); out.fd.sync() }
+    Files.move(next.toPath(), retentionFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+    retentionDays = days
+  }
+  fun retentionDays(): Int = synchronized(lock) { retentionDays }
+  private fun cleanupWatchedLocked() {
+    if (retentionDays == 0) return
+    val cutoff = System.currentTimeMillis() - retentionDays * 24 * 60 * 60_000L
+    records.listFiles()?.filter { it.isDirectory && it.name !in playingRecordings && current?.recordingId != it.name }?.forEach { dir ->
+      val p = metadata(dir); val watchedAt = p.getProperty("watchedAt", "0").toLongOrNull() ?: 0
+      if (p.getProperty("status") == "completed" && p.getProperty("protected") != "true" && watchedAt > 0 && watchedAt <= cutoff) check(dir.deleteRecursively()) { "Could not remove an expired watched recording." }
+    }
   }
   fun deleteRecording(id: String) = synchronized(lock) {
     check(current?.recordingId != id) { "Stop this recording before deleting it." }
-    recordingDirectory(id)?.deleteRecursively()
+    check(id !in playingRecordings) { "Close playback before deleting this recording." }
+    recordingDirectory(id)?.let { dir ->
+      check(metadata(dir).getProperty("protected") != "true") { "Unprotect this recording before deleting it." }
+      check(!dir.exists() || dir.deleteRecursively()) { "Could not delete this recording." }
+    }
   }
   fun shutdown(reason: String) = synchronized(lock) {
     current?.let { finishRecording(it, "interrupted", reason); stopSession(it) }; current = null; owner = null; onIdle()
@@ -288,7 +341,8 @@ class DvrEngine(private val root: File, private val onIdle: () -> Unit = {}, pri
       "createdAt" to p.getProperty("createdAt", "0").toLong(), "status" to p.getProperty("status", "interrupted"), "note" to p.getProperty("note", ""),
       "duration" to list.sumOf { it.duration }, "bytes" to list.sumOf { it.bytes }, "position" to p.getProperty("position", "0").toDouble(),
       "channelId" to p.getProperty("channelId", ""), "stopAt" to p.getProperty("stopAt", "0").toLong(), "jobId" to p.getProperty("jobId", ""),
-      "programmeStart" to p.getProperty("programmeStart", "0").toLong(), "description" to p.getProperty("description", ""), "episode" to p.getProperty("episode", ""))
+      "programmeStart" to p.getProperty("programmeStart", "0").toLong(), "description" to p.getProperty("description", ""), "episode" to p.getProperty("episode", ""),
+      "protected" to (p.getProperty("protected") == "true"), "watchedAt" to p.getProperty("watchedAt", "0").toLong())
   }
   private fun metadata(dir: File): Properties = Properties().apply { File(dir, "recording.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) } }
   private fun saveMetadata(dir: File, p: Properties) {

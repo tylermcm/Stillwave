@@ -10,6 +10,14 @@ import java.nio.file.Files
 import java.util.concurrent.atomic.AtomicInteger
 
 class DvrTest {
+  @Test fun plannerPaddingUsesSeparateCaptureBoundsAndRejectsInvalidPadding() {
+    assertEquals(Pair(3_300_000L, 8_100_000L), RecordingPlanner.captureWindow(3_600_000L, 7_200_000L, 5, 15))
+    assertEquals(Pair(3_600_000L, 7_200_000L), RecordingPlanner.captureWindow(3_600_000L, 7_200_000L, 0, 0))
+    for (padding in listOf(-1, 31, Int.MAX_VALUE)) {
+      try { RecordingPlanner.captureWindow(3_600_000L, 7_200_000L, padding, 0); fail("Must reject invalid start padding") } catch (_: IllegalArgumentException) {}
+      try { RecordingPlanner.captureWindow(3_600_000L, 7_200_000L, 0, padding); fail("Must reject invalid end padding") } catch (_: IllegalArgumentException) {}
+    }
+  }
   @Test fun masterChoosesMuxedRenditionAndResolvesRedirectRelativePaths() {
     val master = """#EXTM3U
 #EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="separate",URI="audio.m3u8"
@@ -112,6 +120,11 @@ second.m4s
       val restored = engine.listRecordings().single()
       assertEquals("completed", restored["status"]); assertEquals(1.2, restored["position"])
       assertTrue(URL(engine.recordingSource(recordingId)["uri"] as String).readText().contains("ENDLIST"))
+      try { engine.deleteRecording(recordingId); fail("Open playback must be kept") } catch (_: IllegalStateException) {}
+      engine.releaseRecording(recordingId)
+      engine.protectRecording(recordingId, true)
+      try { engine.deleteRecording(recordingId); fail("Protected recording must be kept") } catch (_: IllegalStateException) {}
+      engine.protectRecording(recordingId, false)
       engine.deleteRecording(recordingId); assertTrue(engine.listRecordings().isEmpty())
 
       val next = engine.open("write-failure", "channel", "Fixture", "http://127.0.0.1:${provider.localPort}/main.m3u8", mapOf("X-Provider-Key" to "private-key"))
@@ -125,11 +138,55 @@ second.m4s
       val timed = engine.open("timed", "channel", "Fixture", "http://127.0.0.1:${provider.localPort}/main.m3u8", mapOf("X-Provider-Key" to "private-key"))
       val timedId = timed["sessionId"] as String
       await { engine.snapshot(timedId)["duration"] == 3.0 }
+      try { engine.startRecording(timedId, "Expired deadline", (System.currentTimeMillis() - 1).toDouble()); fail("An expired deadline must never become an untimed recording") } catch (_: IllegalArgumentException) {}
+      val extended = engine.startRecording(timedId, "Extend a running deadline", (System.currentTimeMillis() + 200).toDouble())["id"] as String
+      val newEnd = engine.extendRecording(extended)
+      assertTrue(newEnd > System.currentTimeMillis() + 29 * 60_000)
+      Thread.sleep(350)
+      assertEquals("recording", engine.listRecordings().single()["status"])
+      assertEquals(newEnd, engine.listRecordings().single()["stopAt"])
+      engine.stopRecording(extended); engine.deleteRecording(extended)
       engine.startRecording(timedId, "Stop during a frozen source playlist", (System.currentTimeMillis() + 200).toDouble())
       engine.release("timed")
       await { engine.listRecordings().single()["status"] == "completed" }
       assertFalse(engine.hasActiveCapture())
     } finally { engine.close(); provider.close(); root.deleteRecursively() }
+  }
+  @Test fun watchedCleanupPersistsAndKeepsProtectedOpenIncompleteAndRecentRecordings() {
+    val root = Files.createTempDirectory("stillwave-retention-test").toFile()
+    var engine = DvrEngine(root)
+    fun saved(status: String = "completed", watchedDaysAgo: Int = 8): String {
+      val id = java.util.UUID.randomUUID().toString()
+      val dir = File(root, "recordings/$id").apply { mkdirs() }
+      val props = java.util.Properties().apply {
+        setProperty("status", status); setProperty("position", "99"); setProperty("createdAt", "0")
+        setProperty("watchedAt", (System.currentTimeMillis() - watchedDaysAgo * 24 * 60 * 60_000L).toString())
+        setProperty("segments", "0\tsegment-0.bin\t100.0\t0\tfalse\t\t100")
+      }
+      File(dir, "recording.properties").outputStream().use { props.store(it, "Fixture") }
+      return id
+    }
+    try {
+      val expired = saved(); val protected = saved(); val open = saved(); val partial = saved("interrupted"); val recent = saved(watchedDaysAgo = 1)
+      val unwatched = saved(watchedDaysAgo = 0)
+      val propsFile = File(root, "recordings/$unwatched/recording.properties")
+      val props = java.util.Properties().apply { propsFile.inputStream().use { load(it) }; setProperty("watchedAt", "0"); setProperty("position", "0") }
+      propsFile.outputStream().use { props.store(it, "Fixture") }
+      engine.protectRecording(protected, true); engine.recordingSource(open)
+      assertEquals(6, engine.listRecordings().size) // Cleanup defaults to off.
+      engine.setRetention(7)
+      val ids = engine.listRecordings().map { it["id"] }
+      assertFalse(ids.contains(expired)); assertTrue(ids.containsAll(listOf(protected, open, partial, recent, unwatched)))
+      engine.savePosition(unwatched, 99.0)
+      assertTrue((engine.listRecordings().first { it["id"] == unwatched }["watchedAt"] as Long) > 0)
+      engine.releaseRecording(open)
+      assertFalse(engine.listRecordings().any { it["id"] == open })
+      engine.close(); engine = DvrEngine(root)
+      assertEquals(7, engine.retentionDays())
+      assertTrue(engine.listRecordings().any { it["id"] == protected && it["protected"] == true })
+      engine.setRetention(0); engine.protectRecording(protected, false)
+      assertTrue(engine.listRecordings().any { it["id"] == protected })
+    } finally { engine.close(); root.deleteRecursively() }
   }
   private fun await(condition: () -> Boolean) {
     val end = System.currentTimeMillis() + 8000

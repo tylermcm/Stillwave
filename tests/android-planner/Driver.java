@@ -64,6 +64,7 @@ public class Driver extends Instrumentation {
       JSONObject evidence=new JSONObject().put("passed",true).put("duration",record.get("duration")).put("bytes",record.get("bytes")).put("status",record.get("status")).put("conflict",conflict.getString("error")).put("checks",new JSONArray(new String[]{"alarm starts real HLS capture in background","duplicates deduplicated","second stream refused","cancelled job stays cancelled","scheduled end finalizes video","resume position persisted","episode metadata kept","series rule persists and removes"}));
       result.putString("evidence",evidence.toString());
       cancel(first.getString("id"));cancel(second.getString("id"));cancel(cancelled.getString("id"));
+      call(engine,"releaseRecording",new Class<?>[]{String.class},recordingId);
       call(engine,"deleteRecording",new Class<?>[]{String.class},recordingId);
       finish(-1,result);
     } catch(Throwable error) {

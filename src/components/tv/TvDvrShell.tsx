@@ -1,13 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, BackHandler, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { version } from '../../../package.json';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationBar } from 'expo-navigation-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { Channel, Library } from '../../types';
+import type { AppPreferences, Channel, Library } from '../../types';
+import { guideDateTargets, guideMetrics, orderedChannels, preferences } from '../../core/preferences';
+import { OptionsPanel } from './OptionsPanel';
+import { PreferencesPanel } from './PreferencesPanel';
+import { ChannelOrderEditor } from './ChannelOrderEditor';
+import { useSleepTimer } from '../SleepTimer';
 import { createGuideView, guideCoverage } from '../../core/guides';
 import { guideProgrammeKey, guideWindow, moveGuide, programmeAt, type TvDashboardState, type TvDvrTab, type TvGuideCursor } from '../../core/tvGuide';
-import { recordingConflict, recordingMatchesProgramme, seriesEpisodes, seriesTitle, tvDvrItems } from '../../core/tvDvr';
+import { dvrItemActions, recordingConflict, recordingMatchesProgramme, seriesEpisodes, seriesTitle, tvDvrItems } from '../../core/tvDvr';
 import type { Recording } from '../../core/dvr';
 import { adjacentChannel, previousChannel } from '../../core/history';
 import { nowAndNext } from '../../core/xmltv';
@@ -29,9 +34,14 @@ type Props = {
   onWatch: (channel: Channel) => Promise<boolean>; onClose: () => void; onFirstPlaying: (id: string) => void;
   onFavorite: (channel: Channel) => void; onDefaults: () => void; onRefreshPlaylist: (id: string) => void; onRefreshGuide: (id: string) => void;
   onHiddenChannels: (hidden: string[]) => void;
+  onPreferences: (preferences: AppPreferences) => void; onChannelOrder: (order: string[]) => void;
 };
 export function TvShell(props: Props) {
   const insets = useSafeAreaInsets();
+  const prefs = preferences(props.library.preferences);
+  const sleep = useSleepTimer();
+  const inheritedKeySuspension = useContext(TvKeysSuspended);
+  const [panel, setPanel] = useState<'preferences' | 'order' | 'days' | 'storage'>();
   const [screen, setScreen] = useState<'guide' | 'dvr'>('guide');
   const [now, setNow] = useState(Date.now());
   const [cursor, setCursor] = useState<TvGuideCursor>(() => ({ channel: 0, programme: 0, rowTop: 0, windowStart: Math.floor(Date.now() / 1_800_000) * 1_800_000 }));
@@ -42,6 +52,8 @@ export function TvShell(props: Props) {
   const [plans, setPlans] = useState<RecordingPlan[]>([]);
   const [rules, setRules] = useState<SeriesRule[]>([]);
   const [storage, setStorage] = useState<{ totalBytes: number; freeBytes: number }>();
+  const [retentionDays, setRetentionDays] = useState<number>();
+  const cleanupDays = retentionDays ?? prefs.autoDeleteWatchedDays;
   const [toast, setToast] = useState('');
   const [watching, setWatching] = useState<Recording & { uri: string }>();
   const [menu, setMenu] = useState(false);
@@ -61,9 +73,10 @@ export function TvShell(props: Props) {
   const initialized = useRef(false);
   const deletePending = useRef<{ id: string; at: number } | undefined>(undefined);
   const view = useMemo(() => createGuideView(props.library), [props.library.guideSources, props.library.guide, props.library.guideUrl, props.library.mappings]);
-  const allRows = useMemo(() => prioritizeGuideRows(props.library.channels.map((channel, index) => ({ channel, number: channel.number || String(index + 1), programmes: view.guide?.programmes[view.matcher(channel, props.library.mappings) || ''] || [] }))
+  const baseRows = useMemo(() => prioritizeGuideRows(props.library.channels.map((channel, index) => ({ channel, number: channel.number || String(index + 1), programmes: view.guide?.programmes[view.matcher(channel, props.library.mappings) || ''] || [] }))
     .sort((a, b) => comparePreferredChannels(a.channel, b.channel)), now), [props.library.channels, props.library.mappings, view, now]);
-  const visibleChannels = useMemo(() => props.library.channels.filter(c => !isChannelHidden(c, props.library.hiddenChannels)), [props.library.channels, props.library.hiddenChannels]);
+  const allRows = useMemo(() => { const byId = new Map(baseRows.map(r => [r.channel.id, r])); return orderedChannels(baseRows.map(r => r.channel), props.library.channelOrder).map(c => byId.get(c.id)!); }, [baseRows, props.library.channelOrder]);
+  const visibleChannels = useMemo(() => allRows.map(r => r.channel).filter(c => !isChannelHidden(c, props.library.hiddenChannels)), [allRows, props.library.hiddenChannels]);
   const defaultRows = useMemo(() => browseChannelRows(allRows, 'all', props.library.favorites, now, props.library.hiddenChannels), [allRows, props.library.favorites, props.library.hiddenChannels, now]);
   const rows = useMemo(() => filterTvRows(browseChannelRows(allRows, browseMode, props.library.favorites, now, props.library.hiddenChannels), query, category, now), [allRows, browseMode, props.library.favorites, props.library.hiddenChannels, query, category, now]);
   const categories = useMemo(() => channelCategories(allRows), [allRows]);
@@ -76,6 +89,7 @@ export function TvShell(props: Props) {
   const refresh = async () => {
     const [recordings, jobs, rules, disk] = await Promise.all([dvr?.listRecordings() || [], recordingPlanner?.plans() || [], recordingPlanner?.rules() || [], recordingPlanner?.storage()]);
     setRecordings(recordings); setPlans(jobs); setRules(rules); setStorage(disk);
+    setRetentionDays(dvr?.retentionDays());
   };
   const run = (action: () => Promise<void>) => {
     if (busy.current) { setToast('Please wait for the current DVR action.'); return; }
@@ -99,22 +113,23 @@ export function TvShell(props: Props) {
       if (action === 'series') {
         if (rule) { await client.removeRule(rule.id); setToast('Series rule removed. Upcoming episodes cancelled.'); }
         else {
-          const added = await client.addRule(row.channel, programme);
-          for (const p of row.programmes.filter(p => p.stop > Date.now() && seriesTitle(p.title) === seriesTitle(programme.title)).slice(0, 200)) await client.schedule(row.channel, p, added.id);
+          const added = await client.addRule(row.channel, programme, prefs);
+          for (const p of row.programmes.filter(p => p.stop > Date.now() && seriesTitle(p.title) === seriesTitle(programme.title)).slice(0, 200)) await client.schedule(row.channel, p, added.id, false, prefs);
           setToast('Series rule saved. Episodes in the downloaded guide are queued.');
         }
       } else if (record) { await dvr?.stopRecording(record.id); setToast('Recording stopped. Captured video kept.'); }
       else if (plan) { await client.cancel(plan.id); setToast('Recording cancelled.'); }
       else {
         if (programme.start <= Date.now() && recordings.some(r => r.status === 'recording')) { setToast('Stop the current recording first. Only one stream is available.'); return; }
-        await client.schedule(row.channel, programme, undefined, true);
+        await client.schedule(row.channel, programme, undefined, true, prefs);
         setToast(programme.start <= Date.now() ? 'Starting recording…' : client.precise() ? 'Recording scheduled.' : 'Recording scheduled. Android may delay it without exact-alarm access.');
       }
     });
   };
-  const onDvrAction = (action: 'play' | 'delete' | 'stop' | 'cancel' | 'guide') => {
+  const onDvrAction = (action: 'play' | 'delete' | 'stop' | 'cancel' | 'guide' | 'protect' | 'extend') => {
     if (!item) return;
     const selected = item;
+    if (action === 'delete' && selected.protected) { setToast('Unprotect this recording before deleting it.'); return; }
     if (action === 'guide') {
       const channel = defaultRows.findIndex(r => r.channel.id === selected.channelId);
       if (channel < 0) { setToast('This channel is hidden or no longer available. Use Menu → Hidden channels to restore it.'); return; }
@@ -127,6 +142,8 @@ export function TvShell(props: Props) {
       if (action === 'play' && selected.recordingId && dvr) { const source = await dvr.recordingSource(selected.recordingId); if (selected.kind === 'recording') source.position = 0; setWatching(source); }
       else if (action === 'stop' && selected.recordingId) { await dvr?.stopRecording(selected.recordingId); setToast('Stopped. Captured video kept.'); }
       else if (action === 'delete' && selected.recordingId) { await dvr?.deleteRecording(selected.recordingId); deletePending.current = undefined; setToast('Recording deleted.'); }
+      else if (action === 'protect' && selected.recordingId) { await dvr?.protectRecording(selected.recordingId, !selected.protected); setToast(selected.protected ? 'Recording unprotected.' : 'Recording protected from deletion.'); }
+      else if (action === 'extend' && selected.recordingId) { const end = await dvr?.extendRecording(selected.recordingId); if (end) setToast(`Recording extended until ${new Date(end).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}. Check upcoming conflicts in My DVR.`); }
       else if (action === 'cancel') { if (selected.ruleId) await recordingPlanner?.removeRule(selected.ruleId); else await recordingPlanner?.cancel(selected.id); setToast(selected.ruleId ? 'Series rule removed.' : 'Recording cancelled.'); }
     });
   };
@@ -178,11 +195,26 @@ export function TvShell(props: Props) {
     const nextRows = filterTvRows(browseChannelRows(allRows, browseMode, props.library.favorites, now, props.library.hiddenChannels), text, group, now);
     setCursor(guideWindow({ channel: 0, programme: programmeAt(nextRows[0]?.programmes || [], now), rowTop: 0, windowStart: Math.floor(now / 1_800_000) * 1_800_000 }, nextRows)); setFocus({ zone: 'grid', index: 0 });
   };
+  const openPanel = (next: typeof panel) => { setMenu(false); setPanel(next); };
+  const savePreferences = (next: AppPreferences) => run(async () => {
+    if (next.autoDeleteWatchedDays !== cleanupDays && dvr) { await dvr.setRetention(next.autoDeleteWatchedDays); setRetentionDays(next.autoDeleteWatchedDays); }
+    props.onPreferences(next); setToast('Preferences saved on this device.');
+  });
+  const jumpToDate = (at: number) => {
+    const index = Math.max(0, Math.min(selectedCursor.channel, rows.length - 1));
+    setCursor({ channel: index, rowTop: selectedCursor.rowTop, programme: programmeAt(rows[index]?.programmes || [], at), windowStart: Math.floor(at / 1_800_000) * 1_800_000 });
+    setScreen('guide'); setFocus({ zone: 'grid', index: 0 }); setPanel(undefined);
+  };
   const menuActions = browseMenu ? [
     ...CHANNEL_BROWSE_MODES.map(mode => ({ label: `${mode.label} (${browseChannelRows(allRows, mode.id, props.library.favorites, now, props.library.hiddenChannels).length})`, run: () => chooseBrowseMode(mode.id) })),
     { label: 'Back', run: () => { setBrowseMenu(false); setMenuIndex(0); } },
   ] : [
     { label: 'Guide', run: () => onScreen('guide') }, { label: 'My DVR', run: () => onScreen('dvr') },
+    { label: 'Preferences', run: () => openPanel('preferences') },
+    { label: 'Channel order', run: () => openPanel('order') },
+    { label: 'Choose guide day', run: () => openPanel('days') },
+    { label: 'DVR storage', run: () => openPanel('storage') },
+    { label: sleep.label, run: () => { setMenu(false); sleep.open(); } },
     { label: 'Search and filter channels', run: () => { setMenu(false); setSearchOpen(true); } },
     ...(query || category !== 'all' ? [{ label: 'Clear search and category filter', run: () => { applySearch('', 'all'); setMenu(false); } }] : []),
     { label: `Schedules: ${coverage.available} of ${coverage.total} channels`, run: () => chooseBrowseMode('withGuide') },
@@ -202,8 +234,9 @@ export function TvShell(props: Props) {
   ];
   const live = !!programme && programme.start <= now && programme.stop > now;
   const actions = [...(live || !programme ? ['watch'] : []), ...(programme && programme.stop > now ? ['record', 'series'] : [])] as ('watch' | 'record' | 'series')[];
+  const dvrActions = dvrItemActions(item);
   useTvKeys(key => {
-    if (numberSearch || searchOpen) return;
+    if (numberSearch || searchOpen || panel) return;
     if (key.startsWith('digit')) { openNumberSearch(key.slice(5)); return; }
     if (props.selected) return;
     if (menu) {
@@ -238,8 +271,8 @@ export function TvShell(props: Props) {
       return;
     }
     if (focus.zone === 'dvrActions') {
-      if (key === 'left' || key === 'right') setFocus({ zone: 'dvrActions', index: Math.max(0, Math.min(2, focus.index + (key === 'left' ? -1 : 1))) });
-      else if (key === 'select' && item) onDvrAction(focus.index === 0 ? item.kind === 'saved' || item.kind === 'recording' ? 'play' : 'cancel' : item.kind === 'saved' ? 'delete' : item.kind === 'recording' ? 'stop' : 'guide');
+      if (key === 'left' || key === 'right') setFocus({ zone: 'dvrActions', index: Math.max(0, Math.min(dvrActions.length - 1, focus.index + (key === 'left' ? -1 : 1))) });
+      else if (key === 'select' && item) { const action = dvrActions[focus.index]; if (action) onDvrAction(action.action); }
       else if (key === 'up' || key === 'down') setFocus({ zone: 'dvrList', index: 0 });
       return;
     }
@@ -248,7 +281,7 @@ export function TvShell(props: Props) {
       if (key === 'up' && selectedCursor.channel === 0) { setFocus({ zone: actions.length ? 'guideActions' : 'nav', index: 0 }); return; }
       const dx = key === 'left' ? -1 : key === 'right' ? 1 : 0;
       const dy = key === 'up' ? -1 : key === 'down' ? 1 : key === 'channelUp' ? -6 : key === 'channelDown' ? 6 : 0;
-      if (dx || dy) setCursor(moveGuide(selectedCursor, rows, dx, dy));
+      if (dx || dy) setCursor(moveGuide(selectedCursor, rows, dx, dy, guideMetrics(prefs.guideSize).rowHeight));
     } else {
       const tabs: TvDvrTab[] = ['recordings', 'scheduled', 'series'];
       if (key === 'left' || key === 'right') { setDvrTab(tabs[Math.max(0, Math.min(2, tabs.indexOf(dvrTab) + (key === 'left' ? -1 : 1)))]!); setItemIndex(0); }
@@ -268,10 +301,11 @@ export function TvShell(props: Props) {
     return () => { clearInterval(timer); sub.remove(); };
   }, [props.loaded]);
   useEffect(() => {
-    if (!rows.length || initialized.current) return;
+    if (!props.loaded || !rows.length || initialized.current) return;
     initialized.current = true;
+    if (prefs.startup === 'favorites') { chooseBrowseMode('favorites'); return; }
     setCursor(c => guideWindow({ ...c, programme: programmeAt(rows[0]!.programmes, now) }, rows));
-  }, [rows]);
+  }, [rows, props.loaded]);
   useEffect(() => {
     let active = true;
     const load = () => { if (active) void refresh().catch(() => setToast('Could not read the DVR. Your library is kept.')); };
@@ -285,32 +319,32 @@ export function TvShell(props: Props) {
     const missing = seriesEpisodes(rules, allRows, plans, Date.now()).slice(0, capacity);
     if (!recordingPlanner || !missing.length || busy.current) return;
     const client = recordingPlanner;
-    run(async () => { for (const item of missing) await client.schedule(item.channel, item.programme, item.ruleId); });
+    run(async () => { for (const item of missing) await client.schedule(item.channel, item.programme, item.ruleId, false, { paddingBefore: item.paddingBefore ?? prefs.paddingBefore, paddingAfter: item.paddingAfter ?? prefs.paddingAfter }); });
   }, [allRows, rules, plans]);
   useEffect(() => { if (menu) menuList.current?.scrollTo({ y: Math.max(0, (menuIndex - 2) * 50), animated: false }); }, [menu, menuIndex, browseMenu]);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4000); return () => clearTimeout(t); }, [toast]);
   useEffect(() => { if (props.error) setToast(props.error); else if (props.busy) setToast(props.busy); else if (props.notice) setToast(props.notice); }, [props.error, props.busy, props.notice]);
   useEffect(() => {
-    if ((props.selected && !numberSearch) || watching || searchOpen || (!usesTvPlayer && !menu && !numberSearch)) return;
+    if ((props.selected && !numberSearch) || watching || searchOpen || panel || sleep.menuOpen || (!usesTvPlayer && !menu && !numberSearch)) return;
     const sub = BackHandler.addEventListener('hardwareBackPress', () => { if (numberSearch) setNumberSearch(undefined); else if (menu) setMenu(false); else setFocus({ zone: 'nav', index: screen === 'guide' ? 0 : 1 }); return true; });
     return () => sub.remove();
   });
   if (props.selected) {
     const previous = previousChannel({ ...props.library, channels: visibleChannels }, props.selected.id);
-    return <View style={s.fullscreen}><StatusBar hidden /><TvKeysSuspended.Provider value={!!numberSearch}><LivePlayer key={props.selected.id} channel={props.selected} profile={props.library.profile} fullscreen onFullscreenChange={props.onClose} onClose={props.onClose}
+    return <View style={s.fullscreen}><StatusBar hidden /><TvKeysSuspended.Provider value={!!numberSearch || inheritedKeySuspension}><LivePlayer key={props.selected.id} channel={props.selected} profile={props.library.profile} paddingAfter={prefs.paddingAfter} fullscreen onFullscreenChange={props.onClose} onClose={props.onClose}
       programme={nowAndNext(view.guide?.programmes[view.matcher(props.selected, props.library.mappings) || ''], now).now} onFirstPlaying={props.onFirstPlaying} onOpenChannelNumber={() => openNumberSearch()} onOpenGuide={props.onClose}
-      onNextChannel={adjacentChannel(visibleChannels, props.selected.id, 1) ? () => { const channel = adjacentChannel(visibleChannels, props.selected!.id, 1); if (channel) void props.onWatch(channel); } : undefined}
-      onPreviousInLineup={adjacentChannel(visibleChannels, props.selected.id, -1) ? () => { const channel = adjacentChannel(visibleChannels, props.selected!.id, -1); if (channel) void props.onWatch(channel); } : undefined}
+      onNextChannel={adjacentChannel(visibleChannels, props.selected.id, 1, !!props.library.channelOrder?.length) ? () => { const channel = adjacentChannel(visibleChannels, props.selected!.id, 1, !!props.library.channelOrder?.length); if (channel) void props.onWatch(channel); } : undefined}
+      onPreviousInLineup={adjacentChannel(visibleChannels, props.selected.id, -1, !!props.library.channelOrder?.length) ? () => { const channel = adjacentChannel(visibleChannels, props.selected!.id, -1, !!props.library.channelOrder?.length); if (channel) void props.onWatch(channel); } : undefined}
       previousChannelName={previous?.name} onPreviousChannel={previous ? () => void props.onWatch(previous) : undefined} /></TvKeysSuspended.Provider>{numberPad}</View>;
   }
   if (watching) return <TvRecordingPlayer recording={watching} onClose={() => setWatching(undefined)} />;
   const totalGb = storage ? (storage.totalBytes / 1_000_000_000).toFixed(1) : '—';
   const usedGb = ((storage ? storage.totalBytes - storage.freeBytes : recordings.reduce((sum, r) => sum + r.bytes, 0)) / 1_000_000_000).toFixed(1);
   const state: TvDashboardState = { screen, now, clock: new Date(now).toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + new Date(now).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-    dayLabel: query ? `Search: ${query}` : category !== 'all' ? category : browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'long' }),
+    dayLabel: [new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), query ? `Search: ${query}` : category !== 'all' ? category : browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : ''].filter(Boolean).join(' · '),
     rows, cursor: selectedCursor, marks, dvrTab, items, itemIndex, summary: `${usedGb} of ${totalGb} GB used · ${recordings.some(r => r.status === 'recording') ? 1 : 0} of 1 streams in use`,
     conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels match. Use Menu to clear filters or restore hidden channels.` : usesTvPlayer ? 'No schedule is available. Press OK to watch this channel live.' : 'No schedule is available. Tap the channel to watch live.') };
-  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
+  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen} guideSize={prefs.guideSize} onChooseDay={() => openPanel('days')}
     onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }}
     contentInsets={!usesTvPlayer ? insets : undefined} favorites={props.library.favorites} hiddenChannels={props.library.hiddenChannels} seriesRules={rules}
     onJumpToLive={() => { const liveNow = Date.now(); setCursor(c => ({ ...c, windowStart: Math.floor(liveNow / 1_800_000) * 1_800_000, programme: programmeAt(rows[selectedCursor.channel]?.programmes || [], liveNow) })); setFocus({ zone: 'grid', index: 0 }); }}
@@ -329,6 +363,13 @@ export function TvShell(props: Props) {
     {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><Text style={{ color: DVR_COLORS.muted, fontSize: 18, padding: 8 }}>StillWave {version}</Text><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
     {numberPad}
     {searchOpen && <TvChannelSearch categories={categories} query={query} category={category} onApply={applySearch} onClose={() => setSearchOpen(false)} />}
+    {panel === 'preferences' && <PreferencesPanel value={{ ...prefs, autoDeleteWatchedDays: cleanupDays as AppPreferences['autoDeleteWatchedDays'] }} onChange={savePreferences} onClose={() => setPanel(undefined)} />}
+    {panel === 'order' && <ChannelOrderEditor channels={baseRows.map(r => r.channel)} order={props.library.channelOrder || []} initialId={row?.channel.id} onChange={order => { const id = row?.channel.id; props.onChannelOrder(order); if (id) { const next = orderedChannels(rows.map(r => r.channel), order); setCursor(c => ({ ...c, channel: Math.max(0, next.findIndex(ch => ch.id === id)) })); } }} onClose={() => setPanel(undefined)} />}
+    {panel === 'days' && <OptionsPanel title="Choose guide day" description="Only dates with downloaded listings are shown. Empty dates need a guide refresh." actions={guideDateTargets(allRows, now).map(target => ({ label: target.label, run: () => jumpToDate(target.at) }))} onClose={() => setPanel(undefined)} />}
+    {panel === 'storage' && <OptionsPanel title="DVR storage" description={`${(recordings.reduce((sum, r) => sum + r.bytes, 0) / 1e9).toFixed(2)} GB of recordings · ${storage ? (storage.freeBytes / 1e9).toFixed(1) + ' GB free on device' : 'Device storage unavailable'} · ${recordings.filter(r => r.protected).length} protected. Cleanup runs when the recording library is checked, 7 or 30 days after a completed recording is first marked watched (98%). Protected recordings and open playback are kept. Protect individual recordings in My DVR.`} actions={[
+      ...([0, 7, 30] as const).map(days => ({ label: `${cleanupDays === days ? '✓ ' : ''}${days ? `Remove watched recordings after ${days} days` : 'Automatic cleanup · Off'}`, disabled: !dvr || retentionDays == null, run: () => savePreferences({ ...prefs, autoDeleteWatchedDays: days }) })),
+      { label: 'Open My DVR', run: () => { setPanel(undefined); onScreen('dvr'); } },
+    ]} onClose={() => setPanel(undefined)} />}
   </View>;
 }
 const s = StyleSheet.create({ fullscreen: { flex: 1, backgroundColor: '#000' }, menu: { position: 'absolute', left: '25%', right: '25%', top: '12%', bottom: '12%', backgroundColor: DVR_COLORS.panel, borderColor: DVR_COLORS.line, borderWidth: 1, padding: 20 } });

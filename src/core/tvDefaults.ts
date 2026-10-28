@@ -29,6 +29,7 @@ export function completeTvSetup(imported: Library, latest: Library): Library {
   const ids = new Set(imported.channels.map(c => c.id));
   return { ...imported, favorites: latest.favorites.filter(id => ids.has(id)), recents: latest.recents.filter(r => ids.has(r.channelId)),
     reminders: latest.reminders.filter(r => ids.has(r.channelId)), profile: latest.profile, hiddenChannels: latest.hiddenChannels,
+    preferences: latest.preferences, channelOrder: latest.channelOrder,
     mappings: Object.fromEntries(Object.entries(latest.mappings).filter(([id]) => ids.has(id))) };
 }
 

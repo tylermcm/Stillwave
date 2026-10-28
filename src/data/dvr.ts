@@ -13,6 +13,11 @@ interface DvrModule {
   recordingSource(id: string): Promise<Recording & { uri: string }>;
   savePosition(id: string, seconds: number): Promise<void>;
   deleteRecording(id: string): Promise<void>;
+  protectRecording(id: string, protect: boolean): Promise<void>;
+  extendRecording(id: string): Promise<number>;
+  setRetention(days: number): Promise<void>;
+  retentionDays(): number;
+  releaseRecording(id: string): void;
 }
 
 export const dvr = Platform.OS === 'android' && Number(Platform.Version) >= 26 ? requireOptionalNativeModule<DvrModule>('StillwaveDvr') : null;

@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "startup": "guide",
+      "hidden": false,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "favorites",
+      "hidden": false,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": false,
+      "missing": false,
+      "autoplayOpened": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": true,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": false,
+      "missing": true,
+      "guideFallback": true
+    }
+  ],
+  "syntheticStreamsOnly": true,
+  "physicalDeviceTested": false
+}

@@ -8,6 +8,7 @@ import { dvr } from '../../data/dvr';
 import { TvPlayerControls, type TvAction } from './TvPlayerControls';
 import { MobilePlayerControls } from '../MobilePlayerControls';
 import { usesTvPlayer } from '../../data/tv';
+import { useSleepPlayback } from '../SleepTimer';
 export function TvRecordingPlayer({ recording, onClose }: { recording: Recording & { uri: string }; onClose: () => void }) {
   const [paused, setPaused] = useState(false);
   const [ready, setReady] = useState(false);
@@ -36,17 +37,21 @@ export function TvRecordingPlayer({ recording, onClose }: { recording: Recording
   useEffect(() => { if (paused) setVisible(true); }, [paused]);
   const savedPosition = useRef(recording.position);
   const player = useVideoPlayer(null, p => { p.timeUpdateEventInterval = 1; });
+  const sleep = useSleepPlayback(() => { player.pause(); onClose(); });
   useEffect(() => {
     let restored = false;
     const load = player.addListener('sourceLoad', () => { if (!restored) { restored = true; player.currentTime = Math.max(0, Math.min(recording.position, Math.max(0, player.duration - 0.5))); player.play(); } setReady(true); });
     const tick = player.addListener('timeUpdate', event => { savedPosition.current = event.currentTime; setPosition(event.currentTime); });
     const playing = player.addListener('playingChange', event => setPaused(!event.isPlaying));
     const status = player.addListener('statusChange', event => { if (event.status === 'error') setMessage('This recording could not play. Some captured segments may be incomplete.'); });
-    const ended = player.addListener('playToEnd', () => setPaused(true));
+    const ended = player.addListener('playToEnd', () => {
+      savedPosition.current = player.duration || recording.duration; setPosition(savedPosition.current); setPaused(true);
+      void dvr?.savePosition(recording.id, savedPosition.current).catch(() => {});
+    });
     void player.replaceAsync({ uri: recording.uri, contentType: 'hls', useCaching: false }).catch(() => setMessage('Could not open this recording.'));
     const save = () => void dvr?.savePosition(recording.id, savedPosition.current).catch(() => {});
     const timer = setInterval(save, 3000);
-    return () => { clearInterval(timer); save(); load.remove(); tick.remove(); playing.remove(); status.remove(); ended.remove(); };
+    return () => { clearInterval(timer); save(); dvr?.releaseRecording(recording.id); load.remove(); tick.remove(); playing.remove(); status.remove(); ended.remove(); };
   }, [player, recording]);
   const pause = () => { if (player.playing) player.pause(); else player.play(); };
   const seek = (seconds: number) => { player.currentTime = Math.max(0, Math.min(player.currentTime + seconds, Math.max(0, player.duration - 0.25))); };
@@ -57,11 +62,12 @@ export function TvRecordingPlayer({ recording, onClose }: { recording: Recording
     { id: 'close', label: 'Recordings', icon: 'film-outline', run: onClose },
   ];
   return <View style={s.fullscreen}><StatusBar hidden /><VideoView player={player} nativeControls={false} contentFit={fit} style={StyleSheet.absoluteFill} />
-    {usesTvPlayer ? <TvPlayerControls title={recording.title} subtitle={recording.channel} badge={`${clock(position)} / ${clock(recording.duration)}`} message={message} settled={ready} paused={paused} actions={actions} onClose={onClose} onPause={pause} onSeek={seek} /> : <>
+    {usesTvPlayer ? <TvPlayerControls title={recording.title} subtitle={recording.channel} badge={`${clock(position)} / ${clock(recording.duration)}`} message={message} settled={ready} paused={paused} actions={actions} options={[{ id: 'sleep', label: sleep.label, run: () => sleep.open() }]} onClose={onClose} onPause={pause} onSeek={seek} /> : <>
       {!!message && <Text accessibilityRole="alert" style={{ color: '#fff', position: 'absolute', top: 80, left: 20, right: 20 }}>{message}</Text>}
       <MobilePlayerControls title={recording.title} programme={recording.channel} badge={ready ? 'RECORDING' : 'LOADING'} fullscreen paused={paused} failed={!!message} visible={visible} screenReader={screenReader} opacity={opacity}
         media={{ duration: player.duration || recording.duration, position }} hasCc={false} cc={false} onCaptions={() => {}}
         shortcuts={[
+          { id: 'sleep', label: 'Sleep timer', icon: 'moon-outline', run: () => sleep.open() },
           { id: 'speed', label: `${speed}× Speed`, icon: 'speedometer-outline', run: () => { const next = speed >= 2 ? .5 : speed + .5; player.playbackRate = next; setSpeed(next); } },
           { id: 'loop', label: 'Loop', icon: 'repeat', selected: loop, run: () => { player.loop = !loop; setLoop(!loop); } },
           { id: 'recordings', label: 'My DVR', icon: 'film-outline', run: onClose },

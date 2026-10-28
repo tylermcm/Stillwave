@@ -70,6 +70,14 @@ export interface ProgramReminder {
 }
 
 export type BufferProfile = 'fast' | 'balanced' | 'stable';
+export type GuideSize = 'compact' | 'comfortable' | 'large';
+export interface AppPreferences {
+  guideSize: GuideSize;
+  startup: 'guide' | 'favorites' | 'lastChannel';
+  paddingBefore: number;
+  paddingAfter: number;
+  autoDeleteWatchedDays: 0 | 7 | 30;
+}
 
 export interface Library {
   version: 1;
@@ -79,6 +87,8 @@ export interface Library {
   channels: Channel[];
   favorites: string[];
   hiddenChannels?: string[];
+  channelOrder?: string[];
+  preferences?: AppPreferences;
   playlists: SavedPlaylist[];
   playlistName: string;
   playlistUrl?: string;

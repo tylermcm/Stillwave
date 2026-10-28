@@ -1,0 +1,199 @@
+{
+  "verifiedAt": "2026-10-28T17:49:43.782Z",
+  "baseCommit": "f3b891e3ffcf98da9f178015c64bd30748092265",
+  "sourceOnly": true,
+  "publishedVersion": "0.4.11",
+  "newApkBuilt": false,
+  "physicalDeviceTested": false,
+  "typecheckPassed": true,
+  "typescriptTestsPassed": 130,
+  "nativeTestsPassed": 6,
+  "nativeTask": ":stillwave-dvr:testDebugUnitTest",
+  "nativeChecks": [
+    "padding bounds and validation",
+    "shared capture, ranges, resume and deadline finalization",
+    "extended deadline replaces prior scheduled stop",
+    "expired stop time cannot start an indefinite capture",
+    "protected/open recordings cannot be deleted",
+    "watched cleanup off by default; age, status, protection and playback exclusions; policy persists"
+  ],
+  "uiReport": "personalization-ui-verification.json",
+  "startupReport": "startup-preferences-verification.json",
+  "uiViewports": [
+    {
+      "width": 740,
+      "height": 360,
+      "remote": false
+    },
+    {
+      "width": 852,
+      "height": 393,
+      "remote": false
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "remote": false
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "remote": true
+    }
+  ],
+  "startupChecks": [
+    {
+      "startup": "guide",
+      "hidden": false,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "favorites",
+      "hidden": false,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": false,
+      "missing": false,
+      "autoplayOpened": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": true,
+      "missing": false,
+      "guideFallback": true
+    },
+    {
+      "startup": "lastChannel",
+      "hidden": false,
+      "missing": true,
+      "guideFallback": true
+    }
+  ],
+  "limitations": [
+    "Native alarms and lifecycle need physical-device testing.",
+    "Sleep is a session deadline; expiry is rechecked when a suspended app resumes.",
+    "Real-app autoplay test opens a blocked synthetic stream and does not validate provider playback."
+  ],
+  "sources": [
+    {
+      "file": "App.tsx",
+      "sha256": "28deaad230b7eac8efde9563e2260689b5901cb3b361944f1e41617ded9a8616"
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrEngine.kt",
+      "sha256": "083f4ce5e3b339396de8b330378754152811055684d12d2efcc13a9f026a43a0"
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/RecordingPlanner.kt",
+      "sha256": "0bb87251b39e0c144381a9d51cc878c846b0964ecf0b1e8875667e8ca437c8e9"
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/StillwaveDvrModule.kt",
+      "sha256": "78c111523c4b9346ca9185bcc4ef7fd6c153838697c91a3a317bcee79b00dcbf"
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/test/java/expo/modules/stillwavedvr/DvrTest.kt",
+      "sha256": "2d8d69505dd7f4586945a97acae0d1e9340a6b6ce7242e1eaa27e09b1bf1c43e"
+    },
+    {
+      "file": "scripts/verify-dvr-bundle.mjs",
+      "sha256": "336ca1562c95e966124543f58fb1736b84c79a64104707e3e46e40b4aefd2714"
+    },
+    {
+      "file": "src/components/LivePlayer.tsx",
+      "sha256": "bf3eaf2c4b3b2733547608530591918d11097f25416f47dc61ed0aba8b07c9ce"
+    },
+    {
+      "file": "src/components/Recordings.tsx",
+      "sha256": "c0b386688945107828f545ab15e93f5b1df0b63eb3a9bd5222b5af590c78740a"
+    },
+    {
+      "file": "src/components/tv/TvDashboard.tsx",
+      "sha256": "31d3b924be3d56743a6918d4900840f4db0397b240802ec1fb8a3faf3f6d84c8"
+    },
+    {
+      "file": "src/components/tv/TvDvrShell.tsx",
+      "sha256": "b0454a5bb077f873c351ab0d026438190845a592fd675ddb872f8e996804ec99"
+    },
+    {
+      "file": "src/components/tv/TvRecordingPlayer.tsx",
+      "sha256": "54224243827ac2f6114fb8d74736babf84d2f74fc52d10f1445484206f9b349a"
+    },
+    {
+      "file": "src/core/dvr.ts",
+      "sha256": "83e747bd5282c855845c54b3c97395c068aa55a17b099b95c436e60ebe669511"
+    },
+    {
+      "file": "src/core/history.ts",
+      "sha256": "c3508943bfd6fa0074c447375ebb22956e667112d6c02026d7a132fec284f954"
+    },
+    {
+      "file": "src/core/mobileDashboard.ts",
+      "sha256": "5e14ebf72218a2e0a85503950b11dbfbfcfb7bbb40127d0a03847fcc25b6ee44"
+    },
+    {
+      "file": "src/core/playlists.ts",
+      "sha256": "c333bbf2fbea14012e876122fe2c45d1158c51f9d3e99e7f67b1a1b9d7b20481"
+    },
+    {
+      "file": "src/core/tvDefaults.ts",
+      "sha256": "d1ed9ed4fffbdda53f93e5fc6b587cd954df8e3aba8c98c47ada0d24d2a378de"
+    },
+    {
+      "file": "src/core/tvDvr.ts",
+      "sha256": "7998431788fbcd36cdc723cbcbe3cbb1819ef300116d51939696c1d3a2a4fa10"
+    },
+    {
+      "file": "src/core/tvGuide.ts",
+      "sha256": "d6aca9fb5655cfe6b13ff8832fdc45dd03756210c6c2c0bffed856b7685ddf68"
+    },
+    {
+      "file": "src/data/dvr.ts",
+      "sha256": "8396232d5e49e62a966b70667fd445dfcffcec2a773a643deb38b0d4c0e09cca"
+    },
+    {
+      "file": "src/data/recordingPlanner.ts",
+      "sha256": "0b533d174598233fa510237a760ef865b1b4fa5f74e7edcd0a3d199bba5cb81a"
+    },
+    {
+      "file": "src/types.ts",
+      "sha256": "42adeeee05d95b7929255da188bc36a98ab252329466f57277ad7ea697b918d0"
+    },
+    {
+      "file": "tests/android-planner/Driver.java",
+      "sha256": "23e24449874f31ce5ba9f54bd645410a3b055522b526397ba7e0ed16a6915821"
+    },
+    {
+      "file": "src/components/SleepTimer.tsx",
+      "sha256": "213493922fc4ad58c6673d2117ff07adeccf4bf66db1fc0a9899a0daf6ea7234"
+    },
+    {
+      "file": "src/components/tv/ChannelOrderEditor.tsx",
+      "sha256": "b05cf58da0cf3c8897da81cf2b2a35ce41dba13aefece2d4d3d3260e9e07f992"
+    },
+    {
+      "file": "src/components/tv/OptionsPanel.tsx",
+      "sha256": "f65329bd5995fa671924592787953e8ddebaedd5efc450f3ed787a1d627792a3"
+    },
+    {
+      "file": "src/components/tv/PreferencesPanel.tsx",
+      "sha256": "f882a0741d5f35b4f60cc7f05a3725b0c8c3b160f2f73f2ddc3550a04a7bf2fe"
+    },
+    {
+      "file": "src/core/preferences.ts",
+      "sha256": "4e621bce0b829a62f34b552bfe0a760b308cf6d9fa54c86bdaf75c5f97dd7078"
+    },
+    {
+      "file": "tests/personalization-preview.tsx",
+      "sha256": "860cb08af7cac6412431db0b1e8b69a9cdc5eed5f1b59f2be9bdaf2f3602ba89"
+    },
+    {
+      "file": "tests/preferences.test.ts",
+      "sha256": "19fe3c94dd278309b705e7be92e4ca38b057cdd724eba2537a55732c6b16316a"
+    }
+  ]
+}

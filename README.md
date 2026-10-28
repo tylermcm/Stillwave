@@ -10,6 +10,19 @@ Phones and TVs include **Menu → Search and filter channels**, persistent chann
 
 The APK contains its JavaScript, assets and native playback engine. **No web server, Expo Go, developer computer or app account is required to run it.** Your phone connects directly to the playlist, guide and channel providers. A guide can also be imported as a local XMLTV file, so hosting your own guide server is optional.
 
+## Next update: personalization and DVR controls
+
+Implemented in source after 0.4.11; these additions need a new Android APK before they are available on installed devices.
+
+- **Menu → Preferences:** choose Compact, Comfortable or Large Text guide sizing; open the app to Guide, Favorites or the last available watched channel. Preferences are saved on this device. Missing/hidden channels are skipped when restoring playback.
+- **Menu → Channel order:** find/select a channel and move it up/down or to either end. Custom order applies to Guide, Favorites and channel stepping, survives playlist refreshes, and keeps channel numbers unchanged. Reset order restores the default lineup.
+- **Recording padding:** Preferences cycles early/late minutes through 0, 1, 2, 5, 10, 15 and 30. New guide recordings and series rules use the selected padding; existing schedules retain their times. Published programme times and episode identity are preserved. An already-airing show starts capturing when scheduled, without recovering earlier footage. Player “record until program ends” includes late padding. My DVR and live-player options can add 30 minutes to a running deadline (or set a 30-minute deadline for an untimed capture). Conflicts still obey the single-stream limit.
+- **Sleep timer:** Menu or player options offers 15/30/60 minutes and, during live playback with guide data, the end of the current show. The absolute deadline stays set through channel changes and stops playback while preserving active recordings. It is a session timer, cleared when the app process ends; a suspended app rechecks expiry when it resumes.
+- **DVR storage:** shows recording space, free device space and protected recording count. Protect/Unprotect is available beside saved recordings; protected recordings cannot be deleted until unprotected. Automatic cleanup defaults to Off. Opt into 7 or 30 days after a completed recording is first watched to at least 98%. Cleanup runs when the DVR library is checked, keeps protected recordings and open playback, and never cleans up interrupted/active recordings. The native device policy is the authoritative cleanup setting across restarts.
+- **Guide day picker:** tap the day above the channel column or use Menu → Choose guide day. Jump to Today, Tonight or a date with downloaded listings; midnight-spanning listings are included. Jump to Live restores the current timeline.
+
+Native compilation/unit tests and isolated browser interactions are checked separately from physical-device acceptance. Android alarm timing, OS lifecycle behavior, real-provider playback and device rendering still need confirmation on hardware.
+
 Fresh Android installs load the public US playlist and the combined hosted guide, with direct-source fallbacks. **Menu** opens filters, channel-number lookup and feed refresh. Existing playlists, favorites and guide mappings are preserved. Channels with current/upcoming listings appear first. Swipe to browse and tap the focused channel to watch, or use a remote. This APK includes 32-bit ARM and ARM64 on Android 7.0 or newer; local DVR requires Android 8.0 or newer. iOS retains the separate Sources and mobile browsing layout. Native playback still needs testing with your providers and hardware.
 
 ## Pause, rewind and record

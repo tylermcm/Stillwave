@@ -27,6 +27,8 @@ import { useAndroidFullscreen } from './src/components/useAndroidFullscreen';
 import { isTv } from './src/data/tv';
 import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults, needsTvGuideUpgrade } from './src/core/tvDefaults';
 import { TvShell } from './src/components/tv/TvDvrShell';
+import { preferences, startupChannel } from './src/core/preferences';
+import { SleepTimerProvider } from './src/components/SleepTimer';
 
 if (Platform.OS !== 'web') void SplashScreen.preventAutoHideAsync().catch(() => {});
 const splashPreview = Platform.OS === 'web' && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('splash') === '1';
@@ -83,6 +85,7 @@ function Shell() {
   const dirty = useRef(false);
   const busyRef = useRef(false);
   const selectionRequest = useRef(0);
+  const startupApplied = useRef(false);
   const current = useRef(library);
   current.current = library;
   const update = useCallback((change: (previous: Library) => Library) => {
@@ -325,6 +328,13 @@ function Shell() {
     } catch { setError('Could not check the current recording. Try again before changing channels.'); return false; }
   };
   useEffect(() => {
+    if (!loaded || startupApplied.current) return;
+    startupApplied.current = true;
+    const startup = preferences(library.preferences).startup;
+    if (startup === 'lastChannel') { const channel = startupChannel(library); if (channel) void selectChannel(channel); }
+    else if (!isTv) { setTab('guide'); setOnlyFavorites(startup === 'favorites'); }
+  }, [loaded]);
+  useEffect(() => {
     if (!loaded || !remindersNative) return;
     const client = remindersNative;
     const consume = () => {
@@ -384,7 +394,9 @@ function Shell() {
   if (!loaded) return <LaunchSplash onReady={hideNativeSplash} />;
   if (isTv) return <TvShell library={library} selected={selected} loaded={loaded} busy={busy} error={error} notice={notice}
     onWatch={selectChannel} onClose={() => { selectionRequest.current++; setSelected(undefined); setFullscreen(false); }} onFirstPlaying={onFirstPlaying}
-    onFavorite={toggleFavorite} onHiddenChannels={hiddenChannels => update(previous => ({ ...previous, hiddenChannels }))} onDefaults={() => void setupTvDefaults()} onRefreshPlaylist={id => void importPlaylist(false, id)} onRefreshGuide={id => void importGuide(false, id)} />;
+    onFavorite={toggleFavorite} onHiddenChannels={hiddenChannels => update(previous => ({ ...previous, hiddenChannels }))}
+    onPreferences={preferences => update(previous => ({ ...previous, preferences }))} onChannelOrder={channelOrder => update(previous => ({ ...previous, channelOrder }))}
+    onDefaults={() => void setupTvDefaults()} onRefreshPlaylist={id => void importPlaylist(false, id)} onRefreshGuide={id => void importGuide(false, id)} />;
   return <SafeAreaView style={s.safe} edges={fullscreen ? [] : ['top', 'left', 'right']}>
     <StatusBar style="light" hidden={fullscreen} />
     <View style={[s.frame, fullscreen && s.fullFrame]}>
@@ -460,7 +472,7 @@ function Shell() {
   </SafeAreaView>;
 }
 
-export default function App() { return <SafeAreaProvider><AppErrorBoundary>{splashPreview ? <LaunchSplash /> : <Shell />}</AppErrorBoundary></SafeAreaProvider>; }
+export default function App() { return <SafeAreaProvider><AppErrorBoundary><SleepTimerProvider>{splashPreview ? <LaunchSplash /> : <Shell />}</SleepTimerProvider></AppErrorBoundary></SafeAreaProvider>; }
 
 const s = StyleSheet.create({
   fullFrame: { maxWidth: undefined, paddingHorizontal: 0 },
