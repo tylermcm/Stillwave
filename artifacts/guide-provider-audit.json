@@ -1,0 +1,103 @@
+{
+  "collectedAt": "2026-10-28T01:39:59.098Z",
+  "sources": [
+    {
+      "id": "guide-tv-global-pluto",
+      "url": "https://i.mjh.nz/PlutoTV/all.xml.gz",
+      "requestedStreams": 16,
+      "availableStreams": 15,
+      "downloadedBytes": 7440452,
+      "assignments": [
+        {
+          "channelId": "rglvv",
+          "tvgId": "AdrenalinaPuraTV.us@SD",
+          "sourceGuideId": "61b793ccf571b80007b7a610"
+        },
+        {
+          "channelId": "10jyjg5",
+          "tvgId": "ComedyCentralAnimation.us@SD",
+          "sourceGuideId": "64f8a949f5b5e4000862467c"
+        },
+        {
+          "channelId": "ucsprf",
+          "tvgId": "ConcertChannel.us@SD",
+          "sourceGuideId": "6868152657543d1f8be4ece3"
+        },
+        {
+          "channelId": "7fjegn",
+          "tvgId": "GirlfriendsFilms.us@SD",
+          "sourceGuideId": "66ba1e4446762a000855cd87"
+        },
+        {
+          "channelId": "jxfxao",
+          "tvgId": "InstantSaga.us@US",
+          "sourceGuideId": "60549e98061b5f000776866a"
+        },
+        {
+          "channelId": "1znp3m",
+          "tvgId": "Narutoenespanol.us@SD",
+          "sourceGuideId": "5ee92e72fb286e0007285fec"
+        },
+        {
+          "channelId": "79dkth",
+          "tvgId": "OnePiece.us@US",
+          "sourceGuideId": "69affcad8940750a23a7231a"
+        },
+        {
+          "channelId": "vtrc03",
+          "tvgId": "PlutoTVDogelcazarrecompensas.us@SD",
+          "sourceGuideId": "5f9992c685a2a80007fa414a"
+        },
+        {
+          "channelId": "1tzyyil",
+          "tvgId": "PlutoTVEstrellasdeAccion.us@SD",
+          "sourceGuideId": "5e972a21ad709d00074195ba"
+        },
+        {
+          "channelId": "1wdlh0",
+          "tvgId": "PlutoTVLosnuevosdetectives.us@SD",
+          "sourceGuideId": "5f1acba0d1f6340007db8843"
+        },
+        {
+          "channelId": "13cpprv",
+          "tvgId": "PlutoTVMinutoParaGanar.us@SD",
+          "sourceGuideId": "5e46e64dc73db400094b5f0b"
+        },
+        {
+          "channelId": "1b1qlo3",
+          "tvgId": "PlutoTVMisteriosMedicos.us@SD",
+          "sourceGuideId": "5f230e416b68ff00075b0139"
+        },
+        {
+          "channelId": "aeyitd",
+          "tvgId": "PlutoTVSanctuary.us@SD",
+          "sourceGuideId": "63eb57d6c111bc0008fe2658"
+        },
+        {
+          "channelId": "1koxe4z",
+          "tvgId": "PlutoTVWipeout.us@SD",
+          "sourceGuideId": "6909e5c3a3a4b49706b8373b"
+        },
+        {
+          "channelId": "1uj3oh7",
+          "tvgId": "Runtime.us@SD",
+          "sourceGuideId": "6086d3f420fc8500075f8dbf"
+        }
+      ]
+    },
+    {
+      "id": "guide-tv-global-plex",
+      "url": "https://i.mjh.nz/Plex/all.xml.gz",
+      "requestedStreams": 6,
+      "availableStreams": 1,
+      "downloadedBytes": 8421361,
+      "assignments": [
+        {
+          "channelId": "12jgwyx",
+          "tvgId": "CinePride.us@SD",
+          "sourceGuideId": "697140a85d851f5e69414688-62167144ab2095ca85353ad6"
+        }
+      ]
+    }
+  ]
+}

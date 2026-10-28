@@ -1,0 +1,23 @@
+{
+  "source": "https://github.com/iptv-org/epg/blob/master/sites/tvpassport.com/tvpassport.com.channels.xml",
+  "reviewedAt": "2026-10-28",
+  "note": "Exact station feeds whose upstream catalog row has no XMLTV ID. The sync script verifies each station path and label. East/West, language and callsigns are kept explicit.",
+  "tvPassport": {
+    "ae.us@east": { "id": "ae-us--eastern-feed/2", "name": "A&E US - Eastern Feed" },
+    "bounce.us": { "id": "bounce--network/14312", "name": "Bounce - Network" },
+    "catholicfaithnetwork.us": { "id": "catholic-faith-network/6004", "name": "Catholic Faith Network" },
+    "cnnenespanol.us": { "id": "cnn-espanol/2096", "name": "CNN Español" },
+    "depeliculaus.us": { "id": "de-pelicula/4419", "name": "De Pelicula" },
+    "galavision.us@east": { "id": "galavision--eastern-feed/1894", "name": "Galavision - Eastern Feed" },
+    "history.us@east": { "id": "history-channel-us--eastern-feed/621", "name": "History Channel US - Eastern Feed" },
+    "jewishlifetelevision.us": { "id": "jewish-life-television/6826", "name": "Jewish Life Television" },
+    "kiiold101.us": { "id": "us-armenia-kiio-ld-los-angeles-ca/11156", "name": "US Armenia (KIIO-LD) Los Angeles, CA" },
+    "lifetimemovies.us@east": { "id": "lifetime-movies--east/1333", "name": "Lifetime Movies - East" },
+    "livingfaithtv.us": { "id": "wlfg--grundy-va/3703", "name": "WLFG - Grundy, VA", "evidence": "https://livingfaithtv.com/programming/" },
+    "news12conneticut.us": { "id": "news-12-connecticut/20178", "name": "News 12 Connecticut" },
+    "news12longisland.us": { "id": "news-12-long-island/20180", "name": "News 12 Long Island" },
+    "pbs.us@east": { "id": "pbs--network-hd--eastern/4259", "name": "PBS - Network HD - Eastern" },
+    "smartlifestyletv.us": { "id": "smart-lifestyle-tv/33137", "name": "Smart Lifestyle TV" },
+    "worldharvesttv.us": { "id": "world-harvest-television/6038", "name": "World Harvest Television" }
+  }
+}

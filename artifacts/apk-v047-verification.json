@@ -1,0 +1,17 @@
+{
+  "version": "0.4.7",
+  "versionCode": 14,
+  "bytes": 37170957,
+  "sha256": "b4978a603fa416b62b9dea5c5efc16139f111895551af0cf94b9e26195af6fdd",
+  "signingCertificate": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "embeddedBundle": true,
+  "nativeUpdater": true,
+  "launcherIconEntries": [
+    "res/sK.webp"
+  ],
+  "checks": 114,
+  "mobileSearch": "Rendered touch/category/apply checks passed at 852x393 and 740x360",
+  "automaticUpdateCheck": "Android phones and TVs enabled",
+  "apkSignatureAndAlignment": "passed",
+  "deviceTesting": "Physical install and OS updater acceptance pending user test"
+}

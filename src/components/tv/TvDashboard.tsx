@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Animated, Platform, ScrollView, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { TV_DESIGN as D, guideProgrammeKey, tvDuration, tvTime, type TvDashboardState, type TvDvrItem, type TvDvrTab, type TvGuideRow } from '../../core/tvGuide';
+import { TV_DESIGN as D, guideProgrammeFrame, guideProgrammeKey, guideTitleScrollRange, tvDuration, tvTime, type TvDashboardState, type TvDvrItem, type TvDvrTab, type TvGuideRow } from '../../core/tvGuide';
 
 import { usesTvPlayer } from '../../data/tv';
 import { TouchTvList } from './TouchTvList';
@@ -62,12 +62,17 @@ export function TvDashboard({ state: v, ...events }: Props) {
                 <Animated.View style={[s.channel, pinned]}><Label lines={1} style={[s.channelNumber, { width: Math.max(40, r.number.length * 15) }]}>{r.number}</Label><Label lines={1} style={[s.channelName, ci === v.cursor.channel ? { color: DVR_COLORS.text } : {}]}>{r.channel.name}</Label></Animated.View>
                 <View style={s.lane}>
                   {r.programmes.map((p, pi) => {
-                    if (p.stop <= v.cursor.windowStart || p.start >= v.cursor.windowStart + visibleSpan) return null;
+                    const frame = guideProgrammeFrame(p, v.cursor.windowStart, gridWidth - D.channelWidth);
+                    if (!frame) return null;
                     const focused = v.focus.zone === 'grid' && ci === v.cursor.channel && pi === v.cursor.programme;
                     const status = v.marks[guideProgrammeKey(r.channel.id, p)];
+                    const titleOffset = touch ? timeOffset.interpolate({ inputRange: [frame.left, frame.left + frame.width], outputRange: [0, frame.width], extrapolate: 'clamp' }) : 0;
+                    const titleWidth = touch ? timeOffset.interpolate(guideTitleScrollRange(frame.left, frame.width, D.width - D.channelWidth)) : frame.width;
                     return <Pressable key={`${p.start}:${pi}`} accessibilityRole="button" accessibilityLabel={`${p.title} on ${r.channel.name}`} onPress={() => { markTouchSelection?.(); events.onProgramme(ci, pi); }} style={[s.programme, p.start <= v.now && p.stop > v.now && s.programmeNow, focused && s.programmeFocus,
-                      { left: (p.start - v.cursor.windowStart) / 60_000 * D.pixelsPerMinute + 2, width: Math.max(1, (p.stop - p.start) / 60_000 * D.pixelsPerMinute - 4) }]}>
-                      {!!status && <Mark recording={status === 'recording'} ink={focused} />}<Label lines={1} style={[s.programmeText, p.stop <= v.now ? { color: DVR_COLORS.dim } : {}, focused ? { color: DVR_COLORS.ink } : {}]}>{p.title}</Label>
+                      { ...frame, paddingHorizontal: 0 }]}>
+                      <Animated.View style={[s.programmeContent, { width: titleWidth, transform: [{ translateX: titleOffset }] }]}>
+                        {!!status && <Mark recording={status === 'recording'} ink={focused} />}<Label lines={1} style={[s.programmeText, p.stop <= v.now ? { color: DVR_COLORS.dim } : {}, focused ? { color: DVR_COLORS.ink } : {}]}>{p.title}</Label>
+                      </Animated.View>
                     </Pressable>;
                   })}
                   {!r.programmes.some(p => p.stop > v.cursor.windowStart && p.start < v.cursor.windowStart + visibleSpan) && <AnimatedPressable accessibilityRole="button" accessibilityLabel={`Watch ${r.channel.name} live; schedule unavailable`} onPress={() => { markTouchSelection?.(); events.onProgramme(ci, v.cursor.programme); }} style={[s.programme, { left: 2, right: 2 }, touch && { right: undefined, width: D.width - D.channelWidth - 4, transform: [{ translateX: timeOffset }] }, ci === v.cursor.channel && v.focus.zone === 'grid' && s.programmeFocus]}><Label style={[s.programmeText, ci === v.cursor.channel && v.focus.zone === 'grid' ? { color: DVR_COLORS.ink } : { color: DVR_COLORS.muted }]}>Schedule unavailable · OK Watch live</Label></AnimatedPressable>}
@@ -105,7 +110,9 @@ export function TvDashboard({ state: v, ...events }: Props) {
         <View style={s.grid}>
           <Animated.ScrollView ref={timeScroll} testID="touch-guide-timeline" horizontal removeClippedSubviews={false} scrollEnabled={touch} nestedScrollEnabled directionalLockEnabled showsHorizontalScrollIndicator={touch}
             style={{ flex: 1 }} contentContainerStyle={{ width: gridWidth, height: '100%' }}
-            onScroll={touch ? Animated.event([{ nativeEvent: { contentOffset: { x: timeOffset } } }], { useNativeDriver: Platform.OS !== 'web' }) : undefined} scrollEventThrottle={16}>
+            // Visible title widths change during scrolling, requiring the JS
+            // animation driver (native transforms alone cannot resize text).
+            onScroll={touch ? Animated.event([{ nativeEvent: { contentOffset: { x: timeOffset } } }], { useNativeDriver: false }) : undefined} scrollEventThrottle={16}>
           <View style={{ width: gridWidth, flex: 1 }}>
           <View style={s.ruler}><Animated.View style={[s.corner, pinned]}><Label style={s.cornerText}>{v.dayLabel}</Label></Animated.View><View style={s.clip}>
             {ticks.map(t => {
@@ -167,6 +174,7 @@ const s = StyleSheet.create({
   dot: { width: 12, height: 12, borderRadius: 6, backgroundColor: C.rec }, ring: { width: 12, height: 12, borderRadius: 6, borderWidth: 2, borderColor: C.accent },
   grid: { flex: 1, minHeight: 0, borderTopWidth: 1, borderColor: C.line }, ruler: { height: 56, flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: C.line }, corner: { width: 324, paddingLeft: 64, paddingRight: 24, justifyContent: 'center' }, cornerText: { fontSize: 20, lineHeight: 27, color: C.dim }, clip: { flex: 1, overflow: 'hidden' }, tick: { position: 'absolute', top: 0, bottom: 0, paddingLeft: 12, justifyContent: 'center' }, tickText: { fontSize: 22, lineHeight: 29, color: C.muted, fontVariant: ['tabular-nums'] },
   rowsWrap: { flex: 1, minHeight: 0, overflow: 'hidden' }, row: { position: 'absolute', left: 0, right: 0, height: 84, flexDirection: 'row' }, channel: { width: 324, paddingLeft: 64, paddingRight: 24, flexDirection: 'row', alignItems: 'center', gap: 18 }, channelNumber: { width: 40, fontSize: 24, lineHeight: 32, color: C.dim, fontVariant: ['tabular-nums'] }, channelName: { fontSize: 24, lineHeight: 32, color: C.muted, flexShrink: 1 }, lane: { flex: 1, overflow: 'hidden' }, programme: { position: 'absolute', top: 5, bottom: 5, backgroundColor: C.cell, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', gap: 12, overflow: 'hidden', borderRadius: 4 }, programmeNow: { backgroundColor: C.now }, programmeFocus: { backgroundColor: C.accent }, programmeText: { fontSize: 24, lineHeight: 32, flexShrink: 1 }, nowLine: { position: 'absolute', top: 0, bottom: 0, width: 2, backgroundColor: C.rec, opacity: 0.8 },
+  programmeContent: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 18, overflow: 'hidden' },
   footer: { height: 56, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 64, gap: 40, borderTopWidth: 1, borderTopColor: C.line }, footerText: { fontSize: 20, lineHeight: 27, color: C.dim },
   dvr: { flex: 1, minHeight: 0, flexDirection: 'row' }, dvrMain: { flex: 1, paddingHorizontal: 64 }, dvrHead: { flexDirection: 'row', alignItems: 'baseline', gap: 56, paddingTop: 4, paddingBottom: 8 }, dvrTitle: { fontSize: 48, lineHeight: 64, fontWeight: '600', letterSpacing: -0.8 }, tabs: { flexDirection: 'row', gap: 36 }, tab: { paddingVertical: 4, borderBottomWidth: 3, borderBottomColor: 'transparent' }, tabText: { fontSize: 26, lineHeight: 35, color: C.dim }, summary: { fontSize: 22, lineHeight: 30, color: C.muted, paddingTop: 8, paddingBottom: 20 }, conflict: { borderLeftWidth: 3, borderLeftColor: C.accent, paddingVertical: 4, paddingLeft: 16, marginBottom: 18 }, conflictText: { fontSize: 22, lineHeight: 30 },
   list: { flex: 1, minHeight: 0, overflow: 'hidden' }, item: { position: 'absolute', left: 0, right: 0, height: 88, flexDirection: 'row', alignItems: 'center', gap: 24, paddingRight: 20, borderRadius: 4 }, itemFocus: { backgroundColor: C.panel, outlineWidth: 1, outlineStyle: 'solid', outlineColor: C.accent, paddingLeft: 16 }, itemMark: { width: 28, alignItems: 'center' }, itemTitleBlock: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'baseline', gap: 14, overflow: 'hidden' }, itemTitle: { fontFamily: Platform.OS === 'web' ? 'Segoe UI' : 'Roboto', fontSize: 28, lineHeight: 37, includeFontPadding: false, color: C.text, flexShrink: 1 }, itemSubtitle: { fontSize: 22, lineHeight: 30, color: C.muted, flexShrink: 1 }, itemRight: { fontSize: 22, lineHeight: 30, color: C.muted, fontVariant: ['tabular-nums'] }, progress: { width: 120, height: 4, backgroundColor: C.line }, progressFill: { height: 4, backgroundColor: C.accent },

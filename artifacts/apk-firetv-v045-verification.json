@@ -1,0 +1,19 @@
+{
+  "minSdk": 24,
+  "installation": "not performed",
+  "bytes": 37154517,
+  "apk": "Stillwave-FireTV-0.4.5.apk",
+  "tvLauncher": "verified",
+  "sha256": "b312f389fef45fcd8f08fb38bbc6a7afe7a9d6fb84bdddf154f881414623c8c1",
+  "architectures": [
+    "armeabi-v7a",
+    "arm64-v8a"
+  ],
+  "build": "Same verified signed universal APK as phone build; no redundant compilation",
+  "versionCode": 12,
+  "fireOs7Api": 28,
+  "version": "0.4.5",
+  "signingAndBundleEvidence": "apk-v045-verification.json",
+  "touchscreenRequired": false,
+  "tvControls": "automatic detection using UI_MODE_TYPE_TELEVISION"
+}

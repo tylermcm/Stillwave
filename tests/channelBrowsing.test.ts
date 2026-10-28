@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { browseChannelRows, channelCategory, comparePreferredChannels } from '../src/core/channelBrowsing';
+import { browseChannelRows, channelCategory, comparePreferredChannels, prioritizeGuideRows } from '../src/core/channelBrowsing';
 import { parseM3u } from '../src/core/m3u';
 import type { Channel } from '../src/types';
 
@@ -42,4 +42,19 @@ test('Playlist language metadata is retained and takes precedence over bundled l
   const parsed = parseM3u('#EXTM3U\n#EXTINF:-1 tvg-id="ESPN.us@HD" tvg-language="Spanish;French" group-title="Sports",ESPN\nhttps://example.com/one.m3u8');
   assert.deepEqual(parsed.channels[0]!.languages, ['Spanish', 'French']);
   assert.ok(comparePreferredChannels(channel('english', 'Other', 'Sports', ['English']), parsed.channels[0]!) < 0);
+});
+
+test('guide listings come first across browsing filters, preserving order, numbers and playback identities in both groups', () => {
+  const rows = ['missing', 'current', 'expired', 'future', 'endedNow'].map((id, index) => ({ channel: channel(id, id, 'Sports'), number: String(index + 1),
+    programmes: ['missing'].includes(id) ? [] : [{ channelId: id, title: 'Program', start: id === 'future' ? 150 : 0, stop: id === 'expired' ? 50 : id === 'endedNow' ? 100 : 200 }] }));
+  const sorted = prioritizeGuideRows(rows, 100);
+  const expected = ['current', 'future', 'missing', 'expired', 'endedNow'];
+  assert.deepEqual(sorted.map(r => r.channel.id), expected);
+  assert.deepEqual(browseChannelRows(sorted, 'all', [], 100).map(r => r.channel.id), expected);
+  assert.deepEqual(browseChannelRows(sorted, 'sports', [], 100).map(r => r.channel.id), expected);
+  assert.deepEqual(browseChannelRows(sorted, 'favorites', ['expired', 'future', 'missing'], 100).map(r => r.channel.id), ['future', 'missing', 'expired']);
+  assert.deepEqual(browseChannelRows(sorted, 'noGuide', [], 100).map(r => r.channel.id), ['missing', 'expired', 'endedNow']);
+  assert.ok(sorted.every(r => r === rows.find(original => original.channel.id === r.channel.id)));
+  assert.deepEqual(rows.map(r => r.channel.id), ['missing', 'current', 'expired', 'future', 'endedNow']);
+  assert.deepEqual(prioritizeGuideRows(rows, 200), rows);
 });

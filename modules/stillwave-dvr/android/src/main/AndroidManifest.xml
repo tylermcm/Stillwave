@@ -5,7 +5,11 @@
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
   <application>
+    <provider android:name=".UpdateFileProvider" android:authorities="${applicationId}.updates" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/stillwave_update_paths" />
+    </provider>
     <receiver android:name=".RecordingAlarmReceiver" android:exported="false" />
     <receiver android:name=".RecordingRestoreReceiver" android:exported="false">
       <intent-filter>

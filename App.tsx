@@ -384,7 +384,7 @@ function Shell() {
   if (!loaded) return <LaunchSplash onReady={hideNativeSplash} />;
   if (isTv) return <TvShell library={library} selected={selected} loaded={loaded} busy={busy} error={error} notice={notice}
     onWatch={selectChannel} onClose={() => { selectionRequest.current++; setSelected(undefined); setFullscreen(false); }} onFirstPlaying={onFirstPlaying}
-    onFavorite={toggleFavorite} onDefaults={() => void setupTvDefaults()} onRefreshPlaylist={id => void importPlaylist(false, id)} onRefreshGuide={id => void importGuide(false, id)} />;
+    onFavorite={toggleFavorite} onHiddenChannels={hiddenChannels => update(previous => ({ ...previous, hiddenChannels }))} onDefaults={() => void setupTvDefaults()} onRefreshPlaylist={id => void importPlaylist(false, id)} onRefreshGuide={id => void importGuide(false, id)} />;
   return <SafeAreaView style={s.safe} edges={fullscreen ? [] : ['top', 'left', 'right']}>
     <StatusBar style="light" hidden={fullscreen} />
     <View style={[s.frame, fullscreen && s.fullFrame]}>

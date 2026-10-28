@@ -11,6 +11,7 @@ export function restoreLibrary(value: unknown): Library {
   const library = { ...EMPTY_LIBRARY, ...data };
   library.guideSources = Array.isArray(data.guideSources) ? data.guideSources : [];
   library.recents = Array.isArray(data.recents) ? data.recents : [];
+  library.hiddenChannels = Array.isArray(data.hiddenChannels) ? [...new Set(data.hiddenChannels.filter(id => typeof id === 'string'))] : [];
   library.reminders = Array.isArray(data.reminders) ? data.reminders : [];
   if (!Array.isArray(data.playlists) || (!data.playlists.length && data.channels.length)) {
     const id = 'legacy-playlist';

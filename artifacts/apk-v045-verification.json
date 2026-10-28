@@ -1,0 +1,20 @@
+{
+  "version": "0.4.5",
+  "versionCode": 12,
+  "package": "com.stillwave.player",
+  "bytes": 37154517,
+  "sha256": "b312f389fef45fcd8f08fb38bbc6a7afe7a9d6fb84bdddf154f881414623c8c1",
+  "signingCertificate": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "embeddedBundle": true,
+  "approvedSIconEntries": [
+    "res/sK.webp"
+  ],
+  "checks": 110,
+  "signatureAndAlignment": "passed build-script checks",
+  "titleClipping": "TV and phone rendered checks passed, including horizontal scrolling",
+  "captures": [
+    "guide-title-tv.png",
+    "guide-title-phone.png"
+  ],
+  "phoneDeviceTest": "pending user test"
+}

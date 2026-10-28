@@ -2,7 +2,7 @@
   "expo": {
     "name": "StillWave",
     "slug": "stillwave",
-    "version": "0.4.3",
+    "version": "0.4.7",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
@@ -16,7 +16,11 @@
     },
     "android": {
       "package": "com.stillwave.player",
-      "versionCode": 10,
+      "versionCode": 14,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/branding/stillwave-mark-v2.png",
+        "backgroundColor": "#0b0f10"
+      },
       "allowBackup": false,
       "blockedPermissions": [
         "android.permission.SYSTEM_ALERT_WINDOW",
@@ -40,6 +44,7 @@
       "expo-screen-orientation",
       "./plugins/withCleartext.cjs",
       "./plugins/withTvRemote.cjs",
+      "./plugins/withLauncherIcon.cjs",
       [
         "expo-splash-screen",
         {

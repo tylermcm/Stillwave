@@ -1,12 +1,12 @@
 {
   "App.tsx": {
-    "mtime": 1793085070.3445604,
-    "ast_hash": "2e9be2972272873778f8d596a7df6e07",
+    "mtime": 1793167121.4264946,
+    "ast_hash": "a8fa3d0d87ca30f8d8caca77d2d91b70",
     "semantic_hash": ""
   },
   "app.json": {
-    "mtime": 1793083415.79582,
-    "ast_hash": "ad6aef5b96d59e7da550bbe63c5f3024",
+    "mtime": 1793168933.3937876,
+    "ast_hash": "b7059239d4eca5afacb6dea0a6c96da1",
     "semantic_hash": ""
   },
   "eas.json": {
@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1793083415.79582,
-    "ast_hash": "f69e88f75e8c790022865124b382220d",
+    "mtime": 1793168933.3942783,
+    "ast_hash": "412170d3a3160056c3bd3ea9f725e2ad",
     "semantic_hash": ""
   },
   "scripts/build-android-apk.ps1": {
@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "src/components/LivePlayer.tsx": {
-    "mtime": 1793080292.6359718,
-    "ast_hash": "32fde6e6f43c7f2c96bbe6945caa3de9",
+    "mtime": 1793149187.315701,
+    "ast_hash": "77e330c37b64edd186d98df3a1638eea",
     "semantic_hash": ""
   },
   "src/core/diagnostics.ts": {
@@ -70,8 +70,8 @@
     "semantic_hash": ""
   },
   "src/core/m3u.ts": {
-    "mtime": 1793082912.1828687,
-    "ast_hash": "3578172c41f2794c9f3e38c600a1cafa",
+    "mtime": 1793149187.3388097,
+    "ast_hash": "e8dd9da805296fbeb59bcc7fd0003381",
     "semantic_hash": ""
   },
   "src/core/recovery.ts": {
@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "src/core/xmltv.ts": {
-    "mtime": 1793083492.479495,
-    "ast_hash": "b2672d36aeca71610cda41c1f99b2f2f",
+    "mtime": 1793149187.341638,
+    "ast_hash": "c0ea5993955e38b3c74764f647ee30be",
     "semantic_hash": ""
   },
   "src/data/feeds.ts": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "src/types.ts": {
-    "mtime": 1793082472.9038196,
-    "ast_hash": "359756aba4c6fad4035c56a6b461a785",
+    "mtime": 1793167007.7306345,
+    "ast_hash": "a5d8ac6944f8e2397ba2ae90375ef9d8",
     "semantic_hash": ""
   },
   "tests/core.test.ts": {
@@ -130,18 +130,18 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1793085314.807918,
-    "ast_hash": "d81414cd9d62bd093ec27050dbb666ec",
+    "mtime": 1793169073.7898753,
+    "ast_hash": "6657e36e98a83ce8b3c006f735419a43",
     "semantic_hash": ""
   },
   "VALIDATION.md": {
-    "mtime": 1793085314.807918,
-    "ast_hash": "24fe78fdb71e8a52966e222aa6ccae0d",
+    "mtime": 1793149187.117633,
+    "ast_hash": "a295317cc2ea3e29090e0ebfa6667bba",
     "semantic_hash": ""
   },
   "artifacts/INSTALL.md": {
-    "mtime": 1793085314.8104324,
-    "ast_hash": "c38b7e7709f9d503b7a398b4a790aae4",
+    "mtime": 1793149187.1186645,
+    "ast_hash": "c5d75db70a8d54b7dd474570f06bdb75",
     "semantic_hash": ""
   },
   "pnpm-workspace.yaml": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "src/core/playlists.ts": {
-    "mtime": 1793065287.314972,
-    "ast_hash": "7569593a6df79b2115a3fc73a9f52362",
+    "mtime": 1793167007.7306345,
+    "ast_hash": "91652f3e82e535c30747a6997a0aa0be",
     "semantic_hash": ""
   },
   "tests/playlists.test.ts": {
@@ -300,8 +300,8 @@
     "semantic_hash": ""
   },
   "modules/stillwave-dvr/expo-module.config.json": {
-    "mtime": 1793082789.835675,
-    "ast_hash": "b47bd67fdc02a54e944bfb25f06cf097",
+    "mtime": 1793167038.9562001,
+    "ast_hash": "f06a57e486b9ac2c6e1dfcf064baec79",
     "semantic_hash": ""
   },
   "modules/stillwave-dvr/package.json": {
@@ -340,8 +340,8 @@
     "semantic_hash": ""
   },
   "CURRENT_WORK.md": {
-    "mtime": 1793085314.8089204,
-    "ast_hash": "c13fe77895b7da01cccd603ce89b8bf1",
+    "mtime": 1793167744.7452614,
+    "ast_hash": "2bb0869ae6914b27b08dd209abe017e3",
     "semantic_hash": ""
   },
   "artifacts/.image_triage_ai/ranker_report/ranked_clusters_report.html": {
@@ -450,13 +450,13 @@
     "semantic_hash": ""
   },
   "scripts/verify-android-release.ps1": {
-    "mtime": 1793063299.0181031,
-    "ast_hash": "b0ecd97e3c148c6a90bc228a3d7f83ae",
+    "mtime": 1793149187.256692,
+    "ast_hash": "95a55aaa5ee51970f7344d42ee4a5c4a",
     "semantic_hash": ""
   },
   "scripts/verify-dvr-bundle.mjs": {
-    "mtime": 1793084795.6197236,
-    "ast_hash": "a9638567f5e9ba3bbc5a647aa9865c1a",
+    "mtime": 1793149187.2571948,
+    "ast_hash": "96adaa2f57d85a44a10910937e0b2f1b",
     "semantic_hash": ""
   },
   "artifacts/v020-native-e2e-failure.png": {
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "artifacts/tv-guide-supplied-final-metrics.json": {
-    "mtime": 1793084363.953681,
-    "ast_hash": "5864c70a2345ab4da7eab664979e1ef3",
+    "mtime": 1793085474.0306432,
+    "ast_hash": "43fd9cf05c6ea63cb2730f10262954ed",
     "semantic_hash": ""
   },
   "artifacts/v031-tv-web-check.json": {
@@ -580,23 +580,23 @@
     "semantic_hash": ""
   },
   "src/components/tv/TvDashboard.tsx": {
-    "mtime": 1793084489.5273895,
-    "ast_hash": "2fb33768250c0bf07aa17c76a4236ae7",
+    "mtime": 1793163082.740815,
+    "ast_hash": "c49c4d1cdd4063202cf2952ee941c2e3",
     "semantic_hash": ""
   },
   "src/components/tv/TvDvrShell.tsx": {
-    "mtime": 1793084164.0502293,
-    "ast_hash": "e0c18c32ec6b2ddaebeec998b0227ab8",
+    "mtime": 1793168933.3922775,
+    "ast_hash": "cdc35b85b316220d457f3771d973dc59",
     "semantic_hash": ""
   },
   "src/components/tv/TvPlayerControls.tsx": {
-    "mtime": 1793080438.4533942,
-    "ast_hash": "208cdca67fd39a49707e4165919580ca",
+    "mtime": 1793149187.3278291,
+    "ast_hash": "4fbfd6523a50519ee96031f3e63b8ace",
     "semantic_hash": ""
   },
   "src/components/tv/TvRecordingPlayer.tsx": {
-    "mtime": 1793084045.072651,
-    "ast_hash": "11a4f89a5574e3313b6eb818ee73151d",
+    "mtime": 1793149187.3278291,
+    "ast_hash": "9c431c88a6b581a5300ad4603611545e",
     "semantic_hash": ""
   },
   "src/components/tv/TvUi.tsx": {
@@ -605,18 +605,18 @@
     "semantic_hash": ""
   },
   "src/core/guides.ts": {
-    "mtime": 1793065287.313467,
-    "ast_hash": "6adfae3615704412e420ed4e53227dcd",
+    "mtime": 1793149187.337639,
+    "ast_hash": "021273bb5aa133ad775e1b0d9f801b22",
     "semantic_hash": ""
   },
   "src/core/history.ts": {
-    "mtime": 1793065287.314972,
-    "ast_hash": "04ec0d6adecd4d7957e3c4bd5dc68c27",
+    "mtime": 1793149187.3388097,
+    "ast_hash": "5e2775ac7c31289a8176589e0fb61ab9",
     "semantic_hash": ""
   },
   "src/core/tvDefaults.ts": {
-    "mtime": 1793085070.343556,
-    "ast_hash": "d6a865c0796ae5d4ca7fc2cfb368d214",
+    "mtime": 1793167007.7316432,
+    "ast_hash": "66e9cdcc31b87130491898d665f09de1",
     "semantic_hash": ""
   },
   "src/core/tvDvr.ts": {
@@ -625,13 +625,13 @@
     "semantic_hash": ""
   },
   "src/core/tvGuide.ts": {
-    "mtime": 1793084489.5273895,
-    "ast_hash": "8916e19040ea4056957870d26fba28e4",
+    "mtime": 1793163082.739816,
+    "ast_hash": "091664e7da79063183d52584ff9a0092",
     "semantic_hash": ""
   },
   "src/core/tvNavigation.ts": {
-    "mtime": 1793083014.1496477,
-    "ast_hash": "6b0dd324a155502e73d52944171bc68c",
+    "mtime": 1793149187.340979,
+    "ast_hash": "c682e262555307e9c856ab9597be6236",
     "semantic_hash": ""
   },
   "src/data/recordingPlanner.ts": {
@@ -645,8 +645,8 @@
     "semantic_hash": ""
   },
   "src/data/tv.ts": {
-    "mtime": 1793084584.3272748,
-    "ast_hash": "954fdd8e589fc23c9abd1d5bfa2b4774",
+    "mtime": 1793149187.3486943,
+    "ast_hash": "3bfc7d0991013500d91a2077431c6a1d",
     "semantic_hash": ""
   },
   "tests/guides.test.ts": {
@@ -655,13 +655,13 @@
     "semantic_hash": ""
   },
   "tests/tv.test.ts": {
-    "mtime": 1793085070.3445604,
-    "ast_hash": "c33291bc2db62dd7798adcf0b5915070",
+    "mtime": 1793149187.3730261,
+    "ast_hash": "e87e290f655526ebf8bc7a89298130d2",
     "semantic_hash": ""
   },
   "tests/tvDvr.test.ts": {
-    "mtime": 1793084668.7749133,
-    "ast_hash": "07a37f9fdef0b0001477c9d769f07dee",
+    "mtime": 1793163082.7418146,
+    "ast_hash": "738e048c6c1a40624682da4deea4eabf",
     "semantic_hash": ""
   },
   "artifacts/tv-parity-review.html": {
@@ -770,13 +770,13 @@
     "semantic_hash": ""
   },
   "artifacts/tv-guide-supplied-final-difference.png": {
-    "mtime": 1793084363.8106434,
-    "ast_hash": "e8b2fdf5ab4bc6a60c24fb99fe7bcc03",
+    "mtime": 1793085473.9103367,
+    "ast_hash": "aef6192e931838e5943377aea625c134",
     "semantic_hash": ""
   },
   "artifacts/tv-guide-supplied-final-overlay.png": {
-    "mtime": 1793084363.7766714,
-    "ast_hash": "2f3d0fc4002fe2a62821ac12a4142731",
+    "mtime": 1793085473.8798096,
+    "ast_hash": "85dbe6ca06db801002d09e28b3472371",
     "semantic_hash": ""
   },
   "artifacts/v020-native-interrupted-recording.png": {
@@ -850,8 +850,523 @@
     "semantic_hash": ""
   },
   "TV_IMPLEMENTATION.md": {
-    "mtime": 1793085314.8064096,
-    "ast_hash": "a16f907600b25518bf266460664d75dc",
+    "mtime": 1793149187.117633,
+    "ast_hash": "0038eb1d6840218b7f1dae68032c29fb",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-coverage.json": {
+    "mtime": 1793151793.37052,
+    "ast_hash": "3330c095ea621f868c56ed49759989a2",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-gap-audit.json": {
+    "mtime": 1793151816.9425702,
+    "ast_hash": "e5aeabae4fb26b43c92c72cc6dfafb82",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-source-probes.json": {
+    "mtime": 1793149187.13565,
+    "ast_hash": "7da96987c2f141f60b3d0df656305a65",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-supplement-audit.json": {
+    "mtime": 1793151725.3102593,
+    "ast_hash": "9f8814d1170d71ba36a997403ebc5567",
+    "semantic_hash": ""
+  },
+  "artifacts/hosted-epg-verification.json": {
+    "mtime": 1793149187.1449552,
+    "ast_hash": "0e1fd490fb429ed38719b41e8db9f44b",
+    "semantic_hash": ""
+  },
+  "artifacts/release-v041-check.json": {
+    "mtime": 1793149187.15862,
+    "ast_hash": "c64c1ac60fc637d88f5577250e5a2462",
+    "semantic_hash": ""
+  },
+  "artifacts/release-v042-check.json": {
+    "mtime": 1793149187.15862,
+    "ast_hash": "92dd9c7a52e1abfabbc7922852602f1c",
+    "semantic_hash": ""
+  },
+  "artifacts/release-v043-check.json": {
+    "mtime": 1793149187.1677184,
+    "ast_hash": "0cc3be29bb1689f6009609b3810d6c08",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-overlay-review-check.json": {
+    "mtime": 1793085474.8363724,
+    "ast_hash": "996d290006f826d75a5f39ccf6b229bb",
+    "semantic_hash": ""
+  },
+  "artifacts/v040-release-startup-check.json": {
+    "mtime": 1793085678.8448586,
+    "ast_hash": "9e3c7ef0462f22b5b67b4efa34eaaf9f",
+    "semantic_hash": ""
+  },
+  "artifacts/v041-bundle-source-check.json": {
+    "mtime": 1793149187.1872785,
+    "ast_hash": "e8dffc045ab57f3b3d79694d68fcd4f1",
+    "semantic_hash": ""
+  },
+  "artifacts/v042-bundle-source-check.json": {
+    "mtime": 1793149187.1872785,
+    "ast_hash": "3524330b3d95ad7db572dbedb55776e5",
+    "semantic_hash": ""
+  },
+  "artifacts/v043-bundle-source-check.json": {
+    "mtime": 1793149187.1892807,
+    "ast_hash": "bb952296fc7509d9ccd77d6f463d733d",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/build.gradle": {
+    "mtime": 1793167038.9572015,
+    "ast_hash": "5aa63becf487e8aa3cbdc1129d0ec540",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrEngine.kt": {
+    "mtime": 1793082789.8331473,
+    "ast_hash": "7d0b4160de4718e5737540effa104f3a",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrServer.kt": {
+    "mtime": 1792989235.2613122,
+    "ast_hash": "cf999c6d773216b5a5210e368155940b",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrService.kt": {
+    "mtime": 1793082789.8346708,
+    "ast_hash": "6982e6cd0095eb933c73ce563655862c",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/Hls.kt": {
+    "mtime": 1792989234.186525,
+    "ast_hash": "bceb95e56621cf2c54f986dead051730",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/RecordingPlanner.kt": {
+    "mtime": 1793084040.6900659,
+    "ast_hash": "32a9c6c46ce9d43e1be2f91f4e9114ef",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/Reminders.kt": {
+    "mtime": 1793065429.176847,
+    "ast_hash": "ebe19ea0e1c3a58bf80b94857a416c85",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/StillwaveDvrModule.kt": {
+    "mtime": 1793065324.391877,
+    "ast_hash": "4c950dca623428a7b6b17a47af1adab4",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/TvRemote.kt": {
+    "mtime": 1793149187.231614,
+    "ast_hash": "edbccc30514b1691dc2d55d11385eb0e",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/test/java/expo/modules/stillwavedvr/DvrTest.kt": {
+    "mtime": 1793083415.7938192,
+    "ast_hash": "8dd750bf43309930df7c4f3b9a30d0db",
+    "semantic_hash": ""
+  },
+  "scripts/audit-guide-coverage.ts": {
+    "mtime": 1793151322.0834267,
+    "ast_hash": "7267d6c5fcc0ad5b3b6860435b5ed46e",
+    "semantic_hash": ""
+  },
+  "scripts/audit-guide-gaps.ts": {
+    "mtime": 1793149187.244185,
+    "ast_hash": "f642659050e1486e9b59fd1feb96e3d0",
+    "semantic_hash": ""
+  },
+  "scripts/collect-guide-supplements.ts": {
+    "mtime": 1793151105.2254107,
+    "ast_hash": "a5fe5cb7e4ddd6e60861a785c4cc8b0a",
+    "semantic_hash": ""
+  },
+  "scripts/guide-catalog.ts": {
+    "mtime": 1793149187.2451873,
+    "ast_hash": "2ab328ec2ae2bce0ccb0dd6687af168e",
+    "semantic_hash": ""
+  },
+  "scripts/refresh-us-channel-metadata.mjs": {
+    "mtime": 1793149187.2451873,
+    "ast_hash": "d2ff11eccc8c9f44a3a04519ac6f80d5",
+    "semantic_hash": ""
+  },
+  "scripts/serve-guide.mjs": {
+    "mtime": 1793149187.254692,
+    "ast_hash": "ff451f7d0c3f09b4cd9727056a34406a",
+    "semantic_hash": ""
+  },
+  "scripts/serve-mobile-player-preview.mjs": {
+    "mtime": 1793149187.255692,
+    "ast_hash": "944f027ea8d150ca9d986609c525dd4a",
+    "semantic_hash": ""
+  },
+  "scripts/sync-guide-stations.ts": {
+    "mtime": 1793151105.2244089,
+    "ast_hash": "4f119a3fa6bbf23792fd99aae2ae03e5",
+    "semantic_hash": ""
+  },
+  "services/epg/package.json": {
+    "mtime": 1793149187.2601957,
+    "ast_hash": "60cfdf89507af4ecc510411ce7049fe2",
+    "semantic_hash": ""
+  },
+  "services/epg/prepare-public.mjs": {
+    "mtime": 1793149187.2601957,
+    "ast_hash": "0d7053b24076cbe08a023df7a2670f6b",
+    "semantic_hash": ""
+  },
+  "services/epg/stage.mjs": {
+    "mtime": 1793149187.3147013,
+    "ast_hash": "5a035e106de92c620e87bfaf21ef0d22",
+    "semantic_hash": ""
+  },
+  "services/epg/tsconfig.json": {
+    "mtime": 1793149187.3147013,
+    "ast_hash": "d605c20e5629cae88c315fa3fa7af8cc",
+    "semantic_hash": ""
+  },
+  "src/components/LaunchSplash.tsx": {
+    "mtime": 1793149187.315701,
+    "ast_hash": "2dd16816479cde5032016a51f54008c7",
+    "semantic_hash": ""
+  },
+  "src/components/MobilePlayerControls.tsx": {
+    "mtime": 1793149187.325804,
+    "ast_hash": "d540a5f079479bd90d146d9004fcc2b7",
+    "semantic_hash": ""
+  },
+  "src/components/tv/ChannelNumberPad.tsx": {
+    "mtime": 1793149187.325804,
+    "ast_hash": "a64b442c3eb5cb51f65f438344d69848",
+    "semantic_hash": ""
+  },
+  "src/components/tv/TouchTvList.tsx": {
+    "mtime": 1793149187.325804,
+    "ast_hash": "16bfa6d0d9ed27c7948fbc7b907adfb5",
+    "semantic_hash": ""
+  },
+  "src/core/channelBrowsing.ts": {
+    "mtime": 1793167007.7321513,
+    "ast_hash": "e0d31e5467c3443e97f4322907392e0f",
+    "semantic_hash": ""
+  },
+  "src/core/channelNumbers.ts": {
+    "mtime": 1793149187.328829,
+    "ast_hash": "e8e543174f1087129deab12c5dafec66",
+    "semantic_hash": ""
+  },
+  "src/core/guideBundle.ts": {
+    "mtime": 1793149187.337639,
+    "ast_hash": "edbc748ca846e24432550e0c5825553b",
+    "semantic_hash": ""
+  },
+  "src/core/guideImport.ts": {
+    "mtime": 1793149187.337639,
+    "ast_hash": "7014d3cd8367b1c55954685ac9ef621b",
+    "semantic_hash": ""
+  },
+  "src/core/providerGuides.ts": {
+    "mtime": 1793149187.3399792,
+    "ast_hash": "2be5ff3bbca847bfc17eb72203ce6359",
+    "semantic_hash": ""
+  },
+  "src/core/tvPassportGuide.ts": {
+    "mtime": 1793151105.2254107,
+    "ast_hash": "0431b0de25e6d52d30cbdf50e1daf858",
+    "semantic_hash": ""
+  },
+  "src/data/guideFeeds.ts": {
+    "mtime": 1793149187.347625,
+    "ast_hash": "54471c615223604292ff716eab3fccfc",
+    "semantic_hash": ""
+  },
+  "src/data/guideStationAliases.json": {
+    "mtime": 1793151596.6585007,
+    "ast_hash": "ceecf73f0d9c92e79fdda076d26fea26",
+    "semantic_hash": ""
+  },
+  "src/data/usChannelLanguages.json": {
+    "mtime": 1793149187.3496337,
+    "ast_hash": "abdd74cab5709a60e181c5fafc2a3298",
+    "semantic_hash": ""
+  },
+  "tests/channelBrowsing.test.ts": {
+    "mtime": 1793154604.6217105,
+    "ast_hash": "bcbb0dd7842bb1fcd3a51b9a943d8e44",
+    "semantic_hash": ""
+  },
+  "tests/channelNavigation.test.ts": {
+    "mtime": 1793149187.3606958,
+    "ast_hash": "be824c94408f74720c9ea414c808e5da",
+    "semantic_hash": ""
+  },
+  "tests/channelNumbers.test.ts": {
+    "mtime": 1793149187.3606958,
+    "ast_hash": "c22143c2ae8b2d169a3007a9fac295df",
+    "semantic_hash": ""
+  },
+  "tests/guideCollectors.test.ts": {
+    "mtime": 1793151105.2254107,
+    "ast_hash": "7702c1461a419dadac2fefeb8bef4402",
+    "semantic_hash": ""
+  },
+  "tests/guideExpansion.test.ts": {
+    "mtime": 1793149187.3616962,
+    "ast_hash": "bc6fcb7caae7b6be31ab84d60389ff2a",
+    "semantic_hash": ""
+  },
+  "tests/mobile-controls-preview.tsx": {
+    "mtime": 1793149187.3720257,
+    "ast_hash": "b01a2b075dc99fcdcfbb997d33861007",
+    "semantic_hash": ""
+  },
+  ".github/workflows/refresh-epg.yml": {
+    "mtime": 1793151105.2264104,
+    "ast_hash": "4111d71062cadddd9d66aae81a5f0a54",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-coverage.md": {
+    "mtime": 1793151793.37052,
+    "ast_hash": "6030680f7e8542d86ca80040b625a89f",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-gap-audit.md": {
+    "mtime": 1793151816.9440906,
+    "ast_hash": "0113a9040774eae2f50ebc1b39a102d8",
+    "semantic_hash": ""
+  },
+  "assets/branding/concept-v1.md": {
+    "mtime": 1793155502.4574573,
+    "ast_hash": "c7880b77855ad4d88b0aecdaba7a8e23",
+    "semantic_hash": ""
+  },
+  "docs/EPG.md": {
+    "mtime": 1793151322.0845666,
+    "ast_hash": "8e4747cb916a48d708865ffe8beb5d7a",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-player-landscape-dvr-preview.png": {
+    "mtime": 1793149187.145955,
+    "ast_hash": "7a0a2e5bd7d57359962cf5614aae36d3",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-player-portrait.png": {
+    "mtime": 1793149187.145955,
+    "ast_hash": "5f15739c3724dc29448ae6db3ce42683",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-player-reference-landscape.png": {
+    "mtime": 1793149187.146955,
+    "ast_hash": "7ec0ceb56a396513d34b341db2d52e10",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-player-reference-portrait-preview.png": {
+    "mtime": 1793149187.1576903,
+    "ast_hash": "2b1daee9cffef761a04b7bf2691be076",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-player-reference-portrait.png": {
+    "mtime": 1793149187.15862,
+    "ast_hash": "a6517e5b0194aad6b6ebdb6d2ae0c8e0",
+    "semantic_hash": ""
+  },
+  "artifacts/stillwave-splash-concept-v1.png": {
+    "mtime": 1793149187.1686215,
+    "ast_hash": "20071c0fe02f12f69138fad5c0ee3abb",
+    "semantic_hash": ""
+  },
+  "artifacts/stillwave-splash-concept-v2.png": {
+    "mtime": 1793149187.1686215,
+    "ast_hash": "ba0bd980e59bac68dd38fb8509fce206",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-animation-browse.png": {
+    "mtime": 1793149187.1697497,
+    "ast_hash": "97c08a211fd75940b083ff4e904b4cf4",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-channel-number-search.png": {
+    "mtime": 1793149187.1766257,
+    "ast_hash": "28b1813cef5dc55ac0e9dd24cd38439f",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-no-guide-browse.png": {
+    "mtime": 1793149187.1776657,
+    "ast_hash": "a124e3e42b6052ba26ba4eaf056a82b1",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-overlay-review-dvr.png": {
+    "mtime": 1793085474.830356,
+    "ast_hash": "1b2322c6a87ba53691825cee99417106",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-overlay-review-guide.png": {
+    "mtime": 1793085474.7618897,
+    "ast_hash": "ac0d69446d24ee93debc0284fdeba649",
+    "semantic_hash": ""
+  },
+  "artifacts/ui-review-mobile-player.png": {
+    "mtime": 1793149187.1776657,
+    "ast_hash": "54a2ce7d3636c21c9bb1933d7ad7dfb4",
+    "semantic_hash": ""
+  },
+  "artifacts/ui-review-my-dvr.png": {
+    "mtime": 1793149187.1786187,
+    "ast_hash": "3e9c54f4ba665edd284c87f43763bb1e",
+    "semantic_hash": ""
+  },
+  "artifacts/ui-review-smooth-scrolling.png": {
+    "mtime": 1793149187.1857755,
+    "ast_hash": "7a4958ee6393ba009ca28d8c9fd3aa37",
+    "semantic_hash": ""
+  },
+  "artifacts/ui-review-tv-guide.png": {
+    "mtime": 1793149187.1867757,
+    "ast_hash": "055f7fc3e83467fa267c94a90739a2e8",
+    "semantic_hash": ""
+  },
+  "artifacts/v042-shared-tv-guide.png": {
+    "mtime": 1793149187.1892807,
+    "ast_hash": "fd41dc927da04cdc19b2288ac422d9d3",
+    "semantic_hash": ""
+  },
+  "assets/branding/stillwave-mark-v1.png": {
+    "mtime": 1793149187.2018116,
+    "ast_hash": "05940aa686c355fe89618604f723c3cd",
+    "semantic_hash": ""
+  },
+  "assets/branding/stillwave-mark-v2.png": {
+    "mtime": 1793149187.2299604,
+    "ast_hash": "fb886403f55b708ca6cc72386ce037dd",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-cablecast-audit.json": {
+    "mtime": 1793151792.9855244,
+    "ast_hash": "2b79d51d70b5d8e72d16a388feb30c06",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-provider-audit.json": {
+    "mtime": 1793151736.4954896,
+    "ast_hash": "7fc05dd9ddc374d702208688ab2d0fc5",
+    "semantic_hash": ""
+  },
+  "scripts/collect-cablecast-guide.ts": {
+    "mtime": 1793150787.1449447,
+    "ast_hash": "dcb432f7fac97da82705d79ec15ec44c",
+    "semantic_hash": ""
+  },
+  "scripts/collect-provider-guides.ts": {
+    "mtime": 1793151455.6074867,
+    "ast_hash": "c30f5ef8df904c1511cbc25eeebd095a",
+    "semantic_hash": ""
+  },
+  "scripts/guide-download.ts": {
+    "mtime": 1793150787.1449447,
+    "ast_hash": "545b0837a8e0a39add980d52d0fbcbfb",
+    "semantic_hash": ""
+  },
+  "src/core/cablecastGuide.ts": {
+    "mtime": 1793150787.143945,
+    "ast_hash": "225d8a62d90b0264c2ba70843c470f6b",
+    "semantic_hash": ""
+  },
+  "src/core/providerSupplement.ts": {
+    "mtime": 1793151455.6064024,
+    "ast_hash": "087c38f40d596ea26ae23782fcdbc86c",
+    "semantic_hash": ""
+  },
+  "src/data/guideStationOverrides.json": {
+    "mtime": 1793151801.364506,
+    "ast_hash": "b88ffa513640478b7791b8d8e53a3842",
+    "semantic_hash": ""
+  },
+  "tests/guideProviderSupplements.test.ts": {
+    "mtime": 1793151455.6074867,
+    "ast_hash": "2bee28b4fd7c788f9b6a3a5f487596ba",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-expansion-verification.json": {
+    "mtime": 1793151876.9511762,
+    "ast_hash": "4620ee28e01bf80bcf49b7f9d7af4834",
+    "semantic_hash": ""
+  },
+  "artifacts/apk-v044-verification.json": {
+    "mtime": 1793155458.6268115,
+    "ast_hash": "63807d7a8f1cf6c6274d1fd867b803eb",
+    "semantic_hash": ""
+  },
+  "artifacts/apk-firetv-v045-verification.json": {
+    "mtime": 1793164333.8907208,
+    "ast_hash": "af9d3f73c047634fd51b4323c504fea8",
+    "semantic_hash": ""
+  },
+  "artifacts/apk-v045-verification.json": {
+    "mtime": 1793163527.1699672,
+    "ast_hash": "13dd2ca9ecab3bb93b49b27e4894d0d1",
+    "semantic_hash": ""
+  },
+  "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/AppUpdatesModule.kt": {
+    "mtime": 1793167038.9562001,
+    "ast_hash": "b3ac3e671e5f08bb2bdd89c7098e0fc0",
+    "semantic_hash": ""
+  },
+  "src/components/tv/TvChannelSearch.tsx": {
+    "mtime": 1793168933.3922775,
+    "ast_hash": "4c093b40159fd9cc74c2e7e3a9f9226b",
+    "semantic_hash": ""
+  },
+  "src/core/appUpdates.ts": {
+    "mtime": 1793168933.391271,
+    "ast_hash": "a2a31b93e621b0efb149c2c0465694c0",
+    "semantic_hash": ""
+  },
+  "src/data/appUpdates.ts": {
+    "mtime": 1793168933.3922775,
+    "ast_hash": "a89007468646582e7f8fca9b23671379",
+    "semantic_hash": ""
+  },
+  "tests/tvUpdatesAndFilters.test.ts": {
+    "mtime": 1793168933.3942783,
+    "ast_hash": "7c076748afa2d9479f7eb7069efffa54",
+    "semantic_hash": ""
+  },
+  "docs/APP_UPDATES.md": {
+    "mtime": 1793169073.788875,
+    "ast_hash": "6d21f538fcec7c237f1c84efcc262f2f",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-title-phone.png": {
+    "mtime": 1793163216.0544138,
+    "ast_hash": "21068982ed36e47e1c4b4bc31c73524f",
+    "semantic_hash": ""
+  },
+  "artifacts/guide-title-tv.png": {
+    "mtime": 1793163155.9350324,
+    "ast_hash": "2415c9c8c0c1152b239f7b0685a79528",
+    "semantic_hash": ""
+  },
+  "artifacts/apk-firetv-v046-verification.json": {
+    "mtime": 1793167740.6168847,
+    "ast_hash": "65ef6d21d03d78fe81b7071815e62514",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-search-v047-740.png": {
+    "mtime": 1793169036.6413164,
+    "ast_hash": "af1ee834a0afcdc9dbb2a636d0417f71",
+    "semantic_hash": ""
+  },
+  "artifacts/mobile-search-v047-852.png": {
+    "mtime": 1793169036.3078866,
+    "ast_hash": "0040c2bebb7d24bb00c8b1787e6a45b2",
+    "semantic_hash": ""
+  },
+  "artifacts/tv-search-v046.png": {
+    "mtime": 1793167582.624904,
+    "ast_hash": "badd2fc2f07f893988fec22c66435548",
     "semantic_hash": ""
   }
 }

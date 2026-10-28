@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-28T01:44:36.950Z",
+  "generatedAt": "2026-10-28T01:39:59.098Z",
+  "baseline": {
+    "total": 1496,
+    "available": 767,
+    "live": 758,
+    "missing": 729
+  },
+  "coverage": {
+    "total": 1496,
+    "available": 827,
+    "live": 808,
+    "missing": 669
+  },
+  "addedCoveredStreams": 60,
+  "checks": {
+    "typecheck": "passed",
+    "tests": 107,
+    "xmlRoundtrip": "passed by guide builder",
+    "freshAppInstall": "passed, one combined-guide import",
+    "publicOutputGuard": "passed",
+    "standaloneDependencies": "npm ci --ignore-scripts, 6 packages"
+  },
+  "compressedBytes": 3290775,
+  "published": false,
+  "apkBuilt": false
+}

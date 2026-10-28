@@ -13,9 +13,12 @@ on:
       - 'src/core/guide*.ts'
       - 'src/core/xmltv.ts'
       - 'src/core/providerGuides.ts'
+      - 'src/core/providerSupplement.ts'
+      - 'src/core/cablecastGuide.ts'
       - 'src/core/tvPassportGuide.ts'
       - 'src/core/tvDefaults.ts'
       - 'src/data/guideStationAliases.json'
+      - 'src/data/guideStationOverrides.json'
 
 permissions:
   contents: read

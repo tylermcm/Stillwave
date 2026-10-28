@@ -1,1 +1,1 @@
-{"platforms":["android"],"android":{"modules":["expo.modules.stillwavedvr.StillwaveDvrModule","expo.modules.stillwavedvr.StillwaveRemindersModule","expo.modules.stillwavedvr.StillwaveTvModule","expo.modules.stillwavedvr.StillwaveRecordingPlannerModule"]}}
+{"platforms":["android"],"android":{"modules":["expo.modules.stillwavedvr.StillwaveDvrModule","expo.modules.stillwavedvr.StillwaveRemindersModule","expo.modules.stillwavedvr.StillwaveTvModule","expo.modules.stillwavedvr.StillwaveRecordingPlannerModule","expo.modules.stillwavedvr.StillwaveUpdatesModule"]}}

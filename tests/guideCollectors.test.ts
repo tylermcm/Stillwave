@@ -23,6 +23,8 @@ test('TV Passport uses its declared zone, duration and published title without e
   assert.equal(shows[1]!.title, 'Actual movie');
   assert.throws(() => parseTvPassportPage('<div data-st="2026-10-27 10:00:00">', 'one'), /time zone/);
   assert.throws(() => parseTvPassportPage(page.replaceAll('data-st=', 'removed='), 'one'), /no usable/);
+  assert.throws(() => parseTvPassportPage('<h1>TV Schedule for A&amp;E US - Pacific Feed</h1>' + page, 'one', 'A&E US - Eastern Feed'), /different station/);
+  assert.equal(parseTvPassportPage('<h1>TV Schedule for A&amp;E US - Eastern Feed</h1>' + page, 'one', 'A&E US - Eastern Feed').length, 2);
 });
 
 test('schedule conversion rejects DST gaps, repeated hours, impossible dates and incomplete timestamps', () => {

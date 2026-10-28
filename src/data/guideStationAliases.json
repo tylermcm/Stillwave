@@ -1,18 +1,21 @@
 {
   "sources": [
     "https://github.com/iptv-org/epg/tree/master/sites/i.mjh.nz",
-    "https://github.com/iptv-org/epg/tree/master/sites/tvpassport.com"
+    "https://github.com/iptv-org/epg/tree/master/sites/tvpassport.com",
+    "https://github.com/iptv-org/epg/tree/master/sites/plex.tv"
   ],
-  "updatedAt": "2026-10-27",
+  "updatedAt": "2026-10-28",
   "stations": {
     "24hourfreemovies.us": [
-      "5e20b730f2f8d5003d739db7-5fd115bab7ef8d002dcf181d"
+      "5e20b730f2f8d5003d739db7-5fd115bab7ef8d002dcf181d",
+      "plex:5fd115bab7ef8d002dcf181d"
     ],
     "48hours.us@us": [
       "e1df79771ae4850c0e48ecc6284065d0"
     ],
     "50centaction.us": [
       "5e20b730f2f8d5003d739db7-6827b9579beea89c38b6df55",
+      "plex:6827b9579beea89c38b6df55",
       "e2422e42301a3176997019f882471d77"
     ],
     "70scinema.us": [
@@ -29,10 +32,12 @@
     ],
     "accdigitalnetwork.us": [
       "5e20b730f2f8d5003d739db7-5f8ee3727c75fa002d9e47c1",
+      "plex:5f8ee3727c75fa002d9e47c1",
       "409951b52fa75a1684ba8efe5b724e91"
     ],
     "accuweathernow.us": [
       "5e20b730f2f8d5003d739db7-6151d74593dbf246f0843f01",
+      "plex:6151d74593dbf246f0843f01",
       "f95c40a17cfe5b9fb1970192e378fb0c"
     ],
     "afrolandtv.us": [
@@ -40,16 +45,19 @@
     ],
     "allblkgems.us": [
       "5e20b730f2f8d5003d739db7-628bb0eafcb403aa62d2317d",
+      "plex:628bb0eafcb403aa62d2317d",
       "6793ea255225b515b4ba91a7",
       "147998bc965e584d9c6cc360b2c7ae4f"
     ],
     "allrealitybywetv.us": [
       "5e20b730f2f8d5003d739db7-5fc705ff2f220e002d5e6bec",
+      "plex:5fc705ff2f220e002d5e6bec",
       "5e82530945600e0007ca076c",
       "ebedf88c76db5154b9a747a54d393758"
     ],
     "allweddingswetv.us": [
       "5e20b730f2f8d5003d739db7-60de0520281b17002cd1d4c4",
+      "plex:60de0520281b17002cd1d4c4",
       "7c7fd49414d5529788c10291cf90214a"
     ],
     "alwaysfunnyvideos.us": [
@@ -73,6 +81,7 @@
     ],
     "angermanagementchannel.us": [
       "5e20b730f2f8d5003d739db7-6303ca568a01b5d4dae57d0e",
+      "plex:6303ca568a01b5d4dae57d0e",
       "7fbae583c30451e989ea55b4c605e8a9"
     ],
     "animationplus.us": [
@@ -81,36 +90,44 @@
     ],
     "animexhidive.us": [
       "5e20b730f2f8d5003d739db7-63dea56a2a2abb171ff6dadf",
+      "plex:63dea56a2a2abb171ff6dadf",
       "6793eaa4bc03978b9bc63db1",
       "0b92deed3dd556cf91c911a36e948fde"
     ],
     "antiquesroadshowuk.us": [
       "5e20b730f2f8d5003d739db7-630902bf0417b7074a4ad95c",
+      "plex:630902bf0417b7074a4ad95c",
       "5ce44810b421747ae467b7cd",
       "b14c3ee8314b54dd916011298b4958b0"
     ],
     "antiquesroadtrip.us": [
       "5e20b730f2f8d5003d739db7-6348adc71159f6a5ce819b85",
+      "plex:6348adc71159f6a5ce819b85",
       "615b8ec39e878900073f419a"
     ],
     "arewethereyet.us": [
       "5e20b730f2f8d5003d739db7-612919784f53e1002c9aa219",
+      "plex:612919784f53e1002c9aa219",
       "1c235612cec3540f85bb5e2bf7982047"
     ],
     "asiancrush.us": [
-      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc767"
+      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc767",
+      "plex:5eea605474085f0040ddc767"
     ],
     "athomewithfamilyhandyman.us": [
       "5e20b730f2f8d5003d739db7-632270e3e67cf9cd9011fce1",
+      "plex:632270e3e67cf9cd9011fce1",
       "58673c6e05455569978456bdc210f9d7"
     ],
     "babysharktv.us": [
       "5e20b730f2f8d5003d739db7-60d4eddeb2fdec002c141137",
+      "plex:60d4eddeb2fdec002c141137",
       "60faffc3fbbc120007fc4376",
       "40d73ba5be775428a377908b02033b4c"
     ],
     "backstage.us": [
       "5e20b730f2f8d5003d739db7-608aec5fa09205002da4f28f",
+      "plex:608aec5fa09205002da4f28f",
       "USBC10000129R"
     ],
     "barrescue.us": [
@@ -118,26 +135,31 @@
     ],
     "baywatch.us@us": [
       "5e20b730f2f8d5003d739db7-63e63f20abacad42ed3d1acf",
+      "plex:63e63f20abacad42ed3d1acf",
       "ab47c5037be851e6a929a4d09daafeac",
       "USBA2000001BR"
     ],
     "bbcearth.uk@us": [
       "5e20b730f2f8d5003d739db7-6414a73254c537d12d8073d7",
+      "plex:6414a73254c537d12d8073d7",
       "656535fc2c46f30008870fae",
       "41a03e0853d45c06bdfdedc5d26b78d8"
     ],
     "bbcfood.us": [
       "5e20b730f2f8d5003d739db7-630905af0417b7074a4ad95e",
+      "plex:630905af0417b7074a4ad95e",
       "b5d43356a7fc515f996493fcd52a84c6",
       "USBC6000108Z"
     ],
     "bbchomegarden.us": [
       "5e20b730f2f8d5003d739db7-6308eda9ac9983739c8a29bb",
+      "plex:6308eda9ac9983739c8a29bb",
       "b04b170e5f085586985358512adbdb9f",
       "USBC600017FG"
     ],
     "beinsportsxtra.us": [
       "5e20b730f2f8d5003d739db7-60a53634126de9002e694bc4",
+      "plex:60a53634126de9002e694bc4",
       "bc932f13c31e542db6e3e6247e7131bc",
       "USAJ4300001Q7"
     ],
@@ -162,6 +184,7 @@
     ],
     "billiardtv.us": [
       "5e20b730f2f8d5003d739db7-6334a8e48a7b2a349d903b8c",
+      "plex:6334a8e48a7b2a349d903b8c",
       "0b4814b9a5e53029e2b9aba64ddc1df0"
     ],
     "blackinkcrew.us": [
@@ -171,10 +194,12 @@
       "5e46fba0c43b0d00096e5ac1"
     ],
     "bloombergoriginals.us": [
-      "5e20b730f2f8d5003d739db7-68fafe0dae4af1c7478fbeec"
+      "5e20b730f2f8d5003d739db7-68fafe0dae4af1c7478fbeec",
+      "plex:68fafe0dae4af1c7478fbeec"
     ],
     "bloombergtv.us@us": [
-      "5e20b730f2f8d5003d739db7-68fafc6e558214386ab7ca3a"
+      "5e20b730f2f8d5003d739db7-68fafc6e558214386ab7ca3a",
+      "plex:68fafc6e558214386ab7ca3a"
     ],
     "bluebloods.us": [
       "61b3b8c645b45d0007a9bb8d"
@@ -184,6 +209,7 @@
     ],
     "bouncexl.us": [
       "5e20b730f2f8d5003d739db7-623d9b0370560b72147a994a",
+      "plex:623d9b0370560b72147a994a",
       "6176fd25e83a5f0007a464c9",
       "7f28cd98ab575aa784d0f80698279e70"
     ],
@@ -193,19 +219,25 @@
     ],
     "britboxmysteries.us": [
       "5e20b730f2f8d5003d739db7-639a0b83812b6c1429f7acd1",
+      "plex:639a0b83812b6c1429f7acd1",
       "60f5d389985a0c0007357304",
       "0141916713c53d074650f14e2c9ff61e"
     ],
     "buzzr.us": [
       "5e20b730f2f8d5003d739db7-66a2d71b0b91165254efdb40",
+      "plex:66a2d71b0b91165254efdb40",
       "5812bfbe4ced4f7b601b12e6",
       "562baf35c5da56cc91cdea41537b43f9"
     ],
     "campspoopy.us": [
       "5e20b730f2f8d5003d739db7-6164a963766ab4f9f57e81b1"
     ],
+    "carstv.us": [
+      "USAJ3504545A"
+    ],
     "cbsnews247.us": [
       "5e20b730f2f8d5003d739db7-6571f43a1d2aae780d597196",
+      "plex:6571f43a1d2aae780d597196",
       "5a6b92f6e22a617379789618",
       "70881c73b6275623ace6c5c3603a339c"
     ],
@@ -214,10 +246,12 @@
       "a3b212829dd85675bf997edc25a40a73"
     ],
     "cbsnewsbayarea.us": [
+      "plex:6596546bfca6056ca69e3e3c",
       "5eb1afb21486df0007abc57c",
       "8a5a455185bb504694df6689035f6f14"
     ],
     "cbsnewsboston.us": [
+      "plex:65965210fca6056ca69e3e3a",
       "5eb1af2ad345340008fccd1e",
       "73a2f0c10aa1523dabb9d1e470425566"
     ],
@@ -234,6 +268,7 @@
       "4dae849c49ba5724bc485566e89fd46a"
     ],
     "cbsnewslosangeles.us": [
+      "plex:65970654fca6056ca69e3e41",
       "e3fa9982ac3c555298eb72fcb3ffd8a4"
     ],
     "cbsnewsmiami.us": [
@@ -261,20 +296,24 @@
     ],
     "cbssportsgolazonetwork.us": [
       "5e20b730f2f8d5003d739db7-6571186d9a46917c0a8f2ddd",
+      "plex:6571186d9a46917c0a8f2ddd",
       "63a0e33a45264d000850ed7e",
       "b18a1af4fa8b5c58acd43dbc2cf5cc9f"
     ],
     "cbssportshq.us": [
       "5e20b730f2f8d5003d739db7-657107dc56226238740fcc2d",
+      "plex:657107dc56226238740fcc2d",
       "5e9f2c05172a0f0007db4786",
       "1337f5ac77595895bbaf16d1dd75f377"
     ],
     "celebritynamegame.us": [
       "5e20b730f2f8d5003d739db7-640205c40e1daf16b299567e",
+      "plex:640205c40e1daf16b299567e",
       "23427355f7f35851b75a210d7cca22a4"
     ],
     "cheddarnews.us": [
-      "5e20b730f2f8d5003d739db7-5f6b8e5900b0950040d0f2af"
+      "5e20b730f2f8d5003d739db7-5f6b8e5900b0950040d0f2af",
+      "plex:5f6b8e5900b0950040d0f2af"
     ],
     "choppertown.us": [
       "5e20b730f2f8d5003d739db7-5ef11487d33ab9004048a1d3"
@@ -287,6 +326,9 @@
     ],
     "cinepremiere.us": [
       "5cf968040ab7d8f181e6a68b"
+    ],
+    "cinepride.us": [
+      "plex:62167144ab2095ca85353ad6"
     ],
     "cineromantico.us": [
       "5e20b730f2f8d5003d739db7-67db0a3892cb453db28ab020",
@@ -331,6 +373,7 @@
     ],
     "cnnoriginals.us": [
       "5e20b730f2f8d5003d739db7-66ad6025cb5d3b7fb5011c2d",
+      "plex:66ad6025cb5d3b7fb5011c2d",
       "d1a9aad44bf03f8bb866517bb4e1383d"
     ],
     "coldcasefiles.us": [
@@ -346,20 +389,27 @@
     ],
     "comedydynamics.us": [
       "5e20b730f2f8d5003d739db7-5efe1de5e0b3f5003f5d9f76",
+      "plex:5efe1de5e0b3f5003f5d9f76",
       "bc68164868385873a0f2b1c649fa2495"
     ],
+    "cookingpanda.us": [
+      "plex:5f07e9fdf313eb0041bbecda"
+    ],
     "cops.us": [
+      "plex:626c1753ffda6789d20a452e",
       "5e1f7e089f23700009d66303",
       "1a50b7ba48389669b3e0bc6750fe6b31"
     ],
     "courttv.us": [
       "5e20b730f2f8d5003d739db7-6245d867ddf1ba983d5b8bf8",
+      "plex:6245d867ddf1ba983d5b8bf8",
       "5dae0b4841a7d0000938ddbd",
       "bf4508c9597e5f618e508ae00b01f66f",
       "USBA34000049Z"
     ],
     "crime360.us": [
       "5e20b730f2f8d5003d739db7-5f74cf7effbe690040689f41",
+      "plex:5f74cf7effbe690040689f41",
       "6000a5a9e767980007b497ca",
       "0455f88e83625b3c8c302db0c30fe01e",
       "USAK3508703A"
@@ -377,48 +427,57 @@
       "604928d54a4f730007ff76bc"
     ],
     "curiositynow.de@en": [
-      "5e20b730f2f8d5003d739db7-64831c8be3541c909e96d240"
+      "5e20b730f2f8d5003d739db7-64831c8be3541c909e96d240",
+      "plex:64831c8be3541c909e96d240"
     ],
     "dangertv.us": [
       "447d63b6da208bb796b69f0383c474a1",
       "USAJ3504708A"
     ],
     "darkmattertv.us": [
-      "5e20b730f2f8d5003d739db7-5eea605674085f0040ddc7a6"
+      "5e20b730f2f8d5003d739db7-5eea605674085f0040ddc7a6",
+      "plex:5eea605674085f0040ddc7a6"
     ],
     "dateline247.us": [
       "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd19",
+      "plex:5fc70600598c41002da3dd19",
       "637413d8531e0c0007442d6d",
       "18c5f5feae8855baba4d1ccfd75be3db"
     ],
     "dealornodeal.us": [
       "5e20b730f2f8d5003d739db7-6516023b1fc969615e69d172",
+      "plex:6516023b1fc969615e69d172",
       "5e9debf8c881310007d7bde1",
       "1e234e88e79d5de99b222cbe4361767a",
       "USBB4400017N3"
     ],
     "degrassi.us@us": [
       "5e20b730f2f8d5003d739db7-636d5aa3dc2c550b145ed422",
+      "plex:636d5aa3dc2c550b145ed422",
       "5c6eeb85c05dfc257e5a50c4",
       "d89b6124edce5dc0a4dfe42a8026353a"
     ],
     "designatedsurvivor.us": [
       "5e20b730f2f8d5003d739db7-66aa9b7fd8fc59729226073e",
+      "plex:66aa9b7fd8fc59729226073e",
       "8b6e781730caa4afe9bd288a8b880c40"
     ],
     "doctorwhoclassic.us@us": [
       "5ce4475cd43850831ca91ce7"
     ],
     "documentaryplus.us@us": [
-      "5e20b730f2f8d5003d739db7-62f42e6cad0081c6ef405723"
+      "5e20b730f2f8d5003d739db7-62f42e6cad0081c6ef405723",
+      "plex:62f42e6cad0081c6ef405723"
     ],
     "dogthebountyhunter.us@us": [
       "5e20b730f2f8d5003d739db7-66428faa5116d565e63ae32a",
+      "plex:66428faa5116d565e63ae32a",
       "5bee1a7359ee03633e780238",
       "56d6a285b9095e39a711a69a3058410c"
     ],
     "donttellthebride.uk": [
-      "5e20b730f2f8d5003d739db7-635847d0d3a668f1cafc1f9d"
+      "5e20b730f2f8d5003d739db7-635847d0d3a668f1cafc1f9d",
+      "plex:635847d0d3a668f1cafc1f9d"
     ],
     "dovechannel.us": [
       "d93912b4b21158fd95af2ceb8979c586"
@@ -430,19 +489,23 @@
       "USAJ30000039U"
     ],
     "ebonytvbylionsgate.us": [
-      "5e20b730f2f8d5003d739db7-6533de63bd43e1c8b1865152"
+      "5e20b730f2f8d5003d739db7-6533de63bd43e1c8b1865152",
+      "plex:6533de63bd43e1c8b1865152"
     ],
     "ekeepingup.us": [
       "5e20b730f2f8d5003d739db7-645e328e3ea1d2d705ef8ab2",
+      "plex:645e328e3ea1d2d705ef8ab2",
       "4f05781ce64f5b25a42a10c70853312a"
     ],
     "electricnow.us": [
       "5e20b730f2f8d5003d739db7-5f170d61b898490041b49360",
+      "plex:5f170d61b898490041b49360",
       "15cc44e50d8453e18f21ea37713319c5",
       "USBC6000225M"
     ],
     "entertainmenttonight.us": [
       "5e20b730f2f8d5003d739db7-6578bb741a12778a8550d158",
+      "plex:6578bb741a12778a8550d158",
       "5dc0c78281eddb0009a02d5e",
       "392a421311b35de594961680be62564c"
     ],
@@ -463,10 +526,12 @@
     ],
     "f1channel.ie@us": [
       "5e20b730f2f8d5003d739db7-6896595a58a6658b3d6a501a",
+      "plex:6896595a58a6658b3d6a501a",
       "d2564cef9feeec6c58a076d6f6a90491"
     ],
     "failarmy.us@us": [
       "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc791",
+      "plex:5eea605574085f0040ddc791",
       "554158e864526b29254ff105",
       "aeef4f63419a5d5fabcf0055585f9ccc",
       "USAJ3504702A"
@@ -477,7 +542,8 @@
       "USBB3500003D6"
     ],
     "farscape.us": [
-      "5e20b730f2f8d5003d739db7-635195e9ccee3e1547a8831a"
+      "5e20b730f2f8d5003d739db7-635195e9ccee3e1547a8831a",
+      "plex:635195e9ccee3e1547a8831a"
     ],
     "fasttv.us": [
       "6400f731d200410008f9b339"
@@ -488,6 +554,7 @@
     ],
     "fifaplus.uk@unitedstates": [
       "5e20b730f2f8d5003d739db7-66628d4a8dfc36b8c8a399c4",
+      "plex:66628d4a8dfc36b8c8a399c4",
       "b8c4d1dc632d5402afce99ee70859b5e"
     ],
     "filmriseforensicfiles.us": [
@@ -498,6 +565,7 @@
     ],
     "forensicfiles.us": [
       "5e20b730f2f8d5003d739db7-6449369f243fbe342a9c0b4d",
+      "plex:6449369f243fbe342a9c0b4d",
       "5bb1af6a268cae539bcedb0a",
       "USBB3200017MY"
     ],
@@ -510,6 +578,7 @@
     ],
     "foxweather.us": [
       "5e20b730f2f8d5003d739db7-6351b29cb940534786b2ec17",
+      "plex:6351b29cb940534786b2ec17",
       "640a68880e884c0009979cc2",
       "0838d5ccb1d5564d98fb804ab314c85e"
     ],
@@ -522,14 +591,19 @@
     ],
     "fubosportsnetwork.us": [
       "5e20b730f2f8d5003d739db7-5fc705f68aba71002d8b7b37",
+      "plex:5fc705f68aba71002d8b7b37",
       "b4273871759a5631bd536d2214f175e5",
       "USAJ2200023Z0"
     ],
     "funnyaf.us": [
       "580e87ff497c73ba2f321dd3"
     ],
+    "galxytv.us": [
+      "plex:621672e42c2627c068e73ad8"
+    ],
     "gameshowcentral.us": [
       "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc782",
+      "plex:5eea605574085f0040ddc782",
       "5e54187aae660e00093561d6",
       "b89f979c548a5576a27bbe515c906814",
       "USAJ3400012FA"
@@ -541,24 +615,29 @@
       "5b4e99f4423e067bd6df6903"
     ],
     "gotraveler.us": [
-      "5e20b730f2f8d5003d739db7-60a53634126de9002e694bc2"
+      "5e20b730f2f8d5003d739db7-60a53634126de9002e694bc2",
+      "plex:60a53634126de9002e694bc2"
     ],
     "gravitasmovies.us": [
       "5e20b730f2f8d5003d739db7-5efe1de7e0b3f5003f5d9f8e",
+      "plex:5efe1de7e0b3f5003f5d9f8e",
       "973e467d44ac5410ba217c39c9c06958"
     ],
     "gritxtra.us": [
       "5e20b730f2f8d5003d739db7-62b45f15b4508e0eedacdf25",
+      "plex:62b45f15b4508e0eedacdf25",
       "923cd8e7aa1e5a5898aad41fdf6a0f0f"
     ],
     "grjngowesternmovies.de": [
-      "5e20b730f2f8d5003d739db7-63489a771159f6a5ce819b7b"
+      "5e20b730f2f8d5003d739db7-63489a771159f6a5ce819b7b",
+      "plex:63489a771159f6a5ce819b7b"
     ],
     "gunsmoke.us": [
       "60f75771dfc72a00071fd0e0"
     ],
     "hallmarkmoviesmore.us": [
       "5e20b730f2f8d5003d739db7-6244cf3c742b0d58cd4f2514",
+      "plex:6244cf3c742b0d58cd4f2514",
       "628e685ba3811100070551a8"
     ],
     "happydays.us": [
@@ -569,14 +648,17 @@
     ],
     "heartland.us@web": [
       "5e20b730f2f8d5003d739db7-6449369eb3ff17382cae5806",
+      "plex:6449369eb3ff17382cae5806",
       "61f07513227feb00073ee6bc",
       "USBB2900003O3"
     ],
     "historyhit.uk": [
-      "5e20b730f2f8d5003d739db7-5f74cf83ffbe690040689f50"
+      "5e20b730f2f8d5003d739db7-5f74cf83ffbe690040689f50",
+      "plex:5f74cf83ffbe690040689f50"
     ],
     "hiyah.us": [
       "5e20b730f2f8d5003d739db7-5f64c4ef35f612003f6ffe30",
+      "plex:5f64c4ef35f612003f6ffe30",
       "2deae9b4e83550f88f6776c45df08315"
     ],
     "hollywire.us": [
@@ -587,6 +669,7 @@
     ],
     "homemadenation.us": [
       "5e20b730f2f8d5003d739db7-5f74cf82ffbe690040689f47",
+      "plex:5f74cf82ffbe690040689f47",
       "e363a99773db501aa05514f7e52faf2c"
     ],
     "hsn.us@east": [
@@ -600,17 +683,20 @@
       "USAJ2200009C2"
     ],
     "impossiblequizshow.us": [
-      "5e20b730f2f8d5003d739db7-6308fa9c0417b7074a4ad959"
+      "5e20b730f2f8d5003d739db7-6308fa9c0417b7074a4ad959",
+      "plex:6308fa9c0417b7074a4ad959"
     ],
     "inkmaster.us": [
       "60807fd5db701400078219c2",
       "65ae845b7372c0fb85142f6d88a56de7"
     ],
     "iontv.us@east": [
-      "5e20b730f2f8d5003d739db7-624c37af6281708eabbbe26b"
+      "5e20b730f2f8d5003d739db7-624c37af6281708eabbbe26b",
+      "plex:624c37af6281708eabbbe26b"
     ],
     "ironchef.us@us": [
-      "5e20b730f2f8d5003d739db7-6707cfa5da81682f2d1e6837"
+      "5e20b730f2f8d5003d739db7-6707cfa5da81682f2d1e6837",
+      "plex:6707cfa5da81682f2d1e6837"
     ],
     "jerseyshore.us": [
       "609bfa51fbecc1000733152e",
@@ -625,6 +711,7 @@
     ],
     "journy.us": [
       "5e20b730f2f8d5003d739db7-5f5132df62fe160040f26bc2",
+      "plex:5f5132df62fe160040f26bc2",
       "USBB1000003HL"
     ],
     "judgenosey.us@us": [
@@ -633,6 +720,7 @@
     ],
     "justforlaughsgags.us": [
       "5e20b730f2f8d5003d739db7-64704954e536e0faaf10be9f",
+      "plex:64704954e536e0faaf10be9f",
       "4f628a666da552d7a9ea9157e079d56b"
     ],
     "kartoonchannel.us": [
@@ -640,16 +728,22 @@
     ],
     "kevinhartslolnetwork.us": [
       "5e20b730f2f8d5003d739db7-628ea9fcffe4cec6361f5310",
+      "plex:628ea9fcffe4cec6361f5310",
       "52c137ae3cdc50768ad7ea3cdaf0f2f4"
     ],
     "kidsflix.us": [
-      "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc797"
+      "5e20b730f2f8d5003d739db7-5eea605574085f0040ddc797",
+      "plex:5eea605574085f0040ddc797"
+    ],
+    "knxvtv611.us": [
+      "plex:6577ab54f8a8e7d24bc86ed3"
     ],
     "latv.us": [
       "5e20b730f2f8d5003d739db7-6685a97b59703916799193a5"
     ],
     "lawcrime.us": [
       "5e20b730f2f8d5003d739db7-5eea605674085f0040ddc79d",
+      "plex:5eea605674085f0040ddc79d",
       "8ba514251e1a58b7b53368177baa1041",
       "USAK3508710A"
     ],
@@ -661,6 +755,7 @@
     ],
     "livenowfromfox.us": [
       "5e20b730f2f8d5003d739db7-6377ea0e13bb6b1757e14695",
+      "plex:6377ea0e13bb6b1757e14695",
       "63d025db4e83e700086eaa96",
       "f9c0d48b540a55dcb98b04d2cc8abf25",
       "USBA300024TN"
@@ -683,7 +778,8 @@
       "03a419fc4dff59b39b176d9f76b09e38"
     ],
     "lovepets.ca@us": [
-      "5e20b730f2f8d5003d739db7-63fe7d7eb6312779f56504d3"
+      "5e20b730f2f8d5003d739db7-63fe7d7eb6312779f56504d3",
+      "plex:63fe7d7eb6312779f56504d3"
     ],
     "luckydog.us": [
       "USBA3000044BJ"
@@ -703,10 +799,12 @@
       "USAJ3000007MT"
     ],
     "midnightpulp.us": [
-      "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c4427"
+      "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c4427",
+      "plex:5ef4e1b40d9ad000423c4427"
     ],
     "midsomermurders.us": [
       "5e20b730f2f8d5003d739db7-63d6fc71a9e88ee909e7ee23",
+      "plex:63d6fc71a9e88ee909e7ee23",
       "5cbf6a868a1bce4a3d52a5e9",
       "d1e4e369eda359c897e1fdfd8286b19b",
       "USBC24000134A"
@@ -730,13 +828,16 @@
     ],
     "moviesphere.us@us": [
       "5e20b730f2f8d5003d739db7-5fb84bc1b7ad2d002dcb735f",
+      "plex:5fb84bc1b7ad2d002dcb735f",
       "e1192d17771c5a059930192d439957ee"
     ],
     "mrbeananimated.uk@english": [
-      "5e20b730f2f8d5003d739db7-66a2e7fe94b6a49cb5054d7b"
+      "5e20b730f2f8d5003d739db7-66a2e7fe94b6a49cb5054d7b",
+      "plex:66a2e7fe94b6a49cb5054d7b"
     ],
     "mst3k.us@us": [
       "5e20b730f2f8d5003d739db7-60d4eddbb2fdec002c141133",
+      "plex:60d4eddbb2fdec002c141133",
       "545943f1c9f133a519bbac92",
       "1f62c81a73575fdca9fdc8a36c55d8b9"
     ],
@@ -757,6 +858,7 @@
     ],
     "mytimemovienetworkeast.us": [
       "5e20b730f2f8d5003d739db7-644875d7af92c31f4a190bc2",
+      "plex:644875d7af92c31f4a190bc2",
       "be3c81de355c56f89cbf99301735cfd2"
     ],
     "naruto.us@us": [
@@ -764,6 +866,7 @@
     ],
     "nashbridges.us": [
       "5e20b730f2f8d5003d739db7-6668b69889c051b3733f9b60",
+      "plex:6668b69889c051b3733f9b60",
       "cb515abf2b733ce38c17b4a1a384d069"
     ],
     "nbccomedyvault.us": [
@@ -774,23 +877,28 @@
     ],
     "nbcnewsnow.us": [
       "5e20b730f2f8d5003d739db7-5fc70600dd53a6002d8f93ca",
+      "plex:5fc70600dd53a6002d8f93ca",
       "5df97894467dfa00091c873c",
       "b5fe4277ff365ccda0a7d43028d53d90",
       "USBB2200014DK"
     ],
     "nbcsportsnow.us": [
       "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd43",
+      "plex:5fc70600598c41002da3dd43",
       "a90a91570ce0536cbb22b591ad7e0da2"
     ],
     "newkmovies.us": [
       "5e20b730f2f8d5003d739db7-60d4eddab2fdec002c141131",
+      "plex:60d4eddab2fdec002c141131",
       "USAJ30000122O"
     ],
     "newkpop.us": [
-      "5e20b730f2f8d5003d739db7-60d4edd7b2fdec002c14112d"
+      "5e20b730f2f8d5003d739db7-60d4edd7b2fdec002c14112d",
+      "plex:60d4edd7b2fdec002c14112d"
     ],
     "news12newyork.us": [
       "5e20b730f2f8d5003d739db7-5fc6f3a62b6f7b002e77ffaa",
+      "plex:5fc6f3a62b6f7b002e77ffaa",
       "5fff49cfb5cd4f0007c2b0dc"
     ],
     "newsmax2.us": [
@@ -803,6 +911,7 @@
     ],
     "nflchannel.us": [
       "5e20b730f2f8d5003d739db7-61e805952502a7a6fa84d70f",
+      "plex:61e805952502a7a6fa84d70f",
       "5ced7d5df64be98e07ed47b6",
       "998e7fd5826653fc84880c91e2620a33"
     ],
@@ -818,6 +927,7 @@
     ],
     "ninjakidztv.us": [
       "5e20b730f2f8d5003d739db7-627ec46a92d8e6a705784bd1",
+      "plex:627ec46a92d8e6a705784bd1",
       "9dd23031622757d1944e4782b2a192ef"
     ],
     "nosey.us@us": [
@@ -836,14 +946,17 @@
     ],
     "outersphere.us": [
       "5e20b730f2f8d5003d739db7-641496bf238e21f260e7844a",
+      "plex:641496bf238e21f260e7844a",
       "e6d36fc89adf1de07aa090ec5669e0ca"
     ],
     "outsidetv.us": [
       "5e20b730f2f8d5003d739db7-629e522ed1bc5f1b16c6b98d",
+      "plex:629e522ed1bc5f1b16c6b98d",
       "7bdac47dd6dd5204b00b1d0e4cbc9684"
     ],
     "overtime.us": [
       "5e20b730f2f8d5003d739db7-62a388865440744efae8e243",
+      "plex:62a388865440744efae8e243",
       "52451c26422c45e087820bb0a13a69ab"
     ],
     "pac12insider.us": [
@@ -863,16 +976,19 @@
     ],
     "pbsantiquesroadshow.us": [
       "5e20b730f2f8d5003d739db7-6348ac7090b96ef5e0eb3288",
+      "plex:6348ac7090b96ef5e0eb3288",
       "636c2b3c55d2e700074105c4",
       "856fca464da0544784204ba8f6161dac"
     ],
     "pbsnature.us": [
       "5e20b730f2f8d5003d739db7-63506e7747b2355a27e76e7f",
+      "plex:63506e7747b2355a27e76e7f",
       "640a64bd73e013000893d4e0",
       "32fa723f285fc238ae786634f051f972"
     ],
     "pbstravel.us": [
       "5e20b730f2f8d5003d739db7-684c201a3496598cf4003fbc",
+      "plex:684c201a3496598cf4003fbc",
       "94598743eeb76f0dae3caf86ed026deb"
     ],
     "peopleareawesome.us": [
@@ -883,6 +999,7 @@
     ],
     "pgatour.us": [
       "5e20b730f2f8d5003d739db7-68017ed20268b77d02a5f4bd",
+      "plex:68017ed20268b77d02a5f4bd",
       "5de94dacb394a300099fa22a",
       "938d8156a8c45e719f24022d8c1c972c"
     ],
@@ -1003,6 +1120,7 @@
     ],
     "portlandia.us": [
       "5e20b730f2f8d5003d739db7-61d735fea7b7c7f703418512",
+      "plex:61d735fea7b7c7f703418512",
       "753bb09547f701d2e6d0f66bee0ee589"
     ],
     "powernationtv.us": [
@@ -1027,13 +1145,15 @@
       "USBB1900002KF"
     ],
     "realwild.uk": [
-      "5e20b730f2f8d5003d739db7-63584a0cf8e2be1350f802a4"
+      "5e20b730f2f8d5003d739db7-63584a0cf8e2be1350f802a4",
+      "plex:63584a0cf8e2be1350f802a4"
     ],
     "redbulltv.at@us": [
       "c5e8a74546771de365652cd053f73351"
     ],
     "retrocrush.us": [
       "5e20b730f2f8d5003d739db7-5ef4e1b40d9ad000423c442a",
+      "plex:5ef4e1b40d9ad000423c442a",
       "72a54a3c7a3d5381a1baa223a5dc8d23"
     ],
     "revandroll.us": [
@@ -1058,6 +1178,7 @@
     ],
     "ryanandfriends.us": [
       "5e20b730f2f8d5003d739db7-5f91c4ea96a391002df9a664",
+      "plex:5f91c4ea96a391002df9a664",
       "5fb584b7613a31000789de5a",
       "d1bfe824cfee5369a493d7a8bbd96ec1"
     ],
@@ -1066,6 +1187,7 @@
     ],
     "scrippsnews.us": [
       "5e20b730f2f8d5003d739db7-5fc705dda2236e002d69f211",
+      "plex:5fc705dda2236e002d69f211",
       "5459795fc9f133a519bc0bef",
       "d3f36d4a35fa5f40a24b96a51556b9b5"
     ],
@@ -1081,6 +1203,7 @@
     ],
     "snlvault.us": [
       "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd34",
+      "plex:5fc70600598c41002da3dd34",
       "9349c516ca6456b9b5ed7e20cb1c1384"
     ],
     "sonictv.us": [
@@ -1097,11 +1220,13 @@
     ],
     "sportsgrid.us": [
       "5e20b730f2f8d5003d739db7-5ef11485d33ab9004048a1ca",
+      "plex:5ef11485d33ab9004048a1ca",
       "62f1cd0d4c395a2a8ab72cff688666a0",
       "USBA300031OT"
     ],
     "stadium.us": [
       "5e20b730f2f8d5003d739db7-5f6142d2fc6ce20041ec3c92",
+      "plex:5f6142d2fc6ce20041ec3c92",
       "USAJ3504705A"
     ],
     "startrek.us@us": [
@@ -1112,6 +1237,7 @@
     ],
     "storiesbyamc.us": [
       "5e20b730f2f8d5003d739db7-5fc705e2a2236e002d69f3ba",
+      "plex:5fc705e2a2236e002d69f3ba",
       "62f2ce24f328e00007e7f55a",
       "f6ddb474d9cd5ac88f5d1e85186b9cb9"
     ],
@@ -1124,6 +1250,7 @@
     ],
     "swervesports.us": [
       "5e20b730f2f8d5003d739db7-61f04d2bb01a6e8df3f72902",
+      "plex:61f04d2bb01a6e8df3f72902",
       "683df56f5195c2a60a3f5559"
     ],
     "tastemade.us@us": [
@@ -1149,6 +1276,7 @@
     ],
     "tennischannel.us@plus2": [
       "5e20b730f2f8d5003d739db7-65944d40cbc51b25e5070a18",
+      "plex:65944d40cbc51b25e5070a18",
       "681109b688b9d85d0938c6ba",
       "a0b7c0bc09955942866e7072266483c8"
     ],
@@ -1158,6 +1286,7 @@
     ],
     "theaddamsfamily.us": [
       "5e20b730f2f8d5003d739db7-689fb7110a486aeba3c7917c",
+      "plex:689fb7110a486aeba3c7917c",
       "5d81607ab737153ea3c1c80e"
     ],
     "theamazingrace.us": [
@@ -1173,6 +1302,7 @@
     ],
     "thebobrosschannel.us": [
       "5e20b730f2f8d5003d739db7-5efe1de6e0b3f5003f5d9f88",
+      "plex:5efe1de6e0b3f5003f5d9f88",
       "5f36d726234ce10007784f2a",
       "1d3f60995d80521882a379fc06e47679"
     ],
@@ -1187,6 +1317,7 @@
     ],
     "theconners.us": [
       "5e20b730f2f8d5003d739db7-6668b7a5e4f56766e556a415",
+      "plex:6668b7a5e4f56766e556a415",
       "f2d2afeb40ccfeaf7c4c02b75e710b6f"
     ],
     "thedesignnetwork.us": [
@@ -1197,13 +1328,19 @@
     ],
     "thegrahamnortonshow.uk": [
       "5e20b730f2f8d5003d739db7-68dcbb869beaa3a402966dba",
+      "plex:68dcbb869beaa3a402966dba",
       "5934441271a0583124d84d704f600bcc"
+    ],
+    "thegriotv.us": [
+      "5e20b730f2f8d5003d739db7-5fe27da18cdd46002d85efed",
+      "plex:5fe27da18cdd46002d85efed"
     ],
     "thehilltv.us": [
       "8bfd3a488b59590eb2fa5602c2120168"
     ],
     "thejamieoliverchannel.us": [
       "5e20b730f2f8d5003d739db7-64b7170c4612b1f48e9ad31e",
+      "plex:64b7170c4612b1f48e9ad31e",
       "64dab9df3d48f40008868091",
       "8fd0bc4f08285a12abb872f0b2e320d4"
     ],
@@ -1216,6 +1353,7 @@
     ],
     "thenewdetectives.us@us": [
       "5e20b730f2f8d5003d739db7-67cbd471cc5136329877e098",
+      "plex:67cbd471cc5136329877e098",
       "5aea40b35126c2157123aa64",
       "USAJ3504547A"
     ],
@@ -1226,6 +1364,7 @@
     ],
     "thepriceisright.us": [
       "5e20b730f2f8d5003d739db7-63e63d26abacad42ed3d1acd",
+      "plex:63e63d26abacad42ed3d1acd",
       "643f035d5a0cd50008361534",
       "57716baa323e2fb356d638f04e5b277e"
     ],
@@ -1235,6 +1374,7 @@
     ],
     "therifleman.us": [
       "5e20b730f2f8d5003d739db7-64f123008d44f2871135a905",
+      "plex:64f123008d44f2871135a905",
       "5e825550e758c700077b0aef"
     ],
     "thewalkingdeadenespanol.us": [
@@ -1243,11 +1383,13 @@
     ],
     "thewalkingdeaduniverse.us": [
       "5e20b730f2f8d5003d739db7-5fc705ff2f220e002d5e6bce",
+      "plex:5fc705ff2f220e002d5e6bce",
       "62fa8176b9884200074ef5ae",
       "be88a28806f251338d65ec08119f5c81"
     ],
     "thisoldhouse.us": [
       "5e20b730f2f8d5003d739db7-62e3232ca105dea9c400e9fe",
+      "plex:62e3232ca105dea9c400e9fe",
       "5d51e791b7dba3b2ae990ab2",
       "7e9fe2b4c7ba5869af6d60adbf4b7c86",
       "USBC13000065U"
@@ -1257,21 +1399,25 @@
     ],
     "tinyhousenation.us": [
       "5e20b730f2f8d5003d739db7-63c1e176f0f132afc3afbab0",
+      "plex:63c1e176f0f132afc3afbab0",
       "601a0342dcf4370007566891",
       "6f6a43405187540486e726fdb22bb600",
       "USAJ3400020KC"
     ],
     "tmz.us": [
-      "5e20b730f2f8d5003d739db7-63e2ca44203bafbef831a152"
+      "5e20b730f2f8d5003d739db7-63e2ca44203bafbef831a152",
+      "plex:63e2ca44203bafbef831a152"
     ],
     "todayallday.us": [
       "5e20b730f2f8d5003d739db7-5fc70600598c41002da3dd39",
+      "plex:5fc70600598c41002da3dd39",
       "5d695f7db53adf96b78e7ce3",
       "97a1c32a9f1057cf974a920a4279a801",
       "USBB32000251N"
     ],
     "toongoggles.us": [
       "5e20b730f2f8d5003d739db7-5f170d60b898490041b49359",
+      "plex:5f170d60b898490041b49359",
       "USBB1900004J9"
     ],
     "tosh0.us": [
@@ -1283,10 +1429,12 @@
     ],
     "tribecachannel.us": [
       "5e20b730f2f8d5003d739db7-60ede94f7da2ef002c55ce9b",
+      "plex:60ede94f7da2ef002c55ce9b",
       "2547ef42e2f45bbaa84752657cffe3c9"
     ],
     "truecrimenow.us": [
-      "5e20b730f2f8d5003d739db7-61ae679103baf19077bbf933"
+      "5e20b730f2f8d5003d739db7-61ae679103baf19077bbf933",
+      "plex:61ae679103baf19077bbf933"
     ],
     "truehistory.us": [
       "5e20b730f2f8d5003d739db7-614398a08f30fa61e0da7c97"
@@ -1306,6 +1454,7 @@
     ],
     "unidentified.us": [
       "5e20b730f2f8d5003d739db7-6227d1d2c9f485cc7afe8c44",
+      "plex:6227d1d2c9f485cc7afe8c44",
       "USBB10000047W"
     ],
     "universalcrime.us@east": [
@@ -1373,10 +1522,15 @@
     ],
     "vicetv.us": [
       "5e20b730f2f8d5003d739db7-62c47062085f5c338b9c6360",
+      "plex:62c47062085f5c338b9c6360",
       "USBB1900006NY"
     ],
     "wanteddeadoralive.us": [
-      "5e20b730f2f8d5003d739db7-61ddcc6023daf618ed44c29f"
+      "5e20b730f2f8d5003d739db7-61ddcc6023daf618ed44c29f",
+      "plex:61ddcc6023daf618ed44c29f"
+    ],
+    "watchitkid.us": [
+      "plex:621672612c2627c068e73ad6"
     ],
     "watchitscream.us": [
       "5e20b730f2f8d5003d739db7-621671d05abdd3d5556a1baf"
@@ -1396,7 +1550,8 @@
       "USAJ3400014LK"
     ],
     "weedsnursejackie.us": [
-      "5e20b730f2f8d5003d739db7-66915d35086cb6d46eae12c8"
+      "5e20b730f2f8d5003d739db7-66915d35086cb6d46eae12c8",
+      "plex:66915d35086cb6d46eae12c8"
     ],
     "westerntv.us": [
       "5e8df4bc16e34700077e77d3"
@@ -1408,10 +1563,12 @@
     ],
     "willowsports.us": [
       "5e20b730f2f8d5003d739db7-66fbf9cf128ab3f65b259bcb",
+      "plex:66fbf9cf128ab3f65b259bcb",
       "52361d5aea45dadb3168c2ecea7d984a"
     ],
     "wipeoutxtra.us": [
       "5e20b730f2f8d5003d739db7-6515fb621fc969615e69d16e",
+      "plex:6515fb621fc969615e69d16e",
       "USBB4400018LR"
     ],
     "wired2fishtv.us": [
@@ -1426,28 +1583,39 @@
       "5616f9c0ada51f8004c4b091"
     ],
     "wutangcollection.us": [
-      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc770"
+      "5e20b730f2f8d5003d739db7-5eea605474085f0040ddc770",
+      "plex:5eea605474085f0040ddc770"
+    ],
+    "xfctv.us": [
+      "plex:621670feab2095ca85353ad4"
     ],
     "xite90sthrowback.us": [
-      "5e20b730f2f8d5003d739db7-6889430a3b7708975e7c07e3"
+      "5e20b730f2f8d5003d739db7-6889430a3b7708975e7c07e3",
+      "plex:6889430a3b7708975e7c07e3"
     ],
     "xiteclassiccountry.nl": [
-      "5e20b730f2f8d5003d739db7-688d399a8ceaa3681d9425d3"
+      "5e20b730f2f8d5003d739db7-688d399a8ceaa3681d9425d3",
+      "plex:688d399a8ceaa3681d9425d3"
     ],
     "xitejustchill.nl@us": [
-      "5e20b730f2f8d5003d739db7-6889467267ddc0ef2cdbf4ff"
+      "5e20b730f2f8d5003d739db7-6889467267ddc0ef2cdbf4ff",
+      "plex:6889467267ddc0ef2cdbf4ff"
     ],
     "xitenuevolatino.us": [
-      "5e20b730f2f8d5003d739db7-6889479e67ddc0ef2cdbf501"
+      "5e20b730f2f8d5003d739db7-6889479e67ddc0ef2cdbf501",
+      "plex:6889479e67ddc0ef2cdbf501"
     ],
     "xitereggaevibes.nl": [
-      "5e20b730f2f8d5003d739db7-68800f0c4033a6a442ad923d"
+      "5e20b730f2f8d5003d739db7-68800f0c4033a6a442ad923d",
+      "plex:68800f0c4033a6a442ad923d"
     ],
     "xiterockxmetal.nl@us": [
-      "5e20b730f2f8d5003d739db7-68800806996f1a2fb393a6e5"
+      "5e20b730f2f8d5003d739db7-68800806996f1a2fb393a6e5",
+      "plex:68800806996f1a2fb393a6e5"
     ],
     "xitesiemprelatino.us": [
-      "5e20b730f2f8d5003d739db7-68800a594033a6a442ad9237"
+      "5e20b730f2f8d5003d739db7-68800a594033a6a442ad9237",
+      "plex:68800a594033a6a442ad9237"
     ],
     "xploretv.us": [
       "f230a0c3f7ba5804b42d88f5d3c20002",
@@ -1461,6 +1629,7 @@
     ],
     "yugioh.us": [
       "5e20b730f2f8d5003d739db7-6617f52f0049fcb8e2b0d5b8",
+      "plex:6617f52f0049fcb8e2b0d5b8",
       "5f4ec10ed9636f00089b8c89",
       "77946e082d8958f599087890aebf1623"
     ]
@@ -1469,6 +1638,7 @@
     "3abnenglish.us": "three-angels-broadcasting-network/19066",
     "accnetwork.us": "acc-network/33964",
     "accuweathernow.us": "accuweather-hd/7335",
+    "ae.us@east": "ae-us--eastern-feed/2",
     "amc.us@east": "amc--eastern-feed-hd/6219",
     "americanheroeschannel.us": "american-heroes-channel/2035",
     "amp2.us": "amp2/13283",
@@ -1477,17 +1647,22 @@
     "bigtennetwork.us": "big-ten-network-hd/4500",
     "bloombergtv.us@us": "bloomberg-tv-usa/1856",
     "boomerang.us": "boomerang-hd/16413",
+    "bounce.us": "bounce--network/14312",
     "bravo.us@east": "bravo-usa-hd--eastern-feed/6120",
+    "carstv.us": "carstv-hd/18803",
     "cartoonnetwork.us@east": "cartoon-network-usa-hd--eastern/6917",
+    "catholicfaithnetwork.us": "catholic-faith-network/6004",
     "charge.us": "charge/15228",
     "cinemax.us@west": "cinemax--pacific-feed/1215",
     "cmt.us@east": "cmt-us--eastern-feed-hd/6344",
     "cnbc.us": "cnbc-usa-hd/6119",
     "cnn.us": "cnn/70",
+    "cnnenespanol.us": "cnn-espanol/2096",
     "comet.us": "comet-tv/16811",
     "cookingchannel.us": "the-cooking-channel-hd/8113",
     "courttv.us": "court-tv-network/33650",
     "daystartv.us": "daystar--network-hd/13634",
+    "depeliculaus.us": "de-pelicula/4419",
     "discoverychannel.us@east": "discovery-channel-us--eastern-feed/649",
     "disneyjunior.us@east": "disney-junior-usa-hd--east/10523",
     "disneyxd.us@east": "disney-xd-usa-hd--eastern-feed/6236",
@@ -1495,6 +1670,7 @@
     "espn.us": "espn-hd/3036",
     "espn2.us": "espn2-hd/3379",
     "espnu.us": "espn-u/3331",
+    "estv.us": "estv-hd/18805",
     "ewtn.us@english": "ewtn-usa/620",
     "foodnetwork.us@east": "food-network-usa-hd--eastern-feed/3438",
     "fox.us@west": "fox--pacific/4409",
@@ -1504,9 +1680,10 @@
     "foxweather.us": "fox-weather/37620",
     "fuse.us@east": "fuse-tv-hd--eastern/6221",
     "fx.us@east": "fx-networks-east-coast-hd/6111",
-    "hallmarkchannel.us@east": "hallmark-channel-hd--eastern/6213",
+    "galavision.us@east": "galavision--eastern-feed/1894",
     "hbo.us@east": "hbo-hd--eastern-feed/627",
     "hgtv.us@east": "hgtv-usa-hd--eastern/3690",
+    "history.us@east": "history-channel-us--eastern-feed/621",
     "hln.us": "hln-hd/6994",
     "hopechannelnorthamerica.us": "hope-channel/6827",
     "hsn.us@east": "hsn--home-shopping-network/14985",
@@ -1514,9 +1691,13 @@
     "ifc.us@east": "independent-film-channel-us-hd/6215",
     "investigationdiscovery.us@east": "investigation-discovery-usa-hd--eastern/6997",
     "jewelrytv.us": "jewelry-television/3000",
+    "jewishlifetelevision.us": "jewish-life-television/6826",
+    "kiiold101.us": "us-armenia-kiio-ld-los-angeles-ca/11156",
     "knxvtv611.us": "abc-knxv-phoenix-az-hd/5721",
     "laff.us": "laff--network-hd/20170",
     "lawcrime.us": "law--crime-network/32823",
+    "lifetimemovies.us@east": "lifetime-movies--east/1333",
+    "livingfaithtv.us": "wlfg--grundy-va/3703",
     "metv.us": "metv--network-hd/20357",
     "msg.us": "msg-madison-square-gardens-hd/4695",
     "mtv.us@east": "mtv-usa--eastern-feed/656",
@@ -1527,6 +1708,8 @@
     "nbatv.us": "nba-tv-usa-hd/5645",
     "nbc.us@east": "nbc--network-eastern/1227",
     "nbc.us@west": "nbc--network-pacific/4410",
+    "news12conneticut.us": "news-12-connecticut/20178",
+    "news12longisland.us": "news-12-long-island/20180",
     "newsmax2.us": "newsmax2/37081",
     "newsmaxtv.us": "newsmax-tv/16818",
     "nflnetwork.us": "nfl-network/3349",
@@ -1538,6 +1721,7 @@
     "ontv4u.us": "ontv4u/13142",
     "outdoorchannel.us": "outdoor-channel-us-hd/4638",
     "own.us@east": "oprah-winfrey-network-usa-eastern/1159",
+    "pbs.us@east": "pbs--network-hd--eastern/4259",
     "pbskids.us": "pbs-kids-247/31867",
     "positivtv.us": "positiv/4456",
     "qvc.us": "qvc/14683",
@@ -1547,6 +1731,7 @@
     "secnetwork.us": "sec-network-hd/13712",
     "shoplc.us": "shop-lc/36273",
     "showtimefamilyzone.us@east": "showtime-family-zone-hd--eastern/7108",
+    "smartlifestyletv.us": "smart-lifestyle-tv/33137",
     "starz.us@west": "starz-hd--pacific/3389",
     "starzcomedy.us@east": "starz-comedy--eastern/4223",
     "starzkidsfamily.us@east": "starz-kids--family--eastern/1194",
@@ -1570,7 +1755,133 @@
     "weathernation.us": "weathernation/13501",
     "wetv.us@east": "we-womens-entertainment--eastern/664",
     "worldchannel.us": "pbs-world/10214",
+    "worldharvesttv.us": "world-harvest-television/6038",
     "wplg101.us": "abc-wplg-miami-fl-hd/5722",
     "yesnetwork.us": "yes-network/1953"
+  },
+  "tvPassportLabels": {
+    "three-angels-broadcasting-network/19066": "Three Angels Broadcasting Network",
+    "acc-network/33964": "ACC Network",
+    "accuweather-hd/7335": "AccuWeather HD",
+    "ae-us--eastern-feed/2": "A&E US - Eastern Feed",
+    "amc--eastern-feed-hd/6219": "AMC - Eastern Feed HD",
+    "american-heroes-channel/2035": "American Heroes Channel",
+    "amp2/13283": "AMP2",
+    "animal-planet-us-hd--east/4537": "Animal Planet US HD - East",
+    "bbc-america--east-hd/11121": "BBC America - East HD",
+    "big-ten-network-hd/4500": "Big Ten Network HD",
+    "bloomberg-tv-usa/1856": "Bloomberg TV USA",
+    "boomerang-hd/16413": "Boomerang HD",
+    "bounce--network/14312": "Bounce - Network",
+    "bravo-usa-hd--eastern-feed/6120": "Bravo USA HD - Eastern Feed",
+    "carstv-hd/18803": "Cars.TV HD",
+    "cartoon-network-usa-hd--eastern/6917": "Cartoon Network USA HD - Eastern",
+    "catholic-faith-network/6004": "Catholic Faith Network",
+    "charge/15228": "CHARGE!",
+    "cinemax--pacific-feed/1215": "Cinemax - Pacific Feed",
+    "cmt-us--eastern-feed-hd/6344": "CMT US - Eastern Feed HD",
+    "cnbc-usa-hd/6119": "CNBC USA HD",
+    "cnn/70": "CNN",
+    "cnn-espanol/2096": "CNN Español",
+    "comet-tv/16811": "Comet TV",
+    "the-cooking-channel-hd/8113": "The Cooking Channel HD",
+    "court-tv-network/33650": "Court TV Network",
+    "daystar--network-hd/13634": "Daystar - Network HD",
+    "de-pelicula/4419": "De Pelicula",
+    "discovery-channel-us--eastern-feed/649": "Discovery Channel (US) - Eastern Feed",
+    "disney-junior-usa-hd--east/10523": "Disney Junior USA HD - East",
+    "disney-xd-usa-hd--eastern-feed/6236": "Disney XD USA HD - Eastern Feed",
+    "e-entertainment-usa-hd--east/6659": "E! Entertainment USA HD - East",
+    "espn-hd/3036": "ESPN HD",
+    "espn2-hd/3379": "ESPN2 HD",
+    "espn-u/3331": "ESPN U",
+    "estv-hd/18805": "ES.TV HD",
+    "ewtn-usa/620": "EWTN USA",
+    "food-network-usa-hd--eastern-feed/3438": "Food Network USA HD - Eastern Feed",
+    "fox--pacific/4409": "FOX - Pacific",
+    "fox-business-hd/5600": "Fox Business HD",
+    "fox-deportes-hd/10502": "Fox Deportes HD",
+    "fox-news-hd/6207": "Fox News HD",
+    "fox-weather/37620": "Fox Weather",
+    "fuse-tv-hd--eastern/6221": "FUSE TV HD - Eastern",
+    "fx-networks-east-coast-hd/6111": "FX Networks East Coast HD",
+    "galavision--eastern-feed/1894": "Galavision - Eastern Feed",
+    "hbo-hd--eastern-feed/627": "HBO HD - Eastern Feed",
+    "hgtv-usa-hd--eastern/3690": "HGTV USA HD - Eastern",
+    "history-channel-us--eastern-feed/621": "History Channel US - Eastern Feed",
+    "hln-hd/6994": "HLN HD",
+    "hope-channel/6827": "Hope Channel",
+    "hsn--home-shopping-network/14985": "HSN - Home Shopping Network",
+    "hsn-2/13495": "HSN 2",
+    "independent-film-channel-us-hd/6215": "Independent Film Channel US HD",
+    "investigation-discovery-usa-hd--eastern/6997": "Investigation Discovery USA HD - Eastern",
+    "jewelry-television/3000": "Jewelry Television",
+    "jewish-life-television/6826": "Jewish Life Television",
+    "us-armenia-kiio-ld-los-angeles-ca/11156": "US Armenia (KIIO-LD) Los Angeles, CA",
+    "abc-knxv-phoenix-az-hd/5721": "ABC (KNXV) Phoenix, AZ HD",
+    "laff--network-hd/20170": "Laff - Network HD",
+    "law--crime-network/32823": "Law & Crime Network",
+    "lifetime-movies--east/1333": "Lifetime Movies - East",
+    "wlfg--grundy-va/3703": "WLFG - Grundy, VA",
+    "metv--network-hd/20357": "MeTV - Network HD",
+    "msg-madison-square-gardens-hd/4695": "MSG (Madison Square Gardens) HD",
+    "mtv-usa--eastern-feed/656": "MTV USA - Eastern Feed",
+    "mtv-2-east-hd/10276": "MTV 2 East HD",
+    "mtv-live-hd/6081": "MTV Live HD",
+    "national-geographic-us-hd--eastern/4436": "National Geographic US HD - Eastern",
+    "national-geographic-wild-hd/9579": "National Geographic Wild HD",
+    "nba-tv-usa-hd/5645": "NBA TV USA HD",
+    "nbc--network-eastern/1227": "NBC - Network Eastern",
+    "nbc--network-pacific/4410": "NBC - Network Pacific",
+    "news-12-connecticut/20178": "News 12 Connecticut",
+    "news-12-long-island/20180": "News 12 Long Island",
+    "newsmax2/37081": "Newsmax2",
+    "newsmax-tv/16818": "NewsMax TV",
+    "nfl-network/3349": "NFL Network",
+    "nhl-network-usa/14156": "NHL Network USA",
+    "nickelodeon-usa--east-feed-hd/6342": "Nickelodeon USA - East Feed HD",
+    "nick-jr--east/1969": "Nick Jr. - East",
+    "nicktoons-hd--east/11445": "Nicktoons HD - East",
+    "one-america-news-network/12614": "One America News Network",
+    "ontv4u/13142": "ONTV4U",
+    "outdoor-channel-us-hd/4638": "Outdoor Channel US HD",
+    "oprah-winfrey-network-usa-eastern/1159": "Oprah Winfrey Network USA Eastern",
+    "pbs--network-hd--eastern/4259": "PBS - Network HD - Eastern",
+    "pbs-kids-247/31867": "PBS KIDS 24/7",
+    "positiv/4456": "PosiTiV",
+    "qvc/14683": "QVC",
+    "reelzchannel/4175": "ReelzChannel",
+    "revolt-tv/11301": "Revolt TV",
+    "scripps-news/5999": "Scripps News",
+    "sec-network-hd/13712": "SEC Network HD",
+    "shop-lc/36273": "Shop LC",
+    "showtime-family-zone-hd--eastern/7108": "Showtime Family Zone HD - Eastern",
+    "smart-lifestyle-tv/33137": "Smart Lifestyle TV",
+    "starz-hd--pacific/3389": "Starz HD - Pacific",
+    "starz-comedy--eastern/4223": "Starz Comedy - Eastern",
+    "starz-kids--family--eastern/1194": "Starz Kids & Family - Eastern",
+    "syfy-hd--eastern-feed/5643": "Syfy HD - Eastern Feed",
+    "tbn--trinity-broadcasting-network--east/1119": "TBN - Trinity Broadcasting Network - East",
+    "tbs--east-hd/6090": "TBS - East HD",
+    "tbs--pacific-hd/6231": "TBS - Pacific HD",
+    "turner-classic-movies-usa/176": "Turner Classic Movies USA",
+    "telemundo--eastern-feed/1521": "Telemundo - Eastern Feed",
+    "telemundo--pacific-feed/2013": "Telemundo - Pacific Feed",
+    "the-tennis-channel-hd/7051": "The Tennis Channel HD",
+    "the-nest/14118": "The Nest",
+    "the-weather-channel-hd/5599": "The Weather Channel HD",
+    "tnt--eastern-feed/347": "TNT - Eastern Feed",
+    "tnt--pacific-feed/2252": "TNT - Pacific Feed",
+    "trutv-usa--east-hd/6996": "truTV USA - East HD",
+    "trutv-usa--pacific-hd/18808": "truTV USA - Pacific HD",
+    "univision--eastern-feed-hd/8136": "Univision - Eastern Feed HD",
+    "univision--pacific-feed-hd/8137": "Univision - Pacific Feed HD",
+    "cbs-wbtv-charlotte-nc-hd/3649": "CBS (WBTV) Charlotte, NC HD",
+    "weathernation/13501": "WeatherNation",
+    "we-womens-entertainment--eastern/664": "WE (Women's Entertainment) - Eastern",
+    "pbs-world/10214": "PBS World",
+    "world-harvest-television/6038": "World Harvest Television",
+    "abc-wplg-miami-fl-hd/5722": "ABC (WPLG) Miami, FL HD",
+    "yes-network/1953": "YES Network"
   }
 }

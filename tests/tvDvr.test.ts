@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { guideWindow, moveGuide, programmeAt, type TvGuideRow } from '../src/core/tvGuide';
+import { guideProgrammeFrame, guideTitleScrollRange, guideWindow, moveGuide, programmeAt, TV_DESIGN, type TvGuideRow } from '../src/core/tvGuide';
 import { recordingConflict, recordingMatchesProgramme, seriesEpisodes, tvDvrItems } from '../src/core/tvDvr';
 import type { RecordingPlan } from '../src/data/recordingPlanner';
 const minute = 60_000;
@@ -10,6 +10,22 @@ const rows: TvGuideRow[] = [
   { channel, number: '11', programmes: [programme, { ...programme, start: 90 * minute, stop: 120 * minute }] },
   { channel: { ...channel, id: 'two' }, number: '12', programmes: [{ ...programme, start: 0, stop: 120 * minute }] },
 ];
+
+test('in-progress programme cells keep their titles in the visible timeline without changing airing times', () => {
+  const current = { ...programme, start: 0, stop: 90 * minute };
+  assert.deepEqual(guideProgrammeFrame(current, 60 * minute, 1000), { left: 2, width: 30 * TV_DESIGN.pixelsPerMinute - 4 });
+  assert.deepEqual(guideProgrammeFrame({ ...current, stop: 240 * minute }, 60 * minute, 1000), { left: 2, width: 996 });
+  assert.equal(guideProgrammeFrame(current, 90 * minute, 1000), undefined);
+  assert.equal(guideProgrammeFrame(current, -200 * minute, 1000), undefined);
+  assert.equal(current.start, 0);
+  assert.equal(current.stop, 90 * minute);
+});
+
+test('scrolling titles fit the visible portion of both long and short programme cells', () => {
+  assert.deepEqual(guideTitleScrollRange(200, 600, 300), { inputRange: [-100, 200, 500, 800], outputRange: [0, 300, 300, 0], extrapolate: 'clamp' });
+  assert.deepEqual(guideTitleScrollRange(200, 100, 300), { inputRange: [-100, 0, 200, 300], outputRange: [0, 100, 100, 0], extrapolate: 'clamp' });
+  assert.deepEqual(guideTitleScrollRange(200, 300, 300), { inputRange: [-100, 200, 500], outputRange: [0, 300, 0], extrapolate: 'clamp' });
+});
 test('guide vertical navigation keeps its focused time and horizontal movement follows actual program lengths', () => {
   const cursor = { channel: 0, programme: 1, rowTop: 0, windowStart: 60 * minute };
   assert.equal(moveGuide(cursor, rows, 0, 1).programme, 0);

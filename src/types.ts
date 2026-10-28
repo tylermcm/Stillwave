@@ -78,6 +78,7 @@ export interface Library {
   tvGuideDefaultsVersion?: 2 | 3 | 4;
   channels: Channel[];
   favorites: string[];
+  hiddenChannels?: string[];
   playlists: SavedPlaylist[];
   playlistName: string;
   playlistUrl?: string;
@@ -92,5 +93,5 @@ export interface Library {
 }
 
 export const EMPTY_LIBRARY: Library = {
-  version: 1, channels: [], favorites: [], playlists: [], playlistName: '', mappings: {}, profile: 'balanced', guideSources: [], recents: [], reminders: [],
+  version: 1, channels: [], favorites: [], hiddenChannels: [], playlists: [], playlistName: '', mappings: {}, profile: 'balanced', guideSources: [], recents: [], reminders: [],
 };

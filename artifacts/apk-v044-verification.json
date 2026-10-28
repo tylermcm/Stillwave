@@ -1,0 +1,17 @@
+{
+  "version": "0.4.4",
+  "versionCode": 11,
+  "package": "com.stillwave.player",
+  "bytes": 37150421,
+  "sha256": "737454ae4f632db3deeb71f7ea9e67432fcbe8956ee60b914d2d05871c36ab75",
+  "signingCertificate": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "embeddedBundle": true,
+  "approvedSIconEntries": [
+    "res/sK.webp"
+  ],
+  "adaptiveIconInset": "12%",
+  "checks": 108,
+  "apkSignature": "verified by apksigner",
+  "alignment": "verified by zipalign",
+  "deviceTest": "pending user phone test"
+}

@@ -5,6 +5,25 @@ export interface TvGuideRow { channel: Channel; number: string; programmes: Prog
 export interface TvGuideCursor { channel: number; programme: number; windowStart: number; rowTop: number }
 export function guideProgrammeKey(channelId: string, programme: Programme) { return JSON.stringify([channelId, programme.start, programme.title]); }
 
+/** Trim the rendered cell to the timeline, leaving published airing times intact. */
+export function guideProgrammeFrame(programme: Programme, windowStart: number, laneWidth: number) {
+  const start = (programme.start - windowStart) / 60_000 * TV_DESIGN.pixelsPerMinute;
+  const stop = (programme.stop - windowStart) / 60_000 * TV_DESIGN.pixelsPerMinute;
+  if (stop <= 0 || start >= laneWidth) return undefined;
+  const left = Math.max(0, start) + 2;
+  return { left, width: Math.max(1, Math.min(laneWidth, stop) - 2 - left) };
+}
+
+/** Width of the cell's visible intersection as a touch timeline scrolls. */
+export function guideTitleScrollRange(left: number, width: number, viewportWidth: number) {
+  const right = left + width;
+  const points = [left - viewportWidth, Math.min(left, right - viewportWidth), Math.max(left, right - viewportWidth), right];
+  const widths = [0, Math.min(width, viewportWidth), Math.min(width, viewportWidth), 0];
+  const inputRange: number[] = [], outputRange: number[] = [];
+  points.forEach((point, i) => { if (point !== inputRange.at(-1)) { inputRange.push(point); outputRange.push(widths[i]!); } });
+  return { inputRange, outputRange, extrapolate: 'clamp' as const };
+}
+
 export function programmeAt(programmes: Programme[], timestamp: number): number {
   const found = programmes.findIndex(p => p.start <= timestamp && p.stop > timestamp);
   if (found >= 0) return found;

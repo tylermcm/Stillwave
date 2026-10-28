@@ -1,0 +1,272 @@
+{
+  "collectedAt": "2026-10-28T01:39:59.098Z",
+  "requestedHosts": 54,
+  "requestedStreams": 79,
+  "availableStreams": 26,
+  "assignments": [
+    {
+      "channelId": "10lqipw",
+      "tvgId": "LA36.us@SD",
+      "url": "https://reflect-channel36-la.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 44
+    },
+    {
+      "channelId": "14186hl",
+      "tvgId": "Channel18GAC.us@SD",
+      "url": "https://reflect-channel18vod-springfield-il-us.cablecast.tv/internetchannel/schedule?site=2",
+      "siteId": 2,
+      "listings": 126
+    },
+    {
+      "channelId": "14ng1aq",
+      "tvgId": "DetroitChannel68.us@SD",
+      "url": "https://reflect-detroit-vod.cablecast.tv/internetchannel/schedule?site=4",
+      "siteId": 4,
+      "listings": 176
+    },
+    {
+      "channelId": "16uvmkm",
+      "tvgId": "HCTVPublicAccessChannel.us@SD",
+      "url": "https://reflect-hudsonctv.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 246
+    },
+    {
+      "channelId": "187c9sw",
+      "tvgId": "WillametteFallsMediaCenter.us@SD",
+      "url": "https://reflect-greater-clackamas-county-tv.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 151
+    },
+    {
+      "channelId": "18ov818",
+      "tvgId": "BXCulture.us@SD",
+      "url": "https://reflect-stream-bronxnet.cablecast.tv/internetchannel/schedule?site=4",
+      "siteId": 4,
+      "listings": 320
+    },
+    {
+      "channelId": "18qo786",
+      "tvgId": "BXArts.us@SD",
+      "url": "https://reflect-stream-bronxnet.cablecast.tv/internetchannel/schedule?site=3",
+      "siteId": 3,
+      "listings": 266
+    },
+    {
+      "channelId": "1bi13bu",
+      "tvgId": "BXInspire.us@SD",
+      "url": "https://reflect-stream-bronxnet.cablecast.tv/internetchannel/schedule?site=6",
+      "siteId": 6,
+      "listings": 181
+    },
+    {
+      "channelId": "1bzonfo",
+      "tvgId": "HBTV.us@SD",
+      "url": "https://reflect-huntingtonbeach.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 115
+    },
+    {
+      "channelId": "1c994u0",
+      "tvgId": "DetroitChannel22.us@SD",
+      "url": "https://reflect-detroit-vod.cablecast.tv/internetchannel/schedule?site=2",
+      "siteId": 2,
+      "listings": 216
+    },
+    {
+      "channelId": "1moyafg",
+      "tvgId": "AccessTuolumne.us@SD",
+      "url": "https://reflect-tuolumne.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 103
+    },
+    {
+      "channelId": "1ns9q37",
+      "tvgId": "YouDotGov.us@SD",
+      "url": "https://reflect-communitytv.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 22
+    },
+    {
+      "channelId": "1nzpm7o",
+      "tvgId": "DetroitChannel21.us@SD",
+      "url": "https://reflect-detroit-vod.cablecast.tv/internetchannel/schedule?site=3",
+      "siteId": 3,
+      "listings": 404
+    },
+    {
+      "channelId": "1qb20wm",
+      "tvgId": "FCPublicMedia.us@SD",
+      "url": "https://reflect-fcpublicmedia.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 441
+    },
+    {
+      "channelId": "1vhh8f2",
+      "tvgId": "BIGCivicChannel.us@SD",
+      "url": "https://reflect-brookline-interactive-group.cablecast.tv/internetchannel/schedule?site=2",
+      "siteId": 2,
+      "listings": 127
+    },
+    {
+      "channelId": "1yoshi9",
+      "tvgId": "DetroitChannel10.us@SD",
+      "url": "https://reflect-detroit-vod.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 968
+    },
+    {
+      "channelId": "3xudd4",
+      "tvgId": "FCTV.us@SD",
+      "url": "https://reflect-vod-fcgov.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 72
+    },
+    {
+      "channelId": "9bskew",
+      "tvgId": "CMAC1.us@SD",
+      "url": "https://reflect-vod-cmac.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 155
+    },
+    {
+      "channelId": "hh9x0s",
+      "tvgId": "Access19.us@SD",
+      "url": "https://reflect-montgomerycommunitymedia.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 305
+    },
+    {
+      "channelId": "i881is",
+      "tvgId": "BXOmni.us@SD",
+      "url": "https://reflect-stream-bronxnet.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 143
+    },
+    {
+      "channelId": "lcw4tw",
+      "tvgId": "HCTVEducationalAccessChannel.us@SD",
+      "url": "https://reflect-hudsonctv.cablecast.tv/internetchannel/schedule?site=2",
+      "siteId": 2,
+      "listings": 119
+    },
+    {
+      "channelId": "oak70",
+      "tvgId": "CCX1.us@SD",
+      "url": "https://reflect-ccx.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 202
+    },
+    {
+      "channelId": "om6i0k",
+      "tvgId": "MontgomeryChannel.us@SD",
+      "url": "https://reflect-montgomerycommunitymedia.cablecast.tv/internetchannel/schedule?site=2",
+      "siteId": 2,
+      "listings": 308
+    },
+    {
+      "channelId": "p3vk4s",
+      "tvgId": "BIGCommunityChannel.us@SD",
+      "url": "https://reflect-brookline-interactive-group.cablecast.tv/internetchannel/schedule",
+      "siteId": 1,
+      "listings": 275
+    },
+    {
+      "channelId": "p5esbx",
+      "tvgId": "HCTVGovernmentChannel.us@SD",
+      "url": "https://reflect-hudsonctv.cablecast.tv/internetchannel/schedule?site=3",
+      "siteId": 3,
+      "listings": 73
+    },
+    {
+      "channelId": "qbhyu0",
+      "tvgId": "BXInform.us@SD",
+      "url": "https://reflect-stream-bronxnet.cablecast.tv/internetchannel/schedule?site=5",
+      "siteId": 5,
+      "listings": 191
+    }
+  ],
+  "failures": [
+    {
+      "url": "https://buenapark.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://capitalcityconnection.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://champaign-cablecast.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://concordca.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://irctv.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-broadcast-psdschools.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 502"
+    },
+    {
+      "url": "https://reflect-collier-countyboc.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-creatv.cablecast.tv/internetchannel/schedule?site=5",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://reflect-creatv.cablecast.tv/internetchannel/schedule?site=6",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://reflect-creatv.cablecast.tv/internetchannel/schedule?site=7",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://reflect-losangeles.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-mcsb-vod.cablecast.tv/internetchannel/schedule?site=2",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://reflect-monroe-mi-ci.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-monroe-public-access.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-scvtv.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-tacm.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://reflect-tampa-bay-community.cablecast.tv/internetchannel/schedule?site=2",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://reflect-tampa-bay-community.cablecast.tv/internetchannel/schedule?site=3",
+      "error": "HTTP 500"
+    },
+    {
+      "url": "https://vallejo.cablecast.tv/internetchannel/schedule",
+      "error": "fetch failed"
+    },
+    {
+      "url": "https://whittier.cablecast.tv/internetchannel/schedule",
+      "error": "HTTP 404"
+    }
+  ]
+}

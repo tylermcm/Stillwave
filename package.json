@@ -1,6 +1,6 @@
 {
   "name": "stillwave",
-  "version": "0.4.3",
+  "version": "0.4.7",
   "private": true,
   "main": "index.ts",
   "packageManager": "pnpm@11.25.0",

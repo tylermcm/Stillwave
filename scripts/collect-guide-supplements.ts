@@ -34,7 +34,7 @@ export async function collectGuideSupplements(channels: Channel[], now = Date.no
           if (html.length > 4 * 1024 * 1024) throw new Error('Schedule page exceeded size limit.');
           await writeFile(cache, html);
         }
-        list.push(...parseTvPassportPage(html, station.id));
+        list.push(...parseTvPassportPage(html, station.id, (catalog.tvPassportLabels as Record<string, string>)[station.id]));
       } catch (error) { failures.push({ channelId: station.channels[0]!.id, url, error: error instanceof Error ? error.message : 'Failed' }); }
     }
     const sorted = list.filter(p => p.stop > now - 86_400_000 && p.start < now + 7 * 86_400_000).sort((a, b) => a.start - b.start)

@@ -1,0 +1,15 @@
+{
+  "version": "0.4.6",
+  "versionCode": 13,
+  "bytes": 37170957,
+  "sha256": "efd4fb4f3d8451775ff5b95f42ea9f239af825f5bcb8918984599d2e084e80a8",
+  "signingCertificate": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "embeddedBundle": true,
+  "nativeUpdater": true,
+  "checks": 113,
+  "remoteSearch": "Rendered TV keyboard entry, category selection and apply passed",
+  "hiding": "Persistence, refresh identity and filter tests passed",
+  "updates": "Release selection tests, native build, APK registration and installer permission verified; end-to-end device upgrade pending first newer release",
+  "githubLatestRelease": "404: no public release published yet",
+  "published": false
+}

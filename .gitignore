@@ -5,6 +5,7 @@ node_modules/
 .android-build/
 artifacts/*.apk
 artifacts/*.sha256
+artifacts/Stillwave-*.zip
 dist/
 web-build/
 coverage/

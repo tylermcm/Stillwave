@@ -6,6 +6,8 @@ Asset: `stillwave-mark-v1.png` (transparent PNG). Created with the built-in imag
 
 Palette: background `#0b0f10`, seafoam `#8fd6c0`, pale text `#e1e8e8`, muted text `#7f8f90`.
 
+Android launcher integration (0.4.4): the approved version 2 mark is also used for adaptive, round and legacy launcher icons on the dark background. `withLauncherIcon.cjs` insets the adaptive foreground drawable 12% to preserve the S under launcher masks without modifying the image. The signed APK contains the generated icon; phone testing is pending.
+
 ## Generation prompt
 
 Use case: logo-brand. Create a single original standalone app logo mark for StillWave, a calm live television and DVR player. A simple memorable abstract letter S formed from two smooth horizontal wave ribbons, suggesting a gently moving ocean signal. Flat, vector-like precise rounded geometry, balanced negative space, recognizable at tiny Android app icon size. Solid muted seafoam mint #8fd6c0, with at most a second slightly lighter mint plane. No ocean illustration, no television outline, no play triangle, no gradients, no glow, no shadows, no 3D, no extra symbols. Center one compact mark occupying about 65 percent of a square canvas. Transparent background with real alpha. No words, no letters outside the abstract S symbol, no captions, no mockup objects. This is the logo mark asset; wordmark typography will be composed separately in code.

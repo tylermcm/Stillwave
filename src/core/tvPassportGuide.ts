@@ -31,7 +31,12 @@ export function scheduleWallTime(value: string, zone: string): number | undefine
 }
 
 /** Only the published listing attributes are read; scripts and page text are ignored. */
-export function parseTvPassportPage(html: string, channelId: string): Programme[] {
+export function parseTvPassportPage(html: string, channelId: string, expectedStation?: string): Programme[] {
+  if (expectedStation) {
+    const heading = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(html)?.[1];
+    const label = heading && decode(heading.replace(/<[^>]*>/g, '')).replace(/^TV Schedule for\s+/i, '').replace(/\s+/g, ' ').trim();
+    if (label !== expectedStation.replace(/\s+/g, ' ').trim()) throw new Error('TV Passport returned a different station.');
+  }
   const selector = /<select\b[^>]*\bid=["']timezone_selector["'][^>]*>([\s\S]*?)<\/select>/i.exec(html)?.[1];
   const selected = selector?.match(/<option\b(?=[^>]*\bselected\b)[^>]*>/i)?.[0];
   const zone = selected && attributes(selected).value;

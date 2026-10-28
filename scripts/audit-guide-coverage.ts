@@ -4,6 +4,8 @@ import { gzipSync } from 'node:zlib';
 import { compileGuideBundle } from '../src/core/guideBundle';
 import { parseWatchYourGuide } from '../src/core/providerGuides';
 import { collectGuideSupplements } from './collect-guide-supplements';
+import { collectCablecastGuide } from './collect-cablecast-guide';
+import { collectProviderGuides } from './collect-provider-guides';
 import { parseM3u } from '../src/core/m3u';
 import { importGuideBytes, serializeGuide } from '../src/core/guideImport';
 import { createGuideView, guideCoverage } from '../src/core/guides';
@@ -68,12 +70,21 @@ async function main() {
   const defaultCoverage = guideCoverage(channels, defaults, now);
   if (build) {
     if (results.some(r => 'error' in r)) throw new Error('A source failed. The last combined guide is kept; retry the build.');
-    const missing = channels.filter(c => !(defaults.guide?.programmes[defaults.matcher(c) || ''] ?? []).some(p => p.stop > now));
-    const supplement = await collectGuideSupplements(missing, now, reuseDownloads);
-    sources.push(supplement);
-    await writeFile(`${directory}/${supplement.id}.xml`, serializeGuide(supplement.guide));
-    const available = Object.keys(supplement.guide.programmes).length;
-    results.push({ id: supplement.id, name: supplement.name, url: 'https://www.tvpassport.com/', available, addedCoverage: available, refreshHours: 12, collector: true });
+    const missing = () => {
+      const view = createGuideView({ ...EMPTY_LIBRARY, guideSources: sources });
+      return channels.filter(c => !(view.guide?.programmes[view.matcher(c) || ''] ?? []).some(p => p.stop > now));
+    };
+    const append = async (supplement: GuideSource) => {
+      const before = guideCoverage(channels, createGuideView({ ...EMPTY_LIBRARY, guideSources: sources }), now).available;
+      sources.push(supplement);
+      await writeFile(`${directory}/${supplement.id}.xml`, serializeGuide(supplement.guide));
+      const available = guideCoverage(channels, createGuideView({ ...EMPTY_LIBRARY, guideSources: [supplement] }), now).available;
+      const after = guideCoverage(channels, createGuideView({ ...EMPTY_LIBRARY, guideSources: sources }), now).available;
+      results.push({ id: supplement.id, name: supplement.name, url: supplement.url ?? 'https://www.tvpassport.com/', available, addedCoverage: after - before, refreshHours: supplement.refreshHours, collector: true });
+    };
+    await append(await collectGuideSupplements(missing(), now, reuseDownloads));
+    for (const source of await collectProviderGuides(missing(), now, reuseDownloads)) await append(source);
+    await append(await collectCablecastGuide(missing(), now, reuseDownloads));
   }
   const view = createGuideView({ ...EMPTY_LIBRARY, guideSources: sources });
   const details = channels.map(channel => {
@@ -94,9 +105,9 @@ async function main() {
     `Combined guide${build ? ' including collected supplements' : ''}: **${coverage.available}/${coverage.total}**; **${coverage.missing}** unmatched.`, '',
     '| Source | With listings | Added coverage |', '| --- | ---: | ---: |',
     ...results.map(s => `| [${s.name}](${s.url}) | ${s.available ?? 'failed'} | ${s.addedCoverage ?? '—'} |`), '',
-    'Station identities preserve region, language, subchannel and stream identity. Provider ID aliases come from the iptv-org station catalogs. WatchYour schedules require an exact stream host/path match and consistent published UTC timestamps. TV Passport supplements use exact catalog IDs and the page’s declared time zone; ambiguous DST wall times are skipped.', '',
-    'No program placeholders are generated. An unmatched channel has no verified listing in this run; this does not establish that no schedule exists elsewhere. Full channel assignments, missing list and horizons are in guide-coverage.json. Collector failures are in guide-supplement-audit.json when building supplements.', '',
-    'Run `pnpm guide:build` to fetch current feeds, collect missing TV Passport stations and generate verified XML/XML.gz under artifacts/epg. `--reuse-downloads` is a development option using prior downloads, not a live freshness audit.', '',
+    'Station identities preserve region, language, subchannel and stream identity. Provider ID aliases come from the iptv-org station catalogs and reviewed station overrides. Global Pluto/Plex supplements require exact provider identities; foreign display names cannot create matches. WatchYour and Cablecast require an exact published stream host/path. Cablecast keeps explicit UTC offsets and published end times. TV Passport verifies the station heading and uses its declared IANA zone and duration; ambiguous DST wall times are skipped.', '',
+    'No program placeholders are generated. An unmatched channel has no verified listing in this run; this does not establish that no schedule exists elsewhere. Full channel assignments, missing list and horizons are in guide-coverage.json. Collector results and failures are in guide-supplement-audit.json, guide-provider-audit.json and guide-cablecast-audit.json.', '',
+    'Run `pnpm guide:build` to fetch current feeds, collect missing TV Passport, global provider and Cablecast schedules, and generate verified XML/XML.gz under artifacts/epg. `--reuse-downloads` is a development option using prior downloads, not a live freshness audit.', '',
     'The Refresh hosted EPG GitHub Actions workflow publishes verified output to https://tylermcm.github.io/Stillwave/stillwave-us.xml.gz every six hours. Check status.json at that host for the actual public generation time. Local builds do not publish automatically.', '',
     '[Collector catalogs](https://github.com/iptv-org/epg) · [IPTV-EPG](https://iptv-epg.org/guides) · [EPG.PW](https://epg.pw/xmltv.html?lang=en)', '',
   ].join('\n'));

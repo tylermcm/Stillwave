@@ -5,4 +5,7 @@ plugins {
 group = 'com.stillwave'
 version = '0.1.0'
 android { namespace 'expo.modules.stillwavedvr' }
-dependencies { testImplementation 'junit:junit:4.13.2' }
+dependencies {
+  implementation 'androidx.core:core:1.17.0'
+  testImplementation 'junit:junit:4.13.2'
+}
