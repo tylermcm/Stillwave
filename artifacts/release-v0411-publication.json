@@ -1,0 +1,87 @@
+{
+  "releaseUrl": "https://github.com/tylermcm/Stillwave/releases/tag/v0.4.11",
+  "version": "0.4.11",
+  "versionCode": 18,
+  "publishedAt": "2026-10-28T17:16:54Z",
+  "sourceCommit": "0b7e458301a4aeab9f4b53ba0d357246017fccbc",
+  "publicLatestRelease": "v0.4.11",
+  "stablePublishedRelease": true,
+  "uploadedAssets": [
+    {
+      "name": "apk-v0411-verification.json",
+      "bytes": 1396,
+      "digest": "sha256:7e5a7c1408f262066f13cd5e10868622854eab8c30d58e1dd80216ed2e899efc"
+    },
+    {
+      "name": "Stillwave-0.4.11.apk",
+      "bytes": 37191437,
+      "digest": "sha256:bfad07bf1454058bf78ca254989e39a610839342639b3d6152603359191a934b"
+    },
+    {
+      "name": "Stillwave-0.4.11.apk.sha256",
+      "bytes": 87,
+      "digest": "sha256:ffc253e1c3f410e81aa47d4dee1886c0c375cdb4ef8c311af7579025f8a2ef37"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.11.apk",
+      "bytes": 37191437,
+      "digest": "sha256:bfad07bf1454058bf78ca254989e39a610839342639b3d6152603359191a934b"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.11.apk.sha256",
+      "bytes": 94,
+      "digest": "sha256:d0333b79582c61e62e381d634cba0bf8a48645d3cb889a709291949c73d96bc0"
+    }
+  ],
+  "originalSigningCertificateVerified": true,
+  "publicPhoneApkDownloadedAndHashVerified": true,
+  "apkSha256": "bfad07bf1454058bf78ca254989e39a610839342639b3d6152603359191a934b",
+  "publicFireTvAssetHttpStatus": 200,
+  "updateSelectionChecks": [
+    {
+      "installed": "0.4.6",
+      "television": false,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.6",
+      "television": true,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.8",
+      "television": false,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.8",
+      "television": true,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.9",
+      "television": false,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.9",
+      "television": true,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.10",
+      "television": false,
+      "offered": "0.4.11"
+    },
+    {
+      "installed": "0.4.10",
+      "television": true,
+      "offered": "0.4.11"
+    }
+  ],
+  "freshApiChecksAndInstallTargetResolutionVerified": true,
+  "equalInstalledVersionIgnored": true,
+  "physicalDeviceInstallationTested": false,
+  "allUploadedAssetsVerifiedBeforePublication": true,
+  "publicFireTvApkDownloadedAndHashVerified": true
+}

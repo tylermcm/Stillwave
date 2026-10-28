@@ -1,4 +1,8 @@
-## 0.4.11 signed build verified; publication in progress (2026-10-28)
+## 0.4.11 published and public updates verified (2026-10-28)
+
+Published stable release: https://github.com/tylermcm/Stillwave/releases/tag/v0.4.11. Source/tag commit: 0b7e458301a4aeab9f4b53ba0d357246017fccbc, pushed on main. All five uploaded assets matched local sizes and SHA-256 hashes before publication. The unauthenticated latest-release API returns v0.4.11. Both public phone and Fire TV APKs were fully downloaded and their SHA-256 hashes match the verified signed build. The actual updater selector detects the correct assets from installed 0.4.6, 0.4.8, 0.4.9 and 0.4.10 for phone/TV and ignores equal installed 0.4.11. Live fresh-check and install-target resolution checks pass. Evidence: artifacts/release-v0411-publication.json. This supersedes earlier source-only and pending-publication notes. Android update installation, native rendering/playback and S25+ cutout acceptance remain physical-device checks.
+
+## 0.4.11 signed build verified before publication (2026-10-28)
 
 Resumed after the prior chat reached its usage limit. The build and packaging had completed successfully before interruption; publication had not begun. Rechecked typecheck and all 122 tests, original signing certificate, APK signature/alignment, exact bundled updater/menu/guide sources, install permission, TV launcher and identical phone/TV assets. Version 0.4.11 / code 18; each APK is 37,191,437 bytes, SHA-256 bfad07bf1454058bf78ca254989e39a610839342639b3d6152603359191a934b. Reports: artifacts/apk-v0411-verification.json, artifacts/release-v0411-check.json and artifacts/v0411-bundle-source-check.json. Publishing through the already-authorized draft validation workflow. Physical Android installation/rendering/playback and S25+ cutout acceptance remain pending.
 
