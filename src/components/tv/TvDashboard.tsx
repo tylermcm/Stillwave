@@ -1,9 +1,11 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Animated, Platform, ScrollView, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { TV_DESIGN as D, guideProgrammeFrame, guideProgrammeKey, guideTitleScrollRange, tvDuration, tvTime, type TvDashboardState, type TvDvrItem, type TvDvrTab, type TvGuideRow } from '../../core/tvGuide';
 
 import { usesTvPlayer } from '../../data/tv';
 import { TouchTvList } from './TouchTvList';
+import { MobileNavigation } from './MobileNavigation';
+import { mobileDashboardLayout } from '../../core/mobileDashboard';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -19,8 +21,8 @@ function Label({ children, style, lines }: { children: ReactNode; style?: object
 function Mark({ recording = false, ink = false }: { recording?: boolean; ink?: boolean }) {
   return <View style={recording ? s.dot : [s.ring, ink && { borderColor: DVR_COLORS.ink }]} />;
 }
-function Action({ children, primary, focused, onPress }: { children: string; primary?: boolean; focused?: boolean; onPress: () => void }) {
-  return <Pressable accessibilityRole="button" accessibilityLabel={children} onPress={onPress} style={[s.button, primary && s.primary, focused && s.actionFocus]}><Label style={[s.buttonText, primary ? s.primaryText : {}]}>{children}</Label></Pressable>;
+function Action({ children, primary, focused, onPress, scale = 1 }: { children: string; primary?: boolean; focused?: boolean; onPress: () => void; scale?: number }) {
+  return <Pressable accessibilityRole="button" accessibilityLabel={children} onPress={onPress} style={[s.button, !usesTvPlayer && { minHeight: 44 / scale, justifyContent: 'center' }, primary && s.primary, focused && s.actionFocus]}><Label style={[s.buttonText, primary ? s.primaryText : {}]}>{children}</Label></Pressable>;
 }
 function Preview({ channel, recording, style }: { channel: string; recording?: boolean; style?: object }) {
   return <View style={[s.preview, style]}><Label style={s.previewName}>{channel}</Label>{recording && <View style={s.previewRec}><Mark recording /><Label style={s.previewRecText}>REC</Label></View>}</View>;
@@ -29,18 +31,23 @@ function Preview({ channel, recording, style }: { channel: string; recording?: b
 /** Direct translation of mockups/tv-dvr.html, using real data supplied by the controller. */
 export function TvDashboard({ state: v, ...events }: Props) {
   const viewport = useWindowDimensions();
+  const [available, setAvailable] = useState<{ width: number; height: number }>();
+  const touch = !usesTvPlayer;
+  const area = available ?? viewport;
+  const mobile = mobileDashboardLayout(area.width, area.height);
   // The navigation stays at finger size instead of shrinking with the TV canvas.
   const headerHeight = viewport.width < 1100 ? 56 : 80;
-  const bodyHeight = D.height - 80;
-  const scale = Math.min(viewport.width / D.width, Math.max(1, viewport.height - headerHeight) / bodyHeight);
-  const touch = !usesTvPlayer;
+  const bodyHeight = touch ? mobile.height : D.height - 80;
+  const scale = touch ? mobile.scale : Math.min(viewport.width / D.width, Math.max(1, viewport.height - headerHeight) / bodyHeight);
+  const canvasWidth = touch ? mobile.width : D.width;
+  const laneWidth = canvasWidth - D.channelWidth;
   const timeScroll = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const timeOffset = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     timeScroll.current?.scrollTo({ x: 0, animated: false });
     timeOffset.setValue(0);
   }, [v.cursor.windowStart, timeOffset]);
-  const gridWidth = touch ? D.channelWidth + 24 * 60 * D.pixelsPerMinute : D.width;
+  const gridWidth = touch ? Math.max(canvasWidth, D.channelWidth + 24 * 60 * D.pixelsPerMinute) : D.width;
   const pinned = touch ? { zIndex: 2, backgroundColor: DVR_COLORS.bg, transform: [{ translateX: timeOffset }] } : undefined;
   const row = v.rows[v.cursor.channel];
   const programme = row?.programmes[v.cursor.programme];
@@ -58,7 +65,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
   const nowX = D.channelWidth + (v.now - v.cursor.windowStart) / 60_000 * D.pixelsPerMinute;
   const guideActions = [...(live ? ['watch'] : []), ...(!past && programme ? ['record'] : [])];
   const renderGuideRow = (r: TvGuideRow, ci: number, markTouchSelection?: () => void) => {
-    return <View key={r.channel.id} style={[s.row, touch ? { position: 'relative', top: 0, width: gridWidth } : { top: (ci - v.cursor.rowTop) * D.rowHeight }]}>
+    return <View key={r.channel.id} style={[s.row, touch ? { position: 'relative', top: 0, width: gridWidth, height: mobile.rowHeight } : { top: (ci - v.cursor.rowTop) * D.rowHeight }]}>
                 <Animated.View style={[s.channel, pinned]}><Label lines={1} style={[s.channelNumber, { width: Math.max(40, r.number.length * 15) }]}>{r.number}</Label><Label lines={1} style={[s.channelName, ci === v.cursor.channel ? { color: DVR_COLORS.text } : {}]}>{r.channel.name}</Label></Animated.View>
                 <View style={s.lane}>
                   {r.programmes.map((p, pi) => {
@@ -67,7 +74,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
                     const focused = v.focus.zone === 'grid' && ci === v.cursor.channel && pi === v.cursor.programme;
                     const status = v.marks[guideProgrammeKey(r.channel.id, p)];
                     const titleOffset = touch ? timeOffset.interpolate({ inputRange: [frame.left, frame.left + frame.width], outputRange: [0, frame.width], extrapolate: 'clamp' }) : 0;
-                    const titleWidth = touch ? timeOffset.interpolate(guideTitleScrollRange(frame.left, frame.width, D.width - D.channelWidth)) : frame.width;
+                    const titleWidth = touch ? timeOffset.interpolate(guideTitleScrollRange(frame.left, frame.width, laneWidth)) : frame.width;
                     return <Pressable key={`${p.start}:${pi}`} accessibilityRole="button" accessibilityLabel={`${p.title} on ${r.channel.name}`} onPress={() => { markTouchSelection?.(); events.onProgramme(ci, pi); }} style={[s.programme, p.start <= v.now && p.stop > v.now && s.programmeNow, focused && s.programmeFocus,
                       { ...frame, paddingHorizontal: 0 }]}>
                       <Animated.View style={[s.programmeContent, { width: titleWidth, transform: [{ translateX: titleOffset }] }]}>
@@ -75,35 +82,35 @@ export function TvDashboard({ state: v, ...events }: Props) {
                       </Animated.View>
                     </Pressable>;
                   })}
-                  {!r.programmes.some(p => p.stop > v.cursor.windowStart && p.start < v.cursor.windowStart + visibleSpan) && <AnimatedPressable accessibilityRole="button" accessibilityLabel={`Watch ${r.channel.name} live; schedule unavailable`} onPress={() => { markTouchSelection?.(); events.onProgramme(ci, v.cursor.programme); }} style={[s.programme, { left: 2, right: 2 }, touch && { right: undefined, width: D.width - D.channelWidth - 4, transform: [{ translateX: timeOffset }] }, ci === v.cursor.channel && v.focus.zone === 'grid' && s.programmeFocus]}><Label style={[s.programmeText, ci === v.cursor.channel && v.focus.zone === 'grid' ? { color: DVR_COLORS.ink } : { color: DVR_COLORS.muted }]}>Schedule unavailable · OK Watch live</Label></AnimatedPressable>}
+                  {!r.programmes.some(p => p.stop > v.cursor.windowStart && p.start < v.cursor.windowStart + visibleSpan) && <AnimatedPressable accessibilityRole="button" accessibilityLabel={`Watch ${r.channel.name} live; schedule unavailable`} onPress={() => { markTouchSelection?.(); events.onProgramme(ci, v.cursor.programme); }} style={[s.programme, { left: 2, right: 2 }, touch && { right: undefined, width: laneWidth - 4, transform: [{ translateX: timeOffset }] }, ci === v.cursor.channel && v.focus.zone === 'grid' && s.programmeFocus]}><Label lines={1} style={[s.programmeText, ci === v.cursor.channel && v.focus.zone === 'grid' ? { color: DVR_COLORS.ink } : { color: DVR_COLORS.muted }]}>{touch ? 'Schedule unavailable · Tap to watch' : 'Schedule unavailable · OK Watch live'}</Label></AnimatedPressable>}
                 </View>
               </View>;
   };
   const renderDvrRow = (item: TvDvrItem, index: number, markTouchSelection?: () => void) => {
     const rowTop = Math.max(0, v.itemIndex - (v.conflict ? 7 : 8));
     const focused = v.focus.zone === 'dvrList' && index === v.itemIndex;
-    return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={item.title} onPress={() => { markTouchSelection?.(); events.onItem(index); }} style={[s.item, touch ? { position: 'relative', top: 0 } : { top: (index - rowTop) * 88 }, focused && s.itemFocus]}>
+    return <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={item.title} onPress={() => { markTouchSelection?.(); events.onItem(index); }} style={[s.item, touch ? { position: 'relative', top: 0, height: Math.max(88, mobile.rowHeight), gap: 12, paddingRight: 8 } : { top: (index - rowTop) * 88 }, focused && s.itemFocus]}>
               <View style={s.itemMark}>{item.kind === 'recording' ? <Mark recording /> : item.kind !== 'saved' || item.unwatched ? <Mark /> : null}</View>
-              <View style={s.itemTitleBlock}><Label lines={1} style={[s.itemTitle, item.watched ? { color: DVR_COLORS.dim } : {}]}>{item.title}</Label><Label lines={1} style={s.itemSubtitle}>{item.channel}{item.subtitle ? ` · ${item.subtitle}` : ''}</Label></View>
+              <View style={[s.itemTitleBlock, touch && { flexDirection: 'column', alignItems: 'stretch', justifyContent: 'center' }]}><Label lines={1} style={[s.itemTitle, item.watched ? { color: DVR_COLORS.dim } : {}]}>{item.title}</Label><Label lines={1} style={s.itemSubtitle}>{item.channel}{item.subtitle ? ` · ${item.subtitle}` : ''}</Label></View>
               {!!item.progress && item.progress < 1 && <View style={s.progress}><View style={[s.progressFill, { width: `${item.progress * 100}%` }]} /></View>}
               <Label style={s.itemRight}>{item.right}</Label>
             </Pressable>;
   };
-  return <View style={s.viewport}>
-      <View style={[s.top, { height: headerHeight, paddingHorizontal: viewport.width < 1100 ? 16 : 64, gap: viewport.width < 1100 ? 16 : 40 }]}><Label style={[s.brand, viewport.width < 1100 && { fontSize: 20 }]}>stillwave</Label><View style={s.nav}>
+  return <View style={[s.viewport, touch && { backgroundColor: DVR_COLORS.bg }]} onLayout={event => { const { width, height } = event.nativeEvent.layout; setAvailable(previous => previous?.width === width && previous?.height === height ? previous : { width, height }); }}>
+      {!touch && <View style={[s.top, { height: headerHeight, paddingHorizontal: viewport.width < 1100 ? 16 : 64, gap: viewport.width < 1100 ? 16 : 40 }]}><Label style={[s.brand, viewport.width < 1100 && { fontSize: 20 }]}>stillwave</Label><View style={s.nav}>
         {(['guide', 'dvr'] as const).map((screen, i) => <Pressable key={screen} accessibilityRole="tab" accessibilityState={{ selected: v.screen === screen }} accessibilityLabel={screen === 'guide' ? 'Guide' : 'My DVR'} onPress={() => events.onScreen(screen)} style={[s.navButton, v.screen === screen && s.navOn, v.focus.zone === 'nav' && v.focus.index === i && s.actionFocus]}><Label style={[s.navText, v.screen === screen ? { color: DVR_COLORS.text } : {}]}>{screen === 'guide' ? 'Guide' : 'My DVR'}</Label></Pressable>)}
         {events.onMenu && <Pressable accessibilityRole="button" accessibilityLabel="Open TV menu" onPress={events.onMenu} style={[s.navButton, v.focus.zone === 'nav' && v.focus.index === 2 && s.actionFocus]}><Label style={s.navText}>Menu</Label></Pressable>}
-      </View>{viewport.width >= 720 && <Label style={[s.clock, viewport.width < 1100 && { fontSize: 14 }]}>{v.clock}</Label>}</View>
-    <View testID="tv-dashboard" style={[s.stage, { height: bodyHeight, left: (viewport.width - D.width * scale) / 2, top: headerHeight + (viewport.height - headerHeight - bodyHeight * scale) / 2, transform: [{ scale }] }]}>
+      </View>{viewport.width >= 720 && <Label style={[s.clock, viewport.width < 1100 && { fontSize: 14 }]}>{v.clock}</Label>}</View>}
+    <View testID="tv-dashboard" style={[s.stage, { width: canvasWidth, height: bodyHeight, left: touch ? 0 : (viewport.width - D.width * scale) / 2, top: touch ? 0 : headerHeight + (viewport.height - headerHeight - bodyHeight * scale) / 2, transform: [{ scale }] }]}>
       {v.screen === 'guide' ? <View style={s.screen}>
-        <View style={s.details}><Preview channel={row ? `${row.number} ${row.channel.name}` : ''} recording={mark === 'recording'} />
+        <View style={[s.details, touch && { height: 316, paddingTop: 24, paddingHorizontal: 24, gap: 24, paddingBottom: 16 }]}><Preview channel={row ? `${row.number} ${row.channel.name}` : ''} recording={mark === 'recording'} style={touch ? { width: Math.min(400, canvasWidth * .28), height: '100%' } : undefined} />
           <View style={s.info}>
             <Label style={s.when}>{programme ? `${tvTime(programme.start)} – ${tvTime(programme.stop)} · ${tvDuration((programme.stop - programme.start) / 1000)}${live ? ` · ${Math.ceil((programme.stop - v.now) / 60_000)} min left` : ''}` : 'LIVE TV'}</Label>
-            <Label style={s.guideTitle} lines={1}>{programme?.title || row?.channel.name || 'Your TV guide'}</Label>
-            <Label style={s.guideDescription} lines={2}>{programme ? [programme.episode, programme.description].filter(Boolean).join(' · ') : v.guideEmpty || 'Choose a channel to start watching.'}</Label>
-            <View style={s.actions}>{live && <Action primary focused={v.focus.zone === 'guideActions' && v.focus.index === 0} onPress={() => events.onGuideAction('watch')}>Watch</Action>}
-              {!past && !!programme && <><Action primary={!live} focused={v.focus.zone === 'guideActions' && guideActions[v.focus.index] === 'record'} onPress={() => events.onGuideAction('record')}>{recordLabel}</Action><Pressable accessibilityRole="button" accessibilityLabel="Record series" style={v.focus.zone === 'guideActions' && v.focus.index === guideActions.length ? s.actionFocus : undefined} onPress={() => events.onGuideAction('series')}><Label style={s.hint}>S Record series</Label></Pressable></>}
-              {!programme && row && <Action primary focused={v.focus.zone === 'guideActions' && v.focus.index === 0} onPress={() => events.onGuideAction('watch')}>Watch</Action>}
+            <Label style={[s.guideTitle, touch && { marginTop: 4, marginBottom: 6, flexShrink: 0 }]} lines={1}>{programme?.title || row?.channel.name || 'Your TV guide'}</Label>
+            <Label style={s.guideDescription} lines={touch ? 1 : 2}>{programme ? [programme.episode, programme.description].filter(Boolean).join(' · ') : v.guideEmpty || 'Choose a channel to start watching.'}</Label>
+            <View style={s.actions}>{live && <Action scale={scale} primary focused={v.focus.zone === 'guideActions' && v.focus.index === 0} onPress={() => events.onGuideAction('watch')}>Watch</Action>}
+              {!past && !!programme && <><Action scale={scale} primary={!live} focused={v.focus.zone === 'guideActions' && guideActions[v.focus.index] === 'record'} onPress={() => events.onGuideAction('record')}>{recordLabel}</Action>{touch ? <Action scale={scale} onPress={() => events.onGuideAction('series')}>Record series</Action> : <Pressable accessibilityRole="button" accessibilityLabel="Record series" style={v.focus.zone === 'guideActions' && v.focus.index === guideActions.length ? s.actionFocus : undefined} onPress={() => events.onGuideAction('series')}><Label style={s.hint}>S Record series</Label></Pressable>}</>}
+              {!programme && row && <Action scale={scale} primary focused={v.focus.zone === 'guideActions' && v.focus.index === 0} onPress={() => events.onGuideAction('watch')}>Watch</Action>}
             </View>
           </View>
         </View>
@@ -124,25 +131,26 @@ export function TvDashboard({ state: v, ...events }: Props) {
             })}
           </View></View>
           <View style={s.rowsWrap}>
-            {touch ? <TouchTvList key={v.rows[0]?.channel.id || 'empty'} testID="touch-guide-list" scale={scale} data={v.rows} selected={v.cursor.channel} rowHeight={D.rowHeight} keyFor={r => r.channel.id} renderRow={renderGuideRow} /> : v.rows.slice(firstRow, lastRow).map((r, offset) => renderGuideRow(r, firstRow + offset))}
+            {touch ? <TouchTvList key={v.rows[0]?.channel.id || 'empty'} testID="touch-guide-list" scale={scale} data={v.rows} selected={v.cursor.channel} rowHeight={mobile.rowHeight} keyFor={r => r.channel.id} renderRow={renderGuideRow} /> : v.rows.slice(firstRow, lastRow).map((r, offset) => renderGuideRow(r, firstRow + offset))}
             {nowX >= D.channelWidth && nowX < gridWidth && <View pointerEvents="none" style={[s.nowLine, { left: nowX }]} />}
             {!v.rows.length && <Label style={s.empty}>{v.guideEmpty || 'Your channels will appear here after setup.'}</Label>}
           </View>
           </View></Animated.ScrollView>
-          <Footer screen="guide" />
+          {!touch && <Footer screen="guide" />}
         </View>
-      </View> : <View style={s.dvr}>
-        <View style={s.dvrMain}>
-          <View style={[s.dvrHead, { alignItems: 'center' }]}><Label style={s.dvrTitle}>My DVR</Label><View style={[s.tabs, { gap: Math.max(12, 8 / scale) }]}>{(['recordings', 'scheduled', 'series'] as const).map((tab, i) => <Pressable key={tab} accessibilityRole="tab" accessibilityLabel={tab} onPress={() => events.onTab(tab)} style={[s.tab, { minHeight: Math.max(44, 44 / scale), paddingHorizontal: 8 / scale, justifyContent: 'center' }, v.dvrTab === tab && s.navOn, v.focus.zone === 'dvrTabs' && v.focus.index === i && s.actionFocus]}><Label style={[s.tabText, { fontSize: Math.max(26, 16 / scale), lineHeight: Math.max(35, 22 / scale) }, v.dvrTab === tab ? { color: DVR_COLORS.text } : {}]}>{tab[0]!.toUpperCase() + tab.slice(1)}</Label></Pressable>)}</View></View>
+      </View> : <View style={[s.dvr, touch && { paddingTop: 48 / scale }]}>
+        <View style={[s.dvrMain, touch && { paddingHorizontal: 24 }]}>
+          <View style={[s.dvrHead, { alignItems: 'center' }, touch && { flexWrap: 'wrap', gap: 8 }]}><Label style={s.dvrTitle}>My DVR</Label><View style={[s.tabs, { gap: Math.max(12, 8 / scale) }]}>{(['recordings', 'scheduled', 'series'] as const).map((tab, i) => <Pressable key={tab} accessibilityRole="tab" accessibilityLabel={tab} accessibilityState={{ selected: v.dvrTab === tab }} onPress={() => events.onTab(tab)} style={[s.tab, { minHeight: Math.max(44, 44 / scale), paddingHorizontal: 8 / scale, justifyContent: 'center' }, v.dvrTab === tab && s.navOn, v.focus.zone === 'dvrTabs' && v.focus.index === i && s.actionFocus]}><Label style={[s.tabText, { fontSize: Math.max(26, 16 / scale), lineHeight: Math.max(35, 22 / scale) }, v.dvrTab === tab ? { color: DVR_COLORS.text } : {}]}>{tab[0]!.toUpperCase() + tab.slice(1)}</Label></Pressable>)}</View></View>
           <Label style={s.summary}>{v.summary}</Label>
           {!!v.conflict && <View style={s.conflict}><Label style={s.conflictText}>{v.conflict}</Label></View>}
-          <View style={s.list}>{v.items.length ? touch ? <TouchTvList key={v.dvrTab} testID="touch-dvr-list" scale={scale} data={v.items} selected={v.itemIndex} rowHeight={88} keyFor={item => item.id} renderRow={renderDvrRow} /> : v.items.slice(Math.max(0, v.itemIndex - 7), Math.max(8, v.itemIndex + 2)).map((item, offset) => renderDvrRow(item, Math.max(0, v.itemIndex - 7) + offset)) : <Label style={s.empty}>{v.dvrTab === 'recordings' ? 'No recordings yet.' : v.dvrTab === 'scheduled' ? 'Nothing scheduled.' : 'No series rules.'}</Label>}</View>
-          <Footer screen="dvr" />
+          <View style={s.list}>{v.items.length ? touch ? <TouchTvList key={v.dvrTab} testID="touch-dvr-list" scale={scale} data={v.items} selected={v.itemIndex} rowHeight={Math.max(88, mobile.rowHeight)} keyFor={item => item.id} renderRow={renderDvrRow} /> : v.items.slice(Math.max(0, v.itemIndex - 7), Math.max(8, v.itemIndex + 2)).map((item, offset) => renderDvrRow(item, Math.max(0, v.itemIndex - 7) + offset)) : <Label style={s.empty}>{v.dvrTab === 'recordings' ? 'No recordings yet.' : v.dvrTab === 'scheduled' ? 'Nothing scheduled.' : 'No series rules.'}</Label>}</View>
+          {!touch && <Footer screen="dvr" />}
         </View>
-        <DvrDetails item={selectedItem} state={v} onAction={events.onDvrAction} />
+        <DvrDetails item={selectedItem} state={v} onAction={events.onDvrAction} touch={touch} scale={scale} />
       </View>}
       {!!v.toast && <View style={s.toast}><Label style={s.toastText}>{v.toast}</Label></View>}
     </View>
+    {touch && <MobileNavigation screen={v.screen} onScreen={events.onScreen} onMenu={events.onMenu} />}
   </View>;
 }
 
@@ -150,15 +158,16 @@ function Footer({ screen }: { screen: 'guide' | 'dvr' }) {
   const labels = screen === 'guide' ? ['▲ ▼ ◀ ▶ Browse', 'OK Watch', 'R Record', 'S Series', 'Menu / 0–9 Channels', 'D My DVR'] : ['▲ ▼ Select', '◀ ▶ Tabs', 'OK Play', 'X Delete', 'G Guide'];
   return <View style={[s.footer, screen === 'dvr' && { marginHorizontal: -64 }]}>{labels.map((label, i) => <Label key={label} style={[s.footerText, i === labels.length - 1 ? { marginLeft: 'auto' as const } : {}]}>{label}</Label>)}</View>;
 }
-function DvrDetails({ item, state, onAction }: { item?: TvDvrItem; state: TvDashboardState; onAction: Props['onDvrAction'] }) {
-  if (!item) return <View style={s.side} />;
+function DvrDetails({ item, state, onAction, touch, scale }: { item?: TvDvrItem; state: TvDashboardState; onAction: Props['onDvrAction']; touch?: boolean; scale: number }) {
+  if (!item) return touch ? null : <View style={s.side} />;
   const buttons: { label: string; action: Parameters<Props['onDvrAction']>[0] }[] = item.kind === 'saved' ? [{ label: item.progress && item.progress < 1 ? 'Resume' : 'Play', action: 'play' }, { label: 'Delete', action: 'delete' }]
     : item.kind === 'recording' ? [{ label: 'Watch from start', action: 'play' }, { label: 'Stop', action: 'stop' }]
     : [{ label: item.kind === 'series' ? 'Remove rule' : 'Cancel', action: 'cancel' }, { label: 'Show in guide', action: 'guide' }];
-  return <View style={s.side}><Preview channel={item.channel} recording={item.kind === 'recording'} style={s.sidePreview} />
+  const content = <><Preview channel={item.channel} recording={item.kind === 'recording'} style={touch ? { width: '100%', height: 200 } : s.sidePreview} />
     <Label style={s.sideTitle}>{item.title}</Label><Label style={s.sideMeta}>{item.meta}</Label><Label style={s.sideDescription}>{item.description}</Label>
-    <View style={[s.actions, { flexWrap: 'wrap' }]}>{buttons.map((button, i) => <Action key={button.action} primary={i === 0} focused={state.focus.zone === 'dvrActions' && state.focus.index === i} onPress={() => onAction(button.action)}>{button.label}</Action>)}</View>
-  </View>;
+    <View style={[s.actions, { flexWrap: 'wrap' }]}>{buttons.map((button, i) => <Action scale={scale} key={button.action} primary={i === 0} focused={state.focus.zone === 'dvrActions' && state.focus.index === i} onPress={() => onAction(button.action)}>{button.label}</Action>)}</View>
+  </>;
+  return touch ? <ScrollView style={[s.side, { width: '32%', flexGrow: 0, flexShrink: 0, flexBasis: 'auto', paddingHorizontal: 24 }]} contentContainerStyle={{ gap: 14, paddingBottom: 24 }}>{content}</ScrollView> : <View style={s.side}>{content}</View>;
 }
 
 const C = DVR_COLORS;

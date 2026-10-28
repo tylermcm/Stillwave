@@ -1,3 +1,21 @@
+## Android release 0.4.8 build verified (2026-10-28)
+
+User requested building the mobile changes and publishing a GitHub release, supplying the original signing archive. Restored it under ignored private/android-signing; its certificate matches the original release. Version is 0.4.8 / code 15. The existing build scripts restored a project-local JDK/SDK/NDK/CMake/Gradle toolchain, then produced a signed standalone universal APK in 11m53s. Both phone and Fire TV asset names contain the same APK; TV UI remains unchanged.
+
+- artifacts/Stillwave-0.4.8.apk and artifacts/Stillwave-FireTV-0.4.8.apk: 37,175,053 bytes each, SHA-256 547d406014c16b197af2e0343e75307e3ebee9fef9c69a87a3c9e513fb0a809b.
+- Verification passes: package/version, landscape-only activity, ARM32/64, original certificate, signature/alignment, embedded bundle matching generated output, exact bundled mobile/DVR/player source, approved logo/splash, PiP, private DVR service, TV launcher and installer permission. APK contains no signing files. Typecheck and 116 tests pass; the four-size touch checks and unchanged TV captures from the mobile pass remain valid. Physical installation/playback acceptance is pending.
+- Evidence: artifacts/apk-v048-verification.json, artifacts/release-v048-check.json and artifacts/v048-bundle-source-check.json. Build log: ignored .build-tmp/apk-build-v048.log. Keys, credentials, build tools and APK binaries stay out of Git. Publication verification will be recorded after uploading and publishing the stable release.
+
+## Mobile layout changes (included in 0.4.8, 2026-10-28)
+
+User requested mobile-only screen filling, touch wording instead of TV key hints, hidden top navigation, the existing logo instead of the lowercase wordmark, and a small UI size increase. Follow-up corrections explicitly require **landscape only**, substantially less zoom than the first preview, and **the logo visible only while navigation is open**.
+
+- Touch dashboards now measure their actual available safe area and reflow the canvas to fill its width and height with one uniform scale. Final scale is 10% above the former landscape fit, with finger-sized rows/actions. The existing Android landscape lock in plugins/withTvRemote.cjs is retained. No portrait layout or orientation change ships.
+- The persistent top tabs and remote shortcut footer are removed on touch devices. A small centered handle opens navigation by tap or downward swipe; upward swipe, outside tap, close, Android Back, or choosing a destination dismisses it. The StillWave logo is mounted only while expanded. Mobile instructions say tap, and Record series is a real button. TV paths retain their former layout and copy.
+- Browser fixtures checked at 740×360, 852×393, 960×400 and 1280×800: full viewport bounds, hidden/revealed logo, tap/swipe/escape navigation, accessible DVR tabs, guide/DVR scrolling, and pinned channel labels during timeline scrolling. TV Guide and DVR captures at 1920×1080 are pixel-identical to HEAD. Evidence: artifacts/mobile-adaptive-verification.json and mobile-adaptive-{landscape,navigation,dvr}.png. Physical phone testing remains pending.
+- Typecheck and 116 tests pass; Android JS/Hermes export passes. Reusable fixture preview: start Expo on 8082, then node scripts/serve-dashboard-preview.mjs (8095; add ?remote=1 for TV).
+- The later user request authorized the 0.4.8 build and publication described above, superseding the earlier local-only status.
+
 ## Android mobile and TV release 0.4.7 (2026-10-28)
 
 User explicitly requested bringing TV features to the mobile release and creating/pushing a GitHub release. Automatic updater checks now run on Android phones as well as TVs; phones prefer Stillwave-<version>.apk and TVs prefer Stillwave-FireTV-<version>.apk. Both assets are the same universal signed app with device-selected player controls. Compact search panels fit landscape phones; touch search, category selection and Apply were checked at 852x393 and 740x360. Hide/unhide/filter controls already share the Android guide and are included on mobile. Previous-channel shortcuts also exclude hidden stations. iOS remains outside this Android release.

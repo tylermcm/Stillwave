@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, BackHandler, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationBar } from 'expo-navigation-bar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Channel, Library } from '../../types';
 import { createGuideView, guideCoverage } from '../../core/guides';
 import { guideProgrammeKey, guideWindow, moveGuide, programmeAt, type TvDashboardState, type TvDvrTab, type TvGuideCursor } from '../../core/tvGuide';
@@ -29,6 +30,8 @@ type Props = {
   onHiddenChannels: (hidden: string[]) => void;
 };
 export function TvShell(props: Props) {
+  const insets = useSafeAreaInsets();
+  const safeArea = !usesTvPlayer ? { paddingTop: insets.top, paddingRight: insets.right, paddingBottom: insets.bottom, paddingLeft: insets.left } : undefined;
   const [screen, setScreen] = useState<'guide' | 'dvr'>('guide');
   const [now, setNow] = useState(Date.now());
   const [cursor, setCursor] = useState<TvGuideCursor>(() => ({ channel: 0, programme: 0, rowTop: 0, windowStart: Math.floor(Date.now() / 1_800_000) * 1_800_000 }));
@@ -115,7 +118,7 @@ export function TvShell(props: Props) {
       setQuery(''); setCategory('all');
       setCursor(guideWindow({ ...cursor, channel, programme: programmeAt(defaultRows[channel]!.programmes, selected.programme?.start || now) }, defaultRows)); onScreen('guide'); return;
     }
-    if (action === 'delete' && (deletePending.current?.id !== selected.id || Date.now() - deletePending.current.at > 4000)) { deletePending.current = { id: selected.id, at: Date.now() }; setToast('Press Delete again to permanently remove this recording.'); return; }
+    if (action === 'delete' && (deletePending.current?.id !== selected.id || Date.now() - deletePending.current.at > 4000)) { deletePending.current = { id: selected.id, at: Date.now() }; setToast(usesTvPlayer ? 'Press Delete again to permanently remove this recording.' : 'Tap Delete again to permanently remove this recording.'); return; }
     run(async () => {
       if (action === 'play' && selected.recordingId && dvr) { const source = await dvr.recordingSource(selected.recordingId); if (selected.kind === 'recording') source.position = 0; setWatching(source); }
       else if (action === 'stop' && selected.recordingId) { await dvr?.stopRecording(selected.recordingId); setToast('Stopped. Captured video kept.'); }
@@ -283,7 +286,7 @@ export function TvShell(props: Props) {
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4000); return () => clearTimeout(t); }, [toast]);
   useEffect(() => { if (props.error) setToast(props.error); else if (props.busy) setToast(props.busy); else if (props.notice) setToast(props.notice); }, [props.error, props.busy, props.notice]);
   useEffect(() => {
-    if ((props.selected && !numberSearch) || watching || searchOpen) return;
+    if ((props.selected && !numberSearch) || watching || searchOpen || (!usesTvPlayer && !menu && !numberSearch)) return;
     const sub = BackHandler.addEventListener('hardwareBackPress', () => { if (numberSearch) setNumberSearch(undefined); else if (menu) setMenu(false); else setFocus({ zone: 'nav', index: screen === 'guide' ? 0 : 1 }); return true; });
     return () => sub.remove();
   });
@@ -301,12 +304,12 @@ export function TvShell(props: Props) {
   const state: TvDashboardState = { screen, now, clock: new Date(now).toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + new Date(now).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
     dayLabel: query ? `Search: ${query}` : category !== 'all' ? category : browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'long' }),
     rows, cursor: selectedCursor, marks, dvrTab, items, itemIndex, summary: `${usedGb} of ${totalGb} GB used · ${recordings.some(r => r.status === 'recording') ? 1 : 0} of 1 streams in use`,
-    conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels match. Use Menu to clear filters or restore hidden channels.` : 'No schedule is available. Press OK to watch this channel live.') };
-  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
+    conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels match. Use Menu to clear filters or restore hidden channels.` : usesTvPlayer ? 'No schedule is available. Press OK to watch this channel live.' : 'No schedule is available. Tap the channel to watch live.') };
+  return <View style={[s.fullscreen, safeArea]}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
     onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }}
     onProgramme={(channel, programme) => { if (selectedCursor.channel === channel && selectedCursor.programme === programme && focus.zone === 'grid') guideAction('watch'); else { setCursor(usesTvPlayer ? guideWindow({ ...cursor, channel, programme }, rows) : { ...cursor, channel, programme }); setFocus({ zone: 'grid', index: 0 }); } }}
     onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} /></View>
-    {menu && <View style={s.menu}><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
+    {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
     {numberPad}
     {searchOpen && <TvChannelSearch categories={categories} query={query} category={category} onApply={applySearch} onClose={() => setSearchOpen(false)} />}
   </View>;

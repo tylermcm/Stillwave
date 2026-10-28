@@ -1,10 +1,10 @@
-# Stillwave
+# StillWave
 
 A personal Android and iPhone IPTV player built around live television. This is a first working implementation, not a claim of production playback reliability. No ads, analytics SDKs, account server, or bundled channel subscriptions.
 
 ## Install the standalone Android app
 
-The Android release is **0.4.7 / version code 14**, available from [GitHub Releases](https://github.com/tylermcm/Stillwave/releases). Install `Stillwave-0.4.7.apk` on phones or `Stillwave-FireTV-0.4.7.apk` on Android-based Fire TV devices. Both are the same signed universal APK and use the original signing key: install over the existing app without uninstalling. **All Android devices share the landscape TV Guide and My DVR.** Phones and tablets use the mobile video player; Android-based Fire TV devices use remote controls. The Fire TV Stick 4K Select runs Vega OS and cannot install this APK. Physical-device acceptance is pending.
+The Android release is **0.4.8 / version code 15**, available from [GitHub Releases](https://github.com/tylermcm/Stillwave/releases). Install `Stillwave-0.4.8.apk` on phones or `Stillwave-FireTV-0.4.8.apk` on Android-based Fire TV devices. Both are the same signed universal APK and use the original signing key: install over the existing app without uninstalling. **All Android devices use landscape Guide and My DVR views.** On phones and tablets, the layout fills the available safe area with a modest size increase; tap the small top handle or swipe down on it to open navigation and reveal the StillWave logo. Swipe up on the open menu, tap outside, or choose a destination to dismiss it. Touch controls replace remote shortcut instructions. TV layout and remote controls are unchanged. Phones and tablets use the mobile video player. The Fire TV Stick 4K Select runs Vega OS and cannot install this APK. Physical-device acceptance is pending.
 
 Phones and TVs include **Menu → Search and filter channels**, persistent channel hiding/restoration and automatic GitHub release checks. Menu → Check for app updates offers an in-app APK download and opens the OS installer for confirmation. The first update may require allowing installations from StillWave in device settings. Once this version is installed, future stable releases with signed APK assets can be updated without manually transferring the file. See [update and channel-management instructions](docs/APP_UPDATES.md).
 

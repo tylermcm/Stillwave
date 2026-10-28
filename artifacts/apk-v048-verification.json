@@ -1,0 +1,43 @@
+{
+  "package": "com.stillwave.player",
+  "versionName": "0.4.8",
+  "versionCode": 15,
+  "minSdk": "24",
+  "debuggable": false,
+  "mainActivitySupportsPip": true,
+  "dvrServicePrivate": true,
+  "dvrServiceType": "dataSync",
+  "mainActivityOrientation": "landscape",
+  "mainActivityLaunchTheme": "@ref/0x7f130287",
+  "nativeSplashStyleId": "0x7f130287",
+  "nativeSplashAssets": [
+    "res/gV.png",
+    "res/Zt.png",
+    "res/42.png",
+    "res/St.png",
+    "res/S7.png"
+  ],
+  "approvedBrandAssets": [
+    "res/ET.png"
+  ],
+  "embeddedBundleBytes": 1953764,
+  "embeddedBundleSha256": "bea106a57722c049ab0b6a602e490737fb40f66dad530e1aa4aba167524922c8",
+  "packagedBundleMatchesBuild": true,
+  "nativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a"
+  ],
+  "signingCertificateMatchesOriginalKey": true,
+  "signingCertificateSha256": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "signatureAndAlignmentVerified": true,
+  "containsSigningFiles": false,
+  "apkBytes": 37175053,
+  "apkSha256": "547d406014c16b197af2e0343e75307e3ebee9fef9c69a87a3c9e513fb0a809b",
+  "bundledSourceVerified": true,
+  "touchAndTvLayoutVerification": "mobile-adaptive-verification.json",
+  "phoneAndTvApksIdentical": true,
+  "installPermissionVerified": true,
+  "tvLauncherVerified": true,
+  "testsPassed": 116,
+  "physicalDeviceInstallationTested": false
+}
