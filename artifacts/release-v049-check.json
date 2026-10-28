@@ -1,0 +1,36 @@
+{
+  "package": "com.stillwave.player",
+  "versionName": "0.4.9",
+  "versionCode": 16,
+  "minSdk": "24",
+  "debuggable": false,
+  "mainActivitySupportsPip": true,
+  "dvrServicePrivate": true,
+  "dvrServiceType": "dataSync",
+  "mainActivityOrientation": "landscape",
+  "mainActivityLaunchTheme": "@ref/0x7f130287",
+  "nativeSplashStyleId": "0x7f130287",
+  "nativeSplashAssets": [
+    "res/gV.png",
+    "res/Zt.png",
+    "res/42.png",
+    "res/St.png",
+    "res/S7.png"
+  ],
+  "approvedBrandAssets": [
+    "res/ET.png"
+  ],
+  "embeddedBundleBytes": 1953964,
+  "embeddedBundleSha256": "cc86233cc598685d79108620741a0206d0ad949c31ade1019df5ae994d9a60e4",
+  "packagedBundleMatchesBuild": true,
+  "nativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a"
+  ],
+  "signingCertificateMatchesOriginalKey": true,
+  "signingCertificateSha256": "0ba646c4573a26633392f443c9891b371891fb655a863fedfcdefb59fe732060",
+  "signatureAndAlignmentVerified": true,
+  "containsSigningFiles": false,
+  "apkBytes": 37175053,
+  "apkSha256": "754fdf35882af643f9a00562db95c2883e865cb1a457f7fe401b5661dbb5738e"
+}

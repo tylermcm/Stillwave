@@ -138,7 +138,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
           </View></Animated.ScrollView>
           {!touch && <Footer screen="guide" />}
         </View>
-      </View> : <View style={[s.dvr, touch && { paddingTop: 48 / scale }]}>
+      </View> : <View style={[s.dvr, touch && { paddingTop: 24 }]}>
         <View style={[s.dvrMain, touch && { paddingHorizontal: 24 }]}>
           <View style={[s.dvrHead, { alignItems: 'center' }, touch && { flexWrap: 'wrap', gap: 8 }]}><Label style={s.dvrTitle}>My DVR</Label><View style={[s.tabs, { gap: Math.max(12, 8 / scale) }]}>{(['recordings', 'scheduled', 'series'] as const).map((tab, i) => <Pressable key={tab} accessibilityRole="tab" accessibilityLabel={tab} accessibilityState={{ selected: v.dvrTab === tab }} onPress={() => events.onTab(tab)} style={[s.tab, { minHeight: Math.max(44, 44 / scale), paddingHorizontal: 8 / scale, justifyContent: 'center' }, v.dvrTab === tab && s.navOn, v.focus.zone === 'dvrTabs' && v.focus.index === i && s.actionFocus]}><Label style={[s.tabText, { fontSize: Math.max(26, 16 / scale), lineHeight: Math.max(35, 22 / scale) }, v.dvrTab === tab ? { color: DVR_COLORS.text } : {}]}>{tab[0]!.toUpperCase() + tab.slice(1)}</Label></Pressable>)}</View></View>
           <Label style={s.summary}>{v.summary}</Label>

@@ -13,10 +13,11 @@ test('touch guide fills landscape phones and tablets without distorting either a
   }
 });
 
-test('navigation responds to deliberate vertical swipes, not taps or horizontal timeline drags', () => {
-  assert.equal(navigationSwipe(5, 32), 'open');
-  assert.equal(navigationSwipe(-8, -40), 'close');
-  assert.equal(navigationSwipe(0, 8), undefined);
-  assert.equal(navigationSwipe(80, 30), undefined);
+test('side navigation responds to inward and outward swipes, not taps or vertical pulls', () => {
+  assert.equal(navigationSwipe(32, 5), 'open');
+  assert.equal(navigationSwipe(-40, -8), 'close');
+  assert.equal(navigationSwipe(8, 0), undefined);
+  assert.equal(navigationSwipe(5, 80), undefined);
+  assert.equal(navigationSwipe(5, -80), undefined);
   assert.equal(navigationSwipe(30, 30), undefined);
 });

@@ -6,8 +6,8 @@ export function mobileDashboardLayout(width: number, height: number) {
   return { scale, width: width / scale, height: height / scale, rowHeight: Math.max(84, 44 / scale) };
 }
 
-/** Only intentional vertical drags on the navigation handle change its state. */
+/** Only intentional horizontal drags on the inset side handle change its state. */
 export function navigationSwipe(dx: number, dy: number): 'open' | 'close' | undefined {
-  if (Math.abs(dy) < 24 || Math.abs(dy) < Math.abs(dx) * 1.5) return;
-  return dy > 0 ? 'open' : 'close';
+  if (Math.abs(dx) < 24 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+  return dx > 0 ? 'open' : 'close';
 }

@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { BackHandler, Image, PanResponder, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
+import { BackHandler, Image, PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { navigationSwipe } from '../../core/mobileDashboard';
 
 const C = { bg: '#0b0f10', panel: '#11171a', line: '#1f2b2e', text: '#e1e8e8', muted: '#7f8f90', accent: '#8fd6c0' };
 
-/** An explicit tap target and a local swipe surface keep navigation discoverable. */
+/** Keep the handle inside the safe area, away from Android's system edges. */
 export function MobileNavigation({ screen, onScreen, onMenu }: {
   screen: 'guide' | 'dvr'; onScreen: (screen: 'guide' | 'dvr') => void; onMenu?: () => void;
 }) {
@@ -13,7 +13,7 @@ export function MobileNavigation({ screen, onScreen, onMenu }: {
   const swipe = useMemo(() => PanResponder.create({
     // Claim early: PanResponder starts measuring its drag again on grant.
     onMoveShouldSetPanResponder: (_, { dx, dy, moveX, moveY }) => {
-      if (Math.abs(dy) <= 6 || Math.abs(dy) <= Math.abs(dx) * 1.5) return false;
+      if (Math.abs(dx) <= 6 || Math.abs(dx) <= Math.abs(dy) * 1.5) return false;
       origin.current = { x: moveX - dx, y: moveY - dy };
       return true;
     },
@@ -33,30 +33,32 @@ export function MobileNavigation({ screen, onScreen, onMenu }: {
   }, [open]);
   return <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
     {open && <Pressable testID="mobile-navigation-backdrop" accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.backdrop} />}
-    <View pointerEvents={open ? 'auto' : 'box-none'} style={[s.bar, open && s.expanded]} {...swipe.panHandlers}>
-      {open && <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Close StillWave navigation" accessibilityHint="Swipe up here or tap to close navigation." accessibilityState={{ expanded: true }} onPress={() => setOpen(false)} style={s.logoButton}>
+    <View pointerEvents={open ? 'auto' : 'box-none'} style={open ? s.panel : s.handlePosition} {...swipe.panHandlers}>
+      {open ? <>
+      <View style={s.header}><Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Close StillWave navigation" accessibilityHint="Swipe left here or tap to close navigation." accessibilityState={{ expanded: true }} onPress={() => setOpen(false)} style={s.logoButton}>
         <Image accessibilityIgnoresInvertColors source={require('../../../assets/branding/stillwave-mark-v2.png')} resizeMode="contain" style={s.logo} />
-      </Pressable>}
-      {open ? <View style={s.links}>
+      </Pressable><Pressable accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.close}><Text style={s.text}>×</Text></Pressable></View>
+      <ScrollView contentContainerStyle={s.links} keyboardShouldPersistTaps="handled">
         {(['guide', 'dvr'] as const).map(next => <Pressable key={next} accessibilityRole="tab" accessibilityState={{ selected: next === screen }} onPress={() => { onScreen(next); setOpen(false); }} style={[s.link, next === screen && s.selected]}><Text style={s.text}>{next === 'guide' ? 'Guide' : 'My DVR'}</Text></Pressable>)}
         {onMenu && <Pressable accessibilityRole="button" onPress={() => { setOpen(false); onMenu(); }} style={s.link}><Text style={s.text}>Menu</Text></Pressable>}
-        <Pressable accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.close}><Text style={s.text}>×</Text></Pressable>
-      </View> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Swipe down or tap to show Guide, My DVR and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={s.handleButton}><View style={s.handle} /></Pressable>}
+      </ScrollView></> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Swipe right on this handle or tap to show Guide, My DVR and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={s.handleButton}><View style={s.handleTrack}><View style={s.handle} /></View></Pressable>}
     </View>
   </View>;
 }
 
 const s = StyleSheet.create({
   backdrop: { ...StyleSheet.absoluteFill, backgroundColor: '#0008' },
-  bar: { position: 'absolute', top: 0, left: 0, right: 0, minHeight: 48, paddingHorizontal: 8, flexDirection: 'row', alignItems: 'center' },
-  expanded: { backgroundColor: C.bg, borderBottomWidth: 1, borderBottomColor: C.line, paddingVertical: 4 },
+  panel: { position: 'absolute', top: 16, bottom: 16, left: 24, width: 232, maxWidth: '80%', padding: 12, backgroundColor: C.bg, borderWidth: 1, borderColor: C.line, borderRadius: 10 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
   logoButton: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
   logo: { width: 44, height: 44 },
-  handleButton: { position: 'absolute', top: 0, left: '50%', marginLeft: -36, width: 72, height: 44, alignItems: 'center', paddingTop: 8 },
-  handle: { width: 36, height: 4, borderRadius: 2, backgroundColor: C.muted },
-  links: { flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 4, flexWrap: 'wrap' },
-  link: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 12, backgroundColor: C.panel, borderRadius: 6, borderBottomWidth: 2, borderBottomColor: 'transparent' },
-  selected: { borderBottomColor: C.accent },
+  handlePosition: { position: 'absolute', top: '50%', marginTop: -36, left: 24, width: 44, height: 72 },
+  handleButton: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  handleTrack: { width: 12, height: 48, borderRadius: 6, backgroundColor: C.panel, borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  handle: { width: 3, height: 28, borderRadius: 2, backgroundColor: C.muted },
+  links: { gap: 8, paddingBottom: 4 },
+  link: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, backgroundColor: C.panel, borderRadius: 6, borderLeftWidth: 3, borderLeftColor: 'transparent' },
+  selected: { borderLeftColor: C.accent },
   text: { color: C.text, fontSize: 16, fontWeight: '600' },
   close: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
 });

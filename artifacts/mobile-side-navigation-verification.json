@@ -1,0 +1,72 @@
+{
+  "checks": [
+    {
+      "size": {
+        "width": 740,
+        "height": 360
+      },
+      "fullViewport": true,
+      "hiddenLogo": true,
+      "insetLeftHandle": true,
+      "topAndVerticalPullsDoNotOpenNavigation": true,
+      "tapAndHorizontalSwipeNavigation": true,
+      "outsideTapDismisses": true,
+      "guideScrollingAndPinnedChannels": true,
+      "dvrScrolling": true
+    },
+    {
+      "size": {
+        "width": 852,
+        "height": 393
+      },
+      "fullViewport": true,
+      "hiddenLogo": true,
+      "insetLeftHandle": true,
+      "topAndVerticalPullsDoNotOpenNavigation": true,
+      "tapAndHorizontalSwipeNavigation": true,
+      "outsideTapDismisses": true,
+      "guideScrollingAndPinnedChannels": true,
+      "dvrScrolling": true
+    },
+    {
+      "size": {
+        "width": 960,
+        "height": 400
+      },
+      "fullViewport": true,
+      "hiddenLogo": true,
+      "insetLeftHandle": true,
+      "topAndVerticalPullsDoNotOpenNavigation": true,
+      "tapAndHorizontalSwipeNavigation": true,
+      "outsideTapDismisses": true,
+      "guideScrollingAndPinnedChannels": true,
+      "dvrScrolling": true
+    },
+    {
+      "size": {
+        "width": 1280,
+        "height": 800
+      },
+      "fullViewport": true,
+      "hiddenLogo": true,
+      "insetLeftHandle": true,
+      "topAndVerticalPullsDoNotOpenNavigation": true,
+      "tapAndHorizontalSwipeNavigation": true,
+      "outsideTapDismisses": true,
+      "guideScrollingAndPinnedChannels": true,
+      "dvrScrolling": true
+    },
+    {
+      "tvScreen": "guide",
+      "changedColorChannels": 0
+    },
+    {
+      "tvScreen": "dvr",
+      "changedColorChannels": 0
+    }
+  ],
+  "browserErrors": [],
+  "orientation": "Existing native landscape lock retained",
+  "zoom": "10% above prior landscape fit scale",
+  "physicalAndroidSystemGesturesTested": false
+}
