@@ -31,7 +31,6 @@ type Props = {
 };
 export function TvShell(props: Props) {
   const insets = useSafeAreaInsets();
-  const safeArea = !usesTvPlayer ? { paddingTop: insets.top, paddingRight: insets.right, paddingBottom: insets.bottom, paddingLeft: insets.left } : undefined;
   const [screen, setScreen] = useState<'guide' | 'dvr'>('guide');
   const [now, setNow] = useState(Date.now());
   const [cursor, setCursor] = useState<TvGuideCursor>(() => ({ channel: 0, programme: 0, rowTop: 0, windowStart: Math.floor(Date.now() / 1_800_000) * 1_800_000 }));
@@ -72,9 +71,6 @@ export function TvShell(props: Props) {
   const items = useMemo(() => tvDvrItems(dvrTab, recordings, plans, rules, now), [dvrTab, recordings, plans, rules, now]);
   const item = items[Math.min(itemIndex, Math.max(0, items.length - 1))];
 
-  const rule = row && programme ? rules.find(r => r.channelId === row.channel.id && seriesTitle(r.title) === seriesTitle(programme.title)) : undefined;
-  const plan = row && programme ? plans.find(p => ['scheduled', 'starting', 'recording'].includes(p.status) && p.channelId === row.channel.id && p.start === programme.start && p.title === programme.title) : undefined;
-  const record = row && programme ? recordings.find(r => recordingMatchesProgramme(r, row.channel.id, programme, now)) : undefined;
   const refresh = async () => {
     const [recordings, jobs, rules, disk] = await Promise.all([dvr?.listRecordings() || [], recordingPlanner?.plans() || [], recordingPlanner?.rules() || [], recordingPlanner?.storage()]);
     setRecordings(recordings); setPlans(jobs); setRules(rules); setStorage(disk);
@@ -85,12 +81,18 @@ export function TvShell(props: Props) {
     void action().catch(e => setToast(e instanceof Error ? e.message : 'The DVR action could not finish.')).finally(() => { busy.current = false; void refresh().catch(() => {}); });
   };
   const onScreen = (next: 'guide' | 'dvr') => { setScreen(next); setFocus({ zone: next === 'guide' ? 'grid' : 'dvrList', index: 0 }); setMenu(false); };
-  const guideAction = (action: 'watch' | 'record' | 'series') => {
+  const guideAction = (action: 'watch' | 'record' | 'series', channelIndex = selectedCursor.channel, programmeIndex = selectedCursor.programme) => {
+    // Context actions target the held item, independently of cursor updates.
+    const row = rows[channelIndex];
+    const programme = row?.programmes[programmeIndex];
     if (!row) return;
     if (action === 'watch') { void props.onWatch(row.channel); return; }
     if (!recordingPlanner || !programme) { setToast('A matching program guide and the Android DVR are required.'); return; }
     const client = recordingPlanner;
     if (programme.stop <= Date.now()) { setToast('This program has already aired.'); return; }
+    const rule = rules.find(r => r.channelId === row.channel.id && seriesTitle(r.title) === seriesTitle(programme.title));
+    const plan = plans.find(p => ['scheduled', 'starting', 'recording'].includes(p.status) && p.channelId === row.channel.id && p.start === programme.start && p.title === programme.title);
+    const record = recordings.find(r => recordingMatchesProgramme(r, row.channel.id, programme, Date.now()));
     run(async () => {
       if (action === 'series') {
         if (rule) { await client.removeRule(rule.id); setToast('Series rule removed. Upcoming episodes cancelled.'); }
@@ -305,9 +307,21 @@ export function TvShell(props: Props) {
     dayLabel: query ? `Search: ${query}` : category !== 'all' ? category : browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'long' }),
     rows, cursor: selectedCursor, marks, dvrTab, items, itemIndex, summary: `${usedGb} of ${totalGb} GB used · ${recordings.some(r => r.status === 'recording') ? 1 : 0} of 1 streams in use`,
     conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels match. Use Menu to clear filters or restore hidden channels.` : usesTvPlayer ? 'No schedule is available. Press OK to watch this channel live.' : 'No schedule is available. Tap the channel to watch live.') };
-  return <View style={[s.fullscreen, safeArea]}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
+  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen}
     onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }}
-    onProgramme={(channel, programme) => { if (selectedCursor.channel === channel && selectedCursor.programme === programme && focus.zone === 'grid') guideAction('watch'); else { setCursor(usesTvPlayer ? guideWindow({ ...cursor, channel, programme }, rows) : { ...cursor, channel, programme }); setFocus({ zone: 'grid', index: 0 }); } }}
+    contentInsets={!usesTvPlayer ? insets : undefined} favorites={props.library.favorites} hiddenChannels={props.library.hiddenChannels} seriesRules={rules}
+    onJumpToLive={() => { const liveNow = Date.now(); setCursor(c => ({ ...c, windowStart: Math.floor(liveNow / 1_800_000) * 1_800_000, programme: programmeAt(rows[selectedCursor.channel]?.programmes || [], liveNow) })); setFocus({ zone: 'grid', index: 0 }); }}
+    onWatchChannel={index => { const target = rows[index]; if (!target) return; setCursor(c => ({ ...c, channel: index, programme: programmeAt(target.programmes, Date.now()) })); setFocus({ zone: 'grid', index: 0 }); void props.onWatch(target.channel); }}
+    onChannelAction={(action, index) => { const target = rows[index]?.channel; if (!target) return; if (action === 'favorite') props.onFavorite(target); else { props.onHiddenChannels(toggleHiddenChannel(props.library.hiddenChannels || [], target)); setToast(isChannelHidden(target, props.library.hiddenChannels) ? 'Channel restored to the guide.' : 'Channel hidden. Restore it in Menu → Hidden channels.'); } }}
+    onProgramme={(channel, programme) => {
+      if (!usesTvPlayer) {
+        const target = rows[channel]; if (!target) return;
+        setCursor(c => ({ ...c, channel, programme })); setFocus({ zone: 'grid', index: 0 });
+        const airing = target.programmes[programme];
+        if (!airing || airing.start <= Date.now() && airing.stop > Date.now()) void props.onWatch(target.channel);
+      } else if (selectedCursor.channel === channel && selectedCursor.programme === programme && focus.zone === 'grid') guideAction('watch');
+      else { setCursor(guideWindow({ ...cursor, channel, programme }, rows)); setFocus({ zone: 'grid', index: 0 }); }
+    }}
     onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} /></View>
     {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
     {numberPad}

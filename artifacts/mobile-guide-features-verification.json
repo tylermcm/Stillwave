@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "width": 740,
+      "height": 360,
+      "headerPixelsRecovered": 50.82880401611328,
+      "unchangedTitleFont": true,
+      "channelSingleTap": true,
+      "holdDoesNotWatch": true,
+      "channelActions": true,
+      "heldProgrammeRecordAndSeriesTarget": true,
+      "jumpLiveThenScrollAgain": true
+    },
+    {
+      "width": 852,
+      "height": 393,
+      "headerPixelsRecovered": 56.346397399902344,
+      "unchangedTitleFont": true,
+      "channelSingleTap": true,
+      "holdDoesNotWatch": true,
+      "channelActions": true,
+      "heldProgrammeRecordAndSeriesTarget": true,
+      "jumpLiveThenScrollAgain": true
+    },
+    {
+      "width": 960,
+      "height": 400,
+      "headerPixelsRecovered": 57.51680374145508,
+      "unchangedTitleFont": true,
+      "channelSingleTap": true,
+      "holdDoesNotWatch": true,
+      "channelActions": true,
+      "heldProgrammeRecordAndSeriesTarget": true,
+      "jumpLiveThenScrollAgain": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "headerPixelsRecovered": 111.46666717529297,
+      "unchangedTitleFont": true,
+      "channelSingleTap": true,
+      "holdDoesNotWatch": true,
+      "channelActions": true,
+      "heldProgrammeRecordAndSeriesTarget": true,
+      "jumpLiveThenScrollAgain": true
+    },
+    {
+      "simulatedCutout": "left",
+      "fullWidthCanvas": true,
+      "safeTextAndControls": true,
+      "safeActionSheet": true
+    },
+    {
+      "simulatedCutout": "right",
+      "fullWidthCanvas": true,
+      "safeTextAndControls": true,
+      "safeActionSheet": true
+    },
+    {
+      "playerMode": "live",
+      "liveEdgePinned": true,
+      "forwardSeekRules": true,
+      "recordedMediaUnchanged": false
+    },
+    {
+      "playerMode": "media",
+      "liveEdgePinned": false,
+      "forwardSeekRules": true,
+      "recordedMediaUnchanged": true
+    },
+    {
+      "tvScreen": "guide",
+      "changedColorChannels": 0
+    },
+    {
+      "tvScreen": "dvr",
+      "changedColorChannels": 0
+    }
+  ],
+  "browserErrors": [],
+  "nativeCutoutAndDvrPlaybackTested": false,
+  "noApkBuilt": true
+}

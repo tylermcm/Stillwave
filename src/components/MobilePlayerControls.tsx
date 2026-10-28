@@ -3,12 +3,13 @@ import { Animated, Pressable, ScrollView, StyleSheet, Text, View } from 'react-n
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { clock } from '../core/dvr';
+import { mobilePlaybackTimeline, mobileSeekFraction } from '../core/mobilePlayback';
 
 export type MobileShortcut = { id: string; label: string; icon: keyof typeof Ionicons.glyphMap; run: () => void; disabled?: boolean; selected?: boolean };
 type Props = {
   title: string; number?: string; programme?: string; badge: string; fullscreen: boolean;
   paused: boolean; failed: boolean; visible: boolean; screenReader: boolean; opacity: Animated.Value;
-  dvr?: { duration: number; progress: number; delay: number; delayed: boolean };
+  dvr?: { duration: number; progress: number; delay: number; delayed: boolean; ended?: boolean };
   media?: { duration: number; position: number }; shortcuts: MobileShortcut[];
   hasCc: boolean; cc: boolean; onCaptions: () => void;
   onToggleControls: () => void; onInteract: () => void; onPause: () => void; onSeek: (seconds: number) => void;
@@ -27,16 +28,32 @@ function IconButton({ label, icon, onPress, disabled, prominent, seconds, revers
 /** Reference layout: shortcuts across the top; timeline and transport on the video. */
 export function MobilePlayerControls(p: Props) {
   const insets = useSafeAreaInsets();
-  const [timelineWidth, setTimelineWidth] = useState(1), [width, setWidth] = useState(390), [locked, setLocked] = useState(false);
+  const [width, setWidth] = useState(390), [locked, setLocked] = useState(false);
+  const timelineView = useRef<React.ComponentRef<typeof View>>(null);
+  const timelineBounds = useRef<{ x: number; width: number } | undefined>(undefined);
   const lastScrub = useRef(0);
   const act = (fn: () => void) => () => { p.onInteract(); fn(); };
   const side = p.fullscreen ? Math.max(8, insets.left, insets.right) : 4;
   const bottom = p.fullscreen ? Math.max(8, insets.bottom) : 4;
   const duration = p.dvr?.duration ?? p.media?.duration ?? 0;
-  const elapsed = p.dvr ? p.dvr.progress * duration : p.media?.position ?? 0;
-  const progress = Math.max(0, Math.min(1, duration ? elapsed / duration : 0));
+  const timeline = mobilePlaybackTimeline(p.dvr, p.paused, duration ? (p.media?.position ?? 0) / duration : 0);
+  const progress = timeline.progress;
+  const elapsed = progress * duration;
+  const timelineText = timeline.atLive ? 'Live broadcast' : p.dvr && !p.dvr.ended ? `${clock(p.dvr.delay)} behind live` : `${clock(elapsed)} of ${clock(duration)}`;
   const seekable = duration > 0 && !p.failed;
-  const seek = (x: number) => { p.onInteract(); if (seekable) p.onSeekFraction(Math.max(0, Math.min(1, x / timelineWidth))); };
+  const seek = (fraction: number) => {
+    p.onInteract();
+    if (!seekable) return;
+    const chosen = mobileSeekFraction(fraction, p.dvr, p.paused);
+    if (timeline.atLive && chosen >= (p.dvr?.progress ?? 1)) return;
+    p.onSeekFraction(chosen);
+  };
+  const measureTimeline = () => timelineView.current?.measureInWindow((x, _y, measuredWidth) => {
+    if (measuredWidth > 0) timelineBounds.current = { x, width: measuredWidth };
+  });
+  const seekAtPageX = (pageX: number) => timelineView.current?.measureInWindow((x, _y, measuredWidth) => {
+    if (measuredWidth > 0) { timelineBounds.current = { x, width: measuredWidth }; seek((pageX - x) / measuredWidth); }
+  });
   const visible = p.visible || p.screenReader;
   if (locked) return <View style={StyleSheet.absoluteFill} pointerEvents="box-none">
     <View style={[s.unlock, { left: side, bottom }]}><IconButton label="Unlock player controls" icon="lock-closed" onPress={act(() => setLocked(false))} /></View>
@@ -57,14 +74,15 @@ export function MobilePlayerControls(p: Props) {
         <View style={s.edgeButton}><IconButton label="Player options" icon="ellipsis-vertical" onPress={act(p.onOptions)} /></View>
       </View>
       <View testID="mobile-player-timeline" style={[s.timeline, { left: side + 8, right: side + 8, bottom: bottom + 66 }]}>
-        <Text style={s.time}>{seekable ? clock(elapsed) : p.failed ? '—' : 'LIVE'}</Text>
-        {seekable ? <Pressable accessibilityRole="adjustable" accessibilityLabel="Playback timeline"
-          accessibilityValue={{ min: 0, max: Math.round(duration), now: Math.round(elapsed), text: p.dvr ? `${clock(p.dvr.delay)} behind live` : `${clock(elapsed)} of ${clock(duration)}` }}
-          accessibilityActions={[{ name: 'increment', label: 'Forward 10 seconds' }, { name: 'decrement', label: 'Rewind 10 seconds' }]}
-          onAccessibilityAction={e => { p.onInteract(); p.onSeek(e.nativeEvent.actionName === 'increment' ? 10 : -10); }}
-          onLayout={e => setTimelineWidth(Math.max(1, e.nativeEvent.layout.width))} onPress={e => seek(e.nativeEvent.locationX)}
-          onTouchMove={e => { if (Date.now() - lastScrub.current < 150) return; lastScrub.current = Date.now(); seek(e.nativeEvent.locationX); }} style={s.timelineTouch}>
-          <View pointerEvents="none" style={s.track}><View style={[s.fill, { width: `${progress * 100}%` }]} /><View style={[s.thumb, { left: `${progress * 100}%` }]} /></View>
+        <Text style={s.time}>{timeline.atLive ? 'LIVE' : seekable ? p.dvr && !p.dvr.ended ? `−${clock(p.dvr.delay)}` : clock(elapsed) : p.failed ? '—' : 'LIVE'}</Text>
+        {seekable ? <Pressable ref={timelineView} hitSlop={{ left: 8, right: 8 }} testID="mobile-playback-slider" accessibilityRole="adjustable" accessibilityLabel="Playback timeline"
+          accessibilityValue={{ min: 0, max: Math.round(duration), now: Math.round(elapsed), text: timelineText }}
+          aria-valuemin={0} aria-valuemax={Math.round(duration)} aria-valuenow={Math.round(elapsed)} aria-valuetext={timelineText}
+          accessibilityActions={[...(timeline.canForward ? [{ name: 'increment' as const, label: 'Forward 10 seconds' }] : []), { name: 'decrement', label: 'Rewind 10 seconds' }]}
+          onAccessibilityAction={e => { p.onInteract(); if (e.nativeEvent.actionName === 'decrement') p.onSeek(-10); else if (e.nativeEvent.actionName === 'increment' && timeline.canForward) p.onSeek(10); }}
+          onLayout={measureTimeline} onTouchStart={measureTimeline} onPress={e => seekAtPageX(e.nativeEvent.pageX)}
+          onTouchMove={e => { if (Date.now() - lastScrub.current < 150) return; lastScrub.current = Date.now(); const bounds = timelineBounds.current; if (bounds) seek((e.nativeEvent.pageX - bounds.x) / bounds.width); else seekAtPageX(e.nativeEvent.pageX); }} style={s.timelineTouch}>
+          <View pointerEvents="none" style={s.track}><View style={[s.fill, { width: `${progress * 100}%` }]} /><View testID="mobile-playback-thumb" style={[s.thumb, { left: `${progress * 100}%` }]} /></View>
         </Pressable> : <View accessibilityLabel="Seeking unavailable for this live stream" style={s.unavailableTrack}><View style={s.track} /></View>}
         {p.dvr ? <Pressable accessibilityRole="button" accessibilityLabel="Go live" onPress={act(p.onGoLive)} style={s.liveButton}><Text style={[s.time, !p.dvr.delayed && !p.paused && { color: '#a7eccb' }]}>LIVE</Text></Pressable> : <Text style={s.time}>{seekable ? clock(duration) : p.badge}</Text>}
       </View>
@@ -73,7 +91,7 @@ export function MobilePlayerControls(p: Props) {
         {width >= 340 && <IconButton label="Previous channel" icon="play-skip-back" disabled={!p.onPrevious} onPress={act(() => p.onPrevious?.())} />}
         <IconButton label="Rewind 10 seconds" icon="refresh-outline" seconds="10" reverse disabled={!seekable} onPress={act(() => p.onSeek(-10))} />
         <IconButton prominent label={p.failed ? 'Retry stream' : p.paused ? 'Resume live TV' : 'Pause live TV'} icon={p.failed ? 'refresh' : p.paused ? 'play' : 'pause'} onPress={act(p.failed ? p.onGoLive : p.onPause)} />
-        <IconButton label="Forward 10 seconds" icon="refresh" seconds="10" disabled={!seekable} onPress={act(() => p.onSeek(10))} />
+        <IconButton label="Forward 10 seconds" icon="refresh" seconds="10" disabled={!seekable || !timeline.canForward} onPress={act(() => { if (timeline.canForward) p.onSeek(10); })} />
         {width >= 340 && <IconButton label="Next channel" icon="play-skip-forward" disabled={!p.onNext} onPress={act(() => p.onNext?.())} />}
         <IconButton label="Change aspect ratio" icon="crop" onPress={act(p.onAspectRatio)} />
       </View>

@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BackHandler, Image, PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { navigationSwipe } from '../../core/mobileDashboard';
+import { navigationSwipe, type MobileInsets } from '../../core/mobileDashboard';
 
 const C = { bg: '#0b0f10', panel: '#11171a', line: '#1f2b2e', text: '#e1e8e8', muted: '#7f8f90', accent: '#8fd6c0' };
 
 /** Keep the handle inside the safe area, away from Android's system edges. */
-export function MobileNavigation({ screen, onScreen, onMenu }: {
-  screen: 'guide' | 'dvr'; onScreen: (screen: 'guide' | 'dvr') => void; onMenu?: () => void;
+export function MobileNavigation({ screen, onScreen, onMenu, insets, handleTop }: {
+  screen: 'guide' | 'dvr'; onScreen: (screen: 'guide' | 'dvr') => void; onMenu?: () => void; insets?: MobileInsets; handleTop?: number;
 }) {
   const [open, setOpen] = useState(false);
   const origin = useRef({ x: 0, y: 0 });
@@ -33,7 +33,7 @@ export function MobileNavigation({ screen, onScreen, onMenu }: {
   }, [open]);
   return <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
     {open && <Pressable testID="mobile-navigation-backdrop" accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.backdrop} />}
-    <View pointerEvents={open ? 'auto' : 'box-none'} style={open ? s.panel : s.handlePosition} {...swipe.panHandlers}>
+    <View pointerEvents={open ? 'auto' : 'box-none'} style={[open ? s.panel : s.handlePosition, { left: 24 + (insets?.left ?? 0) }, open && { top: 16 + (insets?.top ?? 0), bottom: 16 + (insets?.bottom ?? 0) }, !open && handleTop !== undefined && { top: handleTop, marginTop: 0, height: 44 }]} {...swipe.panHandlers}>
       {open ? <>
       <View style={s.header}><Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Close StillWave navigation" accessibilityHint="Swipe left here or tap to close navigation." accessibilityState={{ expanded: true }} onPress={() => setOpen(false)} style={s.logoButton}>
         <Image accessibilityIgnoresInvertColors source={require('../../../assets/branding/stillwave-mark-v2.png')} resizeMode="contain" style={s.logo} />
@@ -41,7 +41,7 @@ export function MobileNavigation({ screen, onScreen, onMenu }: {
       <ScrollView contentContainerStyle={s.links} keyboardShouldPersistTaps="handled">
         {(['guide', 'dvr'] as const).map(next => <Pressable key={next} accessibilityRole="tab" accessibilityState={{ selected: next === screen }} onPress={() => { onScreen(next); setOpen(false); }} style={[s.link, next === screen && s.selected]}><Text style={s.text}>{next === 'guide' ? 'Guide' : 'My DVR'}</Text></Pressable>)}
         {onMenu && <Pressable accessibilityRole="button" onPress={() => { setOpen(false); onMenu(); }} style={s.link}><Text style={s.text}>Menu</Text></Pressable>}
-      </ScrollView></> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Swipe right on this handle or tap to show Guide, My DVR and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={s.handleButton}><View style={s.handleTrack}><View style={s.handle} /></View></Pressable>}
+      </ScrollView></> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Swipe right on this handle or tap to show Guide, My DVR and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={s.handleButton}><View style={[s.handleTrack, handleTop !== undefined && { height: 36 }]}><View style={s.handle} /></View></Pressable>}
     </View>
   </View>;
 }

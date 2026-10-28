@@ -15,6 +15,7 @@ import { useDvrSession } from './useDvrSession';
 import { isTv, usesTvPlayer } from '../data/tv';
 import { TvPlayerControls, type TvAction } from './tv/TvPlayerControls';
 import { MobilePlayerControls, type MobileShortcut } from './MobilePlayerControls';
+import { mobilePlaybackTimeline, mobileSeekFraction } from '../core/mobilePlayback';
 
 const buffers = {
   fast: { preferredForwardBufferDuration: 8, minBufferForPlayback: 1 },
@@ -107,6 +108,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   const initialAnchor = useRef(anchor.current);
   const liveDelay = capture && positionMs ? Math.max(0, (capture.endMs - positionMs) / 1000) : 0;
   const delayed = !!capture && liveDelay > 12;
+  const [mobileTimeshifted, setMobileTimeshifted] = useState(!!anchor.current && (anchor.current.paused || !!capture && capture.endMs - anchor.current.positionMs > 12_000));
   const warning = capture && paused ? bufferWarning(pausedAt.current ?? positionMs, capture) : '';
   const chromeOpacity = useRef(new Animated.Value(1)).current;
   const panelExpansion = useRef(new Animated.Value(1)).current;
@@ -185,6 +187,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   const goLive = () => {
     if (!captureRef.current) { restart(true); return; }
     seekPosition(captureRef.current.endMs - 3000);
+    setMobileTimeshifted(false);
     pausedAt.current = undefined; intended.current = true; setPaused(false); player.play(); setControlsVisible(true);
   };
   const reconcilePlayback = useCallback(() => {
@@ -415,7 +418,7 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
       }
       pausedAt.current = undefined; intended.current = true; setPaused(false); resetWatchdog.current = true; player.play(); return;
     }
-    if (captureRef.current) pausedAt.current = currentPosition();
+    if (captureRef.current) { pausedAt.current = currentPosition(); if (!usesTvPlayer) setMobileTimeshifted(true); }
     intended.current = false;
     if (timer.current) clearTimeout(timer.current);
     player.pause(); setSettled(false); setPaused(true); setPlaying(false); setState('Paused'); setDetail(captureRef.current ? 'Resume continues from your paused position.' : 'Resume continues if the provider still has this footage.');
@@ -520,7 +523,13 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
   ];
   const touchInteraction = () => { setControlsVisible(true); setInteraction(value => value + 1); };
   const mobileSeek = (seconds: number) => {
-    if (capture) tvSeek(seconds);
+    if (capture) {
+      if (seconds > 0 && mobilePlaybackTimeline({ progress: 1, delayed: delayed || mobileTimeshifted, ended: capture.ended }, paused, 0).atLive) return;
+      if (seconds < 0) setMobileTimeshifted(true);
+      const target = (pausedAt.current ?? currentPosition()) + seconds * 1000;
+      if (!paused && seconds > 0 && target >= capture.endMs - 3000) { goLive(); return; }
+      tvSeek(seconds);
+    }
     else if (media) { const position = Math.max(0, Math.min(media.duration, player.currentTime + seconds)); player.currentTime = position; setMedia({ ...media, position }); resetWatchdog.current = true; }
   };
   const mobileShortcuts: MobileShortcut[] = [
@@ -546,11 +555,22 @@ function PlayerSession({ channel, profile, fullscreen, onFullscreenChange, onClo
       {usesTvPlayer ? <TvPlayerControls title={channel.name} subtitle={programme?.title} badge={`${recordingId ? 'REC · ' : ''}${badge}`} message={warning || dvrNotice || probe || (failed ? detail : '')}
         actions={tvActions} options={tvOptions} settled={settled} paused={paused} onClose={onClose} onPause={togglePause} onSeek={tvSeek} /> : <MobilePlayerControls title={channel.name} number={channel.number} programme={programme?.title} badge={badge} fullscreen={fullscreen}
         paused={paused} failed={failed} visible={controlsVisible} screenReader={screenReader} opacity={chromeOpacity}
-        dvr={capture ? { duration: capture.duration, progress: Math.max(0, Math.min(1, (positionMs - capture.startMs) / Math.max(1, capture.endMs - capture.startMs))), delay: liveDelay, delayed } : undefined}
+        dvr={capture ? { duration: capture.duration, progress: Math.max(0, Math.min(1, (positionMs - capture.startMs) / Math.max(1, capture.endMs - capture.startMs))), delay: liveDelay, delayed: delayed || mobileTimeshifted, ended: capture.ended } : undefined}
         media={media} shortcuts={mobileShortcuts} hasCc={hasCc} cc={cc} onCaptions={toggleCc} onPrevious={onPreviousInLineup || onPreviousChannel} onNext={onNextChannel}
         onAspectRatio={() => { const fits = ['contain', 'cover', 'fill'] as const; setContentFit(fits[(fits.indexOf(contentFit) + 1) % fits.length]!); }}
         onToggleControls={() => { setControlsVisible(value => !value); setInteraction(value => value + 1); }} onInteract={touchInteraction}
-        onPause={togglePause} onSeek={mobileSeek} onSeekFraction={fraction => { if (capture) seekPosition(capture.startMs + fraction * (capture.endMs - capture.startMs)); else if (media) { const position = media.duration * fraction; player.currentTime = position; setMedia({ ...media, position }); resetWatchdog.current = true; } }}
+        onPause={togglePause} onSeek={mobileSeek} onSeekFraction={fraction => {
+          const c = captureRef.current;
+          if (c) {
+            const position = pausedAt.current ?? currentPosition();
+            const current = { progress: (position - c.startMs) / Math.max(1, c.endMs - c.startMs), delayed: delayed || mobileTimeshifted, ended: c.ended };
+            const chosen = mobileSeekFraction(fraction, current, paused);
+            const target = c.startMs + chosen * (c.endMs - c.startMs);
+            if (!paused && !c.ended && !mobilePlaybackTimeline(current, paused, 0).atLive && chosen >= 1) { goLive(); return; }
+            if (target < position - 250) setMobileTimeshifted(true);
+            seekPosition(target);
+          } else if (media) { const position = media.duration * fraction; player.currentTime = position; setMedia({ ...media, position }); resetWatchdog.current = true; }
+        }}
         onGoLive={failed ? () => restart(true) : goLive} onOptions={() => setShowOptions(true)} onClose={onClose} />}
     </View>
     {!usesTvPlayer && <>

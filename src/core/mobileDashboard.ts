@@ -1,3 +1,5 @@
+export type MobileInsets = { top: number; right: number; bottom: number; left: number };
+
 /** Reflow the touch canvas to the available area, using one scale for both axes. */
 export function mobileDashboardLayout(width: number, height: number) {
   // Stay close to the former landscape scale, with a modest 10% increase.

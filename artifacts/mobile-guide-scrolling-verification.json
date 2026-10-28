@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "baselineGuideReopenDrift": 333.6299934387207
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "slowAndFastPinnedColumn": true,
+      "liveEdgeCycles": 6,
+      "guideReopenResetsOffset": true,
+      "wheelAndTouchInput": true,
+      "noPerFrameTitleResize": true,
+      "verticalScrolling": true
+    },
+    {
+      "width": 852,
+      "height": 393,
+      "slowAndFastPinnedColumn": true,
+      "liveEdgeCycles": 6,
+      "guideReopenResetsOffset": true,
+      "wheelAndTouchInput": true,
+      "noPerFrameTitleResize": true,
+      "verticalScrolling": true
+    },
+    {
+      "width": 960,
+      "height": 400,
+      "slowAndFastPinnedColumn": true,
+      "liveEdgeCycles": 6,
+      "guideReopenResetsOffset": true,
+      "wheelAndTouchInput": true,
+      "noPerFrameTitleResize": true,
+      "verticalScrolling": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "slowAndFastPinnedColumn": true,
+      "liveEdgeCycles": 6,
+      "guideReopenResetsOffset": true,
+      "wheelAndTouchInput": true,
+      "noPerFrameTitleResize": true,
+      "verticalScrolling": true
+    },
+    {
+      "tvScreen": "guide",
+      "changedColorChannels": 0
+    },
+    {
+      "tvScreen": "dvr",
+      "changedColorChannels": 0
+    }
+  ],
+  "browserErrors": [],
+  "nativeAndroidPerformanceTested": false,
+  "noApkBuilt": true
+}
