@@ -55,7 +55,7 @@ test('discover offers each device only its own modules and honours hidden sectio
   assert.deepEqual(discoverModules('phone', ['radio', 'local']).map(m => m.id), ['sports', 'dashboard']);
   assert.ok(!discoverModules('phone').some(m => m.id === 'world' || m.id === 'ambient'));
   assert.ok(!discoverModules('tv').some(m => m.id === 'local'));
-  assert.deepEqual(discoverModules('phone').filter(m => m.available).map(m => m.id), ['local']);
+  assert.deepEqual(discoverModules('phone').filter(m => m.available).map(m => m.id), ['dashboard', 'local']);
 });
 
 test('artwork and monograms are deterministic and safe for odd names', () => {

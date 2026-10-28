@@ -74,7 +74,7 @@ export interface HubModule { /** False until the module is built; Discover then 
 const MODULES: Record<HubModuleId, HubModule> = {
   sports: { available: false, id: 'sports', title: 'Sports Center', summary: 'Scores, schedules and standings, with Watch when a channel in your guide carries the game.', mesh: 'stadium', icon: 'football-outline' },
   radio: { available: false, id: 'radio', title: 'Radio & Podcasts', summary: 'Stations and shows, with episode resume and controls that stay with you.', mesh: 'music', icon: 'radio-outline' },
-  dashboard: { available: false, id: 'dashboard', title: 'Daily Dashboard', summary: 'Weather, headlines, tonight’s games and the astronomy picture of the day.', mesh: 'coast', icon: 'partly-sunny-outline' },
+  dashboard: { available: true, id: 'dashboard', title: 'Daily Dashboard', summary: 'Weather, headlines, tonight’s games and the astronomy picture of the day.', mesh: 'coast', icon: 'partly-sunny-outline' },
   local: { available: true, id: 'local', title: 'Local Media', summary: 'Play videos and audio you choose from this phone. Nothing is scanned or uploaded.', mesh: 'aurora', icon: 'folder-open-outline' },
   world: { available: false, id: 'world', title: 'Live World', summary: 'Public city, coastal, wildlife and mountain cameras.', mesh: 'mountain', icon: 'earth-outline' },
   ambient: { available: false, id: 'ambient', title: 'Ambient Mode', summary: 'Quiet scenery with a clock and optional sound.', mesh: 'fire', icon: 'moon-outline' },
