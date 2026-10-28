@@ -1,10 +1,14 @@
+## Android release 0.4.8 published and verified (2026-10-28)
+
+Published stable release: https://github.com/tylermcm/Stillwave/releases/tag/v0.4.8. Source/tag commit: 931e600068c1ea04b32746ccae1f5bcba5ca4e32, pushed on main. All five uploaded assets (both signed APK names, both checksums and apk-v048-verification.json) matched their local SHA-256 hashes before the draft was published. The unauthenticated latest-release API returns v0.4.8. The public phone APK was downloaded again and matches the verified local hash; the Fire TV download returns HTTP200 and its GitHub digest matches the same APK. The actual updater selector detects the release for phones on 0.4.7 and TVs on 0.4.6/0.4.7, and ignores it when 0.4.8 is installed. Evidence: artifacts/release-v048-publication.json. Physical-device update installation remains untested. This supersedes earlier local-only and pending-publication notes for this work.
+
 ## Android release 0.4.8 build verified (2026-10-28)
 
 User requested building the mobile changes and publishing a GitHub release, supplying the original signing archive. Restored it under ignored private/android-signing; its certificate matches the original release. Version is 0.4.8 / code 15. The existing build scripts restored a project-local JDK/SDK/NDK/CMake/Gradle toolchain, then produced a signed standalone universal APK in 11m53s. Both phone and Fire TV asset names contain the same APK; TV UI remains unchanged.
 
 - artifacts/Stillwave-0.4.8.apk and artifacts/Stillwave-FireTV-0.4.8.apk: 37,175,053 bytes each, SHA-256 547d406014c16b197af2e0343e75307e3ebee9fef9c69a87a3c9e513fb0a809b.
 - Verification passes: package/version, landscape-only activity, ARM32/64, original certificate, signature/alignment, embedded bundle matching generated output, exact bundled mobile/DVR/player source, approved logo/splash, PiP, private DVR service, TV launcher and installer permission. APK contains no signing files. Typecheck and 116 tests pass; the four-size touch checks and unchanged TV captures from the mobile pass remain valid. Physical installation/playback acceptance is pending.
-- Evidence: artifacts/apk-v048-verification.json, artifacts/release-v048-check.json and artifacts/v048-bundle-source-check.json. Build log: ignored .build-tmp/apk-build-v048.log. Keys, credentials, build tools and APK binaries stay out of Git. Publication verification will be recorded after uploading and publishing the stable release.
+- Evidence: artifacts/apk-v048-verification.json, artifacts/release-v048-check.json and artifacts/v048-bundle-source-check.json. Build log: ignored .build-tmp/apk-build-v048.log. Keys, credentials, build tools and APK binaries stay out of Git. Publication verification is recorded above.
 
 ## Mobile layout changes (included in 0.4.8, 2026-10-28)
 
