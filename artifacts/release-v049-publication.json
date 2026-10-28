@@ -1,0 +1,43 @@
+{
+  "releaseUrl": "https://github.com/tylermcm/Stillwave/releases/tag/v0.4.9",
+  "version": "0.4.9",
+  "versionCode": 16,
+  "publishedAt": "2026-10-28T14:35:01Z",
+  "sourceCommit": "08f93e86a391262955581f2b915bf035ebfa35fd",
+  "publicLatestRelease": "v0.4.9",
+  "stablePublishedRelease": true,
+  "uploadedAssets": [
+    {
+      "name": "apk-v049-verification.json",
+      "bytes": 1396,
+      "digest": "sha256:a6fdc2a298b6ab73243a69cc4c3941d3f2ea3c5afe453bd69c2acc02a2a8cd42"
+    },
+    {
+      "name": "Stillwave-0.4.9.apk",
+      "bytes": 37175053,
+      "digest": "sha256:754fdf35882af643f9a00562db95c2883e865cb1a457f7fe401b5661dbb5738e"
+    },
+    {
+      "name": "Stillwave-0.4.9.apk.sha256",
+      "bytes": 86,
+      "digest": "sha256:af692e00b43051bfb33a000dd1736492076c71f67a2d4fb3774a372471cb0a2c"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.9.apk",
+      "bytes": 37175053,
+      "digest": "sha256:754fdf35882af643f9a00562db95c2883e865cb1a457f7fe401b5661dbb5738e"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.9.apk.sha256",
+      "bytes": 93,
+      "digest": "sha256:f7982d65c9513fe06a9d48d36ab24be52fb16fb59fad06032b89358af6d3bd61"
+    }
+  ],
+  "originalSigningCertificateVerified": true,
+  "publicPhoneApkDownloadedAndHashVerified": true,
+  "apkSha256": "754fdf35882af643f9a00562db95c2883e865cb1a457f7fe401b5661dbb5738e",
+  "publicFireTvAssetHttpStatus": 200,
+  "phone048AndTv046048DetectUpdate": true,
+  "installed049IgnoresEqualRelease": true,
+  "physicalDeviceInstallationTested": false
+}
