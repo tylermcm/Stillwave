@@ -1,27 +1,37 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { BackHandler, Image, PanResponder, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { navigationSwipe, type MobileInsets } from '../../core/mobileDashboard';
+import type { HubDestination } from '../../core/mobileHub';
+import { FONT, R, T } from '../../ui/theme';
 
-const C = { bg: '#0b0f10', panel: '#11171a', line: '#1f2b2e', text: '#e1e8e8', muted: '#7f8f90', accent: '#8fd6c0' };
+const DESTINATIONS: { id: HubDestination; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
+  { id: 'home', label: 'Home', icon: 'home-outline' },
+  { id: 'guide', label: 'Live TV', icon: 'tv-outline' },
+  { id: 'dvr', label: 'My DVR', icon: 'recording-outline' },
+  { id: 'discover', label: 'Discover', icon: 'compass-outline' },
+];
+/** Where the logo button sits: inside the safe area, in the gutter every phone screen reserves. */
+export const MENU_BUTTON = { size: 44, left: 20, top: 10 } as const;
 
-/** Keep the handle inside the safe area, away from Android's system edges. */
-export function MobileNavigation({ screen, onScreen, onMenu, insets, handleTop }: {
-  screen: 'guide' | 'dvr'; onScreen: (screen: 'guide' | 'dvr') => void; onMenu?: () => void; insets?: MobileInsets; handleTop?: number;
+/**
+ * A small logo button opens the navigation drawer. It scrolls nowhere and pins nothing: the button
+ * occupies a reserved corner, so no screen carries a permanent top bar.
+ */
+export function MobileNavigation({ screen, onScreen, onMenu, insets }: {
+  screen: HubDestination; onScreen: (screen: HubDestination) => void; onMenu?: () => void; insets?: MobileInsets;
 }) {
   const [open, setOpen] = useState(false);
   const origin = useRef({ x: 0, y: 0 });
   const swipe = useMemo(() => PanResponder.create({
-    // Claim early: PanResponder starts measuring its drag again on grant.
     onMoveShouldSetPanResponder: (_, { dx, dy, moveX, moveY }) => {
       if (Math.abs(dx) <= 6 || Math.abs(dx) <= Math.abs(dy) * 1.5) return false;
       origin.current = { x: moveX - dx, y: moveY - dy };
       return true;
     },
     onPanResponderTerminationRequest: () => false,
-    onPanResponderRelease: (_, gesture) => {
-      const action = navigationSwipe(gesture.moveX - origin.current.x, gesture.moveY - origin.current.y);
-      if (action) setOpen(action === 'open');
-    },
+    // Only closing is a swipe; opening stays a deliberate tap so the system back gesture never competes.
+    onPanResponderRelease: (_, gesture) => { if (navigationSwipe(gesture.moveX - origin.current.x, gesture.moveY - origin.current.y) === 'close') setOpen(false); },
   }), []);
   useEffect(() => {
     if (!open) return;
@@ -31,34 +41,46 @@ export function MobileNavigation({ screen, onScreen, onMenu, insets, handleTop }
     window.addEventListener('keydown', key, true);
     return () => { back.remove(); window.removeEventListener('keydown', key, true); };
   }, [open]);
+  const left = (insets?.left ?? 0) + MENU_BUTTON.left;
+  const top = (insets?.top ?? 0) + MENU_BUTTON.top;
   return <View pointerEvents="box-none" style={StyleSheet.absoluteFill}>
     {open && <Pressable testID="mobile-navigation-backdrop" accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.backdrop} />}
-    <View pointerEvents={open ? 'auto' : 'box-none'} style={[open ? s.panel : s.handlePosition, { left: 24 + (insets?.left ?? 0) }, open && { top: 16 + (insets?.top ?? 0), bottom: 16 + (insets?.bottom ?? 0) }, !open && handleTop !== undefined && { top: handleTop, marginTop: 0, height: 44 }]} {...swipe.panHandlers}>
-      {open ? <>
-      <View style={s.header}><Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Close StillWave navigation" accessibilityHint="Swipe left here or tap to close navigation." accessibilityState={{ expanded: true }} onPress={() => setOpen(false)} style={s.logoButton}>
-        <Image accessibilityIgnoresInvertColors source={require('../../../assets/branding/stillwave-mark-v2.png')} resizeMode="contain" style={s.logo} />
-      </Pressable><Pressable accessibilityRole="button" accessibilityLabel="Close navigation" onPress={() => setOpen(false)} style={s.close}><Text style={s.text}>×</Text></Pressable></View>
-      <ScrollView contentContainerStyle={s.links} keyboardShouldPersistTaps="handled">
-        {(['guide', 'dvr'] as const).map(next => <Pressable key={next} accessibilityRole="tab" accessibilityState={{ selected: next === screen }} onPress={() => { onScreen(next); setOpen(false); }} style={[s.link, next === screen && s.selected]}><Text style={s.text}>{next === 'guide' ? 'Guide' : 'My DVR'}</Text></Pressable>)}
-        {onMenu && <Pressable accessibilityRole="button" onPress={() => { setOpen(false); onMenu(); }} style={s.link}><Text style={s.text}>Menu</Text></Pressable>}
-      </ScrollView></> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Swipe right on this handle or tap to show Guide, My DVR and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={s.handleButton}><View style={[s.handleTrack, handleTop !== undefined && { height: 36 }]}><View style={s.handle} /></View></Pressable>}
-    </View>
+    {open ? <View style={[s.panel, { left: (insets?.left ?? 0) + 16, top: (insets?.top ?? 0) + 12, bottom: (insets?.bottom ?? 0) + 12 }]} {...swipe.panHandlers}>
+      <View style={s.header}>
+        <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Close StillWave navigation" accessibilityHint="Tap to close, or swipe left." accessibilityState={{ expanded: true }} onPress={() => setOpen(false)} style={s.brandButton}>
+          <Image accessibilityIgnoresInvertColors source={require('../../../assets/branding/stillwave-mark-v2.png')} resizeMode="contain" style={s.brandLogo} />
+          <Text style={s.brandText}>Still<Text style={{ color: T.mint }}>Wave</Text></Text>
+        </Pressable>
+      </View>
+      <ScrollView contentContainerStyle={s.links} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+        {DESTINATIONS.map(item => {
+          const selected = item.id === screen;
+          return <Pressable key={item.id} accessibilityRole="tab" accessibilityState={{ selected }} onPress={() => { onScreen(item.id); setOpen(false); }} style={({ pressed }) => [s.link, selected && s.linkSelected, pressed && !selected && { backgroundColor: T.mat2 }]}>
+            <Ionicons name={item.icon} size={20} color={selected ? T.lightInk : T.text} />
+            <Text style={[s.linkText, selected && { color: T.lightInk }]}>{item.label}</Text>
+          </Pressable>;
+        })}
+        {onMenu && <Pressable accessibilityRole="button" accessibilityLabel="Menu and settings" onPress={() => { setOpen(false); onMenu(); }} style={({ pressed }) => [s.link, { marginTop: 8 }, pressed && { backgroundColor: T.mat2 }]}>
+          <Ionicons name="options-outline" size={20} color={T.text2} /><Text style={[s.linkText, { color: T.text2 }]}>Menu</Text>
+        </Pressable>}
+      </ScrollView>
+    </View> : <Pressable testID="mobile-navigation-toggle" accessibilityRole="button" accessibilityLabel="Open navigation" accessibilityHint="Shows Home, Live TV, My DVR, Discover and Menu." accessibilityState={{ expanded: false }} onPress={() => setOpen(true)} style={({ pressed }) => [s.menuButton, { left, top }, pressed && { opacity: 0.7 }]}>
+      <Image accessibilityIgnoresInvertColors source={require('../../../assets/branding/stillwave-mark-v2.png')} resizeMode="contain" style={s.menuLogo} />
+    </Pressable>}
   </View>;
 }
 
 const s = StyleSheet.create({
-  backdrop: { ...StyleSheet.absoluteFill, backgroundColor: '#0008' },
-  panel: { position: 'absolute', top: 16, bottom: 16, left: 24, width: 232, maxWidth: '80%', padding: 12, backgroundColor: C.bg, borderWidth: 1, borderColor: C.line, borderRadius: 10 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  logoButton: { width: 48, height: 48, alignItems: 'center', justifyContent: 'center' },
-  logo: { width: 44, height: 44 },
-  handlePosition: { position: 'absolute', top: '50%', marginTop: -36, left: 24, width: 44, height: 72 },
-  handleButton: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  handleTrack: { width: 12, height: 48, borderRadius: 6, backgroundColor: C.panel, borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
-  handle: { width: 3, height: 28, borderRadius: 2, backgroundColor: C.muted },
-  links: { gap: 8, paddingBottom: 4 },
-  link: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, backgroundColor: C.panel, borderRadius: 6, borderLeftWidth: 3, borderLeftColor: 'transparent' },
-  selected: { borderLeftColor: C.accent },
-  text: { color: C.text, fontSize: 16, fontWeight: '600' },
-  close: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
+  backdrop: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(3,6,12,0.62)' },
+  menuButton: { position: 'absolute', width: MENU_BUTTON.size, height: MENU_BUTTON.size, borderRadius: MENU_BUTTON.size / 2, alignItems: 'center', justifyContent: 'center', backgroundColor: T.glass, borderWidth: 1, borderColor: T.edge },
+  menuLogo: { width: 26, height: 26 },
+  panel: { position: 'absolute', width: 292, maxWidth: '82%', padding: 12, backgroundColor: T.glass, borderWidth: 1, borderColor: T.edge, borderRadius: R.sheet },
+  header: { marginBottom: 4 },
+  brandButton: { flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 44, paddingHorizontal: 4 },
+  brandLogo: { width: 32, height: 32 },
+  brandText: { fontFamily: FONT, color: T.text, fontSize: 20, fontWeight: '800', letterSpacing: -0.4 },
+  links: { gap: 3, paddingBottom: 2 },
+  link: { minHeight: 46, flexDirection: 'row', alignItems: 'center', gap: 14, paddingHorizontal: 14, borderRadius: 14 },
+  linkSelected: { backgroundColor: T.light },
+  linkText: { fontFamily: FONT, color: T.text, fontSize: 16, fontWeight: '700' },
 });

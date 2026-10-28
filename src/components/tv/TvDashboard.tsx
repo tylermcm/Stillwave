@@ -5,6 +5,7 @@ import { TV_DESIGN as D, guideProgrammeFrame, guideProgrammeKey, tvDuration, tvT
 import { usesTvPlayer } from '../../data/tv';
 import { TouchTvList } from './TouchTvList';
 import { MobileNavigation } from './MobileNavigation';
+import type { HubDestination } from '../../core/mobileHub';
 import { mobileDashboardLayout, type MobileInsets } from '../../core/mobileDashboard';
 import { MobileGuideActions, type MobileGuideAction } from './MobileGuideActions';
 import { isChannelHidden } from '../../core/channelBrowsing';
@@ -17,6 +18,8 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export const DVR_COLORS = { bg: '#0b0f10', panel: '#11171a', cell: '#151d20', now: '#1a2528', line: '#1f2b2e', text: '#e1e8e8', muted: '#7f8f90', dim: '#55646a', accent: '#8fd6c0', ink: '#08201a', rec: '#e5484d', description: '#a9b6b6' };
 type Props = { state: TvDashboardState; onScreen: (screen: 'guide' | 'dvr') => void; onProgramme: (channel: number, programme: number) => void;
   onMenu?: () => void;
+  /** Phone navigation to the hub screens (Home, Discover) that live outside this guide canvas. */
+  onDestination?: (destination: HubDestination) => void;
   guideSize?: GuideSize; onChooseDay?: () => void;
   onGuideAction: (action: 'watch' | 'record' | 'series', channel?: number, programme?: number) => void; onTab: (tab: TvDvrTab) => void; onItem: (index: number) => void;
   onDvrAction: (action: DvrAction) => void;
@@ -191,7 +194,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
           </View></Animated.ScrollView>
           {!touch && <Footer screen="guide" />}
         </View>
-      </View> : <View style={[s.dvr, touch && { paddingTop: 24 + insets.top / scale, paddingLeft: insets.left / scale, paddingRight: insets.right / scale, paddingBottom: insets.bottom / scale }]}>
+      </View> : <View style={[s.dvr, touch && { paddingTop: 24 + insets.top / scale, paddingLeft: (insets.left + 72) / scale, paddingRight: insets.right / scale, paddingBottom: insets.bottom / scale }]}>
         <View style={[s.dvrMain, touch && { paddingHorizontal: 24 }]}>
           <View style={[s.dvrHead, { alignItems: 'center' }, touch && { flexWrap: 'wrap', gap: 8 }]}><Label style={s.dvrTitle}>My DVR</Label><View style={[s.tabs, { gap: Math.max(12, 8 / scale) }]}>{(['recordings', 'scheduled', 'series'] as const).map((tab, i) => <Pressable key={tab} accessibilityRole="tab" accessibilityLabel={tab} accessibilityState={{ selected: v.dvrTab === tab }} onPress={() => events.onTab(tab)} style={[s.tab, { minHeight: Math.max(44, 44 / scale), paddingHorizontal: 8 / scale, justifyContent: 'center' }, v.dvrTab === tab && s.navOn, v.focus.zone === 'dvrTabs' && v.focus.index === i && s.actionFocus]}><Label style={[s.tabText, { fontSize: Math.max(26, 16 / scale), lineHeight: Math.max(35, 22 / scale) }, v.dvrTab === tab ? { color: DVR_COLORS.text } : {}]}>{tab[0]!.toUpperCase() + tab.slice(1)}</Label></Pressable>)}</View></View>
           <Label style={s.summary}>{v.summary}</Label>
@@ -203,7 +206,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
       </View>}
       {!!v.toast && <View style={s.toast}><Label style={s.toastText}>{v.toast}</Label></View>}
     </View>
-    {touch && <MobileNavigation screen={v.screen} onScreen={events.onScreen} onMenu={events.onMenu} insets={insets} handleTop={v.screen === 'guide' ? insets.top + Math.max(0, (164 * scale - 44) / 2) : undefined} />}
+    {touch && <MobileNavigation screen={v.screen} onScreen={destination => destination === 'guide' || destination === 'dvr' ? events.onScreen(destination) : events.onDestination?.(destination)} onMenu={events.onMenu} insets={insets} />}
     {touch && context && contextRow && <MobileGuideActions title={contextProgramme?.title || contextRow.channel.name} subtitle={contextProgramme ? `${contextRow.channel.name} · ${tvTime(contextProgramme.start)} – ${tvTime(contextProgramme.stop)}` : `Channel ${contextRow.number} · ${contextRow.channel.group}`} description={contextProgramme ? [contextProgramme.episode, contextProgramme.description].filter(Boolean).join(' · ') : undefined} actions={contextActions} onClose={() => setContext(undefined)} />}
   </View>;
 }

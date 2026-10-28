@@ -23,6 +23,8 @@ import { LivePlayer } from '../LivePlayer';
 import { TvRecordingPlayer } from './TvRecordingPlayer';
 import { TvDashboard, DVR_COLORS } from './TvDashboard';
 import { TvButton } from './TvUi';
+import { MobileHub } from '../mobile/MobileHub';
+import type { HubDestination } from '../../core/mobileHub';
 import { browseChannelRows, channelCategories, CHANNEL_BROWSE_MODES, comparePreferredChannels, filterTvRows, isChannelHidden, prioritizeGuideRows, toggleHiddenChannel, type ChannelBrowseMode } from '../../core/channelBrowsing';
 import { ChannelNumberPad } from './ChannelNumberPad';
 import { TvChannelSearch } from './TvChannelSearch';
@@ -43,6 +45,8 @@ export function TvShell(props: Props) {
   const inheritedKeySuspension = useContext(TvKeysSuspended);
   const [panel, setPanel] = useState<'preferences' | 'order' | 'days' | 'storage'>();
   const [screen, setScreen] = useState<'guide' | 'dvr'>('guide');
+  // Phone-only destinations outside the guide canvas.
+  const [hub, setHub] = useState<'home' | 'discover'>();
   const [now, setNow] = useState(Date.now());
   const [cursor, setCursor] = useState<TvGuideCursor>(() => ({ channel: 0, programme: 0, rowTop: 0, windowStart: Math.floor(Date.now() / 1_800_000) * 1_800_000 }));
   const [focus, setFocus] = useState<TvDashboardState['focus']>({ zone: 'grid', index: 0 });
@@ -96,7 +100,8 @@ export function TvShell(props: Props) {
     busy.current = true;
     void action().catch(e => setToast(e instanceof Error ? e.message : 'The DVR action could not finish.')).finally(() => { busy.current = false; void refresh().catch(() => {}); });
   };
-  const onScreen = (next: 'guide' | 'dvr') => { setScreen(next); setFocus({ zone: next === 'guide' ? 'grid' : 'dvrList', index: 0 }); setMenu(false); };
+  const onDestination = (next: HubDestination) => { if (next === 'home' || next === 'discover') { setHub(next); setMenu(false); } else onScreen(next); };
+  const onScreen = (next: 'guide' | 'dvr') => { setHub(undefined); setScreen(next); setFocus({ zone: next === 'guide' ? 'grid' : 'dvrList', index: 0 }); setMenu(false); };
   const guideAction = (action: 'watch' | 'record' | 'series', channelIndex = selectedCursor.channel, programmeIndex = selectedCursor.programme) => {
     // Context actions target the held item, independently of cursor updates.
     const row = rows[channelIndex];
@@ -344,7 +349,7 @@ export function TvShell(props: Props) {
     dayLabel: [new Date(cursor.windowStart).toDateString() === new Date(now).toDateString() ? 'Today' : new Date(cursor.windowStart).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), query ? `Search: ${query}` : category !== 'all' ? category : browseMode !== 'all' ? CHANNEL_BROWSE_MODES.find(m => m.id === browseMode)!.label : ''].filter(Boolean).join(' · '),
     rows, cursor: selectedCursor, marks, dvrTab, items, itemIndex, summary: `${usedGb} of ${totalGb} GB used · ${recordings.some(r => r.status === 'recording') ? 1 : 0} of 1 streams in use`,
     conflict: recordingConflict(recordings, plans, now), toast, focus, guideEmpty: props.busy || (!props.loaded ? 'Loading your channels…' : !rows.length ? `No channels match. Use Menu to clear filters or restore hidden channels.` : usesTvPlayer ? 'No schedule is available. Press OK to watch this channel live.' : 'No schedule is available. Tap the channel to watch live.') };
-  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}><TvDashboard state={state} onScreen={onScreen} guideSize={prefs.guideSize} onChooseDay={() => openPanel('days')}
+  return <View style={s.fullscreen}><StatusBar hidden /><View style={s.fullscreen}>{hub && !usesTvPlayer ? <MobileHub screen={hub} rows={allRows} library={props.library} now={now} insets={insets} busy={props.busy} onDestination={onDestination} onWatch={channel => void props.onWatch(channel)} onFavorite={props.onFavorite} onSetup={props.onDefaults} onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }} /> : <TvDashboard state={state} onScreen={onScreen} onDestination={onDestination} guideSize={prefs.guideSize} onChooseDay={() => openPanel('days')}
     onMenu={() => { setMenu(true); setBrowseMenu(false); setMenuIndex(0); }}
     contentInsets={!usesTvPlayer ? insets : undefined} favorites={props.library.favorites} hiddenChannels={props.library.hiddenChannels} seriesRules={rules}
     onJumpToLive={() => { const liveNow = Date.now(); setCursor(c => ({ ...c, windowStart: Math.floor(liveNow / 1_800_000) * 1_800_000, programme: programmeAt(rows[selectedCursor.channel]?.programmes || [], liveNow) })); setFocus({ zone: 'grid', index: 0 }); }}
@@ -359,7 +364,7 @@ export function TvShell(props: Props) {
       } else if (selectedCursor.channel === channel && selectedCursor.programme === programme && focus.zone === 'grid') guideAction('watch');
       else { setCursor(guideWindow({ ...cursor, channel, programme }, rows)); setFocus({ zone: 'grid', index: 0 }); }
     }}
-    onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} /></View>
+    onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} />}</View>
     {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><Text style={{ color: DVR_COLORS.muted, fontSize: 18, padding: 8 }}>StillWave {version}</Text><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
     {numberPad}
     {searchOpen && <TvChannelSearch categories={categories} query={query} category={category} onApply={applySearch} onClose={() => setSearchOpen(false)} />}
