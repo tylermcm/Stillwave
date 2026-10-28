@@ -61,6 +61,7 @@ export function TvDashboard({ state: v, ...events }: Props) {
   const laneWidth = canvasWidth - channelWidth;
   const timeScroll = useRef<React.ComponentRef<typeof ScrollView>>(null);
   const timeOffset = useRef(new Animated.Value(0)).current;
+  const reverseTimeOffset = useMemo(() => Animated.multiply(timeOffset, -1), [timeOffset]);
   const onTimeScroll = useMemo(() => touch ? Animated.event(
     [{ nativeEvent: { contentOffset: { x: timeOffset } } }],
     { useNativeDriver: Platform.OS !== 'web' },
@@ -173,7 +174,12 @@ export function TvDashboard({ state: v, ...events }: Props) {
           </View></View>
           <View style={s.rowsWrap}>
             {touch ? <TouchTvList key={v.rows[0]?.channel.id || 'empty'} testID="touch-guide-list" scale={scale} data={v.rows} selected={v.cursor.channel} rowHeight={mobile.rowHeight} removeClippedSubviews={false} keyFor={r => r.channel.id} renderRow={renderGuideRow} /> : v.rows.slice(firstRow, lastRow).map((r, offset) => renderGuideRow(r, firstRow + offset))}
-            {nowX >= channelWidth && nowX < gridWidth && <View pointerEvents="none" style={[s.nowLine, { left: nowX }]} />}
+            {nowX >= channelWidth && nowX < gridWidth && (touch ?
+              // Pin the clip to the programme viewport, while the marker follows timeline time.
+              // A row's channel zIndex cannot cover an overlay outside the virtualized list.
+              <Animated.View pointerEvents="none" testID="touch-guide-now-clip" style={{ position: 'absolute', top: 0, bottom: 0, left: channelWidth, width: laneWidth, overflow: 'hidden', transform: [{ translateX: timeOffset }] }}>
+                <Animated.View testID="touch-guide-now-line" style={[s.nowLine, { left: nowX - channelWidth, transform: [{ translateX: reverseTimeOffset }] }]} />
+              </Animated.View> : <View pointerEvents="none" style={[s.nowLine, { left: nowX }]} />)}
             {!v.rows.length && <Label style={s.empty}>{v.guideEmpty || 'Your channels will appear here after setup.'}</Label>}
           </View>
           </View></Animated.ScrollView>

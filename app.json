@@ -2,7 +2,7 @@
   "expo": {
     "name": "StillWave",
     "slug": "stillwave",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true,
@@ -16,7 +16,7 @@
     },
     "android": {
       "package": "com.stillwave.player",
-      "versionCode": 17,
+      "versionCode": 18,
       "adaptiveIcon": {
         "foregroundImage": "./assets/branding/stillwave-mark-v2.png",
         "backgroundColor": "#0b0f10"

@@ -1,6 +1,23 @@
 const RELEASE_PREFIX = 'https://github.com/tylermcm/Stillwave/releases/download/';
 export const RELEASE_API = 'https://api.github.com/repos/tylermcm/Stillwave/releases/latest';
 export interface AppRelease { version: string; url: string; digest: string; size: number }
+export async function fetchAppRelease(installed: string, television: boolean, request: typeof fetch = fetch) {
+  // Android's HTTP cache and upstream caches must not reuse an earlier release offer.
+  const response = await request(`${RELEASE_API}?check=${Date.now()}`, {
+    cache: 'no-store', headers: { Accept: 'application/vnd.github+json', 'Cache-Control': 'no-cache' },
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (response.status === 404) return { release: undefined, message: 'No published GitHub release yet.' };
+  if (!response.ok) throw new Error(`Update check failed (${response.status}). Try again later.`);
+  const release = githubAppRelease(await response.json(), installed, television);
+  return { release, message: release ? `StillWave ${release.version} is available. Open Menu to install.` : `No newer compatible release. Installed: ${installed}.` };
+}
+
+export async function installLatestAppRelease(check: () => ReturnType<typeof fetchAppRelease>, install: (url: string, digest: string) => Promise<string>) {
+  // Never download the offer remembered when the app started: a newer release may exist now.
+  const latest = await check();
+  return { ...latest, result: latest.release ? await install(latest.release.url, latest.release.digest) : 'current' };
+}
 function versionParts(version: string) {
   const m = /^v?(\d+)\.(\d+)\.(\d+)$/.exec(version);
   return m ? m.slice(1).map(Number) : undefined;

@@ -1,15 +1,15 @@
 # Android app updates and channel management
 
-Starting with 0.4.7, Android phones and Fire TV/Android TV check the latest public GitHub release at startup, every six hours while open, and on resume when the last check is six hours old. TV automatic checks were introduced in 0.4.6. Use Menu → Check for app updates to check immediately. An available release changes that menu item to Install update. Downloading occurs when selected; Android/Fire OS still asks the user to confirm installation. Active recordings must finish before an update is installed.
+Starting with 0.4.7, Android phones and Fire TV/Android TV check the latest public GitHub release at startup, every six hours while open, and on resume when the last check is six hours old. TV automatic checks were introduced in 0.4.6. Use Menu → Check for app updates to check immediately. The menu displays the installed StillWave version. Check for app updates remains available when a separate Install update action appears. Since 0.4.11, checks bypass cached responses and each installation attempt refreshes the latest stable compatible release, including retries after granting install permission. Older versions can jump directly to the latest release. A failed check stops installation instead of using an old offer. Downloading occurs when Install update is selected; Android/Fire OS still asks the user to confirm installation. Active recordings must finish before an update is installed.
 
 The first time, allow StillWave to install unknown apps in device settings, then select Install update again. Fire OS may place this under My Fire TV → Developer Options → Install unknown apps. Device menus vary. If the permission page cannot open, enable it from Settings manually.
 
 ## Publishing the next update
 
-1. Increase `expo.version` and `expo.android.versionCode` in app.json and the version in package.json. Use a higher version code every time; for example 0.4.11 / code 18 after 0.4.10 / code 17.
+1. Increase `expo.version` and `expo.android.versionCode` in app.json and the version in package.json. Use a higher version code every time; for example 0.4.12 / code 19 after 0.4.11 / code 18.
 2. Build with `scripts/build-android-apk.ps1` using the original private signing key. The key and passwords must stay out of Git and GitHub releases.
-3. Create a **published, stable** release in `tylermcm/Stillwave`, tagged `v0.4.11` (using the actual version).
-4. Attach the signed APK named exactly `Stillwave-FireTV-0.4.11.apk` or `Stillwave-0.4.11.apk`. Phones prefer the universal filename; televisions prefer the TV filename. Both are currently the same signed universal app with hardware-selected controls. Upload the APK before publishing the release.
+3. Create a **published, stable** release in `tylermcm/Stillwave`, tagged `v0.4.12` (using the actual version).
+4. Attach the signed APK named exactly `Stillwave-FireTV-0.4.12.apk` or `Stillwave-0.4.12.apk`. Phones prefer the universal filename; televisions prefer the TV filename. Both are currently the same signed universal app with hardware-selected controls. Upload the APK before publishing the release.
 5. On the device, use Menu → Check for app updates, or wait for the automatic check. Install over the existing app to preserve settings and recordings.
 
 The updater ignores drafts, prereleases, lower/equal versions, unrelated assets and oversized downloads. APKs must come from this repository's HTTPS release downloads. Downloads are bounded and optional GitHub SHA-256 asset digests are checked. Native validation checks the package, a higher installed version code, device minimum SDK and the original signing certificate before opening the OS installer. Android verifies installation again. There is no silent installation or automatic rollback.

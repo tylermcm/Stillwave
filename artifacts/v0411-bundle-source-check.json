@@ -1,0 +1,211 @@
+{
+  "javascript": [
+    {
+      "file": "App.tsx",
+      "sha256": "17ce6cf88a5539f09ce564e28ad061dc7a5937c55dab04afcad5a2968a18b786",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/LaunchSplash.tsx",
+      "sha256": "6e182081619ea6f96171a1f6cbb43685abb3467c9bcbaba9ff12378ab676067c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/TouchTvList.tsx",
+      "sha256": "01a8b16afac051b8c502a1ad3b250fa1c4f16192d0cd7cd2e0303f1d093f243c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/TvPlayerControls.tsx",
+      "sha256": "6084f0f7b8ef64eb502db4ab550e3123cae8b80651cf76fc179c1ed96308096b",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/tvNavigation.ts",
+      "sha256": "f00f3ffbbae488f6e2c5069e889494b0703fc6533991ac2c78d42ac650e1bb40",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/LivePlayer.tsx",
+      "sha256": "ce939fbca0cf05853b9367d8ce4bd5b66ca09e6f04c2cfe897a7b0ef7965ef93",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/MobilePlayerControls.tsx",
+      "sha256": "af93c1f86c1db053ca230c588b36fda7c1f46fefd0aecfecf9b02b68227f60d2",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/ChannelNumberPad.tsx",
+      "sha256": "ac631a1678660a04171bf0c1dcc5c6f7cc7b086d6b87088d1b2a7c741c6b38ca",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/channelBrowsing.ts",
+      "sha256": "4bfd7a17f06613e71a42d118fe15bd96bf2a8c5497519b852b380f3b4a1e6085",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/channelNumbers.ts",
+      "sha256": "cc7c5f8e5d012f69c7e5b329e95f4d4022d677101d8363bf5e48ade2e3218f2d",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/history.ts",
+      "sha256": "f9bb95b479ac6446d4d457278732ec023414cb93118d9d6232f3d227696a906c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/Recordings.tsx",
+      "sha256": "bf48172e6e6da58cbc302d48f17d554c3a42673e361cd4c085c4541cde3bae5c",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/useDvrSession.ts",
+      "sha256": "862be11f653382a22a74721c252beaa2048ab142501cf02d08f26f22d6a2c54b",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/useAndroidFullscreen.ts",
+      "sha256": "9309be2cfac3678eb8c9c42052942739c42db3384896d24ca36b9fa19451a490",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/dvr.ts",
+      "sha256": "a8afe00853b0fa7aecdb6278449947e49a5b8847ece92f59ad0a2ea16835755b",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/data/dvr.ts",
+      "sha256": "aa0de93752aedca74cb75222bf226482fe386a6e2d4ca2ce64c58c19839f6dbd",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/TvDashboard.tsx",
+      "sha256": "f2c1dad568b56ad08988d3fb539b56b6eff481c0e26dcca473233caa4b4b4067",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/TvDvrShell.tsx",
+      "sha256": "dce20e476e3f86dbd1005886e6b62664c35509a12e259510a746592bd340af54",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/MobileNavigation.tsx",
+      "sha256": "b2a9285a61d44dc6c8ab8c01e3a0e505914a51850084a8653c550c187b69be69",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/MobileGuideActions.tsx",
+      "sha256": "5b3c01d4d8bc46de397a086d9005b22d4deaa4cc39c9ca7197cd09e1a81034aa",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/mobileDashboard.ts",
+      "sha256": "a6addac6b88fb144e1d40b1b1732fd6b2517d2a7aa82ed8437d739cc4b098374",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/mobilePlayback.ts",
+      "sha256": "dd02059e8eaeced0b1f349c1b5a15785f3570c613318b648c3cec0d146bb3698",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/components/tv/TvRecordingPlayer.tsx",
+      "sha256": "f20339c6c3893e03dc6a3b322fdeaa0c3e39afd71a1ebddd800f597a04e5fb35",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/tvGuide.ts",
+      "sha256": "5f8ccedc3cade6b56ef57a93bfd281faaaf548ab30ba2e57786e08d8cfd69d9d",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/tvDvr.ts",
+      "sha256": "a08648a6709cef48abe929a75a5997924ad61554e47b15cebab7b30948fd1b72",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/tvDefaults.ts",
+      "sha256": "abd32eed7d5dcbfc667ecbe9d1efc645f4bf7dba4fc83628f03fe8fa9aa5d094",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/xmltv.ts",
+      "sha256": "d6601040530717f8830223534d52040b1861eb2304448362d2d0415f7f1e6d57",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/data/tv.ts",
+      "sha256": "0780e51d9d9ecd19776bbf5d20bc97aaa169c9c656010b24d8e99c801c6de505",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/data/recordingPlanner.ts",
+      "sha256": "7ed4878193321144ac492d695c6bbd08a0d3c05b61f4e5a0dbe34c8172c0f323",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/core/appUpdates.ts",
+      "sha256": "6bbb72c1076ac4624a89bed7b4a7567679db3f3468d31a54525deb1ebefb4cdb",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "src/data/appUpdates.ts",
+      "sha256": "beb3f027f656cb33dd10658d955fa52aa028a10f6af7fb6569f41b1ce4452d27",
+      "bundledSourceMatches": true
+    },
+    {
+      "file": "package.json",
+      "sha256": "7e45d995a638095d66caef0b2606357313e923b58cf8ad2363c7a46255acdf37",
+      "bundledSourceMatches": true
+    }
+  ],
+  "native": [
+    {
+      "file": "modules/stillwave-dvr/android/src/main/AndroidManifest.xml",
+      "sha256": "ff4e98978420572939a486bc1c96be8fb372b193ad7f56bc02e199f8237d84e6",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrEngine.kt",
+      "sha256": "3fb77a461eed75603d0f32a94299859dbf716de4d991cce589b58798b09b79a2",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrServer.kt",
+      "sha256": "fcacf635a6527fdd8a90e57f35233d2b8208849e6fa77d4564f77c481ce267eb",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/DvrService.kt",
+      "sha256": "93f4a625b57740a230f229a9f36b6bdae7842103c349730a9e7d5759f3507dd8",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/Hls.kt",
+      "sha256": "c6cf3a65d7c4787eeb63687dc61416b0ff3af70e3ed6b0665f1fd2eda2e0c14e",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/StillwaveDvrModule.kt",
+      "sha256": "31ae988c108cd0bf6dd80fe90fb5e19165ff9397db39ecc74bbf0f86cc5331db",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/RecordingPlanner.kt",
+      "sha256": "2a37f348f7c1d8a144701e19d21ed78502ef149480d72ef6c9e5079098161c20",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/TvRemote.kt",
+      "sha256": "8dc0932f94beef33cc7b125aa917aa3a96b556fb82589f5b203ded784b52e652",
+      "modifiedBeforeApk": true
+    },
+    {
+      "file": "modules/stillwave-dvr/android/src/main/java/expo/modules/stillwavedvr/Reminders.kt",
+      "sha256": "ff75a51c20a8991b1af1e8e6c9adffa1fcefd36516452a1a7422ab1058cead58",
+      "modifiedBeforeApk": true
+    }
+  ]
+}

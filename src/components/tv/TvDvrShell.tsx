@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { AppState, BackHandler, Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { AppState, BackHandler, Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { version } from '../../../package.json';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationBar } from 'expo-navigation-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -52,6 +53,7 @@ export function TvShell(props: Props) {
   const [category, setCategory] = useState('all');
   const [release, setRelease] = useState<AppRelease>();
   const [updateBusy, setUpdateBusy] = useState(false);
+  const [checkingUpdates, setCheckingUpdates] = useState(false);
   const updateInFlight = useRef(false), lastUpdateCheck = useRef(0);
   const [numberSearch, setNumberSearch] = useState<{ initial: string }>();
   const menuList = useRef<React.ComponentRef<typeof ScrollView>>(null);
@@ -157,17 +159,17 @@ export function TvShell(props: Props) {
     onWatch={channel => { setNumberSearch(undefined); void props.onWatch(channel); }} />;
   const coverage = useMemo(() => guideCoverage(props.library.channels, view, now), [props.library.channels, view, now]);
   const checkUpdates = async (manual = false) => {
-    if (updateInFlight.current) return;
-    updateInFlight.current = true; lastUpdateCheck.current = Date.now();
+    if (updateInFlight.current || updateBusy) return;
+    updateInFlight.current = true; setCheckingUpdates(true); lastUpdateCheck.current = Date.now();
     try { const result = await checkAppRelease(); setRelease(result.release); if (manual || result.release) setToast(result.message); }
     catch (error) { if (manual) setToast(error instanceof Error ? error.message : 'Could not check for updates.'); }
-    finally { updateInFlight.current = false; }
+    finally { updateInFlight.current = false; setCheckingUpdates(false); }
   };
   const installUpdate = async () => {
-    if (!release || updateBusy) return;
+    if (!release || updateBusy || updateInFlight.current) return;
     if (recordings.some(r => r.status === 'recording')) { setToast('Finish the active recording before installing an update.'); return; }
-    setUpdateBusy(true); setToast('Preparing update. Android will ask you to confirm installation.');
-    try { const result = await installAppRelease(release.url, release.digest); setToast(result === 'permission' ? 'Allow StillWave to install unknown apps in device settings, then select Install update again.' : 'Confirm Update in the Android installer. Your saved library is kept.'); }
+    setUpdateBusy(true); setToast('Checking the latest update. Android will ask you to confirm installation.');
+    try { const latest = await installAppRelease(); setRelease(latest.release); setToast(latest.result === 'current' ? latest.message : latest.result === 'permission' ? 'Allow StillWave to install unknown apps in device settings, then select Install update again.' : 'Confirm Update in the Android installer. Your saved library is kept.'); }
     catch (error) { setToast(error instanceof Error ? error.message : 'The update could not be installed.'); }
     finally { setUpdateBusy(false); }
   };
@@ -192,7 +194,8 @@ export function TvShell(props: Props) {
     ...(row ? [{ label: isChannelHidden(row.channel, props.library.hiddenChannels) ? 'Unhide selected channel' : 'Hide selected channel', run: () => { props.onHiddenChannels(toggleHiddenChannel(props.library.hiddenChannels || [], row.channel)); setMenu(false); setToast(browseMode === 'hidden' ? 'Channel restored to the guide.' : 'Channel hidden. Restore it in Menu → Hidden channels.'); } }] : []),
     { label: `Hidden channels (${props.library.channels.length - visibleChannels.length})`, run: () => { setQuery(''); setCategory('all'); setBrowseMode('hidden'); setCursor(c => ({ ...c, channel: 0, programme: 0, rowTop: 0 })); setScreen('guide'); setMenu(false); } },
     ...(visibleChannels.length < props.library.channels.length ? [{ label: 'Unhide all channels', run: () => { props.onHiddenChannels([]); setMenu(false); setToast('All channels restored.'); } }] : []),
-    { label: updateBusy ? 'Downloading update…' : release ? `Install update ${release.version}` : 'Check for app updates', run: () => { if (release) void installUpdate(); else void checkUpdates(true); } },
+    { label: checkingUpdates ? 'Checking for app updates…' : 'Check for app updates', run: () => { void checkUpdates(true); } },
+    ...(release ? [{ label: updateBusy ? 'Preparing update…' : `Install update ${release.version}`, run: () => { void installUpdate(); } }] : []),
     { label: 'Refresh US playlist and guide', run: () => { props.onDefaults(); setMenu(false); } },
     ...view.sources.filter(s => s.url).map(source => ({ label: `Refresh ${source.name}${source.lastError ? ' · retry failed guide' : ''}`, run: () => { props.onRefreshGuide(source.id); setMenu(false); } })),
     { label: 'Back', run: () => setMenu(false) },
@@ -323,7 +326,7 @@ export function TvShell(props: Props) {
       else { setCursor(guideWindow({ ...cursor, channel, programme }, rows)); setFocus({ zone: 'grid', index: 0 }); }
     }}
     onGuideAction={guideAction} onTab={tab => { setDvrTab(tab); setItemIndex(0); setFocus({ zone: 'dvrList', index: 0 }); }} onItem={index => { setItemIndex(index); setFocus({ zone: 'dvrList', index: 0 }); }} onDvrAction={onDvrAction} /></View>
-    {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
+    {menu && <View style={[s.menu, !usesTvPlayer && { left: insets.left + 12, right: insets.right + 12, top: insets.top + 12, bottom: insets.bottom + 12, padding: 12 }]}><Text style={{ color: DVR_COLORS.muted, fontSize: 18, padding: 8 }}>StillWave {version}</Text><ScrollView ref={menuList}>{menuActions.map((action, i) => <TvButton key={`${i}:${action.label}`} label={action.label} focused={i === Math.min(menuIndex, menuActions.length - 1)} onPress={action.run} />)}</ScrollView></View>}
     {numberPad}
     {searchOpen && <TvChannelSearch categories={categories} query={query} category={category} onApply={applySearch} onClose={() => setSearchOpen(false)} />}
   </View>;

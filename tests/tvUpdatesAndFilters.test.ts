@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { githubAppRelease, newerVersion } from '../src/core/appUpdates';
+import { fetchAppRelease, githubAppRelease, installLatestAppRelease, newerVersion, RELEASE_API } from '../src/core/appUpdates';
 import { browseChannelRows, channelCategories, channelHiddenKey, filterTvRows, isChannelHidden, toggleHiddenChannel } from '../src/core/channelBrowsing';
 import { addPlaylist, restoreLibrary } from '../src/core/playlists';
 import { completeTvSetup } from '../src/core/tvDefaults';
@@ -8,6 +8,42 @@ import { EMPTY_LIBRARY, type Channel } from '../src/types';
 
 const channel: Channel = { id: 'p:old', sourceId: 'old', playlistId: 'p', tvgId: 'Station.us@East', name: 'Station', group: 'Sports;News', number: '10', kind: 'hls', url: 'https://example.org/one.m3u8', headers: {} };
 const release = (overrides = {}) => ({ tag_name: 'v0.4.7', draft: false, prerelease: false, assets: [{ name: 'Stillwave-FireTV-0.4.7.apk', browser_download_url: 'https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-FireTV-0.4.7.apk', size: 40000000, digest: 'sha256:' + 'a'.repeat(64) }], ...overrides });
+
+test('install refreshes an old offer and skips directly to the newest stable release', async () => {
+  const data = (version: string) => release({ tag_name: `v${version}`, assets: [
+    { ...release().assets[0], name: `Stillwave-${version}.apk`, browser_download_url: `https://github.com/tylermcm/Stillwave/releases/download/v${version}/Stillwave-${version}.apk` },
+    { ...release().assets[0], name: `Stillwave-FireTV-${version}.apk`, browser_download_url: `https://github.com/tylermcm/Stillwave/releases/download/v${version}/Stillwave-FireTV-${version}.apk` },
+  ] });
+  for (const television of [false, true]) {
+    let calls = 0;
+    const request: typeof fetch = async (url, options) => {
+      assert.equal(new URL(String(url)).origin + new URL(String(url)).pathname, RELEASE_API);
+      assert.ok(new URL(String(url)).searchParams.has('check'));
+      assert.equal(options?.cache, 'no-store');
+      assert.equal((options?.headers as Record<string, string>)['Cache-Control'], 'no-cache');
+      return Response.json(data(++calls === 1 ? '0.4.9' : '0.4.10'));
+    };
+    const check = () => fetchAppRelease('0.4.8', television, request);
+    assert.equal((await check()).release?.version, '0.4.9');
+    const downloaded: string[] = [];
+    const latest = await installLatestAppRelease(check, async (url, digest) => {
+      downloaded.push(url); assert.equal(digest, 'a'.repeat(64)); return 'installer';
+    });
+    assert.equal(latest.release?.version, '0.4.10');
+    assert.equal(calls, 2);
+    assert.deepEqual(downloaded, [`https://github.com/tylermcm/Stillwave/releases/download/v0.4.10/Stillwave-${television ? 'FireTV-' : ''}0.4.10.apk`]);
+  }
+});
+
+test('install never falls back to an old offer when a fresh check fails or finds no update', async () => {
+  let installs = 0;
+  const install = async () => { installs++; return 'installer'; };
+  await assert.rejects(installLatestAppRelease(() => fetchAppRelease('0.4.8', false, async () => new Response('', { status: 503 })), install), /503/);
+  const current = await installLatestAppRelease(() => fetchAppRelease('0.4.7', false, async () => Response.json(release())), install);
+  assert.equal(current.result, 'current');
+  assert.equal(current.release, undefined);
+  assert.equal(installs, 0);
+});
 
 test('release updater chooses the TV APK, compares numeric versions and rejects previews, stale builds and external assets', () => {
   assert.equal(githubAppRelease(release(), '0.4.6')?.version, '0.4.7');
