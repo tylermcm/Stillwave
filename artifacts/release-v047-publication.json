@@ -1,0 +1,51 @@
+{
+  "verifiedAt": "2026-10-28T06:37:01.971Z",
+  "release": "https://github.com/tylermcm/Stillwave/releases/tag/v0.4.7",
+  "tag": "v0.4.7",
+  "publishedAt": "2026-10-28T06:36:19Z",
+  "sourceCommit": "90c650055477c08a1f71f6460cdce57d3eb47a6d",
+  "publicLatestRelease": true,
+  "updaterDiscoveryFrom046": {
+    "mobile": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-0.4.7.apk",
+    "tv": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-FireTV-0.4.7.apk"
+  },
+  "sameVersionIgnored": true,
+  "publicApkDownload": {
+    "status": 200,
+    "bytes": 37170957,
+    "sha256": "b4978a603fa416b62b9dea5c5efc16139f111895551af0cf94b9e26195af6fdd"
+  },
+  "tvAssetReachable": true,
+  "assets": [
+    {
+      "name": "apk-v047-verification.json",
+      "size": 628,
+      "url": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/apk-v047-verification.json",
+      "digest": "sha256:144b83e8813c71084fe6fc85db3d6b08e2b0f2bec1a87918f657ca5b596cd8dc"
+    },
+    {
+      "name": "Stillwave-0.4.7.apk",
+      "size": 37170957,
+      "url": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-0.4.7.apk",
+      "digest": "sha256:b4978a603fa416b62b9dea5c5efc16139f111895551af0cf94b9e26195af6fdd"
+    },
+    {
+      "name": "Stillwave-0.4.7.apk.sha256",
+      "size": 86,
+      "url": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-0.4.7.apk.sha256",
+      "digest": "sha256:ca291e4997753a31cb9c686f0d922d7981c45650d3e68e8666c4b28eb312b0d7"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.7.apk",
+      "size": 37170957,
+      "url": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-FireTV-0.4.7.apk",
+      "digest": "sha256:b4978a603fa416b62b9dea5c5efc16139f111895551af0cf94b9e26195af6fdd"
+    },
+    {
+      "name": "Stillwave-FireTV-0.4.7.apk.sha256",
+      "size": 93,
+      "url": "https://github.com/tylermcm/Stillwave/releases/download/v0.4.7/Stillwave-FireTV-0.4.7.apk.sha256",
+      "digest": "sha256:fb46aa9a409c9a377ec05432ce6ce9611eaa1d5369babcc5186a8a261942355d"
+    }
+  ]
+}
