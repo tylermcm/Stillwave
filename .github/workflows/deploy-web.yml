@@ -11,8 +11,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  # Shared with refresh-epg.yml: both publish the one Pages site.
+  group: pages-site
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -32,6 +33,14 @@ jobs:
         env:
           EXPO_BASE_URL: /${{ github.event.repository.name }}
           EXPO_NO_TELEMETRY: 1
+      # A deployment replaces the whole site, so carry over the live guide files
+      # (refreshed by refresh-epg.yml) instead of removing them.
+      - name: Keep published guide
+        run: |
+          base="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          for f in stillwave-us.xml.gz stillwave-us.xml manifest.json status.json guide.html; do
+            curl -fsSL "$base/$f" -o "dist/web/$f" || echo "No published $f yet"
+          done
       # Pages has no SPA fallback; serve the app for unknown paths too.
       - run: cp dist/web/index.html dist/web/404.html
       - uses: actions/configure-pages@v5

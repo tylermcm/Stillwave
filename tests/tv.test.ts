@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
-import { moveTvFocus, usesRemotePlayer, usesTvLayout, type TvFocus, type TvNavigation } from '../src/core/tvNavigation';
+import { moveTvFocus, usesRemotePlayer, usesTvLayout, webTvLayoutRequested, type TvFocus, type TvNavigation } from '../src/core/tvNavigation';
 import { DEFAULT_TV_PLAYLIST, completeTvSetup, installTvDefaults } from '../src/core/tvDefaults';
 import { EMPTY_LIBRARY } from '../src/types';
 import { parseXmltv, createGuideMatcher } from '../src/core/xmltv';
@@ -14,6 +14,11 @@ test('Android phones and TVs use the same TV layout; iOS and web retain explicit
   assert.equal(usesTvLayout('ios',false),false);
   assert.equal(usesTvLayout('web',false),false);
   assert.equal(usesTvLayout('web',false,true),true);
+});
+test('web uses the release layout unless ?tv=0 is given', () => {
+  assert.equal(webTvLayoutRequested(''), true);
+  assert.equal(webTvLayoutRequested('?tv=1'), true);
+  assert.equal(webTvLayoutRequested('?tv=0'), false);
 });
 test('TV browsing on a phone does not select remote player controls', () => {
   assert.equal(usesTvLayout('android', false), true);
