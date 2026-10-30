@@ -5,7 +5,7 @@ The web build matches the Android release: touch Guide and My DVR, the default U
 Published at `https://<owner>.github.io/<repo>/` by GitHub Pages. Save it to an iPhone/iPad home screen with Share → Add to Home Screen.
 
 ## Released version only
-The published web app is built from the released source (currently Android 0.4.11, commit `f3b891e`), not from `main`, so unreleased work such as the personalization, sleep timer and channel-order features stays out until it ships. Only the web files (`public/`, `app.config.js`, `src/core/tvNavigation.ts`, `src/data/tv.ts`) come from `main`. To publish a new release on the web, change the `ref` in `.github/actions/build-web/action.yml` to that release's commit (or tag).
+The published web app is built from the released source (currently Android 0.4.11, commit `f3b891e`), not from `main`, so unreleased work such as the personalization, sleep timer and channel-order features stays out until it ships. Only the web files (`public/`, `app.config.js`, `src/core/tvNavigation.ts`, `src/data/tv.ts`, `src/data/library.web.ts`) come from `main`. To publish a new release on the web, change the `ref` in `.github/actions/build-web/action.yml` to that release's commit (or tag).
 
 ## Limits of a browser
 - Local DVR, the recording planner, reminders, Picture-in-Picture and in-app updates are Android-only. Their screens appear but report that recording is unavailable.
