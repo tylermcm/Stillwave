@@ -113,7 +113,7 @@
       (function () {
         if (!/[?&]debug=1/.test(location.search)) return;
         var box = document.createElement('pre');
-        box.style.cssText = 'position:fixed;left:8px;bottom:8px;margin:0;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.75);color:#a7eccb;font:11px/1.35 monospace;z-index:2147483600;pointer-events:none;max-width:60vw;white-space:pre-wrap';
+        box.style.cssText = 'position:fixed;left:8px;bottom:8px;margin:0;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.75);color:#a7eccb;font:11px/1.35 monospace;z-index:2147483600;pointer-events:none;max-width:92vw;white-space:pre-wrap';
         document.body.appendChild(box);
         var log = [], watched = new WeakSet();
         var names = ['loadstart', 'loadedmetadata', 'canplay', 'playing', 'waiting', 'stalled', 'suspend', 'error', 'emptied'];
@@ -123,14 +123,22 @@
         }
         var t0 = Date.now();
         document.addEventListener('securitypolicyviolation', function (e) { log.push('CSP ' + e.violatedDirective); if (log.length > 7) log.shift(); });
+        var history = [];
         setInterval(function () {
           var v = document.querySelector('video');
           if (!v) { box.textContent = 'no video element'; return; }
           watch(v);
           var raw = v.currentSrc || v.src || '', where = raw;
           try { var u = new URL(raw); where = u.protocol + '//' + u.host; } catch (e) {}
-          box.textContent = ['stream: ' + (where || '(none)'), 'page: ' + location.protocol,
-            'ready ' + v.readyState + ' network ' + v.networkState + (v.paused ? ' paused' : ' playing') + ' t=' + v.currentTime.toFixed(1),
+          history.push(v.currentTime); if (history.length > 5) history.shift();
+          var moving = history.length > 1 && history[history.length - 1] !== history[0];
+          var q = v.getVideoPlaybackQuality ? v.getVideoPlaybackQuality() : null;
+          var r = v.getBoundingClientRect(), cs = getComputedStyle(v);
+          var buf = v.buffered.length ? v.buffered.start(0).toFixed(1) + '-' + v.buffered.end(v.buffered.length - 1).toFixed(1) : 'none';
+          box.textContent = ['stream: ' + (where || '(none)') + '  page: ' + location.protocol,
+            'ready ' + v.readyState + ' network ' + v.networkState + (v.paused ? ' PAUSED' : ' playing') + ' t=' + v.currentTime.toFixed(1) + (moving ? ' advancing' : ' NOT advancing'),
+            'video ' + v.videoWidth + 'x' + v.videoHeight + (q ? ' frames ' + q.totalVideoFrames + ' dropped ' + q.droppedVideoFrames : '') + ' buffered ' + buf,
+            'muted ' + v.muted + ' vol ' + v.volume + ' shown ' + Math.round(r.width) + 'x' + Math.round(r.height) + ' ' + cs.visibility + ' opacity ' + cs.opacity,
             'error: ' + (v.error ? v.error.code + ' ' + (v.error.message || '') : 'none')].concat(log).join('\n');
         }, 500);
       })();
