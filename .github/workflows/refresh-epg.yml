@@ -24,7 +24,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: hosted-epg
+  # Shared with deploy-web.yml: both publish the one Pages site.
+  group: pages-site
   cancel-in-progress: false
 
 jobs:
@@ -46,10 +47,23 @@ jobs:
         run: npm run build
       - name: Prepare public status page
         run: node services/epg/prepare-public.mjs
-      - name: Upload verified guide
+      # A Pages deployment replaces the whole site, so publish the web app
+      # together with the guide or each refresh would remove the app.
+      - id: web
+        uses: ./.github/actions/build-web
+        with:
+          base-url: /${{ github.event.repository.name }}
+      - name: Assemble site
+        run: |
+          mkdir site
+          cp -r "${{ steps.web.outputs.path }}/." site/
+          cp .build-tmp/epg-service/artifacts/epg/{stillwave-us.xml.gz,stillwave-us.xml,manifest.json,status.json} site/
+          cp .build-tmp/epg-service/artifacts/epg/index.html site/guide.html
+          cp site/index.html site/404.html
+      - name: Upload verified guide and web app
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
-          path: .build-tmp/epg-service/artifacts/epg
+          path: site
   deploy:
     needs: build
     runs-on: ubuntu-latest

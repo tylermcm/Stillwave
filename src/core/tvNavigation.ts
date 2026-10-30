@@ -3,6 +3,10 @@ export type TvDigit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 export function usesTvLayout(platform: string, hardwareTv: boolean, tvPreview = false) {
   return platform === 'android' || hardwareTv || (platform === 'web' && tvPreview);
 }
+/** Web uses the release layout (touch Guide and My DVR); ?tv=0 returns to the Sources screen. */
+export function webTvLayoutRequested(search: string) {
+  return new URLSearchParams(search).get('tv') !== '0';
+}
 /** Player controls follow the input device, independently of the guide layout. */
 export function usesRemotePlayer(hardwareTv: boolean, remotePreview = false) {
   return hardwareTv || remotePreview;

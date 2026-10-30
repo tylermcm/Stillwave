@@ -1,0 +1,40 @@
+name: Build released web app
+description: >
+  Builds the web app from the released source (RELEASE_SHA), not from main, so
+  unreleased work is not published. Only the web files are taken from main.
+inputs:
+  base-url:
+    description: Subpath the site is served from, e.g. /Stillwave
+    required: true
+outputs:
+  path:
+    description: Directory containing the built site
+    value: ${{ steps.out.outputs.path }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        # Android 0.4.11 (version code 18). Update with each release; see docs/WEB.md.
+        ref: f3b891e3ffcf98da9f178015c64bd30748092265
+        path: release
+    - name: Add web files from main
+      shell: bash
+      run: |
+        mkdir -p release/public && cp -r public/. release/public/
+        cp app.config.js release/
+        cp src/core/tvNavigation.ts release/src/core/
+        cp src/data/tv.ts release/src/data/
+    - name: Build
+      shell: bash
+      working-directory: release
+      run: |
+        corepack enable
+        pnpm install --frozen-lockfile
+        npx expo export --platform web --output-dir dist/web
+      env:
+        EXPO_BASE_URL: ${{ inputs.base-url }}
+        EXPO_NO_TELEMETRY: 1
+    - id: out
+      shell: bash
+      run: echo "path=$GITHUB_WORKSPACE/release/dist/web" >> "$GITHUB_OUTPUT"

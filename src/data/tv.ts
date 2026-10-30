@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import { requireOptionalNativeModule } from 'expo';
 import type { TvKey } from '../core/tvNavigation';
-import { usesRemotePlayer, usesTvLayout } from '../core/tvNavigation';
+import { usesRemotePlayer, usesTvLayout, webTvLayoutRequested } from '../core/tvNavigation';
 
 interface TvModule {
   isTv: boolean;
@@ -12,8 +12,8 @@ interface TvModule {
 export const tvNative = Platform.OS === 'android' ? requireOptionalNativeModule<TvModule>('StillwaveTv') : null;
 // Keep TV browsing on touch devices, with player controls selected separately.
 export const usesTvPlayer = usesRemotePlayer(Platform.isTV || !!tvNative?.isTv, Platform.OS === 'web' && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('remote') === '1');
-// The web preview makes the same TV layout and keyboard paths testable on a PC.
-export const isTv = usesTvLayout(Platform.OS, Platform.isTV || !!tvNative?.isTv, Platform.OS === 'web' && typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('tv') === '1');
+// Web matches the Android release: touch Guide/My DVR with the default US lineup. Add ?tv=0 for the Sources screen.
+export const isTv = usesTvLayout(Platform.OS, Platform.isTV || !!tvNative?.isTv, Platform.OS === 'web' && typeof window !== 'undefined' && webTvLayoutRequested(window.location.search));
 export const TvKeysSuspended = createContext(false);
 
 export function useTvKeys(handler: (key: TvKey) => void, enabled = true) {
