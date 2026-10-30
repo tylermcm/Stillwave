@@ -5,13 +5,14 @@
     <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
     <title>StillWave</title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta name="theme-color" content="#0b0f10" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="StillWave" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="app.webmanifest" />
     <style id="expo-reset">
       html,
       body {
@@ -67,8 +68,9 @@
 
       // Browser chrome (the address bar) stays visible unless the page asks for
       // fullscreen. On touch devices, go fullscreen while a channel is playing
-      // and leave when it closes. Needs a tap, so it fires on the next tap if a
-      // stream starts too late for the tap that opened it.
+      // and leave when it closes. Browsers only allow this from a tap, so it
+      // also retries on every tap, and a button covers the case where it was
+      // refused or the person left fullscreen.
       (function () {
         var root = document.documentElement;
         if (!matchMedia('(pointer: coarse)').matches) return;
@@ -83,16 +85,32 @@
             if (result && result.then) result.then(lockLandscape, function () {});
           } catch (e) {}
         }
-        document.addEventListener('playing', enter, true);
-        document.addEventListener('pointerup', enter, true);
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-label', 'Full screen');
+        button.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e7f4ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+        button.style.cssText = 'display:none;position:fixed;right:10px;top:50%;margin-top:-24px;width:48px;height:48px;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(231,244,239,.3);background:rgba(11,15,16,.6);padding:0;z-index:2147483000';
+        button.addEventListener('click', function (event) { event.stopPropagation(); enter(); });
+        document.body.appendChild(button);
+        var queued = false;
+        function sync() {
+          queued = false;
+          button.style.display = playing() && !active() ? 'flex' : 'none';
+        }
         var timer;
-        new MutationObserver(function () {
+        function changed() {
+          if (!queued) { queued = true; requestAnimationFrame(sync); }
           clearTimeout(timer);
           timer = setTimeout(function () {
             if (!active() || playing()) return;
             (document.exitFullscreen || document.webkitExitFullscreen).call(document);
           }, 400);
-        }).observe(document.body, { childList: true, subtree: true });
+        }
+        document.addEventListener('playing', enter, true);
+        ['pointerup', 'touchend', 'click'].forEach(function (name) { document.addEventListener(name, enter, true); });
+        document.addEventListener('fullscreenchange', changed);
+        document.addEventListener('webkitfullscreenchange', changed);
+        new MutationObserver(changed).observe(document.body, { childList: true, subtree: true });
       })();
     </script>
   </body>
