@@ -24,7 +24,7 @@ runs:
         mkdir -p release/public && cp -r public/. release/public/
         cp app.config.js release/
         cp src/core/tvNavigation.ts release/src/core/
-        cp src/data/tv.ts release/src/data/
+        cp src/data/tv.ts src/data/library.web.ts release/src/data/
     - name: Build
       shell: bash
       working-directory: release
