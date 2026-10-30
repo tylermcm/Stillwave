@@ -107,6 +107,33 @@
         document.addEventListener('webkitfullscreenchange', changed);
         sync();
       })();
+
+      // Diagnostics: add ?debug=1 to the address to show what the video element
+      // is doing. Only the stream's scheme and host are shown, never its path.
+      (function () {
+        if (!/[?&]debug=1/.test(location.search)) return;
+        var box = document.createElement('pre');
+        box.style.cssText = 'position:fixed;left:8px;bottom:8px;margin:0;padding:6px 8px;border-radius:6px;background:rgba(0,0,0,.75);color:#a7eccb;font:11px/1.35 monospace;z-index:2147483600;pointer-events:none;max-width:60vw;white-space:pre-wrap';
+        document.body.appendChild(box);
+        var log = [], watched = new WeakSet();
+        var names = ['loadstart', 'loadedmetadata', 'canplay', 'playing', 'waiting', 'stalled', 'suspend', 'error', 'emptied'];
+        function watch(v) {
+          if (watched.has(v)) return; watched.add(v);
+          names.forEach(function (n) { v.addEventListener(n, function () { log.push(((Date.now() - t0) / 1000).toFixed(1) + 's ' + n); if (log.length > 7) log.shift(); }); });
+        }
+        var t0 = Date.now();
+        document.addEventListener('securitypolicyviolation', function (e) { log.push('CSP ' + e.violatedDirective); if (log.length > 7) log.shift(); });
+        setInterval(function () {
+          var v = document.querySelector('video');
+          if (!v) { box.textContent = 'no video element'; return; }
+          watch(v);
+          var raw = v.currentSrc || v.src || '', where = raw;
+          try { var u = new URL(raw); where = u.protocol + '//' + u.host; } catch (e) {}
+          box.textContent = ['stream: ' + (where || '(none)'), 'page: ' + location.protocol,
+            'ready ' + v.readyState + ' network ' + v.networkState + (v.paused ? ' paused' : ' playing') + ' t=' + v.currentTime.toFixed(1),
+            'error: ' + (v.error ? v.error.code + ' ' + (v.error.message || '') : 'none')].concat(log).join('\n');
+        }, 500);
+      })();
     </script>
   </body>
 </html>
