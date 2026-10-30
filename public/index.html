@@ -21,6 +21,27 @@
       body {
         overflow: hidden;
       }
+      /* The guide only lays out correctly in landscape (as on Android). Touch
+         devices held upright get a prompt instead of a broken guide. */
+      #rotate {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: #0b0f10;
+        color: #e7f4ef;
+        font: 20px system-ui, sans-serif;
+        text-align: center;
+      }
+      #rotate svg { width: 72px; height: 72px; animation: turn 2.4s ease-in-out infinite; }
+      @keyframes turn { 0%, 30% { transform: rotate(0); } 70%, 100% { transform: rotate(-90deg); } }
+      @media (orientation: portrait) and (pointer: coarse) {
+        #rotate { display: flex; }
+      }
       #root {
         display: flex;
         height: 100%;
@@ -32,5 +53,20 @@
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
+    <div id="rotate" role="alert">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a7eccb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+      <div>Rotate your device to landscape<br /><span style="color:#7e9690;font-size:16px">StillWave's guide is built for a wide screen.</span></div>
+    </div>
+    <script>
+      // Honoured in installed/fullscreen apps on Android; iOS and plain tabs
+      // rely on the overlay above.
+      (function () {
+        function lock() {
+          try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(function () {}); } catch (e) {}
+        }
+        lock();
+        addEventListener('pointerdown', lock, { once: true });
+      })();
+    </script>
   </body>
 </html>
