@@ -67,19 +67,19 @@
       lockLandscape();
 
       // Browser chrome (the address bar) stays visible unless the page asks for
-      // fullscreen. On touch devices, go fullscreen while a channel is playing
-      // and leave when it closes. Browsers only allow this from a tap, so it
-      // also retries on every tap, and a button covers the case where it was
-      // refused or the person left fullscreen.
+      // fullscreen. On touch devices the first tap goes fullscreen, which also
+      // lets Chrome lock landscape. Browsers only allow it from a tap, so a
+      // button covers a refused request. Leaving fullscreen yourself stops the
+      // automatic attempts until the button is pressed.
       (function () {
         var root = document.documentElement;
         if (!matchMedia('(pointer: coarse)').matches) return;
         var request = root.requestFullscreen || root.webkitRequestFullscreen;
         if (!request) return;
         var active = function () { return document.fullscreenElement || document.webkitFullscreenElement; };
-        var playing = function () { return !!document.querySelector('video'); };
-        function enter() {
-          if (active() || !playing()) return;
+        var declined = false;
+        function enter(manual) {
+          if (active() || (declined && manual !== true)) return;
           try {
             var result = request.call(root, { navigationUI: 'hide' });
             if (result && result.then) result.then(lockLandscape, function () {});
@@ -88,29 +88,24 @@
         var button = document.createElement('button');
         button.type = 'button';
         button.setAttribute('aria-label', 'Full screen');
-        button.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#e7f4ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
-        button.style.cssText = 'display:none;position:fixed;right:10px;top:50%;margin-top:-24px;width:48px;height:48px;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(231,244,239,.3);background:rgba(11,15,16,.6);padding:0;z-index:2147483000';
-        button.addEventListener('click', function (event) { event.stopPropagation(); enter(); });
+        button.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#e7f4ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+        button.style.cssText = 'display:none;position:fixed;right:8px;top:50%;margin-top:-22px;width:44px;height:44px;align-items:center;justify-content:center;border-radius:50%;border:1px solid rgba(231,244,239,.3);background:rgba(11,15,16,.6);padding:0;z-index:2147483000';
+        button.addEventListener('click', function (event) { event.stopPropagation(); declined = false; enter(true); });
         document.body.appendChild(button);
-        var queued = false;
         function sync() {
-          queued = false;
-          button.style.display = playing() && !active() ? 'flex' : 'none';
+          if (active()) { button.style.display = 'none'; return; }
+          button.style.display = 'flex';
         }
-        var timer;
         function changed() {
-          if (!queued) { queued = true; requestAnimationFrame(sync); }
-          clearTimeout(timer);
-          timer = setTimeout(function () {
-            if (!active() || playing()) return;
-            (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-          }, 400);
+          // Nothing here leaves fullscreen, so leaving it was the person's choice.
+          if (!active()) declined = true;
+          sync();
         }
-        document.addEventListener('playing', enter, true);
-        ['pointerup', 'touchend', 'click'].forEach(function (name) { document.addEventListener(name, enter, true); });
+        document.addEventListener('playing', function () { enter(); }, true);
+        ['pointerup', 'touchend', 'click'].forEach(function (name) { document.addEventListener(name, function () { enter(); }, true); });
         document.addEventListener('fullscreenchange', changed);
         document.addEventListener('webkitfullscreenchange', changed);
-        new MutationObserver(changed).observe(document.body, { childList: true, subtree: true });
+        sync();
       })();
     </script>
   </body>
