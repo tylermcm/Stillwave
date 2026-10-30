@@ -59,13 +59,40 @@
     </div>
     <script>
       // Honoured in installed/fullscreen apps on Android; iOS and plain tabs
-      // rely on the overlay above.
+      // rely on the overlay above. Chrome only allows the lock while fullscreen.
+      function lockLandscape() {
+        try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(function () {}); } catch (e) {}
+      }
+      lockLandscape();
+
+      // Browser chrome (the address bar) stays visible unless the page asks for
+      // fullscreen. On touch devices, go fullscreen while a channel is playing
+      // and leave when it closes. Needs a tap, so it fires on the next tap if a
+      // stream starts too late for the tap that opened it.
       (function () {
-        function lock() {
-          try { screen.orientation && screen.orientation.lock && screen.orientation.lock('landscape').catch(function () {}); } catch (e) {}
+        var root = document.documentElement;
+        if (!matchMedia('(pointer: coarse)').matches) return;
+        var request = root.requestFullscreen || root.webkitRequestFullscreen;
+        if (!request) return;
+        var active = function () { return document.fullscreenElement || document.webkitFullscreenElement; };
+        var playing = function () { return !!document.querySelector('video'); };
+        function enter() {
+          if (active() || !playing()) return;
+          try {
+            var result = request.call(root, { navigationUI: 'hide' });
+            if (result && result.then) result.then(lockLandscape, function () {});
+          } catch (e) {}
         }
-        lock();
-        addEventListener('pointerdown', lock, { once: true });
+        document.addEventListener('playing', enter, true);
+        document.addEventListener('pointerup', enter, true);
+        var timer;
+        new MutationObserver(function () {
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            if (!active() || playing()) return;
+            (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+          }, 400);
+        }).observe(document.body, { childList: true, subtree: true });
       })();
     </script>
   </body>
